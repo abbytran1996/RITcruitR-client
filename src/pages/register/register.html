@@ -1,11 +1,31 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>
-      About
-    </ion-title>
-  </ion-navbar>
-</ion-header>
-
 <ion-content padding>
+
+  <!-- Back Icon -->
+  <ion-row class="row-back-icon">
+    <ion-icon name="close" class="icon-link back-icon block fg-dark opacity-50" (click)="backBtn()"></ion-icon>
+  </ion-row>
+  <!-- End Back Icon -->
+
+  <!-- Title -->
+  <ion-row class="row-title">
+    <h1 class="fg-grey center no-padding">RecruitR</h1>
+  </ion-row>
+  <!-- End Title -->
+
+  <!-- Message -->
+  <ion-row class="row-message">
+    <h3>How will you being using RecruitR?</h3>
+    <h3>As a <span class="fg-accent">Student</span> or a <span class="fg-accent">Recruiter</span>?</h3>
+  </ion-row>
+  <!-- End Message -->
+
+  <!-- Buttons -->
+  <ion-row class="row-buttons">
+    <ion-col>
+      <button class="rec-btn rec-btn-primary btn-stacked center" (click)="studentBtn()">Student</button>
+      <button class="rec-btn rec-btn-primary btn-stacked center">Recruiter</button>
+    </ion-col>
+  </ion-row>
+  <!-- End Buttons -->
 
 </ion-content>

@@ -1,0 +1,49 @@
+<ion-content padding>
+
+  <!-- Back Icon -->
+  <ion-row class="row-back-icon">
+    <ion-icon name="arrow-round-back" class="icon-link back-icon block fg-dark opacity-50" (click)="backBtn()"></ion-icon>
+  </ion-row>
+  <!-- End Back Icon -->
+
+  <!-- Title -->
+  <ion-row class="row-title">
+    <h1 class="fg-grey center no-padding">RecruitR</h1>
+    <h3 class="center no-padding">Student Registration</h3>
+  </ion-row>
+  <!-- End Title -->
+
+  <!-- Form -->
+  <ion-row class="row-register-form">
+    <ion-col>
+      <form #registerForm="ngForm">
+        <div class="rec-input-group">
+          <label class="rec-label rl-primary">EMAIL</label>
+          <input type="email" name="email" class="rec-input ri-primary" required [(ngModel)]="model.email">
+        </div>
+        <div class="rec-input-group">
+          <label class="rec-label rl-primary">PASSWORD</label>
+          <input type="password" name="password" class="rec-input ri-primary" required [(ngModel)]="model.password">
+        </div>
+        <div class="rec-input-group">
+          <label class="rec-label rl-primary">FULL NAME</label>
+          <input type="email" name="name" class="rec-input ri-primary" required [(ngModel)]="model.name">
+        </div>
+        <div class="rec-input-group">
+          <label class="rec-label rl-primary">UNIVERSITY</label>
+          <input type="password" name="university" class="rec-input ri-primary" required [(ngModel)]="model.university">
+        </div>
+      </form>
+    </ion-col>
+  </ion-row>
+  <!-- End Form -->
+
+  <!-- Button -->
+  <ion-row class="row-register-button">
+    <ion-col>
+      <button class="rec-btn rec-btn-primary btn-stacked center" (click)="register()">Register</button>
+    </ion-col>
+  </ion-row>
+  <!-- End Button -->
+
+</ion-content>
