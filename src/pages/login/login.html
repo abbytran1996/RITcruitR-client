@@ -1,27 +1,37 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title text-center>RecruitRs</ion-title>
-  </ion-navbar>
-</ion-header>
+<ion-content padding class="primary-gradient-bg">
 
-<ion-content padding>
-  <ion-row>
+  <!-- Title -->
+  <ion-row class="row-title">
+    <h1 class="fg-white text-center no-padding">RecruitR</h1>
+  </ion-row>
+  <!-- End Title -->
+
+  <!-- Login Form -->
+  <ion-row class="row-login-form">
     <ion-col>
-      <ion-list inset>
-        <ion-item>
-          <ion-input type="text" placeholder="Email"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-input type="password" placeholder="Password"></ion-input>
-        </ion-item>
-      </ion-list>
+      <form #loginForm="ngForm">
+        <div class="rec-input-group">
+          <label class="rec-label rl-white">EMAIL</label>
+          <input type="email" name="email" class="rec-input ri-white" required [(ngModel)]="model.email">
+        </div>
+        <div class="rec-input-group">
+          <label class="rec-label rl-white">PASSWORD</label>
+          <input type="password" name="password" class="rec-input ri-white" required [(ngModel)]="model.password">
+        </div>
+      </form>
     </ion-col>
   </ion-row>
+  <!-- End Login Form -->
 
-  <ion-row>
+  <!-- Login Buttons -->
+  <ion-row class="row-login-buttons">
     <ion-col>
-      <button ion-button block (click)="navigateToTabs()">Login</button>
-      <button ion-button block color="dark">Register</button>
+      <div>
+        <button class="rec-btn-small rec-btn-white btn-stacked center" (click)="login()">Login</button>
+        <button class="rec-btn-small rec-btn-accent btn-stacked center" (click)="register()">Register</button>
+      </div>
     </ion-col>
   </ion-row>
+  <!-- End Login Buttons -->
+
 </ion-content>
