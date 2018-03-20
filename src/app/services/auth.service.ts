@@ -15,15 +15,20 @@ export class AuthService {
         return this.apiService.post('/user/login', user)
             .pipe(map(
                 data => {
+                    if (data.exception !== null) {
+                        return null;
+                    }
 
+                    window.localStorage.setItem('id', data.id);
+                    return data;
                 },
                 err => {
-
+                    return err;
                 }
             ));
     }
 
     logout() {
-
+        window.localStorage.removeItem('id');
     }
 }

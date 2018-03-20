@@ -15,10 +15,10 @@ export class StudentService {
         return this.apiService.post('/students', student)
             .pipe(map(
                 data => {
-
+                    return data;
                 },
                 err => {
-
+                    return err;
                 }
             ));
     }
@@ -27,10 +27,10 @@ export class StudentService {
         return this.apiService.get('/students/byEmail/' + email)
             .pipe(map(
                 data => {
-
+                    return data;
                 },
                 err => {
-
+                    return err;
                 }
             ));
     }
@@ -39,10 +39,10 @@ export class StudentService {
         return this.apiService.put('/students/' + student.id + '/update', student)
             .pipe(map(
                 data => {
-
+                    return data;
                 },
                 err => {
-
+                    return err;
                 }
             ));
     }
@@ -51,10 +51,10 @@ export class StudentService {
         return this.apiService.post('/students/' + student.id + '/skills', student)
             .pipe(map(
                 data => {
-
+                    return data;
                 },
                 err => {
-
+                    return err;
                 }
             ));
     }
@@ -63,10 +63,10 @@ export class StudentService {
         return this.apiService.put('/students/' + id + '/uploadResume', resume)
             .pipe(map(
                 data => {
-
+                    return data;
                 },
                 err => {
-
+                    return err;
                 }
             ));
     }
@@ -75,10 +75,10 @@ export class StudentService {
         return this.apiService.get('/students/' + id + '/resume')
             .pipe(map(
                 data => {
-
+                    return data;
                 },
                 err => {
-
+                    return err;
                 }
             ));
     }

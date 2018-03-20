@@ -15,10 +15,14 @@ export class RecruiterService {
         return this.apiService.post('/recruiters', recruiter)
             .pipe(map(
                 data => {
+                    if (data.exception !== null) {
+                        return null;
+                    }
 
+                    return data;
                 },
                 err => {
-
+                    return err;
                 }
             ));
     }
@@ -27,10 +31,10 @@ export class RecruiterService {
         return this.apiService.get('/recruiters/byEmail/' + email)
             .pipe(map(
                 data => {
-
+                    return data;
                 },
                 err => {
-
+                    return err;
                 }
             ));
     }
@@ -39,10 +43,10 @@ export class RecruiterService {
         return this.apiService.put('/recruiters/' + recruiter.id, recruiter)
             .pipe(map(
                 data => {
-
+                    return data;
                 },
                 err => {
-
+                    return err;
                 }
             ));
     }
