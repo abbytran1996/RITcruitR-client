@@ -13,6 +13,30 @@ Before you proceed, you'll need the following:
 3. Navigate to the repository in the command line and run `ionic serve`.
 4. Congratulations, you're done!
 
+## Environment Config
+
+1. After cloning the repository, create a directory named `environments` inside the `src` folder.
+2. Create two files - `environment.ts` and `environment.dev.ts`
+3. Edit variables if necessary.
+
+### environment.ts
+
+```
+export const environment = {
+    mode: 'Production',
+    api_url: 'http://35.170.211.62:8080'
+}
+```
+
+### environment.dev.ts
+
+```
+export const environment = {
+    mode: 'Development',
+    api_url: 'http://localhost:8080'
+}
+```
+
 ## Testing
 
 ### Unit Testing
