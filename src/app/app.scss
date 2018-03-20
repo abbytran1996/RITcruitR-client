@@ -59,6 +59,14 @@
   opacity: 0;
 }
 
+.float-right {
+  float: right;
+}
+
+.float-left {
+  float: left;
+}
+
 
 
 
@@ -148,6 +156,8 @@ h1 {
   font-size: map-get($font-title, size);
   font-weight: map-get($font-title, weight);
   color: map-get($font-title, color);
+  display: block;
+  width: 100%;
 }
 
 h2 {
@@ -155,6 +165,8 @@ h2 {
   font-size: map-get($font-heading, size);
   font-weight: map-get($font-heading, weight);
   color: map-get($font-heading, color);
+  display: block;
+  width: 100%;
 }
 
 h3 {
@@ -162,6 +174,8 @@ h3 {
   font-size: map-get($font-subheading, size);
   font-weight: map-get($font-subheading, weight);
   color: map-get($font-subheading, color);
+  display: block;
+  width: 100%;
 }
 
 h4, h5, h6 {
@@ -169,6 +183,8 @@ h4, h5, h6 {
   font-size: map-get($font-bodybold, size);
   font-weight: map-get($font-bodybold, weight);
   color: map-get($font-bodybold, color);
+  display: block;
+  width: 100%;
 }
 
 p {
@@ -176,6 +192,8 @@ p {
   font-size: map-get($font-body, size);
   font-weight: map-get($font-body, weight);
   color: map-get($font-body, color);
+  display: block;
+  width: 100%;
 }
 
 a, li {

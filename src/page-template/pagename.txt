@@ -3,7 +3,7 @@ import { NavController, ToastController } from 'ionic-angular';
 import { NgForm } from '@angular/forms';
 
 import { TabsPage } from '../../tabs/tabs';
-import { StudentSetupPage } from '../../student-setup/student-setup';
+import { SetupStudentPage } from '../../setup-student/setup-student';
 
 import { RegisterStudentForm } from '../../../forms/register-student.form';
 
@@ -26,7 +26,7 @@ export class RegisterStudentPage {
   // Attempt to register the student
   register() {
     if (this.registerForm && this.registerForm.valid) {
-      this.navCtrl.push(StudentSetupPage);
+      this.navCtrl.push(SetupStudentPage);
     }
     else {
       this.presentToast("Please enter a valid email, password, full name, and university");

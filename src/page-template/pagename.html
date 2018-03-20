@@ -8,8 +8,8 @@
 
   <!-- Title -->
   <ion-row class="row-title">
-    <h1 class="fg-grey text-center no-padding">RecruitR</h1>
-    <h3 class="text-center no-padding">Student Registration</h3>
+    <h1 class="fg-grey center no-padding">RecruitR</h1>
+    <h3 class="center no-padding">Student Registration</h3>
   </ion-row>
   <!-- End Title -->
 
@@ -27,11 +27,11 @@
         </div>
         <div class="rec-input-group">
           <label class="rec-label rl-primary">FULL NAME</label>
-          <input type="text" name="name" class="rec-input ri-primary" required [(ngModel)]="model.name">
+          <input type="email" name="name" class="rec-input ri-primary" required [(ngModel)]="model.name">
         </div>
         <div class="rec-input-group">
           <label class="rec-label rl-primary">UNIVERSITY</label>
-          <input type="text" name="university" class="rec-input ri-primary" required [(ngModel)]="model.university">
+          <input type="password" name="university" class="rec-input ri-primary" required [(ngModel)]="model.university">
         </div>
       </form>
     </ion-col>

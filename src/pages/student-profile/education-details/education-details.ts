@@ -3,15 +3,14 @@ import { NavController, ToastController } from 'ionic-angular';
 import { NgForm } from '@angular/forms';
 
 import { TabsPage } from '../../tabs/tabs';
-import { StudentSetupPage } from '../../student-setup/student-setup';
 
-import { RegisterStudentForm } from '../../../forms/register-student.form';
+import { EducationDetailsForm } from '../../../forms/education-details.form';
 
 @Component({
-  selector: 'page-register-student',
-  templateUrl: 'register-student.html'
+  selector: 'page-education-details',
+  templateUrl: 'education-details.html'
 })
-export class RegisterStudentPage {
+export class EducationDetailsPage {
 
   constructor(public navCtrl: NavController, private toastCtrl: ToastController) {
 
@@ -20,17 +19,15 @@ export class RegisterStudentPage {
   // ngForm object for validation control
   @ViewChild('registerForm') registerForm;
 
-  // Form model for register fields
-  model = new RegisterStudentForm("", "", "", "");
+  // Form model for education fields
+  model = new EducationDetailsForm("", "", "");
 
-  // Attempt to register the student
-  register() {
-    if (this.registerForm && this.registerForm.valid) {
-      this.navCtrl.push(StudentSetupPage);
-    }
-    else {
-      this.presentToast("Please enter a valid email, password, full name, and university");
-    }
+  continueClicked() {
+
+  }
+
+  skipClicked() {
+    this.navCtrl.push(TabsPage);
   }
 
   // Navigate back to the previous screen

@@ -12,6 +12,8 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
 import { RegisterStudentPage } from '../pages/register/register-student/register-student';
+import { StudentSetupPage } from '../pages/student-setup/student-setup';
+import { EducationDetailsPage } from '../pages/student-profile/education-details/education-details';
 import { AccountPage } from '../pages/account/account';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -27,6 +29,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     LoginPage,
     RegisterPage,
     RegisterStudentPage,
+    StudentSetupPage,
+    EducationDetailsPage,
     AccountPage
   ],
   imports: [
@@ -44,6 +48,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     LoginPage,
     RegisterPage,
     RegisterStudentPage,
+    StudentSetupPage,
+    EducationDetailsPage,
     AccountPage
   ],
   providers: [
