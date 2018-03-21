@@ -1,7 +1,18 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, ToastController } from 'ionic-angular';
 
+import {NgbTypeahead} from '@ng-bootstrap/ng-bootstrap';
+import {Observable} from 'rxjs/Observable';
+import {Subject} from 'rxjs/Subject';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/merge';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
+
 import { RecruiterRegisterPage } from '../recruiter-register/recruiter-register';
+
+const companies = ['Intuit', 'Intu Corporation', 'Google', 'Apple', 'Microsoft', 'Adobe', 'Dell'];
 
 @Component({
   selector: 'page-recruiter-company-select',
@@ -9,24 +20,40 @@ import { RecruiterRegisterPage } from '../recruiter-register/recruiter-register'
 })
 export class RecruiterCompanySelectPage {
 
-  constructor(public navCtrl: NavController, private toastCtrl: ToastController) {
-
-  }
-
   // ngForm object for validation control
   @ViewChild('companyForm') companyForm;
 
   // Form model for inputs
-  model = {company: ""};
+  public model: any;
+
+  // Variables for the typeahead searching
+  @ViewChild('instance') instance: NgbTypeahead;
+  focus$ = new Subject<string>();
+  click$ = new Subject<string>();
+
+  search = (text$: Observable<string>) =>
+    text$
+      .debounceTime(200).distinctUntilChanged()
+      .merge(this.focus$)
+      .merge(this.click$.filter(() => !this.instance.isPopupOpen()))
+      .map(term => (term === '' ? companies : companies.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1)).slice(0, 10));
+
+  constructor(public navCtrl: NavController, private toastCtrl: ToastController) {
+
+  }
 
   // Attempt to register the recruiter
   continueBtn() {
     if (this.companyForm && this.companyForm.valid) {
-      this.navCtrl.push(RecruiterRegisterPage, {company: this.model.company});
+      this.navCtrl.push(RecruiterRegisterPage, {company: this.model});
     }
     else {
-      this.presentToast("Please select a company in the list of registered companies. If your company cannot be found in the list, register your company by tapping the button at the bottom of the screen");
+      this.presentToast("Please select a company in the list of registered companies. If your company cannot be found in the list, register your company by tapping the button at the bottom of the screen", 5000);
     }
+  }
+
+  newCompanyBtn() {
+    this.presentToast("Company creation is an upcoming feature to be implemented next iteration!", 4000);
   }
 
   // Navigate back to the previous screen
@@ -35,10 +62,10 @@ export class RecruiterCompanySelectPage {
   }
 
   // Present a toast message to the user
-  presentToast(message) {
+  presentToast(message, duration) {
     let toast = this.toastCtrl.create({
       message: message,
-      duration: 4000,
+      duration: duration,
       position: 'top'
     });
 

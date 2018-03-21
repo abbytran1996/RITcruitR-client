@@ -11,7 +11,7 @@ import { RecruiterRegisterModel } from '../../models/recruiter-register.model';
 })
 export class RecruiterRegisterPage {
 
-  this.company = undefined;
+  company = undefined;
 
   constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams) {
     this.company = navParams.get("company");

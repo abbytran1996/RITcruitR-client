@@ -23,10 +23,20 @@
     <ion-col>
       <form #companyForm="ngForm">
         <div class="rec-input-group">
-          <select name="company" class="rec-input ri-primary" required [(ngModel)]="model.company">
-            <option value="Intuit">Intuit</option>
-            <option value="Intu Corporation">Intu Corporation</option>
-          </select>
+          <input
+            type="text"
+            name="company"
+            class="rec-input ri-primary"
+            required
+            [(ngModel)]="model"
+            [ngbTypeahead]="search"
+            [resultTemplate]="rt"
+            (focus)="focus$.next($event.target.value)"
+            (click)="click$.next($event.target.value)"
+            #instance="ngbTypeahead">
+          <ng-template #rt let-r="result" let-t="term">
+            {{ r }}
+          </ng-template>
         </div>
       </form>
     </ion-col>
@@ -40,5 +50,22 @@
     </ion-col>
   </ion-row>
   <!-- End Button -->
+
+  <!-- Separator -->
+  <ion-row class="row-sep">
+    <ion-col>
+      <div class="sep-horizontal-1 opacity-50"></div>
+    </ion-col>
+  </ion-row>
+  <!-- End Separator -->
+
+  <!-- Create Company CTA -->
+  <ion-row class="row-cta">
+    <ion-col>
+      <h3 class="new-company-message text-center">If you <span class="fg-accent">can't find your company</span> above,<br>you may create it now.</h3>
+      <button class="rec-btn-small rec-btn-accent btn-stacked center" (click)="newCompanyBtn()">New Company</button>
+    </ion-col>
+  </ion-row>
+  <!-- End Create Company CTA -->
 
 </ion-content>
