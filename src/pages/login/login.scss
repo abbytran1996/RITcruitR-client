@@ -1,0 +1,19 @@
+page-login {
+  background: url(#{$image-path}/bg.png) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
+  .row-title {
+    margin-top: 10vh;
+  }
+
+  .row-login-form {
+    margin-top: 10vh;
+  }
+
+  .row-login-buttons {
+    margin-top: 15vh;
+  }
+}

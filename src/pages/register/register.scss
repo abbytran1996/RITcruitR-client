@@ -1,0 +1,37 @@
+page-register {
+  ion-content.content-ios, ion-content.content-md {
+    background-color: map-get($colors, light);
+  }
+
+  .row-back-icon {
+      padding-left: 20px;
+      padding-top: 10px;
+
+      .back-icon {
+        opacity: .6;
+      }
+  }
+
+  .row-title {
+    margin-top: 10px;
+  }
+
+  .row-message {
+    margin-top: 10vh;
+
+    h3 {
+      width: 100%;
+      margin: 0;
+      text-align: center;
+      line-height: 32px;
+    }
+  }
+
+  .row-buttons {
+    margin-top: 10vh;
+
+    .rec-btn:first-child {
+      margin-bottom: 50px;
+    }
+  }
+}

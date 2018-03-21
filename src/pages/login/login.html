@@ -1,0 +1,37 @@
+<ion-content padding class="primary-gradient-bg">
+
+  <!-- Title -->
+  <ion-row class="row-title">
+    <h1 class="fg-white text-center no-padding">RecruitR</h1>
+  </ion-row>
+  <!-- End Title -->
+
+  <!-- Login Form -->
+  <ion-row class="row-login-form">
+    <ion-col>
+      <form #loginForm="ngForm">
+        <div class="rec-input-group">
+          <label class="rec-label rl-white">EMAIL</label>
+          <input type="email" name="email" class="rec-input ri-white" required [(ngModel)]="model.email">
+        </div>
+        <div class="rec-input-group">
+          <label class="rec-label rl-white">PASSWORD</label>
+          <input type="password" name="password" class="rec-input ri-white" required [(ngModel)]="model.password">
+        </div>
+      </form>
+    </ion-col>
+  </ion-row>
+  <!-- End Login Form -->
+
+  <!-- Login Buttons -->
+  <ion-row class="row-login-buttons">
+    <ion-col>
+      <div>
+        <button class="rec-btn-small rec-btn-white btn-stacked center" (click)="login()">Login</button>
+        <button class="rec-btn-small rec-btn-accent btn-stacked center" (click)="register()">Register</button>
+      </div>
+    </ion-col>
+  </ion-row>
+  <!-- End Login Buttons -->
+
+</ion-content>
