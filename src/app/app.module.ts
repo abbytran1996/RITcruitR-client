@@ -46,9 +46,8 @@ import {
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpClientModule,
-    HttpModule
-    FormsModule,
-    IonicModule.forRoot(MyApp)
+    HttpModule,
+    FormsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
