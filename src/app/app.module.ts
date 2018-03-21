@@ -6,15 +6,20 @@ import { MyApp } from './app.component';
 
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
+import { AccountPage } from '../pages/account/account';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
-import { RegisterStudentPage } from '../pages/register/register-student/register-student';
+
+import { StudentRegisterPage } from '../pages/student-register/student-register';
 import { StudentSetupPage } from '../pages/student-setup/student-setup';
 import { EducationDetailsPage } from '../pages/student-profile/education-details/education-details';
-import { AccountPage } from '../pages/account/account';
+
+import { RecruiterCompanySelectPage } from '../pages/recruiter-company-select/recruiter-company-select';
+import { RecruiterRegisterPage } from '../pages/recruiter-register/recruiter-register';
+import { RecruiterSetupPage } from '../pages/recruiter-setup/recruiter-setup';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -28,9 +33,12 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     TabsPage,
     LoginPage,
     RegisterPage,
-    RegisterStudentPage,
+    StudentRegisterPage,
     StudentSetupPage,
     EducationDetailsPage,
+    RecruiterCompanySelectPage,
+    RecruiterRegisterPage,
+    RecruiterSetupPage,
     AccountPage
   ],
   imports: [
@@ -47,9 +55,12 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     TabsPage,
     LoginPage,
     RegisterPage,
-    RegisterStudentPage,
+    StudentRegisterPage,
     StudentSetupPage,
     EducationDetailsPage,
+    RecruiterCompanySelectPage,
+    RecruiterRegisterPage,
+    RecruiterSetupPage,
     AccountPage
   ],
   providers: [

@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
-import { RegisterStudentPage } from './register-student/register-student';
+import { StudentRegisterPage } from '../student-register/student-register';
+import { RecruiterCompanySelectPage } from '../recruiter-company-select/recruiter-company-select';
 
 @Component({
   selector: 'page-register',
@@ -18,6 +19,10 @@ export class RegisterPage {
   }
 
   studentBtn() {
-    this.navCtrl.push(RegisterStudentPage);
+    this.navCtrl.push(StudentRegisterPage);
+  }
+
+  recruiterBtn() {
+    this.navCtrl.push(RecruiterCompanySelectPage);
   }
 }

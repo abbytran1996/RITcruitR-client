@@ -1,10 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, ToastController } from 'ionic-angular';
-import { NgForm } from '@angular/forms';
 
 import { TabsPage } from '../../tabs/tabs';
 
-import { EducationDetailsForm } from '../../../forms/education-details.form';
+import { EducationDetailsModel } from '../../../models/education-details.model';
 
 @Component({
   selector: 'page-education-details',
@@ -17,13 +16,18 @@ export class EducationDetailsPage {
   }
 
   // ngForm object for validation control
-  @ViewChild('registerForm') registerForm;
+  @ViewChild('educationForm') educationForm;
 
   // Form model for education fields
-  model = new EducationDetailsForm("", "", "");
+  model = new EducationDetailsModel("", "", "", "");
 
   continueClicked() {
-
+    if (this.educationForm && this.educationForm.valid) {
+      this.navCtrl.push(TabsPage);
+    }
+    else {
+      this.presentToast("Please enter your university name, major, GPA, and expected graduation date");
+    }
   }
 
   skipClicked() {

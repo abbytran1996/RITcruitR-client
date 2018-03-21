@@ -1,11 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, ToastController } from 'ionic-angular';
-import { NgForm } from '@angular/forms';
 
 import { TabsPage } from '../tabs/tabs';
 import { RegisterPage } from '../register/register';
 
-import { LoginForm } from '../../forms/login.form';
+import { LoginModel } from '../../models/login.model';
 
 @Component({
   selector: 'page-login',
@@ -21,7 +20,7 @@ export class LoginPage {
   @ViewChild('loginForm') loginForm;
 
   // Form model for login fields
-  model = new LoginForm("", "");
+  model = new LoginModel("", "");
 
   // Called when login button is clicked, attempt to authenticate user
   login() {

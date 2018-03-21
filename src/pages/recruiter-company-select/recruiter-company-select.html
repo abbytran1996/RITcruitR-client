@@ -1,0 +1,44 @@
+<ion-content padding>
+
+  <!-- Back Icon -->
+  <ion-row class="row-back-icon">
+    <ion-icon name="arrow-round-back" class="icon-link back-icon block fg-dark opacity-50" (click)="backBtn()"></ion-icon>
+  </ion-row>
+  <!-- End Back Icon -->
+
+  <!-- Title -->
+  <ion-row class="row-title">
+    <h1 class="fg-grey text-center no-padding">RecruitR</h1>
+  </ion-row>
+  <!-- End Title -->
+
+  <!-- Message -->
+  <ion-row class="row-message">
+    <h3 class="text-center no-padding">What company are you<br>recruiting for?</h3>
+  </ion-row>
+  <!-- End Message -->
+
+  <!-- Form -->
+  <ion-row class="row-form">
+    <ion-col>
+      <form #companyForm="ngForm">
+        <div class="rec-input-group">
+          <select name="company" class="rec-input ri-primary" required [(ngModel)]="model.company">
+            <option value="Intuit">Intuit</option>
+            <option value="Intu Corporation">Intu Corporation</option>
+          </select>
+        </div>
+      </form>
+    </ion-col>
+  </ion-row>
+  <!-- End Form -->
+
+  <!-- Button -->
+  <ion-row class="row-button">
+    <ion-col>
+      <button class="rec-btn rec-btn-primary btn-stacked center" (click)="continueBtn()">Continue</button>
+    </ion-col>
+  </ion-row>
+  <!-- End Button -->
+
+</ion-content>

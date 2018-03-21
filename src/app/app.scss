@@ -145,6 +145,14 @@
   color: #FFFFFF;
 }
 
+.bg-full-image {
+  background: url(#{$image-path}/bg.png) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
 
 
 
@@ -387,8 +395,16 @@ ion-icon.block::before {
   margin-bottom: 0px;
 }
 
+.rec-input-group-small {
+  margin-bottom: 30px;
+}
+
+.rec-input-group-small:last-child {
+  margin-bottom: 0px;
+}
+
 .rec-input[type="text"], .rec-input[type="email"], .rec-input[type="password"],
-.rec-input[type="number"] {
+.rec-input[type="number"], select {
   width: 100%;
   height: 25px;
   background-color: transparent;
@@ -477,4 +493,31 @@ ion-toast.toast-ios {
   line-height: 15px;
   padding-top: 16px;
   color: map-get($colors, primary);
+}
+
+
+
+
+// UI Elements Styles
+// --------------------------------------------------
+
+.progress-bar-label {
+  font-family: map-get($font-subheading, family);
+  color: map-get($font-subheading, color);
+  line-height: 14px;
+  font-size: 12px;
+  padding-left: 5px;
+}
+
+.progress-bar {
+  height: 22px;
+  background-color: #FFFFFF;
+  border-radius: 20px;
+  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, .08);
+}
+
+.progress-bar .bar {
+  height: 22px;
+  background: linear-gradient(to bottom, rgba(map-get($colors, secondary), .85), rgba(map-get($colors, primary), .85));
+  border-radius: 22px;
 }

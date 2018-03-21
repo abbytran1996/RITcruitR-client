@@ -2,20 +2,19 @@ import { Component, ViewChild } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
 import { TabsPage } from '../tabs/tabs';
-import { EducationDetailsPage } from '../student-profile/education-details/education-details';
 
 @Component({
-  selector: 'page-student-setup',
-  templateUrl: 'student-setup.html'
+  selector: 'page-recruiter-setup',
+  templateUrl: 'recruiter-setup.html'
 })
-export class StudentSetupPage {
+export class RecruiterSetupPage {
 
   constructor(public navCtrl: NavController) {
 
   }
 
   continueClicked() {
-    this.navCtrl.push(EducationDetailsPage);
+    this.navCtrl.push(TabsPage);
   }
 
   skipAllClicked() {

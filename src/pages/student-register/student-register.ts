@@ -1,17 +1,16 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, ToastController } from 'ionic-angular';
-import { NgForm } from '@angular/forms';
 
-import { TabsPage } from '../../tabs/tabs';
-import { StudentSetupPage } from '../../student-setup/student-setup';
+import { TabsPage } from '../tabs/tabs';
+import { StudentSetupPage } from '../student-setup/student-setup';
 
-import { RegisterStudentForm } from '../../../forms/register-student.form';
+import { StudentRegisterModel } from '../../models/student-register.model';
 
 @Component({
-  selector: 'page-register-student',
-  templateUrl: 'register-student.html'
+  selector: 'page-student-register',
+  templateUrl: 'student-register.html'
 })
-export class RegisterStudentPage {
+export class StudentRegisterPage {
 
   constructor(public navCtrl: NavController, private toastCtrl: ToastController) {
 
@@ -21,7 +20,7 @@ export class RegisterStudentPage {
   @ViewChild('registerForm') registerForm;
 
   // Form model for register fields
-  model = new RegisterStudentForm("", "", "", "");
+  model = new StudentRegisterModel("", "", "", "");
 
   // Attempt to register the student
   register() {
@@ -29,7 +28,7 @@ export class RegisterStudentPage {
       this.navCtrl.push(StudentSetupPage);
     }
     else {
-      this.presentToast("Please enter a valid email, password, full name, and university");
+      this.presentToast("Please enter a valid email, password, first name, and last name");
     }
   }
 

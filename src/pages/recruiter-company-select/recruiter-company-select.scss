@@ -1,4 +1,4 @@
-page-register-student {
+page-recruiter-company-select {
   ion-content.content-ios, ion-content.content-md {
     background-color: map-get($colors, light);
   }
@@ -25,11 +25,15 @@ page-register-student {
       }
   }
 
-  .row-register-form {
+  .row-message {
+    margin-top: 7vh;
+  }
+
+  .row-form {
     margin-top: 4vh;
   }
 
-  .row-register-button {
-    margin-top: 5vh;
+  .row-button {
+    margin-top: 15vh;
   }
 }
