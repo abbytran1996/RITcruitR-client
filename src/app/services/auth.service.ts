@@ -7,8 +7,8 @@ import { distinctUntilChanged, map } from 'rxjs/operators';
 @Injectable()
 export class AuthService {
     constructor(
-        private apiService: ApiService,
-        private httpC: HttpClient
+      private apiService: ApiService,
+      private http: HttpClient
     ) { }
 
     login(user) {

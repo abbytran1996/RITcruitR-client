@@ -18,7 +18,7 @@ export class StudentRegisterPage {
   @ViewChild('registerForm') registerForm;
 
   // Form model for register fields
-  model = new StudentRegisterModel("test@gmail.com", "Student1!", "John", "Doe");
+  model = new StudentRegisterModel("", "", "", "");
 
   constructor(public navCtrl: NavController, private toastCtrl: ToastController, private studentService: StudentService) {
 
@@ -30,6 +30,7 @@ export class StudentRegisterPage {
       // Make API call to register the student
       this.studentService.addStudent(addTempStudentFields(this.model)).subscribe(
         data => {
+          window.localStorage.setItem('id', data.id);
           this.navCtrl.push(StudentSetupPage, {user: data});
         },
         error => {
