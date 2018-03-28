@@ -1,6 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController } from 'ionic-angular';
-import { NgForm } from '@angular/forms';
+import { NavController, NavParams } from 'ionic-angular';
 
 import { TabsPage } from '../tabs/tabs';
 import { EducationDetailsPage } from '../student-profile/education-details/education-details';
@@ -11,15 +10,17 @@ import { EducationDetailsPage } from '../student-profile/education-details/educa
 })
 export class StudentSetupPage {
 
-  constructor(public navCtrl: NavController) {
+  public user: any;
 
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.user = navParams.get("user");
   }
 
   continueClicked() {
-    this.navCtrl.push(EducationDetailsPage);
+    this.navCtrl.push(EducationDetailsPage, {user: this.user});
   }
 
   skipAllClicked() {
-    this.navCtrl.push(TabsPage);
+    this.navCtrl.push(TabsPage, {user: this.user.user});
   }
 }

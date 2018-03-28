@@ -67,6 +67,38 @@
   float: left;
 }
 
+.margin-top-5 {
+  margin-top: 5px;
+}
+
+.margin-top-10 {
+  margin-top: 10px;
+}
+
+.margin-top-15 {
+  margin-top: 15px;
+}
+
+.margin-top-20 {
+  margin-top: 20px;
+}
+
+.margin-bottom-5 {
+  margin-bottom: 5px;
+}
+
+.margin-bottom-10 {
+  margin-bottom: 10px;
+}
+
+.margin-bottom-15 {
+  margin-bottom: 15px;
+}
+
+.margin-bottom-20 {
+  margin-bottom: 20px;
+}
+
 
 
 
@@ -143,6 +175,14 @@
 
 .fg-white {
   color: #FFFFFF;
+}
+
+.bg-full-image {
+  background: url(#{$image-path}/bg.png) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 
@@ -387,8 +427,16 @@ ion-icon.block::before {
   margin-bottom: 0px;
 }
 
+.rec-input-group-small {
+  margin-bottom: 30px;
+}
+
+.rec-input-group-small:last-child {
+  margin-bottom: 0px;
+}
+
 .rec-input[type="text"], .rec-input[type="email"], .rec-input[type="password"],
-.rec-input[type="number"] {
+.rec-input[type="number"], select {
   width: 100%;
   height: 25px;
   background-color: transparent;
@@ -397,6 +445,34 @@ ion-icon.block::before {
   font-family: map-get($font-input-value, family);
   font-size: map-get($font-input-value, size);
   color: map-get($font-input-value, color);
+}
+
+ngb-typeahead-window {
+  background-color: #FFFFFF;
+  display: block;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, .15);
+}
+
+ngb-typeahead-window button {
+  display: block;
+  width: 100%;
+  background-color: transparent;
+  text-align: left;
+  padding-top: 13px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid rgba(map-get($colors, secondary), .5);
+  font-family: map-get($font-bodybold, family);
+  font-size: 16px;
+  font-weight: normal;
+  color: rgba(map-get($colors, dark), .75);
+}
+
+ngb-typeahead-window button:last-child {
+  border-bottom: none;
 }
 
 .rec-input.ri-primary {
@@ -458,6 +534,7 @@ ion-toast.toast-ios {
 .toast-ios .toast-wrapper {
   background-color: #FFFFFF;
   text-align: center;
+  box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, .15);
 }
 
 .toast-ios .toast-message {
@@ -477,4 +554,37 @@ ion-toast.toast-ios {
   line-height: 15px;
   padding-top: 16px;
   color: map-get($colors, primary);
+}
+
+
+
+
+// UI Elements Styles
+// --------------------------------------------------
+
+.progress-bar-label {
+  font-family: map-get($font-subheading, family);
+  color: map-get($font-subheading, color);
+  line-height: 14px;
+  font-size: 12px;
+  padding-left: 5px;
+}
+
+.progress-bar {
+  height: 22px;
+  background-color: #FFFFFF;
+  border-radius: 20px;
+  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, .08);
+}
+
+.progress-bar .bar {
+  height: 22px;
+  background: linear-gradient(to bottom, rgba(map-get($colors, secondary), .85), rgba(map-get($colors, primary), .85));
+  border-radius: 22px;
+}
+
+.sep-horizontal-1 {
+  width: 100%;
+  height: 2px;
+  background-color: map-get($colors, grey);
 }

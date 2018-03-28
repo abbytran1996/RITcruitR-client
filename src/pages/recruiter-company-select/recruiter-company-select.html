@@ -1,0 +1,71 @@
+<ion-content padding>
+
+  <!-- Back Icon -->
+  <ion-row class="row-back-icon">
+    <ion-icon name="arrow-round-back" class="icon-link back-icon block fg-dark opacity-50" (click)="backBtn()"></ion-icon>
+  </ion-row>
+  <!-- End Back Icon -->
+
+  <!-- Title -->
+  <ion-row class="row-title">
+    <h1 class="fg-grey text-center no-padding">RecruitR</h1>
+  </ion-row>
+  <!-- End Title -->
+
+  <!-- Message -->
+  <ion-row class="row-message">
+    <h3 class="text-center no-padding">What company are you<br>recruiting for?</h3>
+  </ion-row>
+  <!-- End Message -->
+
+  <!-- Form -->
+  <ion-row class="row-form">
+    <ion-col>
+      <form #companyForm="ngForm">
+        <div class="rec-input-group">
+          <input
+            type="text"
+            name="company"
+            class="rec-input ri-primary"
+            required
+            [(ngModel)]="model"
+            [ngbTypeahead]="search"
+            [resultTemplate]="rt"
+            (focus)="focus$.next($event.target.value)"
+            (click)="click$.next($event.target.value)"
+            #instance="ngbTypeahead">
+          <ng-template #rt let-r="result" let-t="term">
+            {{ r }}
+          </ng-template>
+        </div>
+      </form>
+    </ion-col>
+  </ion-row>
+  <!-- End Form -->
+
+  <!-- Button -->
+  <ion-row class="row-button">
+    <ion-col>
+      <button class="rec-btn rec-btn-primary btn-stacked center" (click)="continueBtn()">Continue</button>
+    </ion-col>
+  </ion-row>
+  <!-- End Button -->
+
+  <!-- Separator -->
+  <ion-row class="row-sep">
+    <ion-col>
+      <div class="sep-horizontal-1 opacity-50"></div>
+    </ion-col>
+  </ion-row>
+  <!-- End Separator -->
+
+  <!-- Create Company CTA -->
+  <ion-row class="row-cta">
+    <ion-col>
+      <h3 class="new-company-message text-center">If you <span class="fg-accent">can't find your company</span> above,<br>you may create it now.</h3>
+      <button class="rec-btn-small rec-btn-accent btn-stacked center" (click)="newCompanyBtn()">New Company</button>
+    </ion-col>
+  </ion-row>
+  <!-- End Create Company CTA -->
+
+</ion-content>

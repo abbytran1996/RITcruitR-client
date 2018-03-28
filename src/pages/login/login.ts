@@ -1,11 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, ToastController } from 'ionic-angular';
-import { NgForm } from '@angular/forms';
 
 import { TabsPage } from '../tabs/tabs';
 import { RegisterPage } from '../register/register';
 
-import { LoginForm } from '../../forms/login.form';
+import { LoginModel } from '../../models/login.model';
+
+import { AuthService } from '../../app/services/auth.service';
 
 @Component({
   selector: 'page-login',
@@ -13,20 +14,29 @@ import { LoginForm } from '../../forms/login.form';
 })
 export class LoginPage {
 
-  constructor(public navCtrl: NavController, private toastCtrl: ToastController) {
-
-  }
-
   // ngForm object for validation control
   @ViewChild('loginForm') loginForm;
 
   // Form model for login fields
-  model = new LoginForm("", "");
+  model = new LoginModel("", "");
+
+  constructor(public navCtrl: NavController, private toastCtrl: ToastController, private authService: AuthService) {
+
+  }
 
   // Called when login button is clicked, attempt to authenticate user
   login() {
     if (this.loginForm && this.loginForm.valid) {
-      this.navCtrl.push(TabsPage);
+      // Make API call to login
+      this.authService.login(this.model).subscribe(
+        data => {
+          window.localStorage.setItem('id', data.id);
+          this.navCtrl.push(TabsPage, {user: data});
+        },
+        error => {
+          this.presentToast("No user found with that email and password combination");
+        }
+      );
     }
     else {
       this.presentToast("Please enter a valid email and password");

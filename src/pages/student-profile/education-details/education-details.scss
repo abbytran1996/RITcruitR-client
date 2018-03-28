@@ -4,7 +4,7 @@ page-education-details {
   }
 
   .row-back-icon {
-      padding-left: 20px;
+      padding-left: 10px;
       padding-top: 10px;
       position: absolute;
 
@@ -13,11 +13,15 @@ page-education-details {
       }
   }
 
+  .row-progress {
+    margin-top: 2vh;
+  }
+
   .row-form {
-    margin-top: 4vh;
+    margin-top: 3vh;
   }
 
   .row-buttons {
-    margin-top: 10vh;
+    margin-top: 8vh;
   }
 }

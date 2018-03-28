@@ -1,10 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, ToastController } from 'ionic-angular';
-import { NgForm } from '@angular/forms';
+import { NavController, ToastController, NavParams } from 'ionic-angular';
 
 import { TabsPage } from '../../tabs/tabs';
 
-import { EducationDetailsForm } from '../../../forms/education-details.form';
+import { EducationDetailsModel } from '../../../models/education-details.model';
 
 @Component({
   selector: 'page-education-details',
@@ -12,22 +11,29 @@ import { EducationDetailsForm } from '../../../forms/education-details.form';
 })
 export class EducationDetailsPage {
 
-  constructor(public navCtrl: NavController, private toastCtrl: ToastController) {
+  public user: any;
 
+  constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams) {
+    this.user = navParams.get("user");
   }
 
   // ngForm object for validation control
-  @ViewChild('registerForm') registerForm;
+  @ViewChild('educationForm') educationForm;
 
   // Form model for education fields
-  model = new EducationDetailsForm("", "", "");
+  model = new EducationDetailsModel("", "", "", "");
 
   continueClicked() {
-
+    if (this.educationForm && this.educationForm.valid) {
+      this.navCtrl.push(TabsPage, {user: this.user.user});
+    }
+    else {
+      this.presentToast("Please enter your university name, major, GPA, and expected graduation date");
+    }
   }
 
   skipClicked() {
-    this.navCtrl.push(TabsPage);
+    this.navCtrl.push(TabsPage, {user: this.user.user});
   }
 
   // Navigate back to the previous screen

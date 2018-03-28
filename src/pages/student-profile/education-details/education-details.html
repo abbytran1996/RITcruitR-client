@@ -14,31 +14,35 @@
   <!-- End Title -->
 
   <!-- Progress Bar -->
-  <!-- <ion-row class="row-form">
+  <ion-row class="row-progress">
     <ion-col>
       <div class="progress-bar-wrapper">
-        <p class="progress-bar-label">STEP 1 of 3</p>
+        <p class="progress-bar-label no-margin">STEP 1 of 3</p>
         <div class="progress-bar">
-          <div class="bar" style="width: 35%;"></div>
+          <div class="bar" style="width: 33.33%;"></div>
         </div>
       </div>
     </ion-col>
-  </ion-row> -->
+  </ion-row>
   <!-- End Progress Bar -->
 
   <!-- Form -->
   <ion-row class="row-form">
     <ion-col>
       <form #educationForm="ngForm">
-        <div class="rec-input-group">
-          <label class="rec-label rl-primary">UNIVERSITY MAJOR</label>
+        <div class="rec-input-group-small">
+          <label class="rec-label rl-primary">UNIVERSITY</label>
+          <input type="text" name="university" class="rec-input ri-primary" required [(ngModel)]="model.university">
+        </div>
+        <div class="rec-input-group-small">
+          <label class="rec-label rl-primary">MAJOR</label>
           <input type="text" name="major" class="rec-input ri-primary" required [(ngModel)]="model.major">
         </div>
-        <div class="rec-input-group">
-          <label class="rec-label rl-primary">UNIVERSITY GPA</label>
+        <div class="rec-input-group-small">
+          <label class="rec-label rl-primary">GPA</label>
           <input type="text" name="gpa" class="rec-input ri-primary" required [(ngModel)]="model.gpa">
         </div>
-        <div class="rec-input-group">
+        <div class="rec-input-group-small">
           <label class="rec-label rl-primary">EXPECTED GRADUATION DATE</label>
           <input type="text" name="gradDate" class="rec-input ri-primary" required [(ngModel)]="model.gradDate">
         </div>
