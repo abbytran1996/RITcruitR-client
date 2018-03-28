@@ -32,6 +32,8 @@ import { RecruiterSetupPage } from '../pages/recruiter-setup/recruiter-setup';
 import {
   ApiService,
   AuthService,
+  CompanyService,
+  JobPostingService,
   RecruiterService,
   StudentService
 } from './services';
@@ -86,6 +88,8 @@ import {
     HttpClientModule,
     ApiService,
     AuthService,
+    CompanyService,
+    JobPostingService,
     RecruiterService,
     StudentService
   ]
