@@ -17,7 +17,7 @@ env:
   CXX=g++-4.8
 
 install:
-  - npm install -g gulp bower cordova ionic
+  - npm install -g cordova ionic
   - npm install
   - bower update
 
