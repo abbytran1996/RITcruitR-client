@@ -23,11 +23,13 @@ import { RegisterPage } from '../pages/register/register';
 
 import { StudentRegisterPage } from '../pages/student-register/student-register';
 import { StudentSetupPage } from '../pages/student-setup/student-setup';
-import { EducationDetailsPage } from '../pages/student-profile/education-details/education-details';
+import { StudentEducationPage } from '../pages/student-education/student-education';
 
 import { RecruiterCompanySelectPage } from '../pages/recruiter-company-select/recruiter-company-select';
 import { RecruiterRegisterPage } from '../pages/recruiter-register/recruiter-register';
 import { RecruiterSetupPage } from '../pages/recruiter-setup/recruiter-setup';
+
+import { CompanyRegister1Page } from '../pages/company-register/company-register-1';
 
 import {
   ApiService,
@@ -39,19 +41,20 @@ import {
 @NgModule({
   declarations: [
     MyApp,
-    AboutPage,
-    ContactPage,
-    HomePage,
-    TabsPage,
     LoginPage,
     RegisterPage,
     StudentRegisterPage,
     StudentSetupPage,
-    EducationDetailsPage,
+    StudentEducationPage,
+    CompanyRegister1Page,
     RecruiterCompanySelectPage,
     RecruiterRegisterPage,
     RecruiterSetupPage,
-    AccountPage
+    TabsPage,
+    HomePage,
+    AboutPage,
+    AccountPage,
+    ContactPage
   ],
   imports: [
     BrowserModule,
@@ -65,19 +68,20 @@ import {
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    AboutPage,
-    ContactPage,
-    HomePage,
-    TabsPage,
     LoginPage,
     RegisterPage,
     StudentRegisterPage,
     StudentSetupPage,
-    EducationDetailsPage,
+    StudentEducationPage,
+    CompanyRegister1Page,
     RecruiterCompanySelectPage,
     RecruiterRegisterPage,
     RecruiterSetupPage,
-    AccountPage
+    TabsPage,
+    HomePage,
+    AboutPage,
+    AccountPage,
+    ContactPage
   ],
   providers: [
     StatusBar,

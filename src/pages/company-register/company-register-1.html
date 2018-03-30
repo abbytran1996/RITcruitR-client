@@ -1,0 +1,54 @@
+<ion-content padding>
+
+  <!-- Back Icon -->
+  <ion-row class="row-back-icon">
+    <ion-icon name="arrow-round-back" class="icon-link back-icon block fg-dark opacity-50" (click)="backBtn()"></ion-icon>
+  </ion-row>
+  <!-- End Back Icon -->
+
+  <!-- Title -->
+  <ion-row class="row-title">
+    <h1 class="fg-grey text-center no-padding">RecruitR</h1>
+    <h3 class="text-center no-padding">Company Registration</h3>
+  </ion-row>
+  <!-- End Title -->
+
+  <!-- Progress Bar -->
+  <ion-row class="row-progress">
+    <ion-col>
+      <div class="progress-bar-wrapper">
+        <p class="progress-bar-label no-margin">STEP 1 of 3</p>
+        <div class="progress-bar">
+          <div class="bar" style="width: 33.33%;"></div>
+        </div>
+      </div>
+    </ion-col>
+  </ion-row>
+  <!-- End Progress Bar -->
+
+  <!-- Form -->
+  <ion-row class="row-form">
+    <ion-col>
+      <form #companyForm="ngForm">
+        <div class="rec-input-group">
+          <label class="rec-label rl-primary">COMPANY NAME</label>
+          <input type="text" name="name" class="rec-input ri-primary" required [(ngModel)]="model.name">
+        </div>
+        <div class="rec-input-group">
+          <label class="rec-label rl-primary">INDUSTRY</label>
+          <input type="text" name="industry" class="rec-input ri-primary" required [(ngModel)]="model.industry">
+        </div>
+      </form>
+    </ion-col>
+  </ion-row>
+  <!-- End Form -->
+
+  <!-- Button -->
+  <ion-row class="row-buttons">
+    <ion-col>
+      <button class="rec-btn rec-btn-primary btn-stacked center" (click)="continueClicked()">Continue</button>
+    </ion-col>
+  </ion-row>
+  <!-- End Button -->
+
+</ion-content>

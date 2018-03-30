@@ -1,8 +1,8 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 import { TabsPage } from '../tabs/tabs';
-import { EducationDetailsPage } from '../student-profile/education-details/education-details';
+import { StudentEducationPage } from '../student-education/student-education';
 
 @Component({
   selector: 'page-student-setup',
@@ -17,7 +17,7 @@ export class StudentSetupPage {
   }
 
   continueClicked() {
-    this.navCtrl.push(EducationDetailsPage, {user: this.user});
+    this.navCtrl.push(StudentEducationPage, {user: this.user});
   }
 
   skipAllClicked() {

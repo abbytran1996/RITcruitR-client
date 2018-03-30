@@ -1,15 +1,15 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, ToastController, NavParams } from 'ionic-angular';
 
-import { TabsPage } from '../../tabs/tabs';
+import { TabsPage } from '../tabs/tabs';
 
-import { EducationDetailsModel } from '../../../models/education-details.model';
+import { EducationDetailsModel } from '../../models/education-details.model';
 
 @Component({
-  selector: 'page-education-details',
-  templateUrl: 'education-details.html'
+  selector: 'page-student-education',
+  templateUrl: 'student-education.html'
 })
-export class EducationDetailsPage {
+export class StudentEducationPage {
 
   public user: any;
 
