@@ -6,4 +6,8 @@ install:
   - npm install -g cordova ionic
   - npm install
 
+before_script:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+
 script: node_modules/karma/bin/karma start test-config/karma.conf.js --single-run
