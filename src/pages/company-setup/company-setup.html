@@ -13,19 +13,9 @@
     <ion-row class="row-message">
       <ion-col>
         <h3 class="fg-white no-padding text-center">
-          Thank you for signing up!
-          <br>
-          Let's get the rest of your
-          <br>
-          account set up.
+          To get started, you can create<br>a new <span class="fg-accent">job posting</span>.
           <br><br>
-          If you'd like, you may <span class="fg-accent">skip</span>
-          <br>
-          any of the upcoming steps
-          <br>
-          and enter the information
-          <br>
-          later, on the <span class="fg-accent">account screen</span>.
+          If your company has a profile on<br><span class="fg-accent">Handshake</span>, you can import<br>job postings directly from there.
         </h3>
       </ion-col>
     </ion-row>
@@ -34,8 +24,8 @@
     <!-- Buttons -->
     <ion-row class="row-buttons">
       <ion-col>
-        <button class="rec-btn rec-btn-white btn-stacked center" (click)="continueClicked()">Continue</button>
-        <button class="rec-btn-small rec-btn-accent btn-stacked center" (click)="skipAllClicked()">Skip All</button>
+        <button class="rec-btn rec-btn-white btn-stacked center" (click)="createJobClicked()">Create Job</button>
+        <button class="rec-btn rec-btn-white btn-stacked center import-job-btn" (click)="importJobClicked()">Import Job</button>
       </ion-col>
     </ion-row>
     <!-- End Buttons -->

@@ -17,9 +17,9 @@
   <ion-row class="row-progress">
     <ion-col>
       <div class="progress-bar-wrapper">
-        <p class="progress-bar-label no-margin">STEP 1 of 3</p>
+        <p class="progress-bar-label no-margin">STEP 2 of 3</p>
         <div class="progress-bar">
-          <div class="bar" style="width: 33.33%;"></div>
+          <div class="bar" style="width: 66.66%;"></div>
         </div>
       </div>
     </ion-col>
@@ -31,22 +31,29 @@
     <ion-col>
       <form #companyForm="ngForm">
         <div class="rec-input-group">
-          <label class="rec-label rl-primary">COMPANY NAME</label>
-          <input type="text" name="name" class="rec-input ri-primary" required [(ngModel)]="companyModel.name">
-        </div>
-        <div class="rec-input-group">
-          <label class="rec-label rl-primary">INDUSTRIES</label>
+          <label class="rec-label rl-primary">LOCATIONS</label>
           <select-searchable
-            name="industries"
+            name="locations"
             class="rec-input ri-primary clearfix"
             required
-            [(ngModel)]="companyModel.industries"
-            [items]="industryOptions"
+            [(ngModel)]="companyModel.locations"
+            [items]="locationOptions"
             itemValueField="id"
             itemTextField="text"
             [canSearch]="true"
             [multiple]="true">
           </select-searchable>
+          <!-- <div class="rec-input ri-primary ri-modal-trigger"><button (click)="searchLocations()"></button></div> -->
+        </div>
+        <div class="rec-input-group">
+          <label class="rec-label rl-primary">COMPANY SIZE</label>
+          <ion-select type="text" name="companySize" class="rec-input ri-primary" required [(ngModel)]="companyModel.companySize">
+            <ion-option *ngFor="let option of companySizeOptions" value="{{ option.id }}">{{ option.text }}</ion-option>
+          </ion-select>
+        </div>
+        <div class="rec-input-group">
+          <label class="rec-label rl-primary">WEBSITE</label>
+          <input type="text" name="website" class="rec-input ri-primary" required [(ngModel)]="companyModel.website">
         </div>
       </form>
     </ion-col>

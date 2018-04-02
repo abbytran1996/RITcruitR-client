@@ -1,4 +1,4 @@
-page-company-register-1 {
+modal-locations-search {
   ion-content.content-ios, ion-content.content-md {
     background-color: map-get($colors, light);
   }
@@ -7,21 +7,22 @@ page-company-register-1 {
       padding-left: 20px;
       padding-top: 10px;
       position: absolute;
+      margin-top: 3vh;
 
       .back-icon {
         opacity: .6;
       }
   }
 
-  .row-progress {
-    margin-top: 2vh;
+  .row-title {
+    margin-top: 3vh;
   }
 
   .row-form {
-    margin-top: 8vh;
+    margin-top: 10vh;
   }
 
   .row-buttons {
-    margin-top: 20vh;
+    margin-top: 10vh;
   }
 }

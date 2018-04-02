@@ -10,6 +10,7 @@ import { MyApp } from './app.component';
 
 // Third party modules
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { SelectSearchableModule } from 'ionic-select-searchable';
 
 // Custom modules
 import { AboutPage } from '../pages/about/about';
@@ -27,9 +28,14 @@ import { StudentEducationPage } from '../pages/student-education/student-educati
 
 import { RecruiterCompanySelectPage } from '../pages/recruiter-company-select/recruiter-company-select';
 import { RecruiterRegisterPage } from '../pages/recruiter-register/recruiter-register';
-import { RecruiterSetupPage } from '../pages/recruiter-setup/recruiter-setup';
 
 import { CompanyRegister1Page } from '../pages/company-register/company-register-1';
+import { CompanyRegister2Page } from '../pages/company-register/company-register-2';
+import { CompanySetupPage } from '../pages/company-setup/company-setup';
+import { CompanyJobCreate1Page } from '../pages/company-job-create/company-job-create-1';
+import { CompanyJobCreate2Page } from '../pages/company-job-create/company-job-create-2';
+
+import { LocationsSearchModal } from '../modals/locations-search/locations-search';
 
 import {
   ApiService,
@@ -47,19 +53,24 @@ import {
     StudentSetupPage,
     StudentEducationPage,
     CompanyRegister1Page,
+    CompanyRegister2Page,
+    CompanySetupPage,
+    CompanyJobCreate1Page,
+    CompanyJobCreate2Page,
     RecruiterCompanySelectPage,
     RecruiterRegisterPage,
-    RecruiterSetupPage,
     TabsPage,
     HomePage,
     AboutPage,
     AccountPage,
-    ContactPage
+    ContactPage,
+    LocationsSearchModal
   ],
   imports: [
     BrowserModule,
     FormsModule,
     NgbModule.forRoot(),
+    SelectSearchableModule,
     IonicModule.forRoot(MyApp),
     HttpClientModule,
     HttpModule,
@@ -74,14 +85,18 @@ import {
     StudentSetupPage,
     StudentEducationPage,
     CompanyRegister1Page,
+    CompanyRegister2Page,
+    CompanySetupPage,
+    CompanyJobCreate1Page,
+    CompanyJobCreate2Page,
     RecruiterCompanySelectPage,
     RecruiterRegisterPage,
-    RecruiterSetupPage,
     TabsPage,
     HomePage,
     AboutPage,
     AccountPage,
-    ContactPage
+    ContactPage,
+    LocationsSearchModal
   ],
   providers: [
     StatusBar,

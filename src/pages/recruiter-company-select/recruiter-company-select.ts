@@ -12,6 +12,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
 
 import { RecruiterRegisterPage } from '../recruiter-register/recruiter-register';
 
+// TEMP list for type ahead
 const companies = ['Intuit', 'Intu Corporation', 'Google', 'Apple', 'Microsoft', 'Adobe', 'Dell'];
 
 @Component({
@@ -66,7 +67,9 @@ export class RecruiterCompanySelectPage {
     let toast = this.toastCtrl.create({
       message: message,
       duration: duration,
-      position: 'top'
+      position: 'top',
+      showCloseButton: true,
+      closeButtonText: ''
     });
 
     toast.onDidDismiss(() => {

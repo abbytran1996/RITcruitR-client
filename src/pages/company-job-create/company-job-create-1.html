@@ -9,7 +9,7 @@
   <!-- Title -->
   <ion-row class="row-title">
     <h1 class="fg-grey text-center no-padding">RecruitR</h1>
-    <h3 class="text-center no-padding">Company Registration</h3>
+    <h3 class="text-center no-padding">Job Basic Details</h3>
   </ion-row>
   <!-- End Title -->
 
@@ -17,9 +17,9 @@
   <ion-row class="row-progress">
     <ion-col>
       <div class="progress-bar-wrapper">
-        <p class="progress-bar-label no-margin">STEP 1 of 3</p>
+        <p class="progress-bar-label no-margin">STEP 1 of 8</p>
         <div class="progress-bar">
-          <div class="bar" style="width: 33.33%;"></div>
+          <div class="bar" style="width: 12.5%;"></div>
         </div>
       </div>
     </ion-col>
@@ -29,24 +29,16 @@
   <!-- Form -->
   <ion-row class="row-form">
     <ion-col>
-      <form #companyForm="ngForm">
+      <form #jobForm="ngForm">
         <div class="rec-input-group">
-          <label class="rec-label rl-primary">COMPANY NAME</label>
-          <input type="text" name="name" class="rec-input ri-primary" required [(ngModel)]="companyModel.name">
+          <label class="rec-label rl-primary">JOB TITLE</label>
+          <input type="text" name="title" class="rec-input ri-primary" required [(ngModel)]="jobModel.title">
         </div>
         <div class="rec-input-group">
-          <label class="rec-label rl-primary">INDUSTRIES</label>
-          <select-searchable
-            name="industries"
-            class="rec-input ri-primary clearfix"
-            required
-            [(ngModel)]="companyModel.industries"
-            [items]="industryOptions"
-            itemValueField="id"
-            itemTextField="text"
-            [canSearch]="true"
-            [multiple]="true">
-          </select-searchable>
+          <label class="rec-label rl-primary">JOB LOCATIONS</label>
+          <ion-select name="locations" class="rec-input ri-primary" required [(ngModel)]="jobModel.locations" multiple="true">
+            <ion-option *ngFor="let option of locationOptions" value="{{ option.value }}">{{ option.text }}</ion-option>
+          </ion-select>
         </div>
       </form>
     </ion-col>
@@ -56,7 +48,7 @@
   <!-- Button -->
   <ion-row class="row-buttons">
     <ion-col>
-      <button class="rec-btn rec-btn-primary btn-stacked center" (click)="continueClicked()">Continue</button>
+      <button class="rec-btn-small rec-btn-primary btn-stacked center" (click)="continueClicked()">Continue</button>
     </ion-col>
   </ion-row>
   <!-- End Button -->

@@ -53,7 +53,9 @@ export class LoginPage {
     let toast = this.toastCtrl.create({
       message: message,
       duration: 4000,
-      position: 'top'
+      position: 'top',
+      showCloseButton: true,
+      closeButtonText: ''
     });
 
     toast.onDidDismiss(() => {

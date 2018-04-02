@@ -436,7 +436,8 @@ ion-icon.block::before {
 }
 
 .rec-input[type="text"], .rec-input[type="email"], .rec-input[type="password"],
-.rec-input[type="number"], select {
+.rec-input[type="number"], select.rec-input, textarea.rec-input, ion-select.rec-input,
+select-searchable.rec-input {
   width: 100%;
   height: 25px;
   background-color: transparent;
@@ -445,6 +446,166 @@ ion-icon.block::before {
   font-family: map-get($font-input-value, family);
   font-size: map-get($font-input-value, size);
   color: map-get($font-input-value, color);
+}
+
+textarea.rec-input {
+  height: 50px;
+  max-height: auto;
+  max-width: 100%;
+  min-width: 100%;
+}
+
+ion-select.rec-input {
+  max-width: 100%;
+  position: relative;
+  padding: 0 !important;
+
+  .select-icon {
+    right: 5px;
+  }
+}
+
+select-searchable.rec-input {
+  position: relative;
+  height: auto;
+  min-height: 25px;
+
+  .select-searchable-label {
+    display: none;
+  }
+
+  .select-searchable-value {
+    padding-left: 0;
+    width: 100%;
+    max-width: 95%;
+
+    .select-searchable-value-item {
+      display: inline-block;
+      margin-bottom: 0 !important;
+    }
+
+    .select-searchable-value-item:not(:last-child) {
+      margin-right: 5px;
+    }
+
+    .select-searchable-value-item:not(:last-child)::after {
+      content: ",";
+    }
+  }
+
+  .select-searchable-icon {
+    position: absolute;
+    right: 0px;
+  }
+}
+
+select-searchable-page {
+  ion-content .scroll-content {
+    background-color: #F5F5F5;
+  }
+
+  ion-navbar {
+    .toolbar-background {
+      background-color: #FFFFFF;
+    }
+
+    button.back-button-ios .button-inner {
+      ion-icon {
+        font-size: 24px;
+        display: none;
+      }
+
+      span.back-button-text {
+        font-family: map-get($font-input-value, family);
+        content: "Cancel";
+        padding-left: 5px;
+      }
+    }
+    button.back-button-md .button-inner {
+      ion-icon {
+        font-size: 24px;
+      }
+    }
+  }
+
+  ion-toolbar {
+    .toolbar-background {
+      background-color: #FFFFFF;
+    }
+  }
+
+  ion-toolbar.toolbar-md {
+    input.searchbar-input {
+      background-color: #F5F5F5;
+    }
+  }
+
+  ion-list {
+    padding-top: 10px;
+
+    button.item {
+      border-bottom: 2px solid rgba(0, 0, 0, .05) !important;
+      padding-top: 6px;
+      padding-bottom: 6px;
+      background-color: #ffffff;
+      width: 95%;
+      margin: auto;
+      margin-bottom: 5px;
+      border-radius: 4px;
+      box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, .01);
+
+      ion-icon {
+        font-size: 30px;
+      }
+
+      .item-inner {
+        border-bottom: none !important;
+
+        ion-label {
+          padding-top: 5px;
+        }
+      }
+    }
+
+    button.item:last-child {
+      border-bottom: 2px solid rgba(0, 0, 0, .05) !important;
+    }
+
+    button.item:first-child {
+      border-top: none !important;
+    }
+  }
+
+  ion-footer {
+    ion-toolbar .toolbar-background {
+      background-color: #FFFFFF;
+    }
+
+    .toolbar-content button {
+      border-radius: 35px;
+      background: $color-primary-gradient;
+      font-family: map-get($font-button, family);
+      width: 60%;
+      margin: auto;
+      font-size: 20px;
+      text-transform: lowercase;
+    }
+
+    .toolbar-content button.button-md {
+      padding-top: 5px;
+      font-size: 20px;
+    }
+  }
+}
+
+.ri-modal-trigger {
+  height: 25px;
+
+  button {
+    background: transparent;
+    width: 100%;
+    height: 25px;
+  }
 }
 
 ngb-typeahead-window {
@@ -513,11 +674,19 @@ ngb-typeahead-window button:last-child {
 // Form Styles
 // --------------------------------------------------
 
-input.ng-touched.ng-dirty.ng-valid {
+input.ng-touched.ng-dirty.ng-valid,
+select.ng-touched.ng-dirty.ng-valid,
+ion-select.ng-touched.ng-dirty.ng-valid,
+textarea.ng-touched.ng-dirty.ng-valid,
+select-searchable.ng-dirty.ng-valid {
   border-bottom: 2px solid map-get($colors, valid);
 }
 
-input.ng-touched.ng-dirty.ng-invalid {
+input.ng-touched.ng-dirty.ng-invalid,
+select.ng-touched.ng-dirty.ng-invalid,
+ion-select.ng-touched.ng-dirty.ng-invalid,
+textarea.ng-touched.ng-dirty.ng-invalid,
+select-searchable.ng-dirty.ng-invalid {
   border-bottom: 2px solid map-get($colors, invalid);
 }
 
@@ -554,6 +723,18 @@ ion-toast.toast-ios {
   line-height: 15px;
   padding-top: 16px;
   color: map-get($colors, primary);
+}
+
+.toast-button {
+  position: absolute;
+  width: 100%;
+  left: -2px;
+  top: -4px;
+  height: 100%;
+
+  span {
+    display: none;
+  }
 }
 
 

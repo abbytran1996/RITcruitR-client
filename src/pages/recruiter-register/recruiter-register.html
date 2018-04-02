@@ -9,29 +9,42 @@
   <!-- Title -->
   <ion-row class="row-title">
     <h1 class="fg-grey text-center no-padding">RecruitR</h1>
-    <h3 class="text-center no-padding">Recruiter Registration</h3>
+    <h3 class="text-center no-padding">{{ (companyId == undefined) ? 'Recruiter Registration' : 'Primary Recruiter Registration' }}</h3>
   </ion-row>
   <!-- End Title -->
+
+  <!-- Progress Bar -->
+  <ion-row class="row-progress" [hidden]="companyId == undefined">
+    <ion-col>
+      <div class="progress-bar-wrapper">
+        <p class="progress-bar-label no-margin">STEP 3 of 3</p>
+        <div class="progress-bar">
+          <div class="bar" style="width: 100%;"></div>
+        </div>
+      </div>
+    </ion-col>
+  </ion-row>
+  <!-- End Progress Bar -->
 
   <!-- Form -->
   <ion-row class="row-register-form">
     <ion-col>
       <form #registerForm="ngForm">
-        <div class="rec-input-group">
+        <div [ngClass]="{'rec-input-group': companyId == undefined, 'rec-input-group-small': companyId != undefined}">
           <label class="rec-label rl-primary">EMAIL</label>
-          <input type="email" name="email" class="rec-input ri-primary" required [(ngModel)]="model.email">
+          <input type="email" name="email" class="rec-input ri-primary" required [(ngModel)]="recruiterModel.email">
         </div>
-        <div class="rec-input-group">
+        <div [ngClass]="{'rec-input-group': companyId == undefined, 'rec-input-group-small': companyId != undefined}">
           <label class="rec-label rl-primary">PASSWORD</label>
-          <input type="password" name="password" class="rec-input ri-primary" required [(ngModel)]="model.password">
+          <input type="password" name="password" class="rec-input ri-primary" required [(ngModel)]="recruiterModel.password">
         </div>
-        <div class="rec-input-group">
+        <div [ngClass]="{'rec-input-group': companyId == undefined, 'rec-input-group-small': companyId != undefined}">
           <label class="rec-label rl-primary">FIRST NAME</label>
-          <input type="text" name="firstName" class="rec-input ri-primary" required [(ngModel)]="model.firstName">
+          <input type="text" name="firstName" class="rec-input ri-primary" required [(ngModel)]="recruiterModel.firstName">
         </div>
-        <div class="rec-input-group">
+        <div [ngClass]="{'rec-input-group': companyId == undefined, 'rec-input-group-small': companyId != undefined}">
           <label class="rec-label rl-primary">LAST NAME</label>
-          <input type="text" name="lastName" class="rec-input ri-primary" required [(ngModel)]="model.lastName">
+          <input type="text" name="lastName" class="rec-input ri-primary" required [(ngModel)]="recruiterModel.lastName">
         </div>
       </form>
     </ion-col>

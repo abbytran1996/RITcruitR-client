@@ -1,8 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, ToastController, NavParams } from 'ionic-angular';
 
-import { RecruiterSetupPage } from '../recruiter-setup/recruiter-setup';
+import { CompanySetupPage } from '../company-setup/company-setup';
 
+import { CompanyRegisterModel } from '../../models/company-register.model';
 import { RecruiterRegisterModel } from '../../models/recruiter-register.model';
 
 @Component({
@@ -11,23 +12,27 @@ import { RecruiterRegisterModel } from '../../models/recruiter-register.model';
 })
 export class RecruiterRegisterPage {
 
-  company = undefined;
-
-  constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams) {
-    this.company = navParams.get("company");
-    console.log(this.company);
-  }
-
   // ngForm object for validation control
   @ViewChild('registerForm') registerForm;
 
-  // Form model for register fields
-  model = new RecruiterRegisterModel("", "", "", "");
+  companyId = undefined;
+  recruiterModel = new RecruiterRegisterModel("", "", "", "");
+
+  constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams) {
+    this.companyId = navParams.get("companyId");
+  }
 
   // Attempt to register the recruiter
   register() {
     if (this.registerForm && this.registerForm.valid) {
-      this.navCtrl.push(RecruiterSetupPage);
+      if (this.companyId == undefined) {
+        // Just register the recruiter
+        this.navCtrl.push(CompanySetupPage); // TODO: Change this when multiple recruiter registration is added
+      }
+      else {
+        // Register the company, then the recruiter for that company
+        this.navCtrl.push(CompanySetupPage, {companyId: this.companyId});
+      }
     }
     else {
       this.presentToast("Please enter a valid email, password, first name, and last name");
@@ -44,7 +49,9 @@ export class RecruiterRegisterPage {
     let toast = this.toastCtrl.create({
       message: message,
       duration: 4000,
-      position: 'top'
+      position: 'top',
+      showCloseButton: true,
+      closeButtonText: ''
     });
 
     toast.onDidDismiss(() => {
