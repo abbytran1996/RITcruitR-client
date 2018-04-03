@@ -1,15 +1,15 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, ToastController, NavParams } from 'ionic-angular';
 
-import { CompanyJobCreate3Page } from './company-job-create-3';
+import { CompanyJobCreate7Page } from './company-job-create-7';
 
 import { JobModel } from '../../models/job.model';
 
 @Component({
-  selector: 'page-company-job-create-2',
-  templateUrl: 'company-job-create-2.html'
+  selector: 'page-company-job-create-6',
+  templateUrl: 'company-job-create-6.html'
 })
-export class CompanyJobCreate2Page {
+export class CompanyJobCreate6Page {
 
   // ngForm object for validation control
   @ViewChild('jobForm') jobForm;
@@ -25,10 +25,10 @@ export class CompanyJobCreate2Page {
 
   continueClicked() {
     if (this.jobForm && this.jobForm.valid) {
-      this.navCtrl.push(CompanyJobCreate3Page, {companyId: this.companyId, job: this.jobModel});
+      this.navCtrl.push(CompanyJobCreate7Page, {companyId: this.companyId, job: this.jobModel});
     }
     else {
-      this.presentToast("Please enter a job description");
+      this.presentToast("Please enter a valid job duration");
     }
   }
 

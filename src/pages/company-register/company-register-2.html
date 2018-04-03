@@ -43,11 +43,10 @@
             [canSearch]="true"
             [multiple]="true">
           </select-searchable>
-          <!-- <div class="rec-input ri-primary ri-modal-trigger"><button (click)="searchLocations()"></button></div> -->
         </div>
         <div class="rec-input-group">
           <label class="rec-label rl-primary">COMPANY SIZE</label>
-          <ion-select type="text" name="companySize" class="rec-input ri-primary" required [(ngModel)]="companyModel.companySize">
+          <ion-select name="companySize" class="rec-input ri-primary" required [(ngModel)]="companyModel.companySize">
             <ion-option *ngFor="let option of companySizeOptions" value="{{ option.id }}">{{ option.text }}</ion-option>
           </ion-select>
         </div>

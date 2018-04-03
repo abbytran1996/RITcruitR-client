@@ -9,7 +9,7 @@
   <!-- Title -->
   <ion-row class="row-title">
     <h1 class="fg-grey text-center no-padding">RecruitR</h1>
-    <h3 class="text-center no-padding">Job Description</h3>
+    <h3 class="text-center no-padding">Job Expiration</h3>
   </ion-row>
   <!-- End Title -->
 
@@ -17,23 +17,30 @@
   <ion-row class="row-progress">
     <ion-col>
       <div class="progress-bar-wrapper">
-        <p class="progress-bar-label no-margin">STEP 2 of 8</p>
+        <p class="progress-bar-label no-margin">STEP 6 of 8</p>
         <div class="progress-bar">
-          <div class="bar" style="width: 25%;"></div>
+          <div class="bar" style="width: 75%;"></div>
         </div>
       </div>
     </ion-col>
   </ion-row>
   <!-- End Progress Bar -->
 
+  <!-- Message -->
+  <ion-row class="row-message">
+    <ion-col>
+      <h3 class="text-center no-padding">A job position will expire after the time<br>specified below. Any applicants that<br>have not completed applying before<br>the job expires, will be unable to<br>continue. Any completed applications<br>may still be viewed.</h3>
+    </ion-col>
+  </ion-row>
+  <!-- End Message -->
+
   <!-- Form -->
   <ion-row class="row-form">
     <ion-col>
       <form #jobForm="ngForm">
         <div class="rec-input-group">
-          <label class="rec-label rl-primary">JOB DESCRIPTION</label>
-          <textarea name="description" class="rec-input ri-primary" required [(ngModel)]="jobModel.description">
-          </textarea>
+          <label class="rec-label rl-primary">JOB DURATION (IN DAYS)</label>
+          <input type="number" name="duration" class="rec-input ri-primary" required [(ngModel)]="jobModel.duration">
         </div>
       </form>
     </ion-col>

@@ -7,6 +7,7 @@ export class JobModel {
     public hasWorkExperience: boolean,
     public duration: number,
     public problem: string,
-    public video: string
+    public video: string,
+    public videoNew: string
   ) { }
 }

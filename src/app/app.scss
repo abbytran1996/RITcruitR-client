@@ -465,6 +465,30 @@ ion-select.rec-input {
   }
 }
 
+.rec-input[type="checkbox"] {
+  display: none;
+}
+
+.rec-input[type="checkbox"] + label {
+  display: inline-block;
+  background-image: url('#{$image-path}/checkboxFalse.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  width: 18px;
+  height: 18px;
+  transform: translateY(4px);
+  cursor: pointer;
+}
+
+.rec-input[type="checkbox"]:checked + label {
+  background-image: url('#{$image-path}/checkboxTrue.png');
+}
+
+ion-toggle.rec-input {
+  transform: translateY(-3px);
+}
+
 select-searchable.rec-input {
   position: relative;
   height: auto;

@@ -34,6 +34,12 @@ import { CompanyRegister2Page } from '../pages/company-register/company-register
 import { CompanySetupPage } from '../pages/company-setup/company-setup';
 import { CompanyJobCreate1Page } from '../pages/company-job-create/company-job-create-1';
 import { CompanyJobCreate2Page } from '../pages/company-job-create/company-job-create-2';
+import { CompanyJobCreate3Page } from '../pages/company-job-create/company-job-create-3';
+import { CompanyJobCreate4Page } from '../pages/company-job-create/company-job-create-4';
+import { CompanyJobCreate5Page } from '../pages/company-job-create/company-job-create-5';
+import { CompanyJobCreate6Page } from '../pages/company-job-create/company-job-create-6';
+import { CompanyJobCreate7Page } from '../pages/company-job-create/company-job-create-7';
+import { CompanyJobCreate8Page } from '../pages/company-job-create/company-job-create-8';
 
 import { LocationsSearchModal } from '../modals/locations-search/locations-search';
 
@@ -57,6 +63,13 @@ import {
     CompanySetupPage,
     CompanyJobCreate1Page,
     CompanyJobCreate2Page,
+    CompanyJobCreate3Page,
+    CompanyJobCreate4Page,
+    CompanyJobCreate5Page,
+    CompanyJobCreate5Page,
+    CompanyJobCreate6Page,
+    CompanyJobCreate7Page,
+    CompanyJobCreate8Page,
     RecruiterCompanySelectPage,
     RecruiterRegisterPage,
     TabsPage,
@@ -89,6 +102,13 @@ import {
     CompanySetupPage,
     CompanyJobCreate1Page,
     CompanyJobCreate2Page,
+    CompanyJobCreate3Page,
+    CompanyJobCreate4Page,
+    CompanyJobCreate5Page,
+    CompanyJobCreate5Page,
+    CompanyJobCreate6Page,
+    CompanyJobCreate7Page,
+    CompanyJobCreate8Page,
     RecruiterCompanySelectPage,
     RecruiterRegisterPage,
     TabsPage,

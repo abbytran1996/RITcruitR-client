@@ -28,11 +28,10 @@ export class CompanyJobCreate1Page {
 
   continueClicked() {
     if (this.jobForm && this.jobForm.valid) {
-      // this.navCtrl.push(CompanyJobCreate2Page, {companyId: this.companyId, job: this.jobModel});
-      console.log(this.jobModel);
+      this.navCtrl.push(CompanyJobCreate2Page, {companyId: this.companyId, job: this.jobModel});
     }
     else {
-      this.presentToast("Please enter the job title and job locations");
+      this.presentToast("Please enter the job title and any job locations");
     }
   }
 

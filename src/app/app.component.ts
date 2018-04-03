@@ -4,8 +4,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { LoginPage } from '../pages/login/login';
-import { CompanyJobCreate1Page } from '../pages/company-job-create/company-job-create-1';
-import { CompanyRegister2Page } from '../pages/company-register/company-register-2';
+import { CompanyJobCreate3Page } from '../pages/company-job-create/company-job-create-3';
 
 @Component({
   templateUrl: 'app.html'

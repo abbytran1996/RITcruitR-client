@@ -1,4 +1,28 @@
-<ion-tabs selectedIndex="1">
+<ion-menu [content]="content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>RecruitR</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <button ion-item>
+        Skills
+      </button>
+      <button ion-item>
+        Preferences
+      </button>
+      <button ion-item>
+        Profile Details
+      </button>
+      <button ion-item>
+        Logout
+      </button>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<ion-tabs selectedIndex="1" #content>
   <ion-tab [root]="accountTab" tabTitle="Account" tabIcon="person"></ion-tab>
   <ion-tab [root]="homeTab" tabTitle="Home" tabIcon="home" [rootParams]="homeTabParams"></ion-tab>
   <ion-tab [root]="tab3Root" tabTitle="Contact" tabIcon="people"></ion-tab>
