@@ -437,7 +437,7 @@ ion-icon.block::before {
 
 .rec-input[type="text"], .rec-input[type="email"], .rec-input[type="password"],
 .rec-input[type="number"], select.rec-input, textarea.rec-input, ion-select.rec-input,
-select-searchable.rec-input {
+select-searchable.rec-input, ion-datetime.rec-input {
   width: 100%;
   height: 25px;
   background-color: transparent;
@@ -463,6 +463,11 @@ ion-select.rec-input {
   .select-icon {
     right: 5px;
   }
+}
+
+ion-datetime.rec-input {
+  position: relative;
+  padding: 0 !important;
 }
 
 .rec-input[type="checkbox"] {
@@ -702,7 +707,8 @@ input.ng-touched.ng-dirty.ng-valid,
 select.ng-touched.ng-dirty.ng-valid,
 ion-select.ng-touched.ng-dirty.ng-valid,
 textarea.ng-touched.ng-dirty.ng-valid,
-select-searchable.ng-dirty.ng-valid {
+select-searchable.ng-dirty.ng-valid,
+ion-datetime.ng-dirty.ng-valid  {
   border-bottom: 2px solid map-get($colors, valid);
 }
 
@@ -710,7 +716,8 @@ input.ng-touched.ng-dirty.ng-invalid,
 select.ng-touched.ng-dirty.ng-invalid,
 ion-select.ng-touched.ng-dirty.ng-invalid,
 textarea.ng-touched.ng-dirty.ng-invalid,
-select-searchable.ng-dirty.ng-invalid {
+select-searchable.ng-dirty.ng-invalid
+ion-datetime.ng-dirty.ng-invalid {
   border-bottom: 2px solid map-get($colors, invalid);
 }
 

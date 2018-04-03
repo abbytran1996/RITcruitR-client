@@ -46,7 +46,7 @@
     </ion-header>
     <ion-content>
       <ion-list>
-        <button ion-item menuToggle>
+        <button ion-item menuToggle (click)="createCompanyJob()">
           <ion-icon name="md-add-circle" class="opacity-50"></ion-icon>
           Create Job
         </button>
@@ -54,7 +54,7 @@
           <ion-icon name="ios-cog" class="opacity-50"></ion-icon>
           Manage Jobs
         </button>
-        <button ion-item menuToggle>
+        <button ion-item menuToggle (click)="editCompanyDetails()">
           <ion-icon name="md-contact" class="opacity-50"></ion-icon>
           Company Details
         </button>

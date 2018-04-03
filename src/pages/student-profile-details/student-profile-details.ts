@@ -1,5 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, ToastController } from 'ionic-angular';
+import { NavController, ToastController, NavParams } from 'ionic-angular';
+
+import { StudentEducationPage } from '../student-education/student-education';
 
 @Component({
   selector: 'page-student-profile-details',
@@ -7,7 +9,19 @@ import { NavController, ToastController } from 'ionic-angular';
 })
 export class StudentProfileDetailsPage {
 
-  constructor(public navCtrl: NavController, private toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams) {
+    
+  }
+
+  editEducation() {
+    this.navCtrl.push(StudentEducationPage);
+  }
+
+  editWorkExperience() {
+
+  }
+
+  editProjects() {
 
   }
 

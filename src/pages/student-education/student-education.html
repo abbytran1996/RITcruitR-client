@@ -14,7 +14,7 @@
   <!-- End Title -->
 
   <!-- Progress Bar -->
-  <ion-row class="row-progress">
+  <ion-row class="row-progress" [hidden]="!isSetup">
     <ion-col>
       <div class="progress-bar-wrapper">
         <p class="progress-bar-label no-margin">STEP 1 of 3</p>
@@ -30,21 +30,21 @@
   <ion-row class="row-form">
     <ion-col>
       <form #educationForm="ngForm">
-        <div class="rec-input-group-small">
+        <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
           <label class="rec-label rl-primary">UNIVERSITY</label>
           <input type="text" name="university" class="rec-input ri-primary" required [(ngModel)]="model.university">
         </div>
-        <div class="rec-input-group-small">
+        <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
           <label class="rec-label rl-primary">MAJOR</label>
           <input type="text" name="major" class="rec-input ri-primary" required [(ngModel)]="model.major">
         </div>
-        <div class="rec-input-group-small">
+        <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
           <label class="rec-label rl-primary">GPA</label>
           <input type="text" name="gpa" class="rec-input ri-primary" required [(ngModel)]="model.gpa">
         </div>
-        <div class="rec-input-group-small">
+        <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
           <label class="rec-label rl-primary">EXPECTED GRADUATION DATE</label>
-          <input type="text" name="gradDate" class="rec-input ri-primary" required [(ngModel)]="model.gradDate">
+          <ion-datetime name="gradDate"  required class="rec-input ri-primary" displayFormat="MM/YYYY" pickerFormat="MM YYYY" max="{{ maxYear }}" [(ngModel)]="model.gradDate"></ion-datetime>
         </div>
       </form>
     </ion-col>
@@ -54,8 +54,8 @@
   <!-- Button -->
   <ion-row class="row-buttons">
     <ion-col>
-      <button class="rec-btn-small rec-btn-primary float-right" (click)="continueClicked()">Continue</button>
-      <button class="rec-btn-small rec-btn-accent float-left" (click)="skipClicked()">Skip</button>
+      <button class="rec-btn rec-btn-primary btn-stacked center" (click)="continueClicked()" [hidden]="!isSetup">Continue</button>
+      <button class="rec-btn rec-btn-primary btn-stacked center" (click)="saveClicked()" [hidden]="isSetup">Save</button>
     </ion-col>
   </ion-row>
   <!-- End Button -->

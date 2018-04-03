@@ -5,6 +5,10 @@ import { StudentPhase1Page } from '../student-home/student-phase-1';
 import { StudentPhase2Page } from '../student-home/student-phase-2';
 import { StudentPhase3Page } from '../student-home/student-phase-3';
 import { StudentProfileDetailsPage } from '../student-profile-details/student-profile-details';
+
+import { CompanyDetailsPage } from '../company-details/company-details';
+import { CompanyJobCreate1Page } from '../company-job-create/company-job-create-1';
+
 import { LoginPage } from '../login/login';
 
 import { AuthService } from '../../app/services/auth.service';
@@ -15,7 +19,7 @@ import { AuthService } from '../../app/services/auth.service';
 })
 export class TabsPage {
 
-  showStudentTabs = true;
+  showStudentTabs = false;
 
   studentPhase1Tab = StudentPhase1Page;
   studentPhase2Tab = StudentPhase2Page;
@@ -53,10 +57,19 @@ export class TabsPage {
     this.navCtrl.push(StudentProfileDetailsPage);
   }
 
+  createCompanyJob() {
+    // TODO: Update the companyId below to be the actual company ID.
+    this.navCtrl.push(CompanyJobCreate1Page, {companyId: 0});
+  }
+
+  editCompanyDetails() {
+    this.navCtrl.push(CompanyDetailsPage);
+  }
+
   // Logout the current user and return to the login screen.
   logout() {
     this.authService.logout();
-    this.navCtrl.push(LoginPage, {}, {animate: true, animation: "md-transition"});
+    this.navCtrl.setRoot(LoginPage, {}, {animate: true, animation: "md-transition"});
   }
 
   // Present a toast message to the user

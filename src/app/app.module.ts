@@ -36,6 +36,7 @@ import { CompanyJobCreate5Page } from '../pages/company-job-create/company-job-c
 import { CompanyJobCreate6Page } from '../pages/company-job-create/company-job-create-6';
 import { CompanyJobCreate7Page } from '../pages/company-job-create/company-job-create-7';
 import { CompanyJobCreate8Page } from '../pages/company-job-create/company-job-create-8';
+import { CompanyDetailsPage } from '../pages/company-details/company-details';
 
 import { RecruiterCompanySelectPage } from '../pages/recruiter-company-select/recruiter-company-select';
 import { RecruiterRegisterPage } from '../pages/recruiter-register/recruiter-register';
@@ -73,6 +74,7 @@ import {
     CompanyJobCreate6Page,
     CompanyJobCreate7Page,
     CompanyJobCreate8Page,
+    CompanyDetailsPage,
     RecruiterCompanySelectPage,
     RecruiterRegisterPage,
     TabsPage,
@@ -112,6 +114,7 @@ import {
     CompanyJobCreate6Page,
     CompanyJobCreate7Page,
     CompanyJobCreate8Page,
+    CompanyDetailsPage,
     RecruiterCompanySelectPage,
     RecruiterRegisterPage,
     TabsPage,

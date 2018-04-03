@@ -17,7 +17,7 @@ export class StudentSetupPage {
   }
 
   continueClicked() {
-    this.navCtrl.push(StudentEducationPage, {user: this.user});
+    this.navCtrl.push(StudentEducationPage, {user: this.user, setup: true});
   }
 
   skipAllClicked() {
