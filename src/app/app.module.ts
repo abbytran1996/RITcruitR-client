@@ -23,9 +23,7 @@ import { StudentEducationPage } from '../pages/student-education/student-educati
 import { StudentPhase1Page } from '../pages/student-home/student-phase-1';
 import { StudentPhase2Page } from '../pages/student-home/student-phase-2';
 import { StudentPhase3Page } from '../pages/student-home/student-phase-3';
-
-import { RecruiterCompanySelectPage } from '../pages/recruiter-company-select/recruiter-company-select';
-import { RecruiterRegisterPage } from '../pages/recruiter-register/recruiter-register';
+import { StudentProfileDetailsPage } from '../pages/student-profile-details/student-profile-details';
 
 import { CompanyRegister1Page } from '../pages/company-register/company-register-1';
 import { CompanyRegister2Page } from '../pages/company-register/company-register-2';
@@ -38,6 +36,9 @@ import { CompanyJobCreate5Page } from '../pages/company-job-create/company-job-c
 import { CompanyJobCreate6Page } from '../pages/company-job-create/company-job-create-6';
 import { CompanyJobCreate7Page } from '../pages/company-job-create/company-job-create-7';
 import { CompanyJobCreate8Page } from '../pages/company-job-create/company-job-create-8';
+
+import { RecruiterCompanySelectPage } from '../pages/recruiter-company-select/recruiter-company-select';
+import { RecruiterRegisterPage } from '../pages/recruiter-register/recruiter-register';
 
 import { LocationsSearchModal } from '../modals/locations-search/locations-search';
 
@@ -59,6 +60,7 @@ import {
     StudentPhase1Page,
     StudentPhase2Page,
     StudentPhase3Page,
+    StudentProfileDetailsPage,
     CompanyRegister1Page,
     CompanyRegister2Page,
     CompanySetupPage,
@@ -97,6 +99,7 @@ import {
     StudentPhase1Page,
     StudentPhase2Page,
     StudentPhase3Page,
+    StudentProfileDetailsPage,
     CompanyRegister1Page,
     CompanyRegister2Page,
     CompanySetupPage,
