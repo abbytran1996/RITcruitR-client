@@ -17,7 +17,7 @@ export class CompanyJobCreate8Page {
   // ngForm object for validation control
   @ViewChild('jobForm') jobForm;
 
-  jobModel = new JobModel("", "", "", null, false, null, "", "");
+  jobModel = new JobModel("", "", "", null, false, null, "", "", "");
 
   companyId = undefined;
 

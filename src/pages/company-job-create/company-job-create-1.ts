@@ -16,7 +16,7 @@ export class CompanyJobCreate1Page {
   // ngForm object for validation control
   @ViewChild('jobForm') jobForm;
 
-  jobModel = new JobModel("", "", "", null, false, null, "", "");
+  jobModel = new JobModel("", "", "", null, false, null, "", "", "");
 
   locationOptions = locations;
 

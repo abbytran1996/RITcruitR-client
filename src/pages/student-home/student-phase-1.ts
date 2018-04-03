@@ -4,10 +4,10 @@ import { NavController, NavParams } from 'ionic-angular';
 import { AuthService } from '../../app/services/auth.service';
 
 @Component({
-  selector: 'page-home',
-  templateUrl: 'home.html'
+  selector: 'page-student-phase-1',
+  templateUrl: 'student-phase-1.html'
 })
-export class HomePage {
+export class StudentPhase1Page {
 
   public user: any;
 

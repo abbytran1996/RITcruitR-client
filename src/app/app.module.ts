@@ -9,22 +9,20 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { MyApp } from './app.component';
 
 // Third party modules
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SelectSearchableModule } from 'ionic-select-searchable';
 
 // Custom modules
-import { AboutPage } from '../pages/about/about';
-import { ContactPage } from '../pages/contact/contact';
-import { AccountPage } from '../pages/account/account';
-import { HomePage } from '../pages/home/home';
-import { TabsPage } from '../pages/tabs/tabs';
-
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
+import { TabsPage } from '../pages/tabs/tabs';
 
 import { StudentRegisterPage } from '../pages/student-register/student-register';
 import { StudentSetupPage } from '../pages/student-setup/student-setup';
 import { StudentEducationPage } from '../pages/student-education/student-education';
+import { StudentPhase1Page } from '../pages/student-home/student-phase-1';
+import { StudentPhase2Page } from '../pages/student-home/student-phase-2';
+import { StudentPhase3Page } from '../pages/student-home/student-phase-3';
 
 import { RecruiterCompanySelectPage } from '../pages/recruiter-company-select/recruiter-company-select';
 import { RecruiterRegisterPage } from '../pages/recruiter-register/recruiter-register';
@@ -58,6 +56,9 @@ import {
     StudentRegisterPage,
     StudentSetupPage,
     StudentEducationPage,
+    StudentPhase1Page,
+    StudentPhase2Page,
+    StudentPhase3Page,
     CompanyRegister1Page,
     CompanyRegister2Page,
     CompanySetupPage,
@@ -73,10 +74,6 @@ import {
     RecruiterCompanySelectPage,
     RecruiterRegisterPage,
     TabsPage,
-    HomePage,
-    AboutPage,
-    AccountPage,
-    ContactPage,
     LocationsSearchModal
   ],
   imports: [
@@ -97,6 +94,9 @@ import {
     StudentRegisterPage,
     StudentSetupPage,
     StudentEducationPage,
+    StudentPhase1Page,
+    StudentPhase2Page,
+    StudentPhase3Page,
     CompanyRegister1Page,
     CompanyRegister2Page,
     CompanySetupPage,
@@ -112,10 +112,6 @@ import {
     RecruiterCompanySelectPage,
     RecruiterRegisterPage,
     TabsPage,
-    HomePage,
-    AboutPage,
-    AccountPage,
-    ContactPage,
     LocationsSearchModal
   ],
   providers: [
