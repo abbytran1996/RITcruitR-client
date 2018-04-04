@@ -1,4 +1,4 @@
 export class EducationDetailsModel {
-  constructor(public university: string, public major: string, public gpa: string, public gradDate: string) {
+  constructor(public school: string, public major: string, public gpa: string, public graduationDate: string) {
   }
 }

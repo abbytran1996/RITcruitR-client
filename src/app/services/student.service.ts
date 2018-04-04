@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Http } from '@angular/http';
 
 import { ApiService } from './api.service';
 import { distinctUntilChanged, map } from 'rxjs/operators';
@@ -15,36 +14,23 @@ const httpOptions = {
 export class StudentService {
     constructor(
         private apiService: ApiService,
-        private http: HttpClient,
-        private http2: Http
+        private http: HttpClient
     ) { }
 
     addStudent(student) {
-      return this.apiService.postWithOptions('/students', student, httpOptions);
+      return this.apiService.post('/students', student);
     }
 
-    getStudent(email) {
-        return this.apiService.get('/students/byEmail/' + email)
-            .pipe(map(
-                data => {
-                    return data;
-                },
-                err => {
-                    return err;
-                }
-            ));
+    getStudentById(id) {
+        return this.apiService.get('/students/' + id);
+    }
+
+    getStudentByEmail(email) {
+        return this.apiService.get('/students/byEmail/' + email);
     }
 
     updateStudent(student) {
-        return this.apiService.put('/students/' + student.id + '/update', student)
-            .pipe(map(
-                data => {
-                    return data;
-                },
-                err => {
-                    return err;
-                }
-            ));
+        return this.apiService.put('/students/' + student.id, student);
     }
 
     updateSkillsForStudent(student) {

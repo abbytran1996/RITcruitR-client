@@ -11,32 +11,16 @@ export class RecruiterService {
         private http: HttpClient
     ) { }
 
-    addRecruiter(recruiter) {
-        return this.apiService.post('/recruiters', recruiter)
-            .pipe(map(
-                data => {
-                    if (data.exception !== null) {
-                        return null;
-                    }
-
-                    return data;
-                },
-                err => {
-                    return err;
-                }
-            ));
+    addRecruiter(companyId, recruiter) {
+        return this.apiService.post('/company/' + companyId + 'recruiter', recruiter);
     }
 
-    getRecruiter(email) {
-        return this.apiService.get('/recruiters/byEmail/' + email)
-            .pipe(map(
-                data => {
-                    return data;
-                },
-                err => {
-                    return err;
-                }
-            ));
+    getRecruiterById(id) {
+        return this.apiService.get('/recruiters/' + id);
+    }
+
+    getRecruiterByEmail(email) {
+        return this.apiService.get('/recruiters/byEmail' + email);
     }
 
     updateRecruiter(recruiter) {

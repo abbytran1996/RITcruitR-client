@@ -18,7 +18,10 @@ import { RecruiterRegisterPage } from '../recruiter-register/recruiter-register'
 
 import { LoginPage } from '../login/login';
 
+import { StudentModel } from '../../models/student.model';
+
 import { AuthService } from '../../app/services/auth.service';
+import { StudentService } from '../../app/services/student.service';
 
 @Component({
   selector: 'page-tabs',
@@ -26,7 +29,7 @@ import { AuthService } from '../../app/services/auth.service';
 })
 export class TabsPage {
 
-  showStudentTabs = true;
+  showStudentTabs = false;
 
   // Student tab pages
   studentPhase1Tab = StudentPhase1Page;
@@ -38,30 +41,40 @@ export class TabsPage {
   companyPhase2Tab = CompanyPhase2Page;
   companyPhase3Tab = CompanyPhase3Page;
 
-  public user: any;
-  public tabParams: any;
+  private userId: any;
+  private userEmail: any;
+  private userRole: any;
 
-  constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams, private authService: AuthService) {
-    this.user = navParams.get("user");
+  public student: StudentModel;
+  public company: any;
+  public recruiter: any;
 
-    if (navParams.get("isStudent") != undefined) {
-      this.showStudentTabs = navParams.get("isStudent");
-    }
+  public studentTabParams: any;
+  public recruiterTabParams: any;
 
-    // If a user was sent, get its role type to properly build the tabs and menu.
-    if (this.user != undefined) {
-      this.user.roles.forEach(role => {
-        if (role.name == "student") {
+  constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams, private authService: AuthService, private studentService: StudentService) {
+    this.userId = window.localStorage.getItem('id');
+    this.userEmail = window.localStorage.getItem('email');
+    this.userRole = window.localStorage.getItem('role');
+
+    if (this.userRole == 0) {
+      this.studentService.getStudentByEmail(this.userEmail).subscribe(
+        data => {
+          this.student = StudentModel.createStudentFromApiData(data);
           this.showStudentTabs = true;
-        }
-        else {
-          this.showStudentTabs = false;
-        }
-      });
-    }
 
-    // Set the user in the tab params so each tab has access.
-    this.tabParams = {user: this.user};
+          // Set the user in the tab params so each tab has access.
+          this.studentTabParams = {student: this.student};
+          this.recruiterTabParams = {company: this.company, recruiter: this.recruiter};
+        },
+        error => {
+          this.presentToast("An error occurred loading your account, please try again later");
+        }
+      );
+    }
+    else if (this.userRole == 1) {
+      this.showStudentTabs = false;
+    }
 
     // If a message was sent with nav params, show it.
     let message = navParams.get("message");
@@ -70,19 +83,21 @@ export class TabsPage {
     }
   }
 
+  // Student Links
   editSkills() {
-    this.navCtrl.push(StudentSkillsPage, {user: this.user});
+    this.navCtrl.push(StudentSkillsPage, {student: this.student});
   }
 
 
   editStudentJobPreferences() {
-    this.navCtrl.push(StudentJobPreferencesPage, {user: this.user});
+    this.navCtrl.push(StudentJobPreferencesPage, {student: this.student});
   }
 
   editStudentDetails() {
-    this.navCtrl.push(StudentProfileDetailsPage, {user: this.user});
+    this.navCtrl.push(StudentProfileDetailsPage, {student: this.student});
   }
 
+  // Recruiter Links
   createCompanyJob() {
     // TODO: Update the companyId below to be the actual company ID.
     this.navCtrl.push(CompanyJobCreate1Page, {companyId: 0});

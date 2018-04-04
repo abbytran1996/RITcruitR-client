@@ -4,6 +4,8 @@ import { NavController, ToastController, NavParams } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
 import { StudentWorkExperiencePage } from '../student-work-experience/student-work-experience';
 
+import { StudentModel } from '../../models/student.model';
+
 // TEMP lists, replace with API calls
 const skills = [{text: 'JavaScript', id: 0}, {text: 'HTML', id: 1}, {text: 'Git', id: 2}, {text: 'Agile', id: 3}, {text: 'Software Project Management', id: 4}];
 
@@ -13,7 +15,7 @@ const skills = [{text: 'JavaScript', id: 0}, {text: 'HTML', id: 1}, {text: 'Git'
 })
 export class StudentSkillsPage {
 
-  public user: any;
+  public student: StudentModel;
   public isSetup = false;
 
   // ngForm object for validation control
@@ -25,7 +27,7 @@ export class StudentSkillsPage {
   skillOptions = skills;
 
   constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams) {
-    this.user = navParams.get("user");
+    this.student = navParams.get("student");
 
     if (navParams.get("setup") == true) {
       this.isSetup = true;
@@ -38,7 +40,7 @@ export class StudentSkillsPage {
   continueClicked() {
     if (this.skillsForm && this.skillsForm.valid) {
       // TODO: Call API to create skills
-      this.navCtrl.push(StudentWorkExperiencePage, {user: this.user, setup: true});
+      this.navCtrl.push(StudentWorkExperiencePage, {student: this.student, setup: true});
     }
     else {
       this.presentToast("Please select valid skills");
@@ -46,7 +48,7 @@ export class StudentSkillsPage {
   }
 
   skipClicked() {
-    this.navCtrl.push(StudentWorkExperiencePage, {user: this.user, setup: true});
+    this.navCtrl.push(StudentWorkExperiencePage, {student: this.student, setup: true});
   }
 
   saveClicked() {

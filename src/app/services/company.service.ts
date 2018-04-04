@@ -12,27 +12,11 @@ export class CompanyService {
     ) { }
 
     addCompany(company) {
-        return this.apiService.post('/company', company)
-            .pipe(map(
-                data => {
-                    return data;
-                },
-                err => {
-                    return err;
-                }
-            ));
+        return this.apiService.post('/company', company);
     }
 
     getCompanyById(id) {
-        return this.apiService.get('/company/' + id)
-            .pipe(map(
-                data => {
-                    return data;
-                },
-                err => {
-                    return err;
-                }
-            ));
+        return this.apiService.get('/company/' + id);
     }
 
     getCompanyByEmailSuffix(emailSuffix) {

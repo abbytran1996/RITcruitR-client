@@ -5,6 +5,9 @@ import { TabsPage } from '../tabs/tabs';
 import { StudentContactPage } from '../student-contact/student-contact';
 
 import { EducationDetailsModel } from '../../models/education-details.model';
+import { StudentModel } from '../../models/student.model';
+
+import { StudentService } from '../../app/services/student.service';
 
 @Component({
   selector: 'page-student-education',
@@ -12,7 +15,7 @@ import { EducationDetailsModel } from '../../models/education-details.model';
 })
 export class StudentEducationPage {
 
-  public user: any;
+  public student: StudentModel;
   public isSetup = false;
   public maxYear = undefined;
 
@@ -22,10 +25,10 @@ export class StudentEducationPage {
   // Form model for education fields
   model = new EducationDetailsModel("", "", "", "");
 
-  constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams, private studentService: StudentService) {
     this.maxYear = (new Date()).getFullYear() + 20;
 
-    this.user = navParams.get("user");
+    this.student = navParams.get("student");
 
     if (navParams.get("setup") == true) {
       this.isSetup = true;
@@ -35,14 +38,24 @@ export class StudentEducationPage {
       this.model.university = "Rochester Institute of Technology";
       this.model.major = "Software Engineering";
       this.model.gpa = "3.6";
-      this.model.gradDate = "2018-12";
+      this.model.gradDate = "2018-12-01";
     }
   }
 
   continueClicked() {
     if (this.educationForm && this.educationForm.valid) {
-      // TODO: Call API to create education details
-      this.navCtrl.push(StudentContactPage, {user: this.user, setup: true});
+      this.student.updateEducation(this.model);
+      this.studentService.updateStudent(this.student).subscribe(
+        data => {},
+        res => {
+          if (res.status == 200) {
+              this.navCtrl.push(StudentContactPage, {student: this.student, setup: true});
+          }
+          else {
+            this.presentToast("There was an error updating your education details, please try again");
+          }
+        }
+      );
     }
     else {
       this.presentToast("Please enter your university name, major, GPA, and expected graduation date");

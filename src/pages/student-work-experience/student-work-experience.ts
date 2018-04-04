@@ -3,17 +3,19 @@ import { NavController, ToastController, NavParams } from 'ionic-angular';
 
 import { TabsPage } from '../tabs/tabs';
 
+import { StudentModel } from '../../models/student.model';
+
 @Component({
   selector: 'page-student-work-experience',
   templateUrl: 'student-work-experience.html'
 })
 export class StudentWorkExperiencePage {
 
-  public user: any;
+  public student: StudentModel;
   public isSetup = false;
 
   constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams) {
-    this.user = navParams.get("user");
+    this.student = navParams.get("student");
 
     if (navParams.get("setup") == true) {
       this.isSetup = true;
@@ -21,11 +23,11 @@ export class StudentWorkExperiencePage {
   }
 
   continueClicked() {
-    this.navCtrl.push(TabsPage, {user: this.user});
+    this.navCtrl.push(TabsPage, {student: this.student});
   }
 
   skipClicked() {
-    this.navCtrl.push(TabsPage, {user: this.user, setup: true});
+    this.navCtrl.push(TabsPage, {student: this.student, setup: true});
   }
 
   saveClicked() {

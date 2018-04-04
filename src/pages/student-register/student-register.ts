@@ -5,7 +5,9 @@ import { TabsPage } from '../tabs/tabs';
 import { StudentSetupPage } from '../student-setup/student-setup';
 
 import { StudentRegisterModel } from '../../models/student-register.model';
+import { StudentModel } from '../../models/student.model';
 
+import { AuthService } from '../../app/services/auth.service';
 import { StudentService } from '../../app/services/student.service';
 
 @Component({
@@ -18,9 +20,9 @@ export class StudentRegisterPage {
   @ViewChild('registerForm') registerForm;
 
   // Form model for register fields
-  model = new StudentRegisterModel("", "", "", "");
+  model = new StudentRegisterModel("", "", "", "", "");
 
-  constructor(public navCtrl: NavController, private toastCtrl: ToastController, private studentService: StudentService) {
+  constructor(public navCtrl: NavController, private toastCtrl: ToastController, private studentService: StudentService, private authService: AuthService) {
 
   }
 
@@ -28,13 +30,15 @@ export class StudentRegisterPage {
   register() {
     if (this.registerForm && this.registerForm.valid) {
       // Make API call to register the student
-      this.studentService.addStudent(addTempStudentFields(this.model)).subscribe(
+      this.model.passwordConfirm = this.model.password;
+      this.studentService.addStudent(this.model).subscribe(
         data => {
-          window.localStorage.setItem('id', data.id);
-          this.navCtrl.push(StudentSetupPage, {user: data});
+          let student = StudentModel.createStudentFromApiData(data);
+          this.authService.setLocalVars(data.user);
+          this.navCtrl.push(StudentSetupPage, {student: student});
         },
         error => {
-          this.presentToast("Registration failed, please use a different email address");
+          this.presentToast("A user with that email already exists, please choose another");
         }
       );
     }
@@ -64,15 +68,4 @@ export class StudentRegisterPage {
 
     toast.present();
   }
-}
-
-function addTempStudentFields(student) {
-  student["passwordConfirm"] = student.password;
-  student["school"] = "RIT";
-  student["graduationDate"] = "3918-06-01";
-  student["phoneNumber"] = "7165978584";
-  student["preferredStates"] = [];
-  student["preferredCompanySize"] = 4;
-  student["resume"] = null;
-  return student;
 }

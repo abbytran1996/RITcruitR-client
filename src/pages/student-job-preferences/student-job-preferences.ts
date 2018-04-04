@@ -5,6 +5,7 @@ import { TabsPage } from '../tabs/tabs';
 import { StudentSkillsPage } from '../student-skills/student-skills';
 
 import { StudentJobPreferencesModel } from '../../models/student-job-preferences.model';
+import { StudentModel } from '../../models/student.model';
 
 // TEMP lists, replace with API calls
 const industries = [{text: 'Medical', id: 0}, {text: 'Food Service', id: 1}, {text: 'Transportation', id: 2}, {text: 'Hardware', id: 3}, {text: 'Software', id: 4}];
@@ -17,7 +18,7 @@ const companySizes = [{text: "Startup", id: 0}, {text: "Small", id: 1}, {text: "
 })
 export class StudentJobPreferencesPage {
 
-  public user: any;
+  public student: StudentModel;
   public isSetup = false;
 
   // ngForm object for validation control
@@ -31,7 +32,7 @@ export class StudentJobPreferencesPage {
   companySizeOptions = companySizes;
 
   constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams) {
-    this.user = navParams.get("user");
+    this.student = navParams.get("student");
 
     if (navParams.get("setup") == true) {
       this.isSetup = true;
@@ -47,7 +48,7 @@ export class StudentJobPreferencesPage {
   continueClicked() {
     if (this.jobPreferencesForm && this.jobPreferencesForm.valid) {
       // TODO: Call API to create preferences
-      this.navCtrl.push(StudentSkillsPage, {user: this.user, setup: true});
+      this.navCtrl.push(StudentSkillsPage, {student: this.student, setup: true});
     }
     else {
       this.presentToast("Please select valid options for your job preferences");
@@ -55,7 +56,7 @@ export class StudentJobPreferencesPage {
   }
 
   skipClicked() {
-    this.navCtrl.push(StudentSkillsPage, {user: this.user, setup: true});
+    this.navCtrl.push(StudentSkillsPage, {student: this.student, setup: true});
   }
 
   saveClicked() {

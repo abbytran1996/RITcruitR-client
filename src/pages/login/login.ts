@@ -30,8 +30,8 @@ export class LoginPage {
       // Make API call to login
       this.authService.login(this.model).subscribe(
         data => {
-          window.localStorage.setItem('id', data.id);
-          this.navCtrl.push(TabsPage, {user: data});
+          this.authService.setLocalVars(data);
+          this.navCtrl.push(TabsPage);
         },
         error => {
           this.presentToast("No user found with that email and password combination");

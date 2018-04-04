@@ -5,6 +5,9 @@ import { TabsPage } from '../tabs/tabs';
 import { StudentJobPreferencesPage } from '../student-job-preferences/student-job-preferences';
 
 import { StudentContactModel } from '../../models/student-contact.model';
+import { StudentModel } from '../../models/student.model';
+
+import { StudentService } from '../../app/services/student.service';
 
 @Component({
   selector: 'page-student-contact',
@@ -12,7 +15,7 @@ import { StudentContactModel } from '../../models/student-contact.model';
 })
 export class StudentContactPage {
 
-  public user: any;
+  public student: StudentModel;
   public isSetup = false;
 
   // ngForm object for validation control
@@ -21,8 +24,8 @@ export class StudentContactPage {
   // Form models
   model = new StudentContactModel("", "", "");
 
-  constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams) {
-    this.user = navParams.get("user");
+  constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams, private studentService: StudentService) {
+    this.student = navParams.get("student");
 
     if (navParams.get("setup") == true) {
       this.isSetup = true;
@@ -37,8 +40,18 @@ export class StudentContactPage {
 
   continueClicked() {
     if (this.contactForm && this.contactForm.valid) {
-      // TODO: Call API to create contact info
-      this.navCtrl.push(StudentJobPreferencesPage, {user: this.user, setup: true});
+      this.student.updateContact(this.model);
+      this.studentService.updateStudent(this.student).subscribe(
+        data => {},
+        res => {
+          if (res.status == 200) {
+              this.navCtrl.push(StudentJobPreferencesPage, {student: this.student, setup: true});
+          }
+          else {
+            this.presentToast("There was an error updating your education details, please try again");
+          }
+        }
+      );
     }
     else {
       this.presentToast("Please enter a contact email and a phone number. Website is optional");

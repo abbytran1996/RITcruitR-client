@@ -32,7 +32,7 @@
       <form #educationForm="ngForm">
         <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
           <label class="rec-label rl-primary">UNIVERSITY</label>
-          <input type="text" name="university" class="rec-input ri-primary" required [(ngModel)]="model.university">
+          <input type="text" name="school" class="rec-input ri-primary" required [(ngModel)]="model.school">
         </div>
         <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
           <label class="rec-label rl-primary">MAJOR</label>
@@ -44,7 +44,7 @@
         </div>
         <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
           <label class="rec-label rl-primary">EXPECTED GRADUATION DATE</label>
-          <ion-datetime name="gradDate"  required class="rec-input ri-primary" displayFormat="MM/YYYY" pickerFormat="MM YYYY" max="{{ maxYear }}" [(ngModel)]="model.gradDate"></ion-datetime>
+          <ion-datetime name="graduationDate"  required class="rec-input ri-primary" displayFormat="MM/YYYY" pickerFormat="MM YYYY" max="{{ maxYear }}" [(ngModel)]="model.graduationDate"></ion-datetime>
         </div>
       </form>
     </ion-col>
