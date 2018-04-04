@@ -1,4 +1,4 @@
 export class CompanyRegisterModel {
-  constructor(public name: string, public industries: any, public locations: any, public companySize: number, public website: string) {
+  constructor(public companyName: string, public location: any, public industry: any, public size: number, public websiteURL: string) {
   }
 }

@@ -12,7 +12,7 @@ export class RecruiterService {
     ) { }
 
     addRecruiter(companyId, recruiter) {
-        return this.apiService.post('/company/' + companyId + 'recruiter', recruiter);
+        return this.apiService.post('/company/' + companyId + '/recruiter', recruiter);
     }
 
     getRecruiterById(id) {
@@ -20,7 +20,7 @@ export class RecruiterService {
     }
 
     getRecruiterByEmail(email) {
-        return this.apiService.get('/recruiters/byEmail' + email);
+        return this.apiService.get('/recruiters/byEmail/' + email);
     }
 
     updateRecruiter(recruiter) {

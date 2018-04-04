@@ -32,15 +32,15 @@
       <form #companyForm="ngForm">
         <div class="rec-input-group">
           <label class="rec-label rl-primary">COMPANY NAME</label>
-          <input type="text" name="name" class="rec-input ri-primary" required [(ngModel)]="companyModel.name">
+          <input type="text" name="companyName" class="rec-input ri-primary" required [(ngModel)]="companyModel.companyName">
         </div>
         <div class="rec-input-group">
           <label class="rec-label rl-primary">INDUSTRIES</label>
           <select-searchable
-            name="industries"
+            name="industry"
             class="rec-input ri-primary clearfix"
             required
-            [(ngModel)]="companyModel.industries"
+            [(ngModel)]="companyModel.industry"
             [items]="industryOptions"
             itemValueField="id"
             itemTextField="text"

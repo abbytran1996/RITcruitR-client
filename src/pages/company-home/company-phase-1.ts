@@ -1,15 +1,17 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
+import { RecruiterModel } from '../../models/recruiter.model';
+
 @Component({
   selector: 'page-company-phase-1',
   templateUrl: 'company-phase-1.html'
 })
 export class CompanyPhase1Page {
 
-  public user: any;
+  public recruiter: RecruiterModel;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.user= navParams.get("user");
+    this.recruiter = navParams.get("recruiter");
   }
 }

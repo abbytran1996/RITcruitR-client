@@ -19,9 +19,11 @@ import { RecruiterRegisterPage } from '../recruiter-register/recruiter-register'
 import { LoginPage } from '../login/login';
 
 import { StudentModel } from '../../models/student.model';
+import { RecruiterModel } from '../../models/recruiter.model';
 
 import { AuthService } from '../../app/services/auth.service';
 import { StudentService } from '../../app/services/student.service';
+import { RecruiterService } from '../../app/services/recruiter.service';
 
 @Component({
   selector: 'page-tabs',
@@ -46,18 +48,17 @@ export class TabsPage {
   private userRole: any;
 
   public student: StudentModel;
-  public company: any;
-  public recruiter: any;
+  public recruiter: RecruiterModel;
 
   public studentTabParams: any;
   public recruiterTabParams: any;
 
-  constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams, private authService: AuthService, private studentService: StudentService) {
+  constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams, private authService: AuthService, private studentService: StudentService, private recruiterService: RecruiterService) {
     this.userId = window.localStorage.getItem('id');
     this.userEmail = window.localStorage.getItem('email');
     this.userRole = window.localStorage.getItem('role');
 
-    if (this.userRole == 0) {
+    if (this.userRole == "0") {
       this.studentService.getStudentByEmail(this.userEmail).subscribe(
         data => {
           this.student = StudentModel.createStudentFromApiData(data);
@@ -65,15 +66,27 @@ export class TabsPage {
 
           // Set the user in the tab params so each tab has access.
           this.studentTabParams = {student: this.student};
-          this.recruiterTabParams = {company: this.company, recruiter: this.recruiter};
+          this.recruiterTabParams = {recruiter: this.recruiter};
         },
         error => {
           this.presentToast("An error occurred loading your account, please try again later");
         }
       );
     }
-    else if (this.userRole == 1) {
-      this.showStudentTabs = false;
+    else if (this.userRole == "1") {
+      this.recruiterService.getRecruiterByEmail(this.userEmail).subscribe(
+        data => {
+          this.recruiter = RecruiterModel.createRecruiterFromApiData(data);
+          this.showStudentTabs = false;
+
+          // Set the user in the tab params so each tab has access.
+          this.studentTabParams = {student: this.student};
+          this.recruiterTabParams = {recruiter: this.recruiter};
+        },
+        error => {
+          this.presentToast("An error occurred loading your account, please try again later");
+        }
+      );
     }
 
     // If a message was sent with nav params, show it.

@@ -7,6 +7,11 @@ import { CompanyRegisterConfirmPage } from '../company-register-confirm/company-
 import { CompanyRegisterModel } from '../../models/company-register.model';
 import { RecruiterRegisterModel } from '../../models/recruiter-register.model';
 import { RecruiterContactModel } from '../../models/recruiter-contact.model';
+import { RecruiterModel } from '../../models/recruiter.model';
+
+import { CompanyService } from '../../app/services/company.service';
+import { RecruiterService } from '../../app/services/recruiter.service';
+import { AuthService } from '../../app/services/auth.service';
 
 @Component({
   selector: 'page-recruiter-contact',
@@ -24,10 +29,10 @@ export class RecruiterContactPage {
 
   // Form models
   companyModel = new CompanyRegisterModel("", "", "", null, "");
-  recruiterModel = new RecruiterRegisterModel("", "", "", "");
+  recruiterModel = new RecruiterRegisterModel("", "", "", "", "", "");
   model = new RecruiterContactModel("", "");
 
-  constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams, private companyService: CompanyService, private recruiterService: RecruiterService, private authService: AuthService) {
     this.companyModel = navParams.get("company");
     this.recruiterModel = navParams.get("recruiter");
 
@@ -47,10 +52,33 @@ export class RecruiterContactPage {
   continueClicked() {
     if (this.contactForm && this.contactForm.valid) {
       if (this.isSetup) {
-        // TODO: Call API to create company.
-        // TODO: Call API to create recruiter.
-        // TODO: Call API to create contact info (this could be bundled into the previous step in the future).
-        this.navCtrl.push(CompanyRegisterConfirmPage, {user: this.user}); // TODO: Update this to send the actual user created.
+        // TODO: When multiple locations and industries gets added, change this.
+        this.companyModel.location = this.companyModel.location[0].text;
+        this.companyModel.industry = this.companyModel.industry[0].text;
+
+        // Create the company
+        this.companyService.addCompany(this.companyModel).subscribe(
+          companyData => {
+
+            this.recruiterModel.phoneNumber = this.model.phoneNumber;
+            this.recruiterModel.contactEmail = this.model.contactEmail;
+
+            // Create the recruiter for the company
+            this.recruiterService.addRecruiter(companyData.id, this.recruiterModel).subscribe(
+              recruiterData => {
+                let recruiter = RecruiterModel.createRecruiterFromApiData(recruiterData);
+                this.authService.setLocalVars(recruiterData.user);
+                this.navCtrl.push(CompanyRegisterConfirmPage, {recruiter: recruiter});
+              },
+              error => {
+                this.presentToast("There was an error registering the recruiter for your company, please try again");
+              }
+            );
+          },
+          error => {
+            this.presentToast("A company is already registered by that name, please contact our support team to report fraudulant companies");
+          }
+        );
       }
       else {
         // TODO: Call API to create recruiter.

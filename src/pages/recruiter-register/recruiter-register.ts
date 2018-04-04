@@ -16,7 +16,7 @@ export class RecruiterRegisterPage {
   @ViewChild('registerForm') registerForm;
 
   companyModel = new CompanyRegisterModel("", "", "", null, "");
-  recruiterModel = new RecruiterRegisterModel("", "", "", "");
+  recruiterModel = new RecruiterRegisterModel("", "", "", "", "", "", "");
   isSetup = false;
 
   constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams) {
@@ -31,9 +31,11 @@ export class RecruiterRegisterPage {
   continueClicked() {
     if (this.registerForm && this.registerForm.valid) {
       if (this.isSetup) {
+        this.recruiterModel.passwordConfirm = this.recruiterModel.password;
         this.navCtrl.push(RecruiterContactPage, {company: this.companyModel, recruiter: this.recruiterModel, setup: true});
       }
       else {
+        this.recruiterModel.passwordConfirm = this.recruiterModel.password;
         this.navCtrl.push(RecruiterContactPage, {company: this.companyModel, recruiter: this.recruiterModel});
       }
     }

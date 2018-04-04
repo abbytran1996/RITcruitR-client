@@ -28,15 +28,15 @@ export class CompanyDetailsPage {
   @ViewChild('companyForm') companyForm;
 
   // Form model for education fields
-  companyModel = new CompanyModel("", "", [], [], null, "");
+  companyModel = new CompanyModel(0, "", [], [], null, true, "", "", "", "", null);
 
   constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams) {
     this.user = navParams.get("user");
 
     // TODO: Make API call or use incoming data to set fields.
-    this.companyModel.name = "Intuit";
-    this.companyModel.industries = [{text: 'Software', id: 4}];
-    this.companyModel.locations = [{text: 'Rochester, New York', id: 1}, {text: 'New York City, New York', id: 2}];
+    this.companyModel.companyName = "Intuit";
+    this.companyModel.industry = [{text: 'Software', id: 4}];
+    this.companyModel.location = [{text: 'Rochester, New York', id: 1}, {text: 'New York City, New York', id: 2}];
     this.companyModel.companySize = 4;
     this.companyModel.website = "www.intuit.com";
   }

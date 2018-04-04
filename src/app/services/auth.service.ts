@@ -27,20 +27,20 @@ export class AuthService {
         if (role.name == "student") {
           isStudent = true;
         }
-        else if (role == "recruiter") {
+        else if (role.name == "recruiter") {
           isRecruiter = true;
         }
-        else if (role == "admin") {
+        else if (role.name == "admin") {
           isAdmin = true;
         }
       });
 
       // TODO: Update these role IDs so they can't be changed through local storage
       if (isStudent) {
-        window.localStorage.setItem('role', 0);
+        window.localStorage.setItem('role', "0");
       }
       else if (isRecruiter) {
-        window.localStorage.setItem('role', 1);
+        window.localStorage.setItem('role', "1");
       }
     }
 
