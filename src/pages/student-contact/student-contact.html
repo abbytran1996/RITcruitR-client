@@ -9,7 +9,7 @@
   <!-- Title -->
   <ion-row class="row-title">
     <h1 class="fg-grey text-center no-padding">RecruitR</h1>
-    <h3 class="text-center no-padding">Education Details</h3>
+    <h3 class="text-center no-padding">Contact Information</h3>
   </ion-row>
   <!-- End Title -->
 
@@ -17,9 +17,9 @@
   <ion-row class="row-progress" [hidden]="!isSetup">
     <ion-col>
       <div class="progress-bar-wrapper">
-        <p class="progress-bar-label no-margin">STEP 1 of 5</p>
+        <p class="progress-bar-label no-margin">STEP 2 of 5</p>
         <div class="progress-bar">
-          <div class="bar" style="width: 20%;"></div>
+          <div class="bar" style="width: 40%;"></div>
         </div>
       </div>
     </ion-col>
@@ -29,22 +29,18 @@
   <!-- Form -->
   <ion-row class="row-form">
     <ion-col>
-      <form #educationForm="ngForm">
+      <form #contactForm="ngForm">
         <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
-          <label class="rec-label rl-primary">UNIVERSITY</label>
-          <input type="text" name="university" class="rec-input ri-primary" required [(ngModel)]="model.university">
+          <label class="rec-label rl-primary">CONTACT EMAIL</label>
+          <input type="text" name="contactEmail" class="rec-input ri-primary" required [(ngModel)]="model.contactEmail">
         </div>
         <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
-          <label class="rec-label rl-primary">MAJOR</label>
-          <input type="text" name="major" class="rec-input ri-primary" required [(ngModel)]="model.major">
+          <label class="rec-label rl-primary">PHONE NUMBER</label>
+          <input type="text" name="phone" class="rec-input ri-primary" required [(ngModel)]="model.phone">
         </div>
         <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
-          <label class="rec-label rl-primary">GPA</label>
-          <input type="text" name="gpa" class="rec-input ri-primary" required [(ngModel)]="model.gpa">
-        </div>
-        <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
-          <label class="rec-label rl-primary">EXPECTED GRADUATION DATE</label>
-          <ion-datetime name="gradDate"  required class="rec-input ri-primary" displayFormat="MM/YYYY" pickerFormat="MM YYYY" max="{{ maxYear }}" [(ngModel)]="model.gradDate"></ion-datetime>
+          <label class="rec-label rl-primary">WEBSITE</label>
+          <input type="text" name="website" class="rec-input ri-primary" [(ngModel)]="model.website">
         </div>
       </form>
     </ion-col>

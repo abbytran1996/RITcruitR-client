@@ -31,7 +31,7 @@ export class CompanyRegister2Page {
 
   continueClicked() {
     if (this.companyForm && this.companyForm.valid) {
-      this.navCtrl.push(RecruiterRegisterPage, {companyId: 0}); // TODO: Change this to send the actual company ID
+      this.navCtrl.push(RecruiterRegisterPage, {company: this.companyModel, setup: true});
     }
     else {
       this.presentToast("Please enter your company locations, size, and website");

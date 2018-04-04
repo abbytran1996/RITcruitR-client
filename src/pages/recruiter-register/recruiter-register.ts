@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, ToastController, NavParams } from 'ionic-angular';
 
-import { CompanySetupPage } from '../company-setup/company-setup';
+import { RecruiterContactPage } from '../recruiter-contact/recruiter-contact';
 
 import { CompanyRegisterModel } from '../../models/company-register.model';
 import { RecruiterRegisterModel } from '../../models/recruiter-register.model';
@@ -15,23 +15,26 @@ export class RecruiterRegisterPage {
   // ngForm object for validation control
   @ViewChild('registerForm') registerForm;
 
-  companyId = undefined;
+  companyModel = new CompanyRegisterModel("", "", "", null, "");
   recruiterModel = new RecruiterRegisterModel("", "", "", "");
+  isSetup = false;
 
   constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams) {
-    this.companyId = navParams.get("companyId");
+    this.companyModel = navParams.get("company");
+
+    if (navParams.get("setup") == true) {
+      this.isSetup = true;
+    }
   }
 
   // Attempt to register the recruiter
-  register() {
+  continueClicked() {
     if (this.registerForm && this.registerForm.valid) {
-      if (this.companyId == undefined) {
-        // Just register the recruiter
-        this.navCtrl.push(CompanySetupPage); // TODO: Change this when multiple recruiter registration is added
+      if (this.isSetup) {
+        this.navCtrl.push(RecruiterContactPage, {company: this.companyModel, recruiter: this.recruiterModel, setup: true});
       }
       else {
-        // Register the company, then the recruiter for that company
-        this.navCtrl.push(CompanySetupPage, {companyId: this.companyId});
+        this.navCtrl.push(RecruiterContactPage, {company: this.companyModel, recruiter: this.recruiterModel});
       }
     }
     else {

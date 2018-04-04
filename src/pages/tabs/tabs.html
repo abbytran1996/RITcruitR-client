@@ -8,13 +8,13 @@
     </ion-header>
     <ion-content>
       <ion-list>
-        <button ion-item menuToggle>
+        <button ion-item menuToggle (click)="editSkills()">
           <ion-icon name="md-construct" class="opacity-50"></ion-icon>
           Skills
         </button>
-        <button ion-item menuToggle>
+        <button ion-item menuToggle (click)="editStudentJobPreferences()">
           <ion-icon name="ios-cog" class="opacity-50"></ion-icon>
-          Preferences
+          Match Preferences
         </button>
         <button ion-item menuToggle (click)="editStudentDetails()">
           <ion-icon name="md-contact" class="opacity-50"></ion-icon>
@@ -30,8 +30,8 @@
 
   <ion-tabs selectedIndex="0" #content>
     <ion-tab [root]="studentPhase1Tab" tabTitle="Matched Jobs" tabIcon="list" [rootParams]="tabParams"></ion-tab>
-    <ion-tab [root]="studentPhase2Tab" tabTitle="Problem Phase" tabIcon="help" [rootParams]="tabParams"></ion-tab>
-    <ion-tab [root]="studentPhase3Tab" tabTitle="Presentation Phase" tabIcon="videocam" [rootParams]="tabParams"></ion-tab>
+    <ion-tab [root]="studentPhase2Tab" tabTitle="Presentation Phase" tabIcon="videocam" [rootParams]="tabParams"></ion-tab>
+    <ion-tab [root]="studentPhase3Tab" tabTitle="Final Jobs" tabIcon="checkmark-circle" [rootParams]="tabParams"></ion-tab>
   </ion-tabs>
 </div>
 <!-- End Student Content -->
@@ -54,9 +54,21 @@
           <ion-icon name="ios-cog" class="opacity-50"></ion-icon>
           Manage Jobs
         </button>
+        <button ion-item menuToggle (click)="editContact()">
+          <ion-icon name="ios-call" class="opacity-50"></ion-icon>
+          Edit Contact Info
+        </button>
         <button ion-item menuToggle (click)="editCompanyDetails()">
-          <ion-icon name="md-contact" class="opacity-50"></ion-icon>
+          <ion-icon name="md-list" class="opacity-50"></ion-icon>
           Company Details
+        </button>
+        <button ion-item menuToggle (click)="addRecruiter()">
+          <ion-icon name="md-contact" class="opacity-50"></ion-icon>
+          Add Recruiter
+        </button>
+        <button ion-item menuToggle (click)="editRecruiters()">
+          <ion-icon name="md-contacts" class="opacity-50"></ion-icon>
+          Manage Recruiters
         </button>
         <button ion-item menuToggle (click)="logout()">
           <ion-icon name="ios-exit" class="opacity-50"></ion-icon>
@@ -67,9 +79,9 @@
   </ion-menu>
 
   <ion-tabs selectedIndex="0" #content>
-    <ion-tab [root]="studentPhase1Tab" tabTitle="Job Applicants" tabIcon="people" [rootParams]="tabParams"></ion-tab>
-    <ion-tab [root]="studentPhase2Tab" tabTitle="Presentation Phase" tabIcon="videocam" [rootParams]="tabParams"></ion-tab>
-    <ion-tab [root]="studentPhase3Tab" tabTitle="Final Candidates" tabIcon="checkmark-circle" [rootParams]="tabParams"></ion-tab>
+    <ion-tab [root]="companyPhase1Tab" tabTitle="Job Applicants" tabIcon="people" [rootParams]="tabParams"></ion-tab>
+    <ion-tab [root]="companyPhase2Tab" tabTitle="Presentation Phase" tabIcon="videocam" [rootParams]="tabParams"></ion-tab>
+    <ion-tab [root]="companyPhase3Tab" tabTitle="Final Candidates" tabIcon="checkmark-circle" [rootParams]="tabParams"></ion-tab>
   </ion-tabs>
 </div>
 <!-- End Recruiter Content -->

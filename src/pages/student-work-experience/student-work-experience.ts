@@ -1,32 +1,35 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, ToastController, NavParams } from 'ionic-angular';
 
-import { StudentEducationPage } from '../student-education/student-education';
-import { StudentContactPage } from '../student-contact/student-contact';
-import { StudentWorkExperiencePage } from '../student-work-experience/student-work-experience';
+import { TabsPage } from '../tabs/tabs';
 
 @Component({
-  selector: 'page-student-profile-details',
-  templateUrl: 'student-profile-details.html'
+  selector: 'page-student-work-experience',
+  templateUrl: 'student-work-experience.html'
 })
-export class StudentProfileDetailsPage {
+export class StudentWorkExperiencePage {
 
   public user: any;
+  public isSetup = false;
 
   constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams) {
     this.user = navParams.get("user");
+
+    if (navParams.get("setup") == true) {
+      this.isSetup = true;
+    }
   }
 
-  editEducation() {
-    this.navCtrl.push(StudentEducationPage, {user: this.user});
+  continueClicked() {
+    this.navCtrl.push(TabsPage, {user: this.user});
   }
 
-  editContact() {
-    this.navCtrl.push(StudentContactPage, {user: this.user});
+  skipClicked() {
+    this.navCtrl.push(TabsPage, {user: this.user, setup: true});
   }
 
-  editWorkExperience() {
-    this.navCtrl.push(StudentWorkExperiencePage, {user: this.user});
+  saveClicked() {
+    this.navCtrl.setRoot(TabsPage, {message: "Work experience updated successfully"});
   }
 
   // Navigate back to the previous screen
