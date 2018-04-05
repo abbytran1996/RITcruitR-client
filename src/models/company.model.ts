@@ -1,7 +1,7 @@
 export class CompanyModel {
   constructor(
     public id: any,
-    public companyname: string,
+    public companyName: string,
     public location: any,
     public industry: any,
     public size: number,

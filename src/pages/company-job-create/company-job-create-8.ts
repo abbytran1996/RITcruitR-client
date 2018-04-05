@@ -30,7 +30,7 @@ export class CompanyJobCreate8Page {
 
   finishClicked() {
     if (this.jobForm && (this.jobForm.controls.video.valid || this.jobForm.controls.videoNew.valid)) {
-      this.navCtrl.push(TabsPage, {message: "New job successfully created"});
+      this.navCtrl.setRoot(TabsPage, {message: "New job successfully created"});
     }
     else {
       this.presentToast("Please select an existing video or add a new video URL");

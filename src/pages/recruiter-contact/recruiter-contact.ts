@@ -29,7 +29,7 @@ export class RecruiterContactPage {
 
   // Form models
   companyModel = new CompanyRegisterModel("", "", "", null, "");
-  recruiterModel = new RecruiterRegisterModel("", "", "", "", "", "");
+  recruiterModel = new RecruiterRegisterModel("", "", "", "", "", "", "");
   model = new RecruiterContactModel("", "");
 
   constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams, private companyService: CompanyService, private recruiterService: RecruiterService, private authService: AuthService) {
@@ -45,7 +45,7 @@ export class RecruiterContactPage {
 
       // TODO: Add call or use incoming data to set the model to the existing data.
       this.model.contactEmail = "contact@example.com";
-      this.model.phone = "716-123-4567";
+      this.model.phoneNumber = "716-123-4567";
     }
   }
 

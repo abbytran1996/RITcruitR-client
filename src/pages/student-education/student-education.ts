@@ -35,10 +35,10 @@ export class StudentEducationPage {
     }
     else {
       // TODO: Add call or use incoming data to set the model to the existing education details.
-      this.model.university = "Rochester Institute of Technology";
+      this.model.school = "Rochester Institute of Technology";
       this.model.major = "Software Engineering";
       this.model.gpa = "3.6";
-      this.model.gradDate = "2018-12-01";
+      this.model.graduationDate = "2018-12-01";
     }
   }
 

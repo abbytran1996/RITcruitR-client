@@ -37,8 +37,8 @@ export class CompanyDetailsPage {
     this.companyModel.companyName = "Intuit";
     this.companyModel.industry = [{text: 'Software', id: 4}];
     this.companyModel.location = [{text: 'Rochester, New York', id: 1}, {text: 'New York City, New York', id: 2}];
-    this.companyModel.companySize = 4;
-    this.companyModel.website = "www.intuit.com";
+    this.companyModel.size = 4;
+    this.companyModel.websiteURL = "www.intuit.com";
   }
 
   saveClicked() {
