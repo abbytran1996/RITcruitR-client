@@ -14,7 +14,11 @@ export class StudentWorkExperiencePage {
   public student: StudentModel;
   public isSetup = false;
 
-  constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController,
+    private toastCtrl: ToastController,
+    public navParams: NavParams
+  ) {
     this.student = navParams.get("student");
 
     if (navParams.get("setup") == true) {

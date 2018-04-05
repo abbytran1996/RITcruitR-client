@@ -24,7 +24,12 @@ export class StudentContactPage {
   // Form models
   model = new StudentContactModel("", "", "");
 
-  constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams, private studentService: StudentService) {
+  constructor(
+    public navCtrl: NavController,
+    private toastCtrl: ToastController,
+    public navParams: NavParams,
+    private studentService: StudentService
+  ) {
     this.student = navParams.get("student");
 
     if (navParams.get("setup") == true) {

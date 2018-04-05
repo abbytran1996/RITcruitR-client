@@ -12,7 +12,7 @@ import { MyApp } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SelectSearchableModule } from 'ionic-select-searchable';
 
-// Custom modules
+// Custom Modules
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
 import { TabsPage } from '../pages/tabs/tabs';
@@ -33,14 +33,6 @@ import { CompanyRegister1Page } from '../pages/company-register/company-register
 import { CompanyRegister2Page } from '../pages/company-register/company-register-2';
 import { CompanyRegisterConfirmPage } from '../pages/company-register-confirm/company-register-confirm';
 import { CompanySetupPage } from '../pages/company-setup/company-setup';
-import { CompanyJobCreate1Page } from '../pages/company-job-create/company-job-create-1';
-import { CompanyJobCreate2Page } from '../pages/company-job-create/company-job-create-2';
-import { CompanyJobCreate3Page } from '../pages/company-job-create/company-job-create-3';
-import { CompanyJobCreate4Page } from '../pages/company-job-create/company-job-create-4';
-import { CompanyJobCreate5Page } from '../pages/company-job-create/company-job-create-5';
-import { CompanyJobCreate6Page } from '../pages/company-job-create/company-job-create-6';
-import { CompanyJobCreate7Page } from '../pages/company-job-create/company-job-create-7';
-import { CompanyJobCreate8Page } from '../pages/company-job-create/company-job-create-8';
 import { CompanyPhase1Page } from '../pages/company-home/company-phase-1';
 import { CompanyPhase2Page } from '../pages/company-home/company-phase-2';
 import { CompanyPhase3Page } from '../pages/company-home/company-phase-3';
@@ -50,7 +42,16 @@ import { RecruiterCompanySelectPage } from '../pages/recruiter-company-select/re
 import { RecruiterRegisterPage } from '../pages/recruiter-register/recruiter-register';
 import { RecruiterContactPage } from '../pages/recruiter-contact/recruiter-contact';
 
-import { LocationsSearchModal } from '../modals/locations-search/locations-search';
+import {
+  CompanyJobCreate1Page,
+  CompanyJobCreate2Page,
+  CompanyJobCreate3Page,
+  CompanyJobCreate4Page,
+  CompanyJobCreate5Page,
+  CompanyJobCreate6Page,
+  CompanyJobCreate7Page,
+  CompanyJobCreate8Page,
+} from '../pages/company-job-create';
 
 import {
   ApiService,
@@ -98,8 +99,7 @@ import {
     RecruiterCompanySelectPage,
     RecruiterRegisterPage,
     RecruiterContactPage,
-    TabsPage,
-    LocationsSearchModal
+    TabsPage
   ],
   imports: [
     BrowserModule,
@@ -147,8 +147,7 @@ import {
     RecruiterCompanySelectPage,
     RecruiterRegisterPage,
     RecruiterContactPage,
-    TabsPage,
-    LocationsSearchModal
+    TabsPage
   ],
   providers: [
     StatusBar,

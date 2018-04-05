@@ -1,20 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '@app/env';
-
-import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
-import { catchError } from 'rxjs/operators/catchError';
 
 @Injectable()
 export class ApiService {
     constructor(
         private http: HttpClient
     ) { }
-
-    private formatErrors(error: any) {
-        return new ErrorObservable(error.error);
-    }
 
     //=========================================================================
     // * HTTP GET                                                             *
@@ -58,7 +51,7 @@ export class ApiService {
     }
 
     //=========================================================================
-    // * HTTP DELETE                                                          *  
+    // * HTTP DELETE                                                          *
     //=========================================================================
     delete(path: string): Observable<any> {
         return this.http.delete(

@@ -11,7 +11,11 @@ export class CompanyPhase1Page {
 
   public recruiter: RecruiterModel;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public events: Events
+  ) {
     this.recruiter = navParams.get("recruiter");
 
     events.subscribe('recruiter:obtained', (recruiter) => {

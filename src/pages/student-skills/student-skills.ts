@@ -6,8 +6,7 @@ import { StudentWorkExperiencePage } from '../student-work-experience/student-wo
 
 import { StudentModel } from '../../models/student.model';
 
-// TEMP lists, replace with API calls
-const skills = [{text: 'JavaScript', id: 0}, {text: 'HTML', id: 1}, {text: 'Git', id: 2}, {text: 'Agile', id: 3}, {text: 'Software Project Management', id: 4}];
+import { DataService } from '../../app/services/data.service';
 
 @Component({
   selector: 'page-student-skills',
@@ -21,25 +20,27 @@ export class StudentSkillsPage {
   // ngForm object for validation control
   @ViewChild('skillsForm') skillsForm;
 
-  // Form model
   model = [];
+  skillOptions = [];
 
-  skillOptions = skills;
-
-  constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController,
+    private toastCtrl: ToastController,
+    public navParams: NavParams,
+    public dataService: DataService
+  ) {
     this.student = navParams.get("student");
+    
+    this.skillOptions = this.dataService.getSkills();
 
     if (navParams.get("setup") == true) {
       this.isSetup = true;
-    }
-    else {
-
     }
   }
 
   continueClicked() {
     if (this.skillsForm && this.skillsForm.valid) {
-      // TODO: Call API to create skills
+      // TODO: Call API to add skills
       this.navCtrl.push(StudentWorkExperiencePage, {student: this.student, setup: true});
     }
     else {

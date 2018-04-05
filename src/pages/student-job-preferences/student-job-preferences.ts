@@ -29,13 +29,19 @@ export class StudentJobPreferencesPage {
   industryOptions = [];
   companySizeOptions = [];
 
-  constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams, private studentService: StudentService, private dataService: DataService) {
+  constructor(
+    public navCtrl: NavController,
+    private toastCtrl: ToastController,
+    public navParams: NavParams,
+    private studentService: StudentService,
+    private dataService: DataService
+  ) {
     this.student = navParams.get("student");
 
     // Get the data for the select fields
     this.locationOptions = this.dataService.getLocations();
     this.industryOptions = this.dataService.getIndustries();
-    this.companySizeOptions = this.dataService.getCompanySizes();
+    this.companySizeOptions = this.dataService.getCompanySizesForStudent();
 
     if (navParams.get("setup") == true) {
       this.isSetup = true;

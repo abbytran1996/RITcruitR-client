@@ -19,7 +19,11 @@ export class RecruiterRegisterPage {
   recruiterModel = new RecruiterRegisterModel("", "", "", "", "", "", "");
   isSetup = false;
 
-  constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController,
+    private toastCtrl: ToastController,
+    public navParams: NavParams
+  ) {
     this.companyModel = navParams.get("company");
 
     if (navParams.get("setup") == true) {
@@ -30,14 +34,12 @@ export class RecruiterRegisterPage {
   // Attempt to register the recruiter
   continueClicked() {
     if (this.registerForm && this.registerForm.valid) {
-      if (this.isSetup) {
-        this.recruiterModel.passwordConfirm = this.recruiterModel.password;
-        this.navCtrl.push(RecruiterContactPage, {company: this.companyModel, recruiter: this.recruiterModel, setup: true});
-      }
-      else {
-        this.recruiterModel.passwordConfirm = this.recruiterModel.password;
-        this.navCtrl.push(RecruiterContactPage, {company: this.companyModel, recruiter: this.recruiterModel});
-      }
+      this.recruiterModel.passwordConfirm = this.recruiterModel.password;
+      this.navCtrl.push(RecruiterContactPage, {
+        company: this.companyModel,
+        recruiter: this.recruiterModel,
+        setup: (this.isSetup)
+      });
     }
     else {
       this.presentToast("Please enter a valid email, password, first name, and last name");

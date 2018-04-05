@@ -1,4 +1,7 @@
 export class StudentJobPreferencesModel {
-  constructor(public preferredLocations: any, public PreferredIndustries: any, public preferredCompanySizes: any) {
-  }
+  constructor(
+    public preferredLocations: any,
+    public preferredIndustries: any,
+    public preferredCompanySizes: any
+  ) {}
 }

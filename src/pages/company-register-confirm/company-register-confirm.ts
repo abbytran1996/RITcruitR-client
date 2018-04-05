@@ -11,11 +11,15 @@ export class CompanyRegisterConfirmPage {
 
   user = undefined;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams
+  ) {
     this.user = navParams.get("user");
   }
 
   continueClicked() {
-    this.navCtrl.push(TabsPage, {user: this.user, companyId: 0, isStudent: false}); // TODO: Remove this function and button.
+     // TODO: Change this so it leads back to the login screen, keep for dev
+    this.navCtrl.push(TabsPage, {user: this.user, companyId: 0, isStudent: false});
   }
 }

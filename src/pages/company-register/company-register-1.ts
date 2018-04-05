@@ -5,10 +5,9 @@ import { CompanyRegister2Page } from './company-register-2';
 
 import { CompanyRegisterModel } from '../../models/company-register.model';
 
-import { SelectSearchable } from 'ionic-select-searchable';
+import { DataService } from '../../app/services/data.service';
 
-// TEMP list for type ahead
-const industries = [{text: 'Medical', id: 0}, {text: 'Food Service', id: 1}, {text: 'Transportation', id: 2}, {text: 'Hardware', id: 3}, {text: 'Software', id: 4}];
+import { SelectSearchable } from 'ionic-select-searchable';
 
 @Component({
   selector: 'page-company-register-1',
@@ -20,11 +19,15 @@ export class CompanyRegister1Page {
   @ViewChild('companyForm') companyForm;
 
   companyModel = new CompanyRegisterModel("", "", "", null, "");
+  industryOptions = [];
 
-  industryOptions = industries;
-
-  constructor(public navCtrl: NavController, private toastCtrl: ToastController) {
-
+  constructor(
+    public navCtrl: NavController,
+    private toastCtrl: ToastController,
+    public dataService: DataService
+  ) {
+    // Get the data for the select fields
+    this.industryOptions = this.dataService.getIndustries();
   }
 
   continueClicked() {

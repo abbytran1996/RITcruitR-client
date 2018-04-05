@@ -20,9 +20,14 @@ export class LoginPage {
   // Form model for login fields
   model = new LoginModel("", "");
 
-  constructor(public navCtrl: NavController, private toastCtrl: ToastController, private authService: AuthService) {
-    this.model.username = "teststudent@example.com";
-    this.model.password = "Student1!";
+  constructor(
+    public navCtrl: NavController,
+    private toastCtrl: ToastController,
+    private authService: AuthService
+  ) {
+    // TODO: Remove eventually, for now I'm leaving it here for simplicity with future dev
+    // this.model.username = "teststudent@example.com";
+    // this.model.password = "Student1!";
   }
 
   // Called when login button is clicked, attempt to authenticate user

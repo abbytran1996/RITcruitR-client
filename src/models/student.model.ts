@@ -22,8 +22,8 @@ export class StudentModel {
     public preferredLocations: any,
     public preferredIndustries: any,
     public preferredCompanySizes: any,
-    public resumeLocation: string) {
-  }
+    public resumeLocation: string
+  ) {}
 
   public static createStudentFromApiData(apiData: any): StudentModel {
     return new StudentModel(
@@ -36,7 +36,11 @@ export class StudentModel {
       apiData.school,
       apiData.major,
       apiData.gpa,
-      new UserModel(apiData.user.id, apiData.user.username, apiData.user.roles),
+      new UserModel(
+        apiData.user.id,
+        apiData.user.username,
+        apiData.user.roles
+      ),
       apiData.phoneNumber,
       apiData.contactEmail,
       apiData.website,

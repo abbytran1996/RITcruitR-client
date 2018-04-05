@@ -22,14 +22,16 @@ export class StudentRegisterPage {
   // Form model for register fields
   model = new StudentRegisterModel("", "", "", "", "");
 
-  constructor(public navCtrl: NavController, private toastCtrl: ToastController, private studentService: StudentService, private authService: AuthService) {
-
-  }
+  constructor(
+    public navCtrl: NavController,
+    private toastCtrl: ToastController,
+    private studentService: StudentService,
+    private authService: AuthService
+  ) {}
 
   // Attempt to register the student
   register() {
     if (this.registerForm && this.registerForm.valid) {
-      // Make API call to register the student
       this.model.passwordConfirm = this.model.password;
       this.studentService.addStudent(this.model).subscribe(
         data => {

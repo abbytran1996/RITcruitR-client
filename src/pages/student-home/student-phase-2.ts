@@ -11,7 +11,10 @@ export class StudentPhase2Page {
 
   public student: StudentModel;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams
+  ) {
     this.student= navParams.get("student");
   }
 }

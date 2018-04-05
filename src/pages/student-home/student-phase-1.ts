@@ -11,7 +11,11 @@ export class StudentPhase1Page {
 
   public student: StudentModel;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public events: Events
+  ) {
     this.student= navParams.get("student");
 
     events.subscribe('student:obtained', (student) => {

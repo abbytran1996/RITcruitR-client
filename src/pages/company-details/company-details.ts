@@ -5,10 +5,7 @@ import { TabsPage } from '../tabs/tabs';
 
 import { CompanyModel } from '../../models/company.model';
 
-// TEMP lists, replace with API calls
-const industries = [{text: 'Medical', id: 0}, {text: 'Food Service', id: 1}, {text: 'Transportation', id: 2}, {text: 'Hardware', id: 3}, {text: 'Software', id: 4}];
-const locations = [{text: 'Buffalo, New York', id: 0}, {text: 'Rochester, New York', id: 1}, {text: 'New York City, New York', id: 2}, {text: 'San Jose, California', id: 3}, {text: 'Seattle, Washington', id: 4}];
-const companySizes = [{text: "Startup", id: 0}, {text: "Small", id: 1}, {text: "Medium", id: 2}, {text: "Large", id: 3}, {text: "Huge", id: 4}];
+import { DataService } from '../../app/services/data.service';
 
 @Component({
   selector: 'page-company-details',
@@ -17,12 +14,10 @@ const companySizes = [{text: "Startup", id: 0}, {text: "Small", id: 1}, {text: "
 export class CompanyDetailsPage {
 
   public user: any;
-  public isSetup = false;
-  public maxYear = undefined;
 
-  industryOptions = industries;
-  locationOptions = locations;
-  companySizeOptions = companySizes;
+  industryOptions = [];
+  locationOptions = [];
+  companySizeOptions = [];
 
   // ngForm object for validation control
   @ViewChild('companyForm') companyForm;
@@ -30,13 +25,23 @@ export class CompanyDetailsPage {
   // Form model for education fields
   companyModel = new CompanyModel(0, "", [], [], null, true, "", "", "", "", null);
 
-  constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController,
+    private toastCtrl: ToastController,
+    public navParams: NavParams,
+    public dataService: DataService
+  ) {
     this.user = navParams.get("user");
 
-    // TODO: Make API call or use incoming data to set fields.
+    // Get the data for the select fields
+    this.locationOptions = this.dataService.getLocations();
+    this.industryOptions = this.dataService.getIndustries();
+    this.companySizeOptions = this.dataService.getCompanySizesForCompany();
+
+    // TODO: Set these fields with actual incoming company data.
     this.companyModel.companyName = "Intuit";
-    this.companyModel.industry = [{text: 'Software', id: 4}];
-    this.companyModel.location = [{text: 'Rochester, New York', id: 1}, {text: 'New York City, New York', id: 2}];
+    this.companyModel.industry = ['Software'];
+    this.companyModel.location = ['Rochester, New York', 'New York City, New York'];
     this.companyModel.size = 4;
     this.companyModel.websiteURL = "www.intuit.com";
   }

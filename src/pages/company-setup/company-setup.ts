@@ -12,7 +12,10 @@ export class CompanySetupPage {
 
   companyId = undefined;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams
+  ) {
     this.companyId = navParams.get("companyId");
   }
 
@@ -21,7 +24,7 @@ export class CompanySetupPage {
   }
 
   importJobClicked() {
-    // Implement Handshake job importing here (future iteration)
+    // TODO: Implement Handshake job importing here (future iteration)
     this.navCtrl.push(TabsPage);
   }
 }

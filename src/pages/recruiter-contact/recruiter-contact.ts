@@ -32,7 +32,14 @@ export class RecruiterContactPage {
   recruiterModel = new RecruiterRegisterModel("", "", "", "", "", "", "");
   model = new RecruiterContactModel("", "");
 
-  constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams, private companyService: CompanyService, private recruiterService: RecruiterService, private authService: AuthService) {
+  constructor(
+    public navCtrl: NavController,
+    private toastCtrl: ToastController,
+    public navParams: NavParams,
+    private companyService: CompanyService,
+    private recruiterService: RecruiterService,
+    private authService: AuthService
+  ) {
     this.companyModel = navParams.get("company");
     this.recruiterModel = navParams.get("recruiter");
 
@@ -43,7 +50,7 @@ export class RecruiterContactPage {
     if (navParams.get("edit") == true) {
       this.isEdit = true;
 
-      // TODO: Add call or use incoming data to set the model to the existing data.
+      // TODO: Set these fields using actual incoming recruiter data
       this.model.contactEmail = "contact@example.com";
       this.model.phoneNumber = "716-123-4567";
     }
@@ -56,33 +63,46 @@ export class RecruiterContactPage {
         this.companyModel.location = this.companyModel.location[0].text;
         this.companyModel.industry = this.companyModel.industry[0].text;
 
-        // Create the company
+        /*
+          Create the company
+          =====================================================================
+        */
         this.companyService.addCompany(this.companyModel).subscribe(
           companyData => {
 
             this.recruiterModel.phoneNumber = this.model.phoneNumber;
             this.recruiterModel.contactEmail = this.model.contactEmail;
 
-            // Create the recruiter for the company
+            /*
+              Create the recruiter for the company
+              =================================================================
+            */
             this.recruiterService.addRecruiter(companyData.id, this.recruiterModel).subscribe(
               recruiterData => {
                 let recruiter = RecruiterModel.createRecruiterFromApiData(recruiterData);
+
+                // TODO: Remove this setLocalVars call after dev. We don't want
+                // to "login" the recruiter after company creation because they
+                // need to await approval. Keeping for dev.
                 this.authService.setLocalVars(recruiterData.user);
                 this.navCtrl.push(CompanyRegisterConfirmPage, {recruiter: recruiter});
               },
+
+              // Recruiter create error
               error => {
                 this.presentToast("There was an error registering the recruiter for your company, please try again");
               }
             );
           },
+
+          // Company create error
           error => {
             this.presentToast("A company is already registered by that name, please contact our support team to report fraudulant companies");
           }
         );
       }
       else {
-        // TODO: Call API to create recruiter.
-        // TODO: Call API to create contact info (this could be bundled into the previous step in the future).
+        // TODO: Call API to create recruiter (not for company registration).
         this.navCtrl.setRoot(TabsPage, {message: "New recruiter added successfully"});
       }
     }
@@ -93,7 +113,7 @@ export class RecruiterContactPage {
 
   saveClicked() {
     if (this.contactForm && this.contactForm.valid) {
-      // TODO: Call API to update contact info
+      // TODO: Call API to update contact info for recruiter (edit mode)
       this.navCtrl.setRoot(TabsPage, {message: "Contact Information updated successfully"});
     }
     else {

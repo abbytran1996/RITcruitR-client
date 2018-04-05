@@ -15,10 +15,13 @@ export class CompanyJobCreate2Page {
   @ViewChild('jobForm') jobForm;
 
   jobModel = new JobModel("", "", "", null, false, null, "", "", "");
-
   companyId = undefined;
 
-  constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController,
+    private toastCtrl: ToastController,
+    public navParams: NavParams
+  ) {
     this.companyId = navParams.get("companyId");
     this.jobModel = navParams.get("job");
   }

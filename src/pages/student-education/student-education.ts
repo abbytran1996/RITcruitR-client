@@ -25,7 +25,12 @@ export class StudentEducationPage {
   // Form model for education fields
   model = new EducationDetailsModel("", "", null, "");
 
-  constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams, private studentService: StudentService) {
+  constructor(
+    public navCtrl: NavController,
+    private toastCtrl: ToastController,
+    public navParams: NavParams,
+    private studentService: StudentService
+  ) {
     this.maxYear = (new Date()).getFullYear() + 20;
 
     this.student = navParams.get("student");

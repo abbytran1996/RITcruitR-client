@@ -9,5 +9,5 @@ export class JobModel {
     public problem: string,
     public video: string,
     public videoNew: string
-  ) { }
+  ) {}
 }

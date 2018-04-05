@@ -18,12 +18,15 @@ export class CompanyJobCreate8Page {
   @ViewChild('jobForm') jobForm;
 
   jobModel = new JobModel("", "", "", null, false, null, "", "", "");
-
   companyId = undefined;
 
   videoOptions = videos;
 
-  constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController,
+    private toastCtrl: ToastController,
+    public navParams: NavParams
+  ) {
     this.companyId = navParams.get("companyId");
     this.jobModel = navParams.get("job");
   }

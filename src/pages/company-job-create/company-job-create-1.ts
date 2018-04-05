@@ -5,8 +5,6 @@ import { CompanyJobCreate2Page } from './company-job-create-2';
 
 import { JobModel } from '../../models/job.model';
 
-const locations = [{text: 'Buffalo, New York', value: 0}, {text: 'Rochester, New York', value: 1}];
-
 @Component({
   selector: 'page-company-job-create-1',
   templateUrl: 'company-job-create-1.html'
@@ -18,12 +16,18 @@ export class CompanyJobCreate1Page {
 
   jobModel = new JobModel("", "", "", null, false, null, "", "", "");
 
-  locationOptions = locations;
-
+  locationOptions = [];
   companyId = undefined;
 
-  constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController,
+    private toastCtrl: ToastController,
+    public navParams: NavParams
+  ) {
     this.companyId = navParams.get("companyId");
+
+    // TODO: Replace with actual incoming company locations
+    this.locationOptions = [{text: 'Buffalo, New York', value: 0}, {text: 'Rochester, New York', value: 1}];
   }
 
   continueClicked() {

@@ -37,27 +37,36 @@ export class TabsPage {
   public studentPhase1Tab = StudentPhase1Page;
   public studentPhase2Tab = StudentPhase2Page;
   public studentPhase3Tab = StudentPhase3Page;
+  public studentTabParams: any;
 
   // Company tab pages
   public companyPhase1Tab = CompanyPhase1Page;
   public companyPhase2Tab = CompanyPhase2Page;
   public companyPhase3Tab = CompanyPhase3Page;
+  public recruiterTabParams: any;
 
+  // User stored data
   private userId: any;
   private userEmail: any;
   private userRole: any;
-
   public student: StudentModel;
   public recruiter: RecruiterModel;
 
-  public studentTabParams: any;
-  public recruiterTabParams: any;
-
-  constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams, private authService: AuthService, private studentService: StudentService, private recruiterService: RecruiterService, public events: Events) {
+  constructor(
+    public navCtrl: NavController,
+    private toastCtrl: ToastController,
+    public navParams: NavParams,
+    private authService: AuthService,
+    private studentService: StudentService,
+    private recruiterService: RecruiterService,
+    public events: Events
+  ) {
     this.userId = window.localStorage.getItem('id');
     this.userEmail = window.localStorage.getItem('email');
     this.userRole = window.localStorage.getItem('role');
 
+    // Load the correct data depending on user role
+    // TODO: Update this to be more secure once we do our security updates
     if (this.userRole == "0") {
       this.studentService.getStudentByEmail(this.userEmail).subscribe(
         data => {
@@ -98,7 +107,10 @@ export class TabsPage {
     }
   }
 
-  // Student Links
+  /*
+    Student Nav Options
+    ===========================================================================
+  */
 
   // Edit the student skills
   editSkills() {
@@ -115,7 +127,10 @@ export class TabsPage {
     this.navCtrl.push(StudentProfileDetailsPage, {student: this.student});
   }
 
-  // Recruiter Links
+  /*
+    Recruiter Nav Options
+    ===========================================================================
+  */
 
   // Create a job as a recruiter
   createCompanyJob() {

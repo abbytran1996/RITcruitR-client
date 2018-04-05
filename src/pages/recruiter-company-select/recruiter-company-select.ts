@@ -12,9 +12,11 @@ import 'rxjs/add/operator/distinctUntilChanged';
 
 import { RecruiterRegisterPage } from '../recruiter-register/recruiter-register';
 
-// TEMP list for type ahead
-const companies = ['Intuit', 'Intu Corporation', 'Google', 'Apple', 'Microsoft', 'Adobe', 'Dell'];
+const companies = ["Intuit", "Microsoft", "Apple"];
 
+// TODO: This page isn't used at all anymore, leaving here for now because
+// this is the last remnants of the old typeahead field. We may want to use
+// it later for something (web portal).
 @Component({
   selector: 'page-recruiter-company-select',
   templateUrl: 'recruiter-company-select.html'
@@ -39,9 +41,10 @@ export class RecruiterCompanySelectPage {
       .merge(this.click$.filter(() => !this.instance.isPopupOpen()))
       .map(term => (term === '' ? companies : companies.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1)).slice(0, 10));
 
-  constructor(public navCtrl: NavController, private toastCtrl: ToastController) {
-
-  }
+  constructor(
+    public navCtrl: NavController,
+    private toastCtrl: ToastController
+  ) {}
 
   // Attempt to register the recruiter
   continueBtn() {

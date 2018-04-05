@@ -10,9 +10,9 @@ import { CompanyRegister1Page } from '../company-register/company-register-1';
 })
 export class RegisterPage {
 
-  constructor(public navCtrl: NavController) {
-
-  }
+  constructor(
+    public navCtrl: NavController
+  ) {}
 
   backBtn() {
     this.navCtrl.pop();

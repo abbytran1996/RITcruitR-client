@@ -19,7 +19,7 @@
       <form #companyForm="ngForm">
         <div class="rec-input-group-small">
           <label class="rec-label rl-primary">COMPANY NAME</label>
-          <input type="text" name="name" class="rec-input ri-primary" required [(ngModel)]="companyModel.name">
+          <input type="text" name="companyName" class="rec-input ri-primary" required [(ngModel)]="companyModel.companyName">
         </div>
         <div class="rec-input-group-small">
           <label class="rec-label rl-primary">INDUSTRIES</label>
@@ -29,8 +29,6 @@
             required
             [(ngModel)]="companyModel.industry"
             [items]="industryOptions"
-            itemValueField="id"
-            itemTextField="text"
             [canSearch]="true"
             [multiple]="true">
           </select-searchable>
@@ -43,8 +41,6 @@
             required
             [(ngModel)]="companyModel.location"
             [items]="locationOptions"
-            itemValueField="id"
-            itemTextField="text"
             [canSearch]="true"
             [multiple]="true">
           </select-searchable>

@@ -11,7 +11,10 @@ export class CompanyPhase2Page {
 
   public recruiter: RecruiterModel;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams
+  ) {
     this.recruiter= navParams.get("recruiter");
   }
 }
