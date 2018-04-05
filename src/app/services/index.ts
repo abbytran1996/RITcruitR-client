@@ -4,3 +4,4 @@ export * from './company.service';
 export * from './jobPosting.service';
 export * from './recruiter.service';
 export * from './student.service';
+export * from './data.service';

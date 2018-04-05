@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, ToastController, NavParams } from 'ionic-angular';
+import { NavController, ToastController, NavParams, Events } from 'ionic-angular';
 
 import { StudentPhase1Page } from '../student-home/student-phase-1';
 import { StudentPhase2Page } from '../student-home/student-phase-2';
@@ -31,17 +31,17 @@ import { RecruiterService } from '../../app/services/recruiter.service';
 })
 export class TabsPage {
 
-  showStudentTabs = false;
+  public showStudentTabs = false;
 
   // Student tab pages
-  studentPhase1Tab = StudentPhase1Page;
-  studentPhase2Tab = StudentPhase2Page;
-  studentPhase3Tab = StudentPhase3Page;
+  public studentPhase1Tab = StudentPhase1Page;
+  public studentPhase2Tab = StudentPhase2Page;
+  public studentPhase3Tab = StudentPhase3Page;
 
   // Company tab pages
-  companyPhase1Tab = CompanyPhase1Page;
-  companyPhase2Tab = CompanyPhase2Page;
-  companyPhase3Tab = CompanyPhase3Page;
+  public companyPhase1Tab = CompanyPhase1Page;
+  public companyPhase2Tab = CompanyPhase2Page;
+  public companyPhase3Tab = CompanyPhase3Page;
 
   private userId: any;
   private userEmail: any;
@@ -53,7 +53,7 @@ export class TabsPage {
   public studentTabParams: any;
   public recruiterTabParams: any;
 
-  constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams, private authService: AuthService, private studentService: StudentService, private recruiterService: RecruiterService) {
+  constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams, private authService: AuthService, private studentService: StudentService, private recruiterService: RecruiterService, public events: Events) {
     this.userId = window.localStorage.getItem('id');
     this.userEmail = window.localStorage.getItem('email');
     this.userRole = window.localStorage.getItem('role');
@@ -66,7 +66,8 @@ export class TabsPage {
 
           // Set the user in the tab params so each tab has access.
           this.studentTabParams = {student: this.student};
-          this.recruiterTabParams = {recruiter: this.recruiter};
+
+          this.events.publish('student:obtained', this.student);
         },
         error => {
           this.presentToast("An error occurred loading your account, please try again later");
@@ -80,8 +81,9 @@ export class TabsPage {
           this.showStudentTabs = false;
 
           // Set the user in the tab params so each tab has access.
-          this.studentTabParams = {student: this.student};
           this.recruiterTabParams = {recruiter: this.recruiter};
+
+          this.events.publish('recruiter:obtained', this.recruiter);
         },
         error => {
           this.presentToast("An error occurred loading your account, please try again later");
@@ -97,37 +99,46 @@ export class TabsPage {
   }
 
   // Student Links
+
+  // Edit the student skills
   editSkills() {
     this.navCtrl.push(StudentSkillsPage, {student: this.student});
   }
 
-
+  // Edit the student match preferences
   editStudentJobPreferences() {
     this.navCtrl.push(StudentJobPreferencesPage, {student: this.student});
   }
 
+  // Edit the student details (education, contact, work experience)
   editStudentDetails() {
     this.navCtrl.push(StudentProfileDetailsPage, {student: this.student});
   }
 
   // Recruiter Links
+
+  // Create a job as a recruiter
   createCompanyJob() {
     // TODO: Update the companyId below to be the actual company ID.
     this.navCtrl.push(CompanyJobCreate1Page, {companyId: 0});
   }
 
+  // Edit the details for a company
   editCompanyDetails() {
     this.navCtrl.push(CompanyDetailsPage, {companyId: 0});
   }
 
+  // Add a new recruiter to the company
   addRecruiter() {
     this.navCtrl.push(RecruiterRegisterPage, {companyId: 0});
   }
 
+  // Edit the recruiters in a company
   editRecruiters() {
 
   }
 
+  // Edit the recruiters contact info
   editContact() {
     this.navCtrl.push(RecruiterContactPage, {edit: true}); // TODO: Send the recruiter
   }

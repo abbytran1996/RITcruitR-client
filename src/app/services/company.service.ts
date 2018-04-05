@@ -11,47 +11,43 @@ export class CompanyService {
         private http: HttpClient
     ) { }
 
-    addCompany(company) {
-        return this.apiService.post('/company', company);
-    }
-
+    //=========================================================================
+    // * GET COMPANY BY ID                                                    *
+    //=========================================================================
+    // - Given a company id, returns the associated company
+    // - Expects a company id number
+    // - Returns a CompanyModel
     getCompanyById(id) {
         return this.apiService.get('/company/' + id);
     }
 
-    getCompanyByEmailSuffix(emailSuffix) {
-        return this.apiService.get('/company/email_suffix/' + emailSuffix)
-            .pipe(map(
-                data => {
-                    return data;
-                },
-                err => {
-                    return err;
-                }
-            ));
-    }
-
+    //=========================================================================
+    // * GET COMPANY BY NAME                                                  *
+    //=========================================================================
+    // - Given a company name, returns the associated company
+    // - Expects a company name string
+    // - Returns a CompanyModel
     getCompanyByName(name) {
-        return this.apiService.get('/company/company_name/' + name)
-            .pipe(map(
-                data => {
-                    return data;
-                },
-                err => {
-                    return err;
-                }
-            ));
+        return this.apiService.get('/company/company_name/' + name);
     }
 
+    //=========================================================================
+    // * ADD COMPANY                                                          *
+    //=========================================================================
+    // - Registers a new company
+    // - Expects a CompanyRegisterModel
+    // - Returns a CompanyModel
+    addCompany(company) {
+        return this.apiService.post('/company', company);
+    }
+
+    //=========================================================================
+    // * UPDATE COMPANY                                                       *
+    //=========================================================================
+    // - Updates a company
+    // - Expects a CompanyModel
+    // - Returns 200 (OK) response
     updateCompany(company) {
-        return this.apiService.put('/company/' + company.id, company)
-            .pipe(map(
-                data => {
-                    return data;
-                },
-                err => {
-                    return err;
-                }
-            ));
+        return this.apiService.put('/company/' + company.id, company);
     }
 }

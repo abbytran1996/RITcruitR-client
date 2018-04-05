@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, Events } from 'ionic-angular';
 
 import { RecruiterModel } from '../../models/recruiter.model';
 
@@ -11,7 +11,11 @@ export class CompanyPhase1Page {
 
   public recruiter: RecruiterModel;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events) {
     this.recruiter = navParams.get("recruiter");
+
+    events.subscribe('recruiter:obtained', (recruiter) => {
+      this.recruiter = recruiter;
+    });
   }
 }

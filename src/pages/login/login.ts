@@ -21,7 +21,8 @@ export class LoginPage {
   model = new LoginModel("", "");
 
   constructor(public navCtrl: NavController, private toastCtrl: ToastController, private authService: AuthService) {
-
+    this.model.username = "teststudent@example.com";
+    this.model.password = "Student1!";
   }
 
   // Called when login button is clicked, attempt to authenticate user

@@ -16,6 +16,9 @@ export class ApiService {
         return new ErrorObservable(error.error);
     }
 
+    //=========================================================================
+    // * HTTP GET                                                             *
+    //=========================================================================
     get(path: string, params: HttpParams = new HttpParams()): Observable<any> {
         return this.http.get(
           `${environment.api_url}${path}`,
@@ -23,6 +26,9 @@ export class ApiService {
         );
     }
 
+    //=========================================================================
+    // * HTTP POST                                                            *
+    //=========================================================================
     post(path: string, body: Object = {}): Observable<any> {
         return this.http.post(
             `${environment.api_url}${path}`,
@@ -30,6 +36,9 @@ export class ApiService {
         );
     }
 
+    //=========================================================================
+    // * HTTP POST WITH HEADER OPTIONS                                        *
+    //=========================================================================
     postWithOptions(path: string, body: Object = {}, options: any): Observable<any> {
         return this.http.post(
             `${environment.api_url}${path}`,
@@ -38,6 +47,9 @@ export class ApiService {
         );
     }
 
+    //=========================================================================
+    // * HTTP PUT                                                             *
+    //=========================================================================
     put(path: string, body: Object = {}): Observable<any> {
         return this.http.put(
             `${environment.api_url}${path}`,
@@ -45,6 +57,9 @@ export class ApiService {
         );
     }
 
+    //=========================================================================
+    // * HTTP DELETE                                                          *  
+    //=========================================================================
     delete(path: string): Observable<any> {
         return this.http.delete(
             `${environment.api_url}${path}`

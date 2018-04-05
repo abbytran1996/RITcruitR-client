@@ -31,10 +31,9 @@ export class StudentContactPage {
       this.isSetup = true;
     }
     else {
-      // TODO: Add call or use incoming data to set the model to the existing data.
-      this.model.contactEmail = "contact@example.com";
-      this.model.phoneNumber = "716-123-4567";
-      this.model.website = "www.example.com";
+      this.model.contactEmail = this.student.contactEmail;
+      this.model.phoneNumber = this.student.phoneNumber;
+      this.model.website = this.student.website;
     }
   }
 
@@ -60,8 +59,18 @@ export class StudentContactPage {
 
   saveClicked() {
     if (this.contactForm && this.contactForm.valid) {
-      // TODO: Call API to update contact info
-      this.navCtrl.setRoot(TabsPage, {message: "Contact Information updated successfully"});
+      this.student.updateContact(this.model);
+      this.studentService.updateStudent(this.student).subscribe(
+        data => {},
+        res => {
+          if (res.status == 200) {
+              this.navCtrl.setRoot(TabsPage, {message: "Contact Information updated successfully"});
+          }
+          else {
+            this.presentToast("There was an error updating your education details, please try again");
+          }
+        }
+      );
     }
     else {
       this.presentToast("Please enter a contact email and a phone number. Website is optional");

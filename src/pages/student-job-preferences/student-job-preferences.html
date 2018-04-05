@@ -31,36 +31,30 @@
     <ion-col>
       <form #jobPreferencesForm="ngForm">
         <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
-          <label class="rec-label rl-primary">LOCATIONS</label>
+          <label class="rec-label rl-primary">PREFERRED LOCATIONS</label>
           <select-searchable
-            name="locations"
+            name="preferredLocations"
             class="rec-input ri-primary clearfix"
-            required
-            [(ngModel)]="model.locations"
+            [(ngModel)]="model.preferredLocations"
             [items]="locationOptions"
-            itemValueField="id"
-            itemTextField="text"
             [canSearch]="true"
             [multiple]="true">
           </select-searchable>
         </div>
         <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
-          <label class="rec-label rl-primary">INDUSTRIES</label>
+          <label class="rec-label rl-primary">PREFERRED INDUSTRIES</label>
           <select-searchable
-            name="industries"
+            name="preferredIndustries"
             class="rec-input ri-primary clearfix"
-            required
-            [(ngModel)]="model.industries"
+            [(ngModel)]="model.preferredIndustries"
             [items]="industryOptions"
-            itemValueField="id"
-            itemTextField="text"
             [canSearch]="true"
             [multiple]="true">
           </select-searchable>
         </div>
         <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
-          <label class="rec-label rl-primary">COMPANY SIZE</label>
-          <ion-select name="companySize" class="rec-input ri-primary" required [(ngModel)]="model.companySize">
+          <label class="rec-label rl-primary">PREFERRED COMPANY SIZES</label>
+          <ion-select name="preferredCompanySizes" class="rec-input ri-primary" required [(ngModel)]="model.preferredCompanySizes" multiple="true">
             <ion-option *ngFor="let option of companySizeOptions" value="{{ option.id }}">{{ option.text }}</ion-option>
           </ion-select>
         </div>

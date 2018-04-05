@@ -17,55 +17,43 @@ export class StudentService {
         private http: HttpClient
     ) { }
 
-    addStudent(student) {
-      return this.apiService.post('/students', student);
-    }
-
+    //=========================================================================
+    // * GET STUDENT BY ID                                                    *
+    //=========================================================================
+    // - Given the id of a student (not a user), returns the associated student
+    // - Expects a student id number
+    // - Returns a StudentModel
     getStudentById(id) {
         return this.apiService.get('/students/' + id);
     }
 
+    //=========================================================================
+    // * GET STUDENT BY EMAIL                                                 *
+    //=========================================================================
+    // - Given a student's email, returns the associated student
+    // - Expects a student email string
+    // - Returns a StudentModel
     getStudentByEmail(email) {
         return this.apiService.get('/students/byEmail/' + email);
     }
 
+    //=========================================================================
+    // * ADD STUDENT                                                          *
+    //=========================================================================
+    // - Register a new student
+    // - Expects a StudentRegisterModel
+    // - Returns a StudentModel
+    addStudent(student) {
+      return this.apiService.post('/students', student);
+    }
+
+    //=========================================================================
+    // * UPDATE STUDENT                                                       *
+    //=========================================================================
+    // - Updates an existing student
+    // - Expects a StudentModel
+    // - Returns 200 (OK) response
     updateStudent(student) {
         return this.apiService.put('/students/' + student.id, student);
-    }
-
-    updateSkillsForStudent(student) {
-        return this.apiService.post('/students/' + student.id + '/skills', student)
-            .pipe(map(
-                data => {
-                    return data;
-                },
-                err => {
-                    return err;
-                }
-            ));
-    }
-
-    uploadResume(id, resume) {
-        return this.apiService.put('/students/' + id + '/uploadResume', resume)
-            .pipe(map(
-                data => {
-                    return data;
-                },
-                err => {
-                    return err;
-                }
-            ));
-    }
-
-    getResumeForStudent(id) {
-        return this.apiService.get('/students/' + id + '/resume')
-            .pipe(map(
-                data => {
-                    return data;
-                },
-                err => {
-                    return err;
-                }
-            ));
     }
 }

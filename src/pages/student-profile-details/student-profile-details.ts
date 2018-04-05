@@ -5,28 +5,30 @@ import { StudentEducationPage } from '../student-education/student-education';
 import { StudentContactPage } from '../student-contact/student-contact';
 import { StudentWorkExperiencePage } from '../student-work-experience/student-work-experience';
 
+import { StudentModel } from '../../models/student.model';
+
 @Component({
   selector: 'page-student-profile-details',
   templateUrl: 'student-profile-details.html'
 })
 export class StudentProfileDetailsPage {
 
-  public user: any;
+  public student: StudentModel;
 
   constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams) {
-    this.user = navParams.get("user");
+    this.student = navParams.get("student");
   }
 
   editEducation() {
-    this.navCtrl.push(StudentEducationPage, {user: this.user});
+    this.navCtrl.push(StudentEducationPage, {student: this.student});
   }
 
   editContact() {
-    this.navCtrl.push(StudentContactPage, {user: this.user});
+    this.navCtrl.push(StudentContactPage, {student: this.student});
   }
 
   editWorkExperience() {
-    this.navCtrl.push(StudentWorkExperiencePage, {user: this.user});
+    this.navCtrl.push(StudentWorkExperiencePage, {student: this.student});
   }
 
   // Navigate back to the previous screen

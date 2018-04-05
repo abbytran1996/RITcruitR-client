@@ -1,6 +1,7 @@
 import { UserModel } from './user.model';
 import { EducationDetailsModel } from './education-details.model';
 import { StudentContactModel } from './student-contact.model';
+import { StudentJobPreferencesModel } from './student-job-preferences.model';
 
 export class StudentModel {
 
@@ -18,9 +19,9 @@ export class StudentModel {
     public phoneNumber: string,
     public contactEmail: string,
     public website: string,
-    public preferredStates: any,
+    public preferredLocations: any,
     public preferredIndustries: any,
-    public preferredCompanySize: any,
+    public preferredCompanySizes: any,
     public resumeLocation: string) {
   }
 
@@ -39,9 +40,9 @@ export class StudentModel {
       apiData.phoneNumber,
       apiData.contactEmail,
       apiData.website,
-      apiData.preferredStates,
+      apiData.preferredLocations,
       apiData.preferredIndustries,
-      apiData.preferredCompanySize,
+      apiData.preferredCompanySizes,
       apiData.resumeLocation
     );
   }
@@ -57,5 +58,11 @@ export class StudentModel {
     this.contactEmail = contact.contactEmail;
     this.phoneNumber = contact.phoneNumber;
     this.website = contact.website;
+  }
+
+  public updateMatchPreferences(prefs: StudentJobPreferencesModel): void {
+    this.preferredLocations = prefs.preferredLocations;
+    this.preferredIndustries = prefs.preferredIndustries;
+    this.preferredCompanySizes = prefs.preferredCompanySizes;
   }
 }

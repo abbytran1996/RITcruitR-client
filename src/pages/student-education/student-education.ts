@@ -23,7 +23,7 @@ export class StudentEducationPage {
   @ViewChild('educationForm') educationForm;
 
   // Form model for education fields
-  model = new EducationDetailsModel("", "", "", "");
+  model = new EducationDetailsModel("", "", null, "");
 
   constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams, private studentService: StudentService) {
     this.maxYear = (new Date()).getFullYear() + 20;
@@ -34,11 +34,10 @@ export class StudentEducationPage {
       this.isSetup = true;
     }
     else {
-      // TODO: Add call or use incoming data to set the model to the existing education details.
-      this.model.school = "Rochester Institute of Technology";
-      this.model.major = "Software Engineering";
-      this.model.gpa = "3.6";
-      this.model.graduationDate = "2018-12-01";
+      this.model.school = this.student.school;
+      this.model.major = this.student.major;
+      this.model.gpa = this.student.gpa;
+      this.model.graduationDate = this.student.graduationDate.substring(0, 7);
     }
   }
 
@@ -64,8 +63,18 @@ export class StudentEducationPage {
 
   saveClicked() {
     if (this.educationForm && this.educationForm.valid) {
-      // TODO: Call API to update education details
-      this.navCtrl.setRoot(TabsPage, {message: "Education details updated successfully"});
+      this.student.updateEducation(this.model);
+      this.studentService.updateStudent(this.student).subscribe(
+        data => {},
+        res => {
+          if (res.status == 200) {
+              this.navCtrl.setRoot(TabsPage, {message: "Education details updated successfully"});
+          }
+          else {
+            this.presentToast("There was an error updating your education details, please try again");
+          }
+        }
+      );
     }
     else {
       this.presentToast("Please enter your university name, major, GPA, and expected graduation date");

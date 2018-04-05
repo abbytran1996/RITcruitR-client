@@ -7,10 +7,8 @@ import { StudentSkillsPage } from '../student-skills/student-skills';
 import { StudentJobPreferencesModel } from '../../models/student-job-preferences.model';
 import { StudentModel } from '../../models/student.model';
 
-// TEMP lists, replace with API calls
-const industries = [{text: 'Medical', id: 0}, {text: 'Food Service', id: 1}, {text: 'Transportation', id: 2}, {text: 'Hardware', id: 3}, {text: 'Software', id: 4}];
-const locations = [{text: 'Buffalo, New York', id: 0}, {text: 'Rochester, New York', id: 1}, {text: 'New York City, New York', id: 2}, {text: 'San Jose, California', id: 3}, {text: 'Seattle, Washington', id: 4}];
-const companySizes = [{text: "Startup", id: 0}, {text: "Small", id: 1}, {text: "Medium", id: 2}, {text: "Large", id: 3}, {text: "Huge", id: 4}];
+import { StudentService } from '../../app/services/student.service';
+import { DataService } from '../../app/services/data.service';
 
 @Component({
   selector: 'page-student-job-preferences',
@@ -25,33 +23,47 @@ export class StudentJobPreferencesPage {
   @ViewChild('jobPreferencesForm') jobPreferencesForm;
 
   // Form model
-  model = new StudentJobPreferencesModel([], [], null);
+  model = new StudentJobPreferencesModel([], [], []);
 
-  industryOptions = industries;
-  locationOptions = locations;
-  companySizeOptions = companySizes;
+  locationOptions = [];
+  industryOptions = [];
+  companySizeOptions = [];
 
-  constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams, private studentService: StudentService, private dataService: DataService) {
     this.student = navParams.get("student");
+
+    // Get the data for the select fields
+    this.locationOptions = this.dataService.getLocations();
+    this.industryOptions = this.dataService.getIndustries();
+    this.companySizeOptions = this.dataService.getCompanySizes();
 
     if (navParams.get("setup") == true) {
       this.isSetup = true;
     }
     else {
-      // TODO: Add call or use incoming data to set the model to the existing data.
-      this.model.industries = [{text: 'Software', id: 4}];
-      this.model.locations = [{text: 'Buffalo, New York', id: 0}];
-      this.model.companySize = 0;
+      this.model.preferredLocations = this.student.preferredLocations;
+      this.model.preferredIndustries = this.student.preferredIndustries;
+      this.model.preferredCompanySizes = this.student.preferredCompanySizes;
     }
   }
 
   continueClicked() {
     if (this.jobPreferencesForm && this.jobPreferencesForm.valid) {
-      // TODO: Call API to create preferences
-      this.navCtrl.push(StudentSkillsPage, {student: this.student, setup: true});
+      this.student.updateMatchPreferences(this.model);
+      this.studentService.updateStudent(this.student).subscribe(
+        data => {},
+        res => {
+          if (res.status == 200) {
+              this.navCtrl.push(StudentSkillsPage, {student: this.student, setup: true});
+          }
+          else {
+            this.presentToast("There was an error updating your education details, please try again");
+          }
+        }
+      );
     }
     else {
-      this.presentToast("Please select valid options for your job preferences");
+      this.presentToast("Please select at least one option for preferred company sizes");
     }
   }
 
@@ -61,11 +73,21 @@ export class StudentJobPreferencesPage {
 
   saveClicked() {
     if (this.jobPreferencesForm && this.jobPreferencesForm.valid) {
-      // TODO: Call API to update preferences
-      this.navCtrl.setRoot(TabsPage, {message: "Job Preferences updated successfully"});
+      this.student.updateMatchPreferences(this.model);
+      this.studentService.updateStudent(this.student).subscribe(
+        data => {},
+        res => {
+          if (res.status == 200) {
+              this.navCtrl.setRoot(TabsPage, {message: "Match Preferences updated successfully"});
+          }
+          else {
+            this.presentToast("There was an error updating your education details, please try again");
+          }
+        }
+      );
     }
     else {
-      this.presentToast("Please select valid options for your job preferences");
+      this.presentToast("Please select at least one option for preferred company sizes");
     }
   }
 

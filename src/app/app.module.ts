@@ -58,7 +58,8 @@ import {
   CompanyService,
   JobPostingService,
   RecruiterService,
-  StudentService
+  StudentService,
+  DataService
 } from './services';
 
 @NgModule({
@@ -159,7 +160,8 @@ import {
     CompanyService,
     JobPostingService,
     RecruiterService,
-    StudentService
+    StudentService,
+    DataService
   ]
 })
 export class AppModule {}

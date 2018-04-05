@@ -11,10 +11,30 @@ export class AuthService {
       private http: HttpClient
     ) { }
 
+    //=========================================================================
+    // * LOGIN                                                                *
+    //=========================================================================
+    // - Authenticates a user
+    // - Expects a LoginModel
+    // - Returns a UserModel
     login(user) {
       return this.apiService.post('/user/login', user);
     }
 
+    //=========================================================================
+    // * LOGOUT                                                               *
+    //=========================================================================
+    // - Removes all local storage variables for a user
+    logout() {
+        window.localStorage.removeItem('id');
+        window.localStorage.removeItem('email');
+        window.localStorage.removeItem('role');
+    }
+
+    //=========================================================================
+    // * SET LOCAL VARS                                                       *
+    //=========================================================================
+    // - Sets local storage variables for a user
     setLocalVars(user) {
       window.localStorage.setItem('id', user.id);
       window.localStorage.setItem('email', user.username);
@@ -42,11 +62,5 @@ export class AuthService {
       else if (isRecruiter) {
         window.localStorage.setItem('role', "1");
       }
-    }
-
-    logout() {
-        window.localStorage.removeItem('id');
-        window.localStorage.removeItem('email');
-        window.localStorage.removeItem('role');
     }
 }
