@@ -15,7 +15,7 @@ export class RecruiterRegisterPage {
   // ngForm object for validation control
   @ViewChild('registerForm') registerForm;
 
-  companyModel = new CompanyRegisterModel("", "", "", null, "");
+  companyModel = new CompanyRegisterModel("", [], [], null, "");
   recruiterModel = new RecruiterRegisterModel("", "", "", "", "", "", "");
   isSetup = false;
 

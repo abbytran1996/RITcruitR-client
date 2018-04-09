@@ -2,8 +2,8 @@ export class CompanyModel {
   constructor(
     public id: any,
     public companyName: string,
-    public location: any,
-    public industry: any,
+    public locations: any,
+    public industries: any,
     public size: number,
     public approvalStatus: boolean,
     public presentation: string,
@@ -17,8 +17,8 @@ export class CompanyModel {
     return new CompanyModel(
       apiData.id,
       apiData.companyName,
-      apiData.location,
-      apiData.industry,
+      apiData.locations,
+      apiData.industries,
       apiData.size,
       apiData.approvalStatus,
       apiData.presentation,

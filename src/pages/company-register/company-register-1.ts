@@ -18,7 +18,7 @@ export class CompanyRegister1Page {
   // ngForm object for validation control
   @ViewChild('companyForm') companyForm;
 
-  companyModel = new CompanyRegisterModel("", "", "", null, "");
+  companyModel = new CompanyRegisterModel("", [], [], null, "");
   industryOptions = [];
 
   constructor(

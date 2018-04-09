@@ -22,8 +22,8 @@ export class RecruiterModel {
       new CompanyModel(
         apiData.company.id,
         apiData.company.companyName,
-        apiData.company.location,
-        apiData.company.industry,
+        apiData.company.locations,
+        apiData.company.industries,
         apiData.company.size,
         apiData.company.approvalStatus,
         apiData.company.presentation,

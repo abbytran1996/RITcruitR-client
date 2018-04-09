@@ -135,17 +135,17 @@ export class TabsPage {
   // Create a job as a recruiter
   createCompanyJob() {
     // TODO: Update the companyId below to be the actual company ID.
-    this.navCtrl.push(CompanyJobCreate1Page, {companyId: 0});
+    this.navCtrl.push(CompanyJobCreate1Page, {recruiter: this.recruiter});
   }
 
   // Edit the details for a company
   editCompanyDetails() {
-    this.navCtrl.push(CompanyDetailsPage, {companyId: 0});
+    this.navCtrl.push(CompanyDetailsPage, {recruiter: this.recruiter});
   }
 
   // Add a new recruiter to the company
   addRecruiter() {
-    this.navCtrl.push(RecruiterRegisterPage, {companyId: 0});
+    this.navCtrl.push(RecruiterRegisterPage, {recruiter: this.recruiter});
   }
 
   // Edit the recruiters in a company
@@ -155,7 +155,7 @@ export class TabsPage {
 
   // Edit the recruiters contact info
   editContact() {
-    this.navCtrl.push(RecruiterContactPage, {edit: true}); // TODO: Send the recruiter
+    this.navCtrl.push(RecruiterContactPage, {recruiter: this.recruiter, edit: true});
   }
 
   // Logout the current user and return to the login screen.

@@ -28,7 +28,7 @@ export class RecruiterContactPage {
   @ViewChild('contactForm') contactForm;
 
   // Form models
-  companyModel = new CompanyRegisterModel("", "", "", null, "");
+  companyModel = new CompanyRegisterModel("", [], [], null, "");
   recruiterModel = new RecruiterRegisterModel("", "", "", "", "", "", "");
   model = new RecruiterContactModel("", "");
 
@@ -59,9 +59,6 @@ export class RecruiterContactPage {
   continueClicked() {
     if (this.contactForm && this.contactForm.valid) {
       if (this.isSetup) {
-        // TODO: When multiple locations and industries gets added, change this.
-        this.companyModel.location = this.companyModel.location[0].text;
-        this.companyModel.industry = this.companyModel.industry[0].text;
 
         /*
           Create the company

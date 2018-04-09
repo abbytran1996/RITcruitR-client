@@ -4,8 +4,10 @@ import { NavController, ToastController, NavParams } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
 
 import { CompanyModel } from '../../models/company.model';
+import { RecruiterModel } from '../../models/recruiter.model';
 
 import { DataService } from '../../app/services/data.service';
+import { CompanyService } from '../../app/services/company.service';
 
 @Component({
   selector: 'page-company-details',
@@ -22,33 +24,40 @@ export class CompanyDetailsPage {
   // ngForm object for validation control
   @ViewChild('companyForm') companyForm;
 
-  // Form model for education fields
+  // Form model
+  recruiterModel: RecruiterModel;
   companyModel = new CompanyModel(0, "", [], [], null, true, "", "", "", "", null);
 
   constructor(
     public navCtrl: NavController,
     private toastCtrl: ToastController,
     public navParams: NavParams,
-    public dataService: DataService
+    public dataService: DataService,
+    public companyService: CompanyService
   ) {
-    this.user = navParams.get("user");
+    this.recruiterModel = navParams.get("recruiter");
+    this.companyModel = this.recruiterModel.company;
+    console.log(this.companyModel);
 
     // Get the data for the select fields
     this.locationOptions = this.dataService.getLocations();
     this.industryOptions = this.dataService.getIndustries();
     this.companySizeOptions = this.dataService.getCompanySizesForCompany();
-
-    // TODO: Set these fields with actual incoming company data.
-    this.companyModel.companyName = "Intuit";
-    this.companyModel.industry = ['Software'];
-    this.companyModel.location = ['Rochester, New York', 'New York City, New York'];
-    this.companyModel.size = 4;
-    this.companyModel.websiteURL = "www.intuit.com";
   }
 
   saveClicked() {
     if (this.companyForm && this.companyForm.valid) {
-      this.navCtrl.push(TabsPage, {message: "Company details updated successfully"});
+      this.companyService.updateCompany(this.companyModel).subscribe(
+        data => {},
+        res => {
+          if (res.status == 200) {
+              this.navCtrl.push(TabsPage, {message: "Company details updated successfully"});
+          }
+          else {
+            this.presentToast("There was an error updating your education details, please try again");
+          }
+        }
+      );
     }
     else {
       this.presentToast("Please enter all company details");
