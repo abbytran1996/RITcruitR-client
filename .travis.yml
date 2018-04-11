@@ -1,0 +1,18 @@
+language: node_js
+node_js:
+  - "6"
+
+install:
+  - npm install -g cordova ionic
+  - npm install
+
+addons:
+  chrome: stable
+
+before_script:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+  - "sudo chown root /opt/google/chrome/chrome-sandbox"
+  - "sudo chmod 4755 /opt/google/chrome/chrome-sandbox"
+
+script: node_modules/karma/bin/karma start test-config/karma.conf.js --single-run
