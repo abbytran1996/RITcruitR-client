@@ -32,12 +32,12 @@
       <form #jobForm="ngForm">
         <div class="rec-input-group">
           <label class="rec-label rl-primary">JOB TITLE</label>
-          <input type="text" name="title" class="rec-input ri-primary" required [(ngModel)]="jobModel.title">
+          <input type="text" name="positionTitle" class="rec-input ri-primary" required [(ngModel)]="jobModel.positionTitle">
         </div>
         <div class="rec-input-group">
           <label class="rec-label rl-primary">JOB LOCATIONS</label>
           <ion-select name="locations" class="rec-input ri-primary" required [(ngModel)]="jobModel.locations" multiple="true">
-            <ion-option *ngFor="let option of locationOptions" value="{{ option.value }}">{{ option.text }}</ion-option>
+            <ion-option *ngFor="let option of recruiter.company.locations" value="{{ option }}">{{ option }}</ion-option>
           </ion-select>
         </div>
       </form>
@@ -48,7 +48,7 @@
   <!-- Button -->
   <ion-row class="row-buttons">
     <ion-col>
-      <button class="rec-btn-small rec-btn-primary btn-stacked center" (click)="continueClicked()">Continue</button>
+      <button class="rec-btn-small-wide rec-btn-primary btn-stacked center" (click)="continueClicked()">Continue</button>
     </ion-col>
   </ion-row>
   <!-- End Button -->

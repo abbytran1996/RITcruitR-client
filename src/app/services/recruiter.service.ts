@@ -32,6 +32,16 @@ export class RecruiterService {
     }
 
     //=========================================================================
+    // * GET RECRUITERS BY COMPANY                                            *
+    //=========================================================================
+    // - Given a company id, returns a list of recruiters
+    // - Expects a company id number
+    // - Returns a list of RecruiterModels
+    getRecruitersByCompany(companyId) {
+        return this.apiService.get('/recruiters/company/' + companyId);
+    }
+
+    //=========================================================================
     // * ADD RECRUITER                                                        *
     //=========================================================================
     // - Registers a new recruiter with a company

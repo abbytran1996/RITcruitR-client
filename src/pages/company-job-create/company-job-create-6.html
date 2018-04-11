@@ -29,7 +29,8 @@
   <!-- Message -->
   <ion-row class="row-message">
     <ion-col>
-      <h3 class="text-center no-padding">A job position will expire after the time<br>specified below. Any applicants that<br>have not completed applying before<br>the job expires, will be unable to<br>continue. Any completed applications<br>may still be viewed.</h3>
+      <!-- <h3 class="text-center no-padding">A job position will expire after the time<br>specified below. Any applicants that<br>have not completed applying before<br>the job expires, will be unable to<br>continue. Any completed applications<br>may still be viewed.</h3> -->
+      <h3 class="text-center no-padding">A job position may no longer be applied to<br>after the time specified below. Any<br>completed applications may still be viewed.<br><br>The match threshold determines how close<br>an applicant must match in order to<br>see the position and apply.</h3>
     </ion-col>
   </ion-row>
   <!-- End Message -->
@@ -38,9 +39,13 @@
   <ion-row class="row-form">
     <ion-col>
       <form #jobForm="ngForm">
-        <div class="rec-input-group">
+        <div class="rec-input-group-small">
           <label class="rec-label rl-primary">JOB DURATION (IN DAYS)</label>
           <input type="number" name="duration" class="rec-input ri-primary" required [(ngModel)]="jobModel.duration">
+        </div>
+        <div class="rec-input-group-small">
+          <label class="rec-label full-width rl-primary">MATCH THRESHOLD <ion-badge class="rec-badge float-right">{{ jobModel.matchThreshold }} %</ion-badge></label>
+            <ion-range name="matchThreshold" min="0" max="100" step="10" snaps="true" color="primary" [(ngModel)]="jobModel.matchThreshold"></ion-range>
         </div>
       </form>
     </ion-col>
@@ -50,7 +55,7 @@
   <!-- Button -->
   <ion-row class="row-buttons">
     <ion-col>
-      <button class="rec-btn-small rec-btn-primary btn-stacked center" (click)="continueClicked()">Continue</button>
+      <button class="rec-btn-small-wide rec-btn-primary btn-stacked center" (click)="continueClicked()">Continue</button>
     </ion-col>
   </ion-row>
   <!-- End Button -->

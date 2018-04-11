@@ -41,10 +41,10 @@
       <form #jobForm="ngForm">
         <div class="rec-input-group">
           <label class="rec-label rl-primary">MINIMUM GPA</label>
-          <input type="text" name="minGpa" class="rec-input ri-primary" [(ngModel)]="jobModel.minGpa">
+          <input type="number" name="minGpa" class="rec-input ri-primary" [(ngModel)]="jobModel.minGpa">
         </div>
         <div class="rec-input-group">
-          <label class="rec-label rl-primary" for="hasWorkExperienceCheck">HAS WORK EXPERIENCE</label>
+          <label class="rec-label rl-primary">HAS WORK EXPERIENCE</label>
           <ion-toggle name="hasWorkExperience" class="rec-input float-right" checked="false" [(ngModel)]="jobModel.hasWorkExperience"></ion-toggle>
         </div>
       </form>
@@ -55,7 +55,7 @@
   <!-- Button -->
   <ion-row class="row-buttons">
     <ion-col>
-      <button class="rec-btn-small rec-btn-primary btn-stacked center" (click)="continueClicked()">Continue</button>
+      <button class="rec-btn-small-wide rec-btn-primary btn-stacked center" (click)="continueClicked()">Continue</button>
     </ion-col>
   </ion-row>
   <!-- End Button -->

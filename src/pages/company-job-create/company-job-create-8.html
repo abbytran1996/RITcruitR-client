@@ -40,14 +40,14 @@
     <ion-col>
       <form #jobForm="ngForm">
         <div class="rec-input-group">
-          <label class="rec-label rl-primary">PREVIOUS VIDEO</label>
+          <label class="rec-label rl-primary">SELECT VIDEO</label>
           <ion-select name="video" class="rec-input ri-primary" required [(ngModel)]="jobModel.video">
-            <ion-option *ngFor="let option of videoOptions" value="{{ option.id }}">{{ option.text }}</ion-option>
+            <ion-option *ngFor="let option of videoOptions" value="{{ option.text }}">{{ option.text }}</ion-option>
           </ion-select>
         </div>
         <div class="rec-input-group">
           <label class="rec-label rl-primary">NEW VIDEO URL</label>
-          <input type="text" name="videoNew" class="rec-input ri-primary" required [(ngModel)]="jobModel.videoNew">
+          <input type="text" name="newVideo" class="rec-input ri-primary" required [(ngModel)]="jobModel.newVideo">
         </div>
       </form>
     </ion-col>
@@ -57,7 +57,7 @@
   <!-- Button -->
   <ion-row class="row-buttons">
     <ion-col>
-      <button class="rec-btn-small rec-btn-primary btn-stacked center" (click)="finishClicked()">Finish</button>
+      <button class="rec-btn-small-wide rec-btn-primary btn-stacked center" (click)="finishClicked()">Finish</button>
     </ion-col>
   </ion-row>
   <!-- End Button -->

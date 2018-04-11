@@ -134,7 +134,6 @@ export class TabsPage {
 
   // Create a job as a recruiter
   createCompanyJob() {
-    // TODO: Update the companyId below to be the actual company ID.
     this.navCtrl.push(CompanyJobCreate1Page, {recruiter: this.recruiter});
   }
 

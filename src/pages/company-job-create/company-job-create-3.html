@@ -38,7 +38,17 @@
   <ion-row class="row-form">
     <ion-col>
       <form #jobForm="ngForm">
-
+        <div class="rec-input-group">
+          <label class="rec-label rl-primary">REQUIRED SKILLS</label>
+          <select-searchable
+            name="requiredSkills"
+            class="rec-input ri-primary clearfix"
+            [(ngModel)]="jobModel.requiredSkills"
+            [items]="skillOptions"
+            [canSearch]="true"
+            [multiple]="true">
+          </select-searchable>
+        </div>
       </form>
     </ion-col>
   </ion-row>
@@ -47,7 +57,7 @@
   <!-- Button -->
   <ion-row class="row-buttons">
     <ion-col>
-      <button class="rec-btn-small rec-btn-primary btn-stacked center" (click)="continueClicked()">Continue</button>
+      <button class="rec-btn-small-wide rec-btn-primary btn-stacked center" (click)="continueClicked()">Continue</button>
     </ion-col>
   </ion-row>
   <!-- End Button -->

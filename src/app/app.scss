@@ -24,6 +24,10 @@
   display: block;
 }
 
+.width-100 {
+  width: 100%;
+}
+
 .block-center {
   display: block;
   width: min-content;
@@ -287,10 +291,13 @@ ion-icon.block::before {
 }
 
 .rec-btn {
-  width: 176px;
-  height: 61px;
+  // Old sizes, keeping in case there is a recent switch TODO: Remove
+  // width: 176px;
+  // height: 61px;
+  width: 250px;
+  height: 70px;
   padding-top: 5px;
-  border-radius: 35px;
+  border-radius: 50px;
   box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.15);
   background-color: map-get($colors, primary);
   color: map-get($font-button, color);
@@ -313,8 +320,11 @@ ion-icon.block::before {
 }
 
 .rec-btn-small {
-  width: 136px;
-  height: 43px;
+  // Old sizes, keeping in case there is a recent switch TODO: Remove
+  // width: 136px;
+  // height: 43px;
+  width: 156px;
+  height: 61px;
   padding-top: 5px;
   border-radius: 35px;
   box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.15);
@@ -335,6 +345,32 @@ ion-icon.block::before {
 }
 
 .rec-btn-small:disabled {
+  opacity: .5;
+}
+
+.rec-btn-small-wide {
+  width: 186px;
+  height: 60px;
+  padding-top: 5px;
+  border-radius: 35px;
+  box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.15);
+  background-color: map-get($colors, primary);
+  color: map-get($font-button-small, color);
+  font-family: map-get($font-button-small, family);
+  font-size: map-get($font-button-small, size);
+
+  transition-property: background-color;
+  transition-duration: .3s;
+}
+
+.rec-btn-small-wide:hover, .rec-btn-small-wide:active, .rec-btn-small-wide:focus {
+  background-color: saturate(map-get($colors, primary), 8%);
+
+  transition-property: background-color;
+  transition-duration: .3s;
+}
+
+.rec-btn-small-wide:disabled {
   opacity: .5;
 }
 
@@ -439,7 +475,7 @@ ion-icon.block::before {
 .rec-input[type="number"], select.rec-input, textarea.rec-input, ion-select.rec-input,
 select-searchable.rec-input, ion-datetime.rec-input {
   width: 100%;
-  height: 25px;
+  height: 35px;
   background-color: transparent;
   border: none;
   border-bottom: 2px solid map-get($colors, grey);
@@ -497,7 +533,7 @@ ion-toggle.rec-input {
 select-searchable.rec-input {
   position: relative;
   height: auto;
-  min-height: 25px;
+  min-height: 35px;
 
   .select-searchable-label {
     display: none;
@@ -611,12 +647,12 @@ select-searchable-page {
     }
 
     .toolbar-content button {
-      border-radius: 35px;
+      border-radius: 45px;
       background: $color-primary-gradient;
       font-family: map-get($font-button, family);
-      width: 60%;
+      width: 70%;
       margin: auto;
-      font-size: 20px;
+      font-size: 26px;
       text-transform: lowercase;
     }
 
@@ -696,6 +732,13 @@ ngb-typeahead-window button:last-child {
   font-size: map-get($font-input-label, size);
   color: #FFFFFF;
 }
+
+.rec-label.full-width {
+  display: block;
+  width: 100%;
+}
+
+
 
 
 
@@ -799,4 +842,97 @@ ion-toast.toast-ios {
   width: 100%;
   height: 2px;
   background-color: map-get($colors, grey);
+}
+
+.rec-badge {
+  transform: translateY(-2px);
+  padding-top: 7px;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-weight: normal;
+}
+
+ion-header.rec-header > ion-row {
+  padding-top: 4vh;
+  box-shadow: -1px 0px 5px 0px rgba(0, 0, 0, 0.15);
+  background-color: #FFFFFF;
+
+  .row-back-icon {
+    padding-top: 20px;
+
+    .ios ion-icon {
+      font-size: 60px;
+    }
+  }
+}
+
+ion-footer.button-footer {
+  ion-row {
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    box-shadow: -1px 0px 5px 0px rgba(0, 0, 0, 0.15);
+    background-color: #FFFFFF;
+  }
+}
+
+ion-footer.button-footer::before {
+  background: none;
+}
+
+
+
+
+// Platform Specific Sizing Changes
+// --------------------------------------------------
+.ios {
+  h1 {
+    font-size: map-get($font-title, size-ios);
+  }
+
+  h2 {
+    font-size: map-get($font-heading, size-ios);
+  }
+
+  h3 {
+    font-size: map-get($font-subheading, size-ios);
+  }
+
+  h4, h5, h6 {
+    font-size: map-get($font-bodybold, size-ios);
+  }
+
+  p {
+    font-size: map-get($font-body, size-ios);
+  }
+
+  a, li {
+    font-size: map-get($font-body, size-ios);
+  }
+
+  button.rec-btn {
+    width: 70vw;
+    height: 80px;
+    border-radius: 50px;
+    font-size: map-get($font-button, size-ios);
+  }
+
+  button.rec-btn-small-wide {
+    width: 60vw;
+    height: 70px;
+    border-radius: 50px;
+    font-size: map-get($font-button-small, size-ios);
+  }
+
+  .rec-input[type="text"], .rec-input[type="email"], .rec-input[type="password"],
+  .rec-input[type="number"], select.rec-input, textarea.rec-input, ion-select.rec-input,
+  select-searchable.rec-input, ion-datetime.rec-input {
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+    font-size: map-get($font-input-value, size-ios);
+  }
+
+  .rec-label {
+    font-size: map-get($font-input-label, size-ios);
+  }
 }

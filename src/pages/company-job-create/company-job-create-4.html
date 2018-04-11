@@ -29,7 +29,7 @@
   <!-- Message -->
   <ion-row class="row-message">
     <ion-col>
-      <h3 class="text-center no-padding">Add skills that are nice to have for<br>the position.</h3>
+      <h3 class="text-center no-padding">Add skills that are nice to have for<br>the position.<br><br>The nice to have skills weight determines how heavily these skills will be used for matching.</h3>
     </ion-col>
   </ion-row>
   <!-- End Message -->
@@ -38,7 +38,21 @@
   <ion-row class="row-form">
     <ion-col>
       <form #jobForm="ngForm">
-
+        <div class="rec-input-group">
+          <label class="rec-label rl-primary">NICE TO HAVE SKILLS</label>
+          <select-searchable
+            name="niceToHaveSkills"
+            class="rec-input ri-primary clearfix"
+            [(ngModel)]="jobModel.niceToHaveSkills"
+            [items]="skillOptions"
+            [canSearch]="true"
+            [multiple]="true">
+          </select-searchable>
+        </div>
+        <div class="rec-input-group">
+          <label class="rec-label full-width rl-primary">NICE TO HAVE SKILLS WEIGHT <ion-badge class="rec-badge float-right">{{ jobModel.niceToHaveSkillsWeight }} %</ion-badge></label>
+            <ion-range name="niceToHaveSkillsWeight" min="0" max="100" step="10" snaps="true" color="primary" [(ngModel)]="jobModel.niceToHaveSkillsWeight"></ion-range>
+        </div>
       </form>
     </ion-col>
   </ion-row>
@@ -47,7 +61,7 @@
   <!-- Button -->
   <ion-row class="row-buttons">
     <ion-col>
-      <button class="rec-btn-small rec-btn-primary btn-stacked center" (click)="continueClicked()">Continue</button>
+      <button class="rec-btn-small-wide rec-btn-primary btn-stacked center" (click)="continueClicked()">Continue</button>
     </ion-col>
   </ion-row>
   <!-- End Button -->

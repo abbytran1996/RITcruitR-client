@@ -3,7 +3,8 @@ import { NavController, ToastController, NavParams } from 'ionic-angular';
 
 import { CompanyJobCreate8Page } from './company-job-create-8';
 
-import { JobModel } from '../../models/job.model';
+import { NewJobModel } from '../../models/new-job.model';
+import { RecruiterModel } from '../../models/recruiter.model';
 
 @Component({
   selector: 'page-company-job-create-7',
@@ -14,21 +15,21 @@ export class CompanyJobCreate7Page {
   // ngForm object for validation control
   @ViewChild('jobForm') jobForm;
 
-  jobModel = new JobModel("", "", "", null, false, null, "", "", "");
-  companyId = undefined;
+  jobModel: NewJobModel;
+  recruiter: RecruiterModel;
 
   constructor(
     public navCtrl: NavController,
     private toastCtrl: ToastController,
     public navParams: NavParams
   ) {
-    this.companyId = navParams.get("companyId");
+    this.recruiter = navParams.get("recruiter");
     this.jobModel = navParams.get("job");
   }
 
   continueClicked() {
     if (this.jobForm && this.jobForm.valid) {
-      this.navCtrl.push(CompanyJobCreate8Page, {companyId: this.companyId, job: this.jobModel});
+      this.navCtrl.push(CompanyJobCreate8Page, {recruiter: this.recruiter, job: this.jobModel});
     }
     else {
       this.presentToast("Please enter a job problem statement");

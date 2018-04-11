@@ -3,7 +3,10 @@ import { NavController, ToastController, NavParams } from 'ionic-angular';
 
 import { CompanyJobCreate5Page } from './company-job-create-5';
 
-import { JobModel } from '../../models/job.model';
+import { NewJobModel } from '../../models/new-job.model';
+import { RecruiterModel } from '../../models/recruiter.model';
+
+import { DataService } from '../../app/services/data.service';
 
 @Component({
   selector: 'page-company-job-create-4',
@@ -14,24 +17,29 @@ export class CompanyJobCreate4Page {
   // ngForm object for validation control
   @ViewChild('jobForm') jobForm;
 
-  jobModel = new JobModel("", "", "", null, false, null, "", "", "");
-  companyId = undefined;
+  jobModel: NewJobModel;
+  recruiter: RecruiterModel;
+
+  skillOptions = [];
 
   constructor(
     public navCtrl: NavController,
     private toastCtrl: ToastController,
-    public navParams: NavParams
+    public navParams: NavParams,
+    public dataService: DataService
   ) {
-    this.companyId = navParams.get("companyId");
+    this.recruiter = navParams.get("recruiter");
     this.jobModel = navParams.get("job");
+
+    this.skillOptions = this.dataService.getSkills();
   }
 
   continueClicked() {
     if (this.jobForm && this.jobForm.valid) {
-      this.navCtrl.push(CompanyJobCreate5Page, {companyId: this.companyId, job: this.jobModel});
+      this.navCtrl.push(CompanyJobCreate5Page, {recruiter: this.recruiter, job: this.jobModel});
     }
     else {
-      this.presentToast("");
+      this.presentToast("There is a problem with the skills you have selected, please review them and try again");
     }
   }
 

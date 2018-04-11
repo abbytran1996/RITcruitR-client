@@ -26,8 +26,8 @@ export class LoginPage {
     private authService: AuthService
   ) {
     // TODO: Remove eventually, for now I'm leaving it here for simplicity with future dev
-    // this.model.username = "teststudent@example.com";
-    // this.model.password = "Student1!";
+    // this.model.username = "rec@test.com";
+    // this.model.password = "Recruiter1!";
   }
 
   // Called when login button is clicked, attempt to authenticate user
