@@ -10,7 +10,7 @@ Before you proceed, you'll need the following:
 
 1. Open the command line and run `npm install -g cordova ionic`.
 2. Clone the repository.
-3. Navigate to the repository in the command line and run `ionic serve`.
+3. Navigate to the repository in the command line and run `ionic serve`. Adding the flag `--lab` to the command will show you a mobile version of the application.
 4. Congratulations, you're done!
 
 ## Testing

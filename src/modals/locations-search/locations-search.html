@@ -1,0 +1,49 @@
+<ion-content padding>
+
+  <!-- Back Icon -->
+  <ion-row class="row-back-icon">
+    <ion-icon name="close" class="icon-link back-icon block fg-dark opacity-50" (click)="backClicked()"></ion-icon>
+  </ion-row>
+  <!-- End Back Icon -->
+
+  <!-- Title -->
+  <ion-row class="row-title">
+    <h1 class="fg-grey text-center no-padding">RecruitR</h1>
+    <h3 class="text-center no-padding">Search Locations</h3>
+  </ion-row>
+  <!-- End Title -->
+
+  <!-- Form -->
+  <ion-row class="row-form">
+    <ion-col>
+      <form #locationsForm="ngForm">
+        <div class="rec-input-group">
+          <input
+            type="text"
+            name="locations"
+            class="rec-input ri-primary"
+            required
+            [(ngModel)]="locationsModel"
+            [ngbTypeahead]="search"
+            [resultTemplate]="rt"
+            (focus)="focus$.next($event.target.value)"
+            (click)="click$.next($event.target.value)"
+            #instance="ngbTypeahead">
+          <ng-template #rt let-r="result" let-t="term">
+            {{ r }}
+          </ng-template>
+        </div>
+      </form>
+    </ion-col>
+  </ion-row>
+  <!-- End Form -->
+
+  <!-- Button -->
+  <ion-row class="row-buttons">
+    <ion-col>
+      <button class="rec-btn rec-btn-primary btn-stacked center" (click)="doneClicked()">Done</button>
+    </ion-col>
+  </ion-row>
+  <!-- End Button -->
+
+</ion-content>

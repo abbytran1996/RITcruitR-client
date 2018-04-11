@@ -1,11 +1,25 @@
+var chalk = require('chalk');
+var fs = require('fs');
 var webpack = require('webpack');
 var path = require('path');
+
+function environmentPath(env) {
+  var filePath = './src/environments/environment' + (env === 'prod' ? '' : '.' + env) + '.ts';
+  if (!fs.existsSync(filePath)) {
+      console.log(chalk.red('\n' + filePath + ' does not exist!'));
+  } else {
+      return filePath;
+  }
+}
 
 module.exports = {
   devtool: 'inline-source-map',
 
   resolve: {
-    extensions: ['.ts', '.js']
+    extensions: ['.ts', '.js'],
+    alias: {
+      '@app/env': path.resolve(environmentPath('dev'))
+    }
   },
 
   module: {

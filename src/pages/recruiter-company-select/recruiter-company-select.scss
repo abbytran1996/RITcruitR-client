@@ -1,0 +1,51 @@
+page-recruiter-company-select {
+  ion-content.content-ios, ion-content.content-md {
+    background-color: map-get($colors, light);
+  }
+
+  ion-content.content-ios {
+    .row-title {
+      margin-top: 13px;
+    }
+  }
+
+  ion-content.content-md {
+    .row-title {
+      margin-top: 6px;
+    }
+  }
+
+  .row-back-icon {
+      padding-left: 20px;
+      padding-top: 10px;
+      position: absolute;
+
+      .back-icon {
+        opacity: .6;
+      }
+  }
+
+  .row-message {
+    margin-top: 7vh;
+  }
+
+  .row-form {
+    margin-top: 4vh;
+  }
+
+  .row-button {
+    margin-top: 5vh;
+  }
+
+  .row-sep {
+    margin-top: 17vh;
+  }
+
+  .row-cta {
+    margin-top: 5vh;
+  }
+
+  .new-company-message {
+    font-size: 18px;
+  }
+}

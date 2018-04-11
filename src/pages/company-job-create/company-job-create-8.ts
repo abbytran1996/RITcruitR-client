@@ -1,0 +1,82 @@
+import { Component, ViewChild } from '@angular/core';
+import { NavController, ToastController, NavParams } from 'ionic-angular';
+
+import { TabsPage } from '../tabs/tabs';
+
+import { NewJobModel } from '../../models/new-job.model';
+import { JobModel } from '../../models/job.model';
+import { RecruiterModel } from '../../models/recruiter.model';
+
+import { JobPostingService } from '../../app/services/job-posting.service';
+
+// TEMP lists, replace with API calls
+const videos = [{text: "Company Advertisement Video", id: 0}, {text: "UI Developer Video", id: 1}];
+
+@Component({
+  selector: 'page-company-job-create-8',
+  templateUrl: 'company-job-create-8.html'
+})
+export class CompanyJobCreate8Page {
+
+  // ngForm object for validation control
+  @ViewChild('jobForm') jobForm;
+
+  jobModel: NewJobModel;
+  recruiter: RecruiterModel;
+
+  videoOptions = videos;
+
+  constructor(
+    public navCtrl: NavController,
+    private toastCtrl: ToastController,
+    public navParams: NavParams,
+    public jobPostingService: JobPostingService
+  ) {
+    this.recruiter = navParams.get("recruiter");
+    this.jobModel = navParams.get("job");
+  }
+
+  finishClicked() {
+    if (this.jobForm && (this.jobForm.controls.video.valid || this.jobForm.controls.videoNew.valid)) {
+      this.jobModel.recruiterId = this.recruiter.id;
+      this.jobModel.niceToHaveSkillsWeight = this.jobModel.niceToHaveSkillsWeight / 100;
+      this.jobModel.matchThreshold = this.jobModel.matchThreshold / 100;
+
+      // Create the job using the API
+      this.jobPostingService.addJob(this.recruiter.company.id, this.jobModel).subscribe(
+        data => {
+          let job = JobModel.createJobFromApiData(data);
+          this.navCtrl.setRoot(TabsPage, {message: "New job successfully created"});
+        },
+        error => {
+          this.presentToast("There was an error creating the job, please try again later");
+        }
+      );
+    }
+    else {
+      this.presentToast("Please select an existing video or add a new video URL");
+    }
+  }
+
+  // Navigate back to the previous screen
+  backBtn() {
+    this.navCtrl.pop();
+  }
+
+  // Present a toast message to the user
+  presentToast(message) {
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 4000,
+      position: 'top',
+      showCloseButton: true,
+      closeButtonText: ''
+    });
+
+    toast.onDidDismiss(() => {
+
+    });
+
+    toast.present();
+  }
+}
