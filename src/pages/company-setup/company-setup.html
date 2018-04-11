@@ -1,0 +1,33 @@
+<ion-content padding class="bg-full-image">
+
+    <!-- Title -->
+    <ion-row class="row-title">
+      <ion-col>
+        <h3 class="fg-accent text-center no-padding no-margin">Welcome to</h3>
+        <h1 class="fg-white text-center no-padding no-margin">RecruitR</h1>
+      </ion-col>
+    </ion-row>
+    <!-- End Title -->
+
+    <!-- Message -->
+    <ion-row class="row-message">
+      <ion-col>
+        <h3 class="fg-white no-padding text-center">
+          To get started, you can create<br>a new <span class="fg-accent">job posting</span>.
+          <br><br>
+          If your company has a profile on<br><span class="fg-accent">Handshake</span>, you can import<br>job postings directly from there.
+        </h3>
+      </ion-col>
+    </ion-row>
+    <!-- End Message -->
+
+    <!-- Buttons -->
+    <ion-row class="row-buttons">
+      <ion-col>
+        <button class="rec-btn rec-btn-white btn-stacked center" (click)="createJobClicked()">Create Job</button>
+        <button class="rec-btn rec-btn-white btn-stacked center import-job-btn" (click)="importJobClicked()">Import Job</button>
+      </ion-col>
+    </ion-row>
+    <!-- End Buttons -->
+
+</ion-content>

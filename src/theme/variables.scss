@@ -72,6 +72,7 @@ $color-primary-gradient-bg: linear-gradient(to bottom, rgba(map-get($colors, pri
 $font-title: (
     family: 'Fredoka',
     size: 40px,
+    size-ios: 46px,
     weight: normal,
     color: map-get($colors, primary)
 );
@@ -79,6 +80,7 @@ $font-title: (
 $font-heading: (
     family: Baloo,
     size: 24px,
+    size-ios: 26px,
     weight: normal,
     color: map-get($colors, primary)
 );
@@ -86,6 +88,7 @@ $font-heading: (
 $font-subheading: (
     family: Baloo,
     size: 20px,
+    size-ios: 22px,
     weight: normal,
     color: map-get($colors, primary)
 );
@@ -93,6 +96,7 @@ $font-subheading: (
 $font-bodybold: (
     family: OverpassBold,
     size: 14px,
+    size-ios: 16px,
     weight: bold,
     color: map-get($colors, dark)
 );
@@ -100,34 +104,39 @@ $font-bodybold: (
 $font-body: (
     family: Overpass,
     size: 14px,
+    size-ios: 16px,
     weight: normal,
     color: map-get($colors, dark)
 );
 
 $font-button: (
     family: Baloo,
-    size: 24px,
+    size: 28px,
+    size-ios: 30px,
     weight: normal,
     color: map-get($colors, light)
 );
 
 $font-button-small: (
     family: Baloo,
-    size: 18px,
+    size: 24px,
+    size-ios: 26px,
     weight: normal,
     color: map-get($colors, light)
 );
 
 $font-input-label: (
     family: Baloo,
-    size: 14px,
+    size: 15px,
+    size-ios: 16px,
     weight: normal,
     color: map-get($colors, secondary)
 );
 
 $font-input-value: (
     family: Overpass,
-    size: 18px,
+    size: 22px,
+    size-ios: 24px,
     weight: normal,
     color: map-get($colors, dark)
 );

@@ -1,0 +1,23 @@
+page-company-details {
+  ion-content.content-ios, ion-content.content-md {
+    background-color: map-get($colors, light);
+  }
+
+  .row-back-icon {
+      padding-left: 10px;
+      padding-top: 10px;
+      position: absolute;
+
+      .back-icon {
+        opacity: .6;
+      }
+  }
+
+  .row-form {
+    margin-top: 3vh;
+  }
+
+  .row-buttons {
+    margin-top: 4vh;
+  }
+}

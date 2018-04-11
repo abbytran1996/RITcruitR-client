@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
 import { StudentRegisterPage } from '../student-register/student-register';
-import { RecruiterCompanySelectPage } from '../recruiter-company-select/recruiter-company-select';
+import { CompanyRegister1Page } from '../company-register/company-register-1';
 
 @Component({
   selector: 'page-register',
@@ -10,9 +10,9 @@ import { RecruiterCompanySelectPage } from '../recruiter-company-select/recruite
 })
 export class RegisterPage {
 
-  constructor(public navCtrl: NavController) {
-
-  }
+  constructor(
+    public navCtrl: NavController
+  ) {}
 
   backBtn() {
     this.navCtrl.pop();
@@ -22,7 +22,7 @@ export class RegisterPage {
     this.navCtrl.push(StudentRegisterPage);
   }
 
-  recruiterBtn() {
-    this.navCtrl.push(RecruiterCompanySelectPage);
+  companyBtn() {
+    this.navCtrl.push(CompanyRegister1Page);
   }
 }

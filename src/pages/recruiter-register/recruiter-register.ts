@@ -1,8 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, ToastController, NavParams } from 'ionic-angular';
 
-import { RecruiterSetupPage } from '../recruiter-setup/recruiter-setup';
+import { RecruiterContactPage } from '../recruiter-contact/recruiter-contact';
 
+import { CompanyRegisterModel } from '../../models/company-register.model';
 import { RecruiterRegisterModel } from '../../models/recruiter-register.model';
 
 @Component({
@@ -11,23 +12,34 @@ import { RecruiterRegisterModel } from '../../models/recruiter-register.model';
 })
 export class RecruiterRegisterPage {
 
-  company = undefined;
-
-  constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams) {
-    this.company = navParams.get("company");
-    console.log(this.company);
-  }
-
   // ngForm object for validation control
   @ViewChild('registerForm') registerForm;
 
-  // Form model for register fields
-  model = new RecruiterRegisterModel("", "", "", "");
+  companyModel = new CompanyRegisterModel("", [], [], null, "");
+  recruiterModel = new RecruiterRegisterModel("", "", "", "", "", "", "");
+  isSetup = false;
+
+  constructor(
+    public navCtrl: NavController,
+    private toastCtrl: ToastController,
+    public navParams: NavParams
+  ) {
+    this.companyModel = navParams.get("company");
+
+    if (navParams.get("setup") == true) {
+      this.isSetup = true;
+    }
+  }
 
   // Attempt to register the recruiter
-  register() {
+  continueClicked() {
     if (this.registerForm && this.registerForm.valid) {
-      this.navCtrl.push(RecruiterSetupPage);
+      this.recruiterModel.passwordConfirm = this.recruiterModel.password;
+      this.navCtrl.push(RecruiterContactPage, {
+        company: this.companyModel,
+        recruiter: this.recruiterModel,
+        setup: (this.isSetup)
+      });
     }
     else {
       this.presentToast("Please enter a valid email, password, first name, and last name");
@@ -44,7 +56,9 @@ export class RecruiterRegisterPage {
     let toast = this.toastCtrl.create({
       message: message,
       duration: 4000,
-      position: 'top'
+      position: 'top',
+      showCloseButton: true,
+      closeButtonText: ''
     });
 
     toast.onDidDismiss(() => {

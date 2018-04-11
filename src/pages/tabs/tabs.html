@@ -1,5 +1,87 @@
-<ion-tabs selectedIndex="1">
-  <ion-tab [root]="accountTab" tabTitle="Account" tabIcon="person"></ion-tab>
-  <ion-tab [root]="homeTab" tabTitle="Home" tabIcon="home" [rootParams]="homeTabParams"></ion-tab>
-  <ion-tab [root]="tab3Root" tabTitle="Contact" tabIcon="people"></ion-tab>
-</ion-tabs>
+<!-- Student Content -->
+<div *ngIf="showStudentTabs">
+  <ion-menu [content]="content">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>RecruitR</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list>
+        <button ion-item menuToggle (click)="editSkills()">
+          <ion-icon name="md-construct" class="opacity-50"></ion-icon>
+          Skills
+        </button>
+        <button ion-item menuToggle (click)="editStudentJobPreferences()">
+          <ion-icon name="ios-cog" class="opacity-50"></ion-icon>
+          Match Preferences
+        </button>
+        <button ion-item menuToggle (click)="editStudentDetails()">
+          <ion-icon name="md-contact" class="opacity-50"></ion-icon>
+          Profile Details
+        </button>
+        <button ion-item menuToggle (click)="logout()">
+          <ion-icon name="ios-exit" class="opacity-50"></ion-icon>
+          Logout
+        </button>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+  <ion-tabs selectedIndex="0" #content>
+    <ion-tab [root]="studentPhase1Tab" tabTitle="Matched Jobs" tabIcon="list" [rootParams]="studentTabParams"></ion-tab>
+    <ion-tab [root]="studentPhase2Tab" tabTitle="Presentation Phase" tabIcon="videocam" [rootParams]="studentTabParams"></ion-tab>
+    <ion-tab [root]="studentPhase3Tab" tabTitle="Final Jobs" tabIcon="checkmark-circle" [rootParams]="studentTabParams"></ion-tab>
+  </ion-tabs>
+</div>
+<!-- End Student Content -->
+
+<!-- Recruiter Content -->
+<div *ngIf="!showStudentTabs">
+  <ion-menu [content]="content">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>RecruitR</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list>
+        <button ion-item menuToggle (click)="createCompanyJob()">
+          <ion-icon name="md-add-circle" class="opacity-50"></ion-icon>
+          Create Job
+        </button>
+        <button ion-item menuToggle>
+          <ion-icon name="ios-cog" class="opacity-50"></ion-icon>
+          Manage Jobs
+        </button>
+        <button ion-item menuToggle (click)="editContact()">
+          <ion-icon name="ios-call" class="opacity-50"></ion-icon>
+          Edit Contact Info
+        </button>
+        <button ion-item menuToggle (click)="editCompanyDetails()">
+          <ion-icon name="md-list" class="opacity-50"></ion-icon>
+          Company Details
+        </button>
+        <button ion-item menuToggle (click)="addRecruiter()">
+          <ion-icon name="md-contact" class="opacity-50"></ion-icon>
+          Add Recruiter
+        </button>
+        <button ion-item menuToggle (click)="editRecruiters()">
+          <ion-icon name="md-contacts" class="opacity-50"></ion-icon>
+          Manage Recruiters
+        </button>
+        <button ion-item menuToggle (click)="logout()">
+          <ion-icon name="ios-exit" class="opacity-50"></ion-icon>
+          Logout
+        </button>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+  <ion-tabs selectedIndex="0" #content>
+    <ion-tab [root]="companyPhase1Tab" tabTitle="Job Applicants" tabIcon="people" [rootParams]="recruiterTabParams"></ion-tab>
+    <ion-tab [root]="companyPhase2Tab" tabTitle="Presentation Phase" tabIcon="videocam" [rootParams]="recruiterTabParams"></ion-tab>
+    <ion-tab [root]="companyPhase3Tab" tabTitle="Final Candidates" tabIcon="checkmark-circle" [rootParams]="recruiterTabParams"></ion-tab>
+  </ion-tabs>
+</div>
+<!-- End Recruiter Content -->

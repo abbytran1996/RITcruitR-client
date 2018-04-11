@@ -1,0 +1,35 @@
+page-company-job-create-8 {
+  ion-content.content-ios, ion-content.content-md {
+    background-color: map-get($colors, light);
+  }
+
+  .row-back-icon {
+      padding-left: 20px;
+      padding-top: 10px;
+      position: absolute;
+
+      .back-icon {
+        opacity: .6;
+      }
+  }
+
+  .row-progress {
+    margin-top: 2vh;
+  }
+
+  .row-message {
+    margin-top: 3vh;
+
+    h3 {
+      font-size: 16px;
+    }
+  }
+
+  .row-form {
+    margin-top: 2vh;
+  }
+
+  .row-buttons {
+    margin-top: 7vh;
+  }
+}

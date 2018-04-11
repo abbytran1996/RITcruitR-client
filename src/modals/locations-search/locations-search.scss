@@ -1,0 +1,28 @@
+modal-locations-search {
+  ion-content.content-ios, ion-content.content-md {
+    background-color: map-get($colors, light);
+  }
+
+  .row-back-icon {
+      padding-left: 20px;
+      padding-top: 10px;
+      position: absolute;
+      margin-top: 3vh;
+
+      .back-icon {
+        opacity: .6;
+      }
+  }
+
+  .row-title {
+    margin-top: 3vh;
+  }
+
+  .row-form {
+    margin-top: 10vh;
+  }
+
+  .row-buttons {
+    margin-top: 10vh;
+  }
+}

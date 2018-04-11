@@ -20,8 +20,14 @@ export class LoginPage {
   // Form model for login fields
   model = new LoginModel("", "");
 
-  constructor(public navCtrl: NavController, private toastCtrl: ToastController, private authService: AuthService) {
-
+  constructor(
+    public navCtrl: NavController,
+    private toastCtrl: ToastController,
+    private authService: AuthService
+  ) {
+    // TODO: Remove eventually, for now I'm leaving it here for simplicity with future dev
+    // this.model.username = "rec@test.com";
+    // this.model.password = "Recruiter1!";
   }
 
   // Called when login button is clicked, attempt to authenticate user
@@ -30,8 +36,8 @@ export class LoginPage {
       // Make API call to login
       this.authService.login(this.model).subscribe(
         data => {
-          window.localStorage.setItem('id', data.id);
-          this.navCtrl.push(TabsPage, {user: data});
+          this.authService.setLocalVars(data);
+          this.navCtrl.push(TabsPage);
         },
         error => {
           this.presentToast("No user found with that email and password combination");
@@ -53,7 +59,9 @@ export class LoginPage {
     let toast = this.toastCtrl.create({
       message: message,
       duration: 4000,
-      position: 'top'
+      position: 'top',
+      showCloseButton: true,
+      closeButtonText: ''
     });
 
     toast.onDidDismiss(() => {
