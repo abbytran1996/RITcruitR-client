@@ -37,7 +37,9 @@ $colors: (
   dark:         #424242,
   grey:         #8F9090,
   valid:        #32db64,
-  invalid:      #f53d3d
+  invalid:      #f53d3d,
+  white:        #ffffff,
+  black:        #000000
 );
 
 $color-primary-gradient: linear-gradient(to right, map-get($colors, primary), map-get($colors, secondary));

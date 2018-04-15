@@ -855,7 +855,7 @@ ion-toast.toast-ios {
 ion-header.rec-header > ion-row {
   padding-top: 4vh;
   box-shadow: -1px 0px 5px 0px rgba(0, 0, 0, 0.15);
-  background-color: #FFFFFF;
+  background-color: map-get($colors, light);
 
   .row-back-icon {
     padding-top: 20px;
@@ -871,7 +871,7 @@ ion-footer.button-footer {
     padding-top: 2vh;
     padding-bottom: 2vh;
     box-shadow: -1px 0px 5px 0px rgba(0, 0, 0, 0.15);
-    background-color: #FFFFFF;
+    background-color: map-get($colors, light);
   }
 }
 

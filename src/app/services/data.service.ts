@@ -57,14 +57,13 @@ export class DataService {
       ];
     }
 
-    // TODO: Update this to pull real structured data from the API
+    //=========================================================================
+    // * GET ALL SKILLS                                                       *
+    //=========================================================================
+    // - Returns the structured list of skills
+    // - Returns a list of skills (there's no skill model because it's simple):
+    //   ex. [{"id": 1, "name": "Experience Design"}, {...}]
     getSkills() {
-      return [
-        'JavaScript',
-        'HTML',
-        'Git',
-        'Agile',
-        'Software Project Management'
-      ];
+      return this.apiService.get('/skills');
     }
 }

@@ -21,8 +21,7 @@ export class StudentModel {
     public website: string,
     public preferredLocations: any,
     public preferredIndustries: any,
-    public preferredCompanySizes: any,
-    public resumeLocation: string
+    public preferredCompanySizes: any
   ) {}
 
   public static createStudentFromApiData(apiData: any): StudentModel {
@@ -46,8 +45,7 @@ export class StudentModel {
       apiData.website,
       apiData.preferredLocations,
       apiData.preferredIndustries,
-      apiData.preferredCompanySizes,
-      apiData.resumeLocation
+      apiData.preferredCompanySizes
     );
   }
 

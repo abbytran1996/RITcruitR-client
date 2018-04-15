@@ -20,7 +20,6 @@ export class StudentSkillsPage {
   // ngForm object for validation control
   @ViewChild('skillsForm') skillsForm;
 
-  model = [];
   skillOptions = [];
 
   constructor(
@@ -30,8 +29,16 @@ export class StudentSkillsPage {
     public dataService: DataService
   ) {
     this.student = navParams.get("student");
-    
-    this.skillOptions = this.dataService.getSkills();
+
+    // Get the skills to populate the typeahead
+    this.dataService.getSkills().subscribe(
+      data => {
+        this.skillOptions = data;
+      },
+      error => {
+        this.presentToast("There was an error retrieving the list of skills, please try again");
+      }
+    );
 
     if (navParams.get("setup") == true) {
       this.isSetup = true;
