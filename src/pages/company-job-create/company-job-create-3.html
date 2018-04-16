@@ -45,6 +45,7 @@
             class="rec-input ri-primary clearfix"
             [(ngModel)]="jobModel.requiredSkills"
             [items]="skillOptions"
+            itemTextField="name"
             [canSearch]="true"
             [multiple]="true">
           </select-searchable>

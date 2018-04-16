@@ -247,6 +247,22 @@ a, li {
   color: map-get($font-body, color);
 }
 
+ul.rec-ul {
+  margin: 0;
+  list-style: none;
+
+  li::before {
+    content: "\2022";
+    font-size: 28px;
+    color: map-get($colors, primary);
+    display: inline-block;
+    width: .7em;
+    margin-left: -1em;
+    line-height: 1em;
+    transform: translateY(4px);
+  }
+}
+
 
 
 
@@ -291,9 +307,6 @@ ion-icon.block::before {
 }
 
 .rec-btn {
-  // Old sizes, keeping in case there is a recent switch TODO: Remove
-  // width: 176px;
-  // height: 61px;
   width: 250px;
   height: 70px;
   padding-top: 5px;
@@ -320,9 +333,6 @@ ion-icon.block::before {
 }
 
 .rec-btn-small {
-  // Old sizes, keeping in case there is a recent switch TODO: Remove
-  // width: 136px;
-  // height: 43px;
   width: 156px;
   height: 61px;
   padding-top: 5px;
@@ -444,6 +454,36 @@ ion-icon.block::before {
 
 .rec-btn-white:hover, .rec-btn-white:active, .rec-btn-white:focus {
   background: darken(#FFFFFF, 4%);
+
+  transition-property: background-color;
+  transition-duration: .3s;
+}
+
+.rec-btn-accept {
+  background-color: map-get($colors, accept);
+  color: #FFFFFF;
+
+  transition-property: background-color;
+  transition-duration: .3s;
+}
+
+.rec-btn-accept:hover, .rec-btn-accept:active, .rec-btn-accept:focus {
+  background: darken(map-get($colors, accept), 4%);
+
+  transition-property: background-color;
+  transition-duration: .3s;
+}
+
+.rec-btn-deny {
+  background-color: map-get($colors, deny);
+  color: #FFFFFF;
+
+  transition-property: background-color;
+  transition-duration: .3s;
+}
+
+.rec-btn-deny:hover, .rec-btn-deny:active, .rec-btn-deny:focus {
+  background: darken(map-get($colors, deny), 4%);
 
   transition-property: background-color;
   transition-duration: .3s;
@@ -814,74 +854,6 @@ ion-toast.toast-ios {
 
 
 
-// UI Elements Styles
-// --------------------------------------------------
-
-.progress-bar-label {
-  font-family: map-get($font-subheading, family);
-  color: map-get($font-subheading, color);
-  line-height: 14px;
-  font-size: 12px;
-  padding-left: 5px;
-}
-
-.progress-bar {
-  height: 22px;
-  background-color: #FFFFFF;
-  border-radius: 20px;
-  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, .08);
-}
-
-.progress-bar .bar {
-  height: 22px;
-  background: linear-gradient(to bottom, rgba(map-get($colors, secondary), .85), rgba(map-get($colors, primary), .85));
-  border-radius: 22px;
-}
-
-.sep-horizontal-1 {
-  width: 100%;
-  height: 2px;
-  background-color: map-get($colors, grey);
-}
-
-.rec-badge {
-  transform: translateY(-2px);
-  padding-top: 7px;
-  padding-left: 10px;
-  padding-right: 10px;
-  font-weight: normal;
-}
-
-ion-header.rec-header > ion-row {
-  padding-top: 4vh;
-  box-shadow: -1px 0px 5px 0px rgba(0, 0, 0, 0.15);
-  background-color: #FFFFFF;
-
-  .row-back-icon {
-    padding-top: 20px;
-
-    .ios ion-icon {
-      font-size: 60px;
-    }
-  }
-}
-
-ion-footer.button-footer {
-  ion-row {
-    padding-top: 2vh;
-    padding-bottom: 2vh;
-    box-shadow: -1px 0px 5px 0px rgba(0, 0, 0, 0.15);
-    background-color: #FFFFFF;
-  }
-}
-
-ion-footer.button-footer::before {
-  background: none;
-}
-
-
-
-
 // Platform Specific Sizing Changes
 // --------------------------------------------------
 .ios {
@@ -934,5 +906,223 @@ ion-footer.button-footer::before {
 
   .rec-label {
     font-size: map-get($font-input-label, size-ios);
+  }
+
+  .tab-button {
+    ion-icon {
+      font-size: 32px;
+      transform: translateY(-2px);
+    }
+
+    .tab-button-text {
+      font-size: 14px;
+    }
+  }
+
+  ion-navbar button.bar-buttons {
+    font-size: 22px;
+    transform: translateY(-3px);
+  }
+}
+
+
+
+
+// UI Elements Styles
+// --------------------------------------------------
+
+.progress-bar-label {
+  font-family: map-get($font-subheading, family);
+  color: map-get($font-subheading, color);
+  line-height: 14px;
+  font-size: 12px;
+  padding-left: 5px;
+}
+
+.progress-bar {
+  height: 22px;
+  background-color: #FFFFFF;
+  border-radius: 20px;
+  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, .08);
+}
+
+.progress-bar .bar {
+  height: 22px;
+  background: linear-gradient(to bottom, rgba(map-get($colors, secondary), .85), rgba(map-get($colors, primary), .85));
+  border-radius: 22px;
+}
+
+.sep-horizontal-1 {
+  width: 100%;
+  height: 2px;
+  background-color: map-get($colors, grey);
+}
+
+.rec-badge {
+  transform: translateY(-2px);
+  padding-top: 7px;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-weight: normal;
+}
+
+ion-header.rec-header > ion-row {
+  padding-top: 4vh;
+  box-shadow: -1px 0px 5px 0px rgba(0, 0, 0, 0.15);
+  background-color: map-get($colors, light);
+
+  .row-back-icon {
+    padding-top: 20px;
+
+    .ios ion-icon {
+      font-size: 60px;
+    }
+  }
+}
+
+ion-footer.button-footer {
+  ion-row {
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    box-shadow: -1px 0px 5px 0px rgba(0, 0, 0, 0.15);
+    background-color: map-get($colors, light);
+  }
+}
+
+ion-footer.button-footer::before {
+  background: none;
+}
+
+.match-list-empty {
+  width: 80%;
+  margin: auto;
+  margin-top: 4vh !important;
+
+  button {
+    margin-top: 4vh;
+  }
+
+  ion-icon {
+    font-weight: normal;
+    color: #FFFFFF;
+    width: 100%;
+    text-align: center;
+  }
+
+  .sep-horizontal-1 {
+    margin-top: 10px;
+    background-color: #FFFFFF;
+    opacity: .3;
+  }
+}
+
+.match-list {
+  height: 100%;
+  position: relative;
+}
+
+.match-card {
+  position: absolute;
+  bottom: 0px;
+  top: 0px;
+  width: 100%;
+  border-radius: 7px;
+  background-color: #FFFFFF;
+}
+
+.match-card-header {
+  height: 70px;
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
+  background-color: map-get($colors, light);
+  border-bottom: solid 2px rgba(map-get($colors, grey), .3);
+  padding-top: 12px;
+
+  h3.title {
+    margin: 0;
+    font-size: 24px;
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+.match-card-content {
+  padding: 15px;
+
+  h3.heading {
+    margin: 0;
+    font-size: 22px;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  .content-section {
+    margin-top: 10px;
+  }
+
+  .content-section:first-child {
+    margin-top: 0px;
+  }
+}
+
+.match-card-footer {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  height: 70px;
+  border-bottom-left-radius: 7px;
+  border-bottom-right-radius: 7px;
+  background-color: map-get($colors, light);
+  border-top: solid 2px rgba(map-get($colors, grey), .3);
+
+  button.rec-btn-small {
+    height: 50px;
+    font-size: 20px;
+    top: 50%;
+    position: relative;
+    transform: translateY(-50%);
+    box-shadow: none;
+  }
+
+  button.rec-btn-small:first-child {
+    margin-left: 3vw;
+  }
+
+  button.rec-btn-small:last-child {
+    margin-right: 3vw;
+  }
+
+  // Screens <= 374px wide
+  @media (max-width: 374px) {
+    button.rec-btn-small:first-child {
+      margin-left: 1vw;
+    }
+
+    button.rec-btn-small:last-child {
+      margin-right: 1vw;
+    }
+  }
+}
+
+.match-check {
+  background-color: #7CC54B;
+  width: 14px;
+  height: 14px;
+  display: inline-block;
+  border-radius: 50%;
+  border: solid 3px #BEDE7E;
+  position: relative;
+  transform: translateY(-2.5px);
+  margin-left: 4px;
+
+  ion-icon {
+    display: block;
+    color: #FFFFFF;
+    font-size: 8px;
+    text-align: center;
   }
 }

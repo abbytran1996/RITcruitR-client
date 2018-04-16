@@ -8,5 +8,51 @@
 </ion-header>
 
 <ion-content class="bg-full-image" padding>
-  <pre class="fg-white">{{ student | json }}</pre>
+  <div class="match-list" [hidden]="matchList == undefined || (matchList != undefined && matchList.length == 0)">
+    <div class="match-card">
+      <div class="match-card-header">
+        <h3 class="title fg-primary text-center">{{ match.job.positionTitle }}</h3>
+        <p class="fg-grey text-center">
+          {{ (matchPoints.industry) ? match.matchedIndustry : match.job.company.industries[0] }}
+          <span class="match-check" [hidden]="!matchPoints.industry"><ion-icon name="checkmark" class=""></ion-icon></span>
+        </p>
+      </div>
+      <div class="match-card-content">
+        <div class="locations content-section">
+          <h3 class="heading fg-dark">Locations:</h3>
+          <ul class="rec-ul">
+            <li *ngFor="let location of match.job.locations; let i = index" class="fg-dark">
+              {{ location }}
+              <span class="match-check" [hidden]="!matchPoints.locations[i]"><ion-icon name="checkmark" class=""></ion-icon></span>
+            </li>
+          </ul>
+        </div>
+        <div class="skills content-section">
+          <h3 class="heading fg-dark">Top Skills:</h3>
+          <ul class="rec-ul">
+            <li *ngFor="let skill of match.skillsToShow; let i = index">
+              {{ skill.name }}
+              <span class="match-check" [hidden]="!matchPoints.skills[i]"><ion-icon name="checkmark" class=""></ion-icon></span>
+            </li>
+          </ul>
+        </div>
+        <div class="skills content-section">
+          <h3 class="heading fg-dark">Summary:</h3>
+          <p class="fg-dark">{{ match.job.description }}</p>
+        </div>
+      </div>
+      <div class="match-card-footer">
+        <button class="rec-btn-small rec-btn-deny float-left" (click)="notInterested()">Decline</button>
+        <button class="rec-btn-small rec-btn-accept float-right" (click)="interested()">Interested</button>
+      </div>
+    </div>
+  </div>
+  <div class="match-list-empty" [hidden]="matchList != undefined && matchList.length > 0">
+    <ion-icon name="ios-cog" class=""></ion-icon>
+    <div class="sep-horizontal-1"></div>
+    <h3 class="fg-white text-center">You weren't matched with any job positions. Perhaps update your skills and job preferences to increase your number of matches.</h3>
+    <div class="sep-horizontal-1"></div>
+    <button class="rec-btn rec-btn-white btn-stacked center">Edit Skills</button>
+    <button class="rec-btn rec-btn-white btn-stacked center">Edit Job Preferences</button>
+  </div>
 </ion-content>

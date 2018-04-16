@@ -1,6 +1,6 @@
 page-student-register {
   ion-content.content-ios, ion-content.content-md {
-    background-color: map-get($colors, light);
+    background-color: map-get($colors, white);
   }
 
   ion-content.content-ios {
@@ -23,13 +23,5 @@ page-student-register {
       .back-icon {
         opacity: .6;
       }
-  }
-
-  .row-register-form {
-    margin-top: 4vh;
-  }
-
-  .row-register-button {
-    margin-top: 5vh;
   }
 }

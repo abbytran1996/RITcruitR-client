@@ -15,11 +15,12 @@ export class DataService {
     // TODO: Update this to pull real structured data from the API
     getLocations() {
       return [
-        'Buffalo, New York',
-        'Rochester, New York',
-        'New York City, New York',
-        'San Jose, California',
-        'Seattle, Washington'
+        'Buffalo, NY',
+        'Rochester, NY',
+        'New York City, NY',
+        'San Jose, CA',
+        'San Francisco, CA',
+        'Seattle, WA'
       ];
     }
 
@@ -30,7 +31,8 @@ export class DataService {
         'Food Service',
         'Banking',
         'Hardware',
-        'Financial'
+        'Financial',
+        'Social Network'
       ];
     }
 
@@ -57,14 +59,13 @@ export class DataService {
       ];
     }
 
-    // TODO: Update this to pull real structured data from the API
+    //=========================================================================
+    // * GET ALL SKILLS                                                       *
+    //=========================================================================
+    // - Returns the structured list of skills
+    // - Returns a list of skills (there's no skill model because it's simple):
+    //   ex. [{"id": 1, "name": "Experience Design"}, {...}]
     getSkills() {
-      return [
-        'JavaScript',
-        'HTML',
-        'Git',
-        'Agile',
-        'Software Project Management'
-      ];
+      return this.apiService.get('/skills');
     }
 }

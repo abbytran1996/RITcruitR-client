@@ -31,7 +31,15 @@ export class CompanyJobCreate4Page {
     this.recruiter = navParams.get("recruiter");
     this.jobModel = navParams.get("job");
 
-    this.skillOptions = this.dataService.getSkills();
+    // Get the skills to populate the typeahead
+    this.dataService.getSkills().subscribe(
+      data => {
+        this.skillOptions = data;
+      },
+      error => {
+        this.presentToast("There was an error retrieving the list of skills, please try again");
+      }
+    );
   }
 
   continueClicked() {
