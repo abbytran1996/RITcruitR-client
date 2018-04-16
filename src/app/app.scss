@@ -907,6 +907,22 @@ ion-toast.toast-ios {
   .rec-label {
     font-size: map-get($font-input-label, size-ios);
   }
+
+  .tab-button {
+    ion-icon {
+      font-size: 32px;
+      transform: translateY(-2px);
+    }
+
+    .tab-button-text {
+      font-size: 14px;
+    }
+  }
+
+  ion-navbar button.bar-buttons {
+    font-size: 22px;
+    transform: translateY(-3px);
+  }
 }
 
 
@@ -1012,71 +1028,82 @@ ion-footer.button-footer::before {
   width: 100%;
   border-radius: 7px;
   background-color: #FFFFFF;
+}
 
-  .match-card-header {
-    height: 70px;
-    border-top-left-radius: 7px;
-    border-top-right-radius: 7px;
-    background-color: map-get($colors, light);
-    border-bottom: solid 2px rgba(map-get($colors, grey), .3);
-    padding-top: 12px;
+.match-card-header {
+  height: 70px;
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
+  background-color: map-get($colors, light);
+  border-bottom: solid 2px rgba(map-get($colors, grey), .3);
+  padding-top: 12px;
 
-    h3.title {
-      margin: 0;
-      font-size: 24px;
-    }
-
-    p {
-      margin: 0;
-    }
+  h3.title {
+    margin: 0;
+    font-size: 24px;
   }
 
-  .match-card-content {
-    padding: 15px;
+  p {
+    margin: 0;
+  }
+}
 
-    h3.heading {
-      margin: 0;
-      font-size: 22px;
-    }
+.match-card-content {
+  padding: 15px;
 
-    p {
-      margin: 0;
-    }
-
-    .content-section {
-      margin-top: 10px;
-    }
-
-    .content-section:first-child {
-      margin-top: 0px;
-    }
+  h3.heading {
+    margin: 0;
+    font-size: 22px;
   }
 
-  .match-card-footer {
-    position: absolute;
-    bottom: 0px;
-    width: 100%;
-    height: 70px;
-    border-bottom-left-radius: 7px;
-    border-bottom-right-radius: 7px;
-    background-color: map-get($colors, light);
-    border-top: solid 2px rgba(map-get($colors, grey), .3);
+  p {
+    margin: 0;
+  }
 
-    button.rec-btn-small {
-      height: 50px;
-      font-size: 20px;
-      top: 50%;
-      position: relative;
-      transform: translateY(-50%);
-      box-shadow: none;
-    }
+  .content-section {
+    margin-top: 10px;
+  }
 
+  .content-section:first-child {
+    margin-top: 0px;
+  }
+}
+
+.match-card-footer {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  height: 70px;
+  border-bottom-left-radius: 7px;
+  border-bottom-right-radius: 7px;
+  background-color: map-get($colors, light);
+  border-top: solid 2px rgba(map-get($colors, grey), .3);
+
+  button.rec-btn-small {
+    height: 50px;
+    font-size: 20px;
+    top: 50%;
+    position: relative;
+    transform: translateY(-50%);
+    box-shadow: none;
+  }
+
+  button.rec-btn-small:first-child {
+    margin-left: 3vw;
+  }
+
+  button.rec-btn-small:last-child {
+    margin-right: 3vw;
+  }
+
+  // Screens <= 374px wide
+  @media (max-width: 374px) {
     button.rec-btn-small:first-child {
-      margin-left: 10px;
+      margin-left: 1vw;
     }
 
     button.rec-btn-small:last-child {
-      margin-right: 10px;
+      margin-right: 1vw;
     }
   }
 }

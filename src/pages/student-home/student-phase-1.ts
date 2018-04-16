@@ -13,7 +13,7 @@ import { StudentService } from '../../app/services/student.service';
 export class StudentPhase1Page {
 
   public student: StudentModel;
-  public matchList: Array<MatchModel>;
+  public matchList: any;
   public match: MatchModel;
   public matchIndex = 0;
   public matchPoints = {industry: false, locations: [false, false], skills: []};
