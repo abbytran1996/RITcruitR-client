@@ -247,6 +247,22 @@ a, li {
   color: map-get($font-body, color);
 }
 
+ul.rec-ul {
+  margin: 0;
+  list-style: none;
+
+  li::before {
+    content: "\2022";
+    font-size: 28px;
+    color: map-get($colors, primary);
+    display: inline-block;
+    width: .7em;
+    margin-left: -1em;
+    line-height: 1em;
+    transform: translateY(4px);
+  }
+}
+
 
 
 
@@ -291,9 +307,6 @@ ion-icon.block::before {
 }
 
 .rec-btn {
-  // Old sizes, keeping in case there is a recent switch TODO: Remove
-  // width: 176px;
-  // height: 61px;
   width: 250px;
   height: 70px;
   padding-top: 5px;
@@ -320,9 +333,6 @@ ion-icon.block::before {
 }
 
 .rec-btn-small {
-  // Old sizes, keeping in case there is a recent switch TODO: Remove
-  // width: 136px;
-  // height: 43px;
   width: 156px;
   height: 61px;
   padding-top: 5px;
@@ -444,6 +454,36 @@ ion-icon.block::before {
 
 .rec-btn-white:hover, .rec-btn-white:active, .rec-btn-white:focus {
   background: darken(#FFFFFF, 4%);
+
+  transition-property: background-color;
+  transition-duration: .3s;
+}
+
+.rec-btn-accept {
+  background-color: map-get($colors, accept);
+  color: #FFFFFF;
+
+  transition-property: background-color;
+  transition-duration: .3s;
+}
+
+.rec-btn-accept:hover, .rec-btn-accept:active, .rec-btn-accept:focus {
+  background: darken(map-get($colors, accept), 4%);
+
+  transition-property: background-color;
+  transition-duration: .3s;
+}
+
+.rec-btn-deny {
+  background-color: map-get($colors, deny);
+  color: #FFFFFF;
+
+  transition-property: background-color;
+  transition-duration: .3s;
+}
+
+.rec-btn-deny:hover, .rec-btn-deny:active, .rec-btn-deny:focus {
+  background: darken(map-get($colors, deny), 4%);
 
   transition-property: background-color;
   transition-duration: .3s;
@@ -814,6 +854,64 @@ ion-toast.toast-ios {
 
 
 
+// Platform Specific Sizing Changes
+// --------------------------------------------------
+.ios {
+  h1 {
+    font-size: map-get($font-title, size-ios);
+  }
+
+  h2 {
+    font-size: map-get($font-heading, size-ios);
+  }
+
+  h3 {
+    font-size: map-get($font-subheading, size-ios);
+  }
+
+  h4, h5, h6 {
+    font-size: map-get($font-bodybold, size-ios);
+  }
+
+  p {
+    font-size: map-get($font-body, size-ios);
+  }
+
+  a, li {
+    font-size: map-get($font-body, size-ios);
+  }
+
+  button.rec-btn {
+    width: 70vw;
+    height: 80px;
+    border-radius: 50px;
+    font-size: map-get($font-button, size-ios);
+  }
+
+  button.rec-btn-small-wide {
+    width: 60vw;
+    height: 70px;
+    border-radius: 50px;
+    font-size: map-get($font-button-small, size-ios);
+  }
+
+  .rec-input[type="text"], .rec-input[type="email"], .rec-input[type="password"],
+  .rec-input[type="number"], select.rec-input, textarea.rec-input, ion-select.rec-input,
+  select-searchable.rec-input, ion-datetime.rec-input {
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+    font-size: map-get($font-input-value, size-ios);
+  }
+
+  .rec-label {
+    font-size: map-get($font-input-label, size-ios);
+  }
+}
+
+
+
+
 // UI Elements Styles
 // --------------------------------------------------
 
@@ -879,60 +977,125 @@ ion-footer.button-footer::before {
   background: none;
 }
 
+.match-list-empty {
+  width: 80%;
+  margin: auto;
+  margin-top: 4vh !important;
 
-
-
-// Platform Specific Sizing Changes
-// --------------------------------------------------
-.ios {
-  h1 {
-    font-size: map-get($font-title, size-ios);
+  button {
+    margin-top: 4vh;
   }
 
-  h2 {
-    font-size: map-get($font-heading, size-ios);
+  ion-icon {
+    font-weight: normal;
+    color: #FFFFFF;
+    width: 100%;
+    text-align: center;
   }
 
-  h3 {
-    font-size: map-get($font-subheading, size-ios);
+  .sep-horizontal-1 {
+    margin-top: 10px;
+    background-color: #FFFFFF;
+    opacity: .3;
   }
+}
 
-  h4, h5, h6 {
-    font-size: map-get($font-bodybold, size-ios);
-  }
+.match-list {
+  height: 100%;
+  position: relative;
+}
 
-  p {
-    font-size: map-get($font-body, size-ios);
-  }
+.match-card {
+  position: absolute;
+  bottom: 0px;
+  top: 0px;
+  width: 100%;
+  border-radius: 7px;
+  background-color: #FFFFFF;
 
-  a, li {
-    font-size: map-get($font-body, size-ios);
-  }
-
-  button.rec-btn {
-    width: 70vw;
-    height: 80px;
-    border-radius: 50px;
-    font-size: map-get($font-button, size-ios);
-  }
-
-  button.rec-btn-small-wide {
-    width: 60vw;
+  .match-card-header {
     height: 70px;
-    border-radius: 50px;
-    font-size: map-get($font-button-small, size-ios);
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    background-color: map-get($colors, light);
+    border-bottom: solid 2px rgba(map-get($colors, grey), .3);
+    padding-top: 12px;
+
+    h3.title {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    p {
+      margin: 0;
+    }
   }
 
-  .rec-input[type="text"], .rec-input[type="email"], .rec-input[type="password"],
-  .rec-input[type="number"], select.rec-input, textarea.rec-input, ion-select.rec-input,
-  select-searchable.rec-input, ion-datetime.rec-input {
-    padding: 0;
-    margin: 0;
-    border-radius: 0;
-    font-size: map-get($font-input-value, size-ios);
+  .match-card-content {
+    padding: 15px;
+
+    h3.heading {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    .content-section {
+      margin-top: 10px;
+    }
+
+    .content-section:first-child {
+      margin-top: 0px;
+    }
   }
 
-  .rec-label {
-    font-size: map-get($font-input-label, size-ios);
+  .match-card-footer {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    height: 70px;
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+    background-color: map-get($colors, light);
+    border-top: solid 2px rgba(map-get($colors, grey), .3);
+
+    button.rec-btn-small {
+      height: 50px;
+      font-size: 20px;
+      top: 50%;
+      position: relative;
+      transform: translateY(-50%);
+      box-shadow: none;
+    }
+
+    button.rec-btn-small:first-child {
+      margin-left: 10px;
+    }
+
+    button.rec-btn-small:last-child {
+      margin-right: 10px;
+    }
+  }
+}
+
+.match-check {
+  background-color: #7CC54B;
+  width: 14px;
+  height: 14px;
+  display: inline-block;
+  border-radius: 50%;
+  border: solid 3px #BEDE7E;
+  position: relative;
+  transform: translateY(-2.5px);
+  margin-left: 4px;
+
+  ion-icon {
+    display: block;
+    color: #FFFFFF;
+    font-size: 8px;
+    text-align: center;
   }
 }
