@@ -1,27 +1,3 @@
 page-student-register {
-  ion-content.content-ios, ion-content.content-md {
-    background-color: map-get($colors, white);
-  }
 
-  ion-content.content-ios {
-    .row-title {
-      margin-top: 13px;
-    }
-  }
-
-  ion-content.content-md {
-    .row-title {
-      margin-top: 6px;
-    }
-  }
-
-  .row-back-icon {
-      padding-left: 20px;
-      padding-top: 10px;
-      position: absolute;
-
-      .back-icon {
-        opacity: .6;
-      }
-  }
 }

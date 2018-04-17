@@ -1,36 +1,41 @@
-<ion-content padding>
+<ion-header class="rec-header">
+  <ion-row>
+    <!-- Back Icon -->
+    <ion-row class="row-back-icon">
+      <ion-icon name="arrow-round-back" class="icon-link back-icon block fg-dark opacity-50" (click)="backBtn()"></ion-icon>
+    </ion-row>
+    <!-- End Back Icon -->
 
-  <!-- Back Icon -->
-  <ion-row class="row-back-icon">
-    <ion-icon name="arrow-round-back" class="icon-link back-icon block fg-dark opacity-50" (click)="backBtn()"></ion-icon>
-  </ion-row>
-  <!-- End Back Icon -->
+    <!-- Title -->
+    <ion-row class="row-title">
+      <h1 class="fg-grey text-center no-padding">RecruitR</h1>
+      <h3 class="text-center no-padding">Job Video</h3>
+    </ion-row>
+    <!-- End Title -->
 
-  <!-- Title -->
-  <ion-row class="row-title">
-    <h1 class="fg-grey text-center no-padding">RecruitR</h1>
-    <h3 class="text-center no-padding">Job Video</h3>
-  </ion-row>
-  <!-- End Title -->
-
-  <!-- Progress Bar -->
-  <ion-row class="row-progress">
-    <ion-col>
-      <div class="progress-bar-wrapper">
-        <p class="progress-bar-label no-margin">STEP 8 of 8</p>
-        <div class="progress-bar">
-          <div class="bar" style="width: 100%;"></div>
+    <!-- Progress Bar -->
+    <ion-row class="row-progress">
+      <ion-col>
+        <div class="progress-bar-wrapper">
+          <p class="progress-bar-label no-margin">STEP 8 of 8</p>
+          <div class="progress-bar">
+            <div class="bar" style="width: 100%;"></div>
+          </div>
         </div>
-      </div>
-    </ion-col>
+      </ion-col>
+    </ion-row>
+    <!-- End Progress Bar -->
+
   </ion-row>
-  <!-- End Progress Bar -->
+</ion-header>
+
+<ion-content padding class="rec-content bg-white">
 
   <!-- Message -->
   <ion-row class="row-message">
     <ion-col>
-      <h3 class="text-center no-padding">In one of the application phases,<br>applicants will view a video meant<br>to represent the company or the position.</h3>
-      <h3 class="text-center no-padding">A YouTuve video URL can be<br>added here, or you may select one that<br>you've already used.</h3>
+      <h3 class="text-center no-padding">In one of the application phases, applicants will view a video meant to represent the company or the position.</h3>
+      <h3 class="text-center no-padding">A YouTuve video URL can be added here, or you may select one that you've already used.</h3>
     </ion-col>
   </ion-row>
   <!-- End Message -->
@@ -54,12 +59,12 @@
   </ion-row>
   <!-- End Form -->
 
-  <!-- Button -->
-  <ion-row class="row-buttons">
-    <ion-col>
-      <button class="rec-btn-small-wide rec-btn-primary btn-stacked center" (click)="finishClicked()">Finish</button>
-    </ion-col>
-  </ion-row>
-  <!-- End Button -->
-
 </ion-content>
+
+<!-- Button Footer -->
+<ion-footer class="button-footer">
+  <ion-row>
+    <button class="rec-btn rec-btn-primary btn-stacked center" (click)="finishClicked()">Finish</button>
+  </ion-row>
+</ion-footer>
+<!-- End Button Footer -->

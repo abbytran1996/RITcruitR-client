@@ -1,39 +1,44 @@
-<ion-content padding>
+<ion-header class="rec-header">
+  <ion-row>
+    <!-- Back Icon -->
+    <ion-row class="row-back-icon">
+      <ion-icon name="arrow-round-back" class="icon-link back-icon block fg-dark opacity-50" (click)="backBtn()"></ion-icon>
+    </ion-row>
+    <!-- End Back Icon -->
 
-  <!-- Back Icon -->
-  <ion-row class="row-back-icon">
-    <ion-icon name="arrow-round-back" class="icon-link back-icon block fg-dark opacity-50" (click)="backBtn()"></ion-icon>
-  </ion-row>
-  <!-- End Back Icon -->
+    <!-- Title -->
+    <ion-row class="row-title">
+      <h1 class="fg-grey text-center no-padding">RecruitR</h1>
+      <h3 class="text-center no-padding">Work Experience</h3>
+    </ion-row>
+    <!-- End Title -->
 
-  <!-- Title -->
-  <ion-row class="row-title">
-    <h1 class="fg-grey text-center no-padding">RecruitR</h1>
-    <h3 class="text-center no-padding">Work Experience</h3>
-  </ion-row>
-  <!-- End Title -->
-
-  <!-- Progress Bar -->
-  <ion-row class="row-progress" [hidden]="!isSetup">
-    <ion-col>
-      <div class="progress-bar-wrapper">
-        <p class="progress-bar-label no-margin">STEP 5 of 5</p>
-        <div class="progress-bar">
-          <div class="bar" style="width: 100%;"></div>
+    <!-- Progress Bar -->
+    <ion-row class="row-progress" [hidden]="!isSetup">
+      <ion-col>
+        <div class="progress-bar-wrapper">
+          <p class="progress-bar-label no-margin">STEP 5 of 5</p>
+          <div class="progress-bar">
+            <div class="bar" style="width: 100%;"></div>
+          </div>
         </div>
-      </div>
-    </ion-col>
-  </ion-row>
-  <!-- End Progress Bar -->
+      </ion-col>
+    </ion-row>
+    <!-- End Progress Bar -->
 
-  <!-- Button -->
-  <ion-row class="row-buttons">
-    <ion-col>
-      <button class="rec-btn-small rec-btn-accent float-left" (click)="skipClicked()" [hidden]="!isSetup">Skip</button>
-      <button class="rec-btn-small rec-btn-primary float-right" (click)="continueClicked()" [hidden]="!isSetup">Continue</button>
-      <button class="rec-btn rec-btn-primary btn-stacked center" (click)="saveClicked()" [hidden]="isSetup">Done</button>
-    </ion-col>
   </ion-row>
-  <!-- End Button -->
+</ion-header>
+
+<ion-content padding class="rec-content bg-white">
 
 </ion-content>
+
+<!-- Button Footer -->
+<ion-footer class="button-footer">
+  <ion-row>
+    <button class="rec-btn-small rec-btn-accent float-left" (click)="skipClicked()" [hidden]="!isSetup">Skip</button>
+    <button class="rec-btn-small rec-btn-primary float-right" (click)="continueClicked()" [hidden]="!isSetup">Continue</button>
+    <button class="rec-btn rec-btn-primary btn-stacked center" (click)="saveClicked()" [hidden]="isSetup">Done</button>
+  </ion-row>
+</ion-footer>
+<!-- End Button Footer -->
