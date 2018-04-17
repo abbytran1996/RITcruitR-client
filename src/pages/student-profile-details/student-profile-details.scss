@@ -1,32 +1,6 @@
 page-student-profile-details {
-  ion-content.content-ios, ion-content.content-md {
-    background-color: map-get($colors, light);
-  }
-
-  ion-content.content-ios {
-    .row-title {
-      margin-top: 13px;
-    }
-  }
-
-  ion-content.content-md {
-    .row-title {
-      margin-top: 6px;
-    }
-  }
-
-  .row-back-icon {
-      padding-left: 20px;
-      padding-top: 10px;
-      position: absolute;
-
-      .back-icon {
-        opacity: .6;
-      }
-  }
-
   .row-message {
-    margin-top: 6vh;
+    margin-top: 2vh;
 
     h3 {
       width: 100%;
@@ -37,12 +11,36 @@ page-student-profile-details {
   }
 
   .row-buttons {
-    margin-top: 8vh;
+    margin-top: 4vh;
+    position: relative;
+  }
 
-    button {
-      margin-bottom: 6vh;
-      width: 80%;
-      height: 75px;
+  .circle-icon-btn ~ h3 {
+    font-size: 16px;
+  }
+
+  .row-one {
+    position: relative;
+
+    .circle-icon-btn-wrapper:first-child {
+      position: absolute;
+      left: 1vw;
+    }
+
+    .circle-icon-btn-wrapper:last-child {
+      position: absolute;
+      right: 1vw;
+    }
+  }
+
+  .row-two {
+    position: relative;
+
+    .circle-icon-btn-wrapper {
+      position: absolute;
+      top: 28vh;
+      left: 50%;
+      transform: translateX(-50%);
     }
   }
 }

@@ -1,8 +1,7 @@
 // http://ionicframework.com/docs/theming/
 
 
-// App Global Sass
-// --------------------------------------------------
+// --------------------------------------------------------------[ App Global ]
 
 .no-margin {
   margin: 0;
@@ -106,8 +105,7 @@
 
 
 
-// Color Styles
-// --------------------------------------------------
+// ------------------------------------------------------------[ Color Styles ]
 
 .bg-primary {
   background-color: map-get($colors, primary);
@@ -192,8 +190,7 @@
 
 
 
-// Typography Styles
-// --------------------------------------------------
+// -------------------------------------------------------[ Typography Styles ]
 
 h1 {
   font-family: map-get($font-title, family);
@@ -266,8 +263,7 @@ ul.rec-ul {
 
 
 
-// Icon Styles
-// --------------------------------------------------
+// -------------------------------------------------------------[ Icon Styles ]
 
 ion-icon.icon-ios {
   font-size: 52px;
@@ -294,8 +290,7 @@ ion-icon.block::before {
 
 
 
-// Button Styles
-// --------------------------------------------------
+// -----------------------------------------------------------[ Button Styles ]
 
 .btn-stacked {
   display: block;
@@ -492,9 +487,9 @@ ion-icon.block::before {
 
 
 
-// Input Styles
-// --------------------------------------------------
+// ------------------------------------------------------------[ Input Styles ]
 
+// Input groups (wrappers)
 .rec-input-group {
   margin-bottom: 50px;
 }
@@ -511,6 +506,7 @@ ion-icon.block::before {
   margin-bottom: 0px;
 }
 
+// Primary input build
 .rec-input[type="text"], .rec-input[type="email"], .rec-input[type="password"],
 .rec-input[type="number"], select.rec-input, textarea.rec-input, ion-select.rec-input,
 select-searchable.rec-input, ion-datetime.rec-input {
@@ -524,6 +520,7 @@ select-searchable.rec-input, ion-datetime.rec-input {
   color: map-get($font-input-value, color);
 }
 
+// Textareas
 textarea.rec-input {
   height: 50px;
   max-height: auto;
@@ -531,6 +528,7 @@ textarea.rec-input {
   min-width: 100%;
 }
 
+// Ionic select fields
 ion-select.rec-input {
   max-width: 100%;
   position: relative;
@@ -541,11 +539,13 @@ ion-select.rec-input {
   }
 }
 
+// Ionic datetime fields
 ion-datetime.rec-input {
   position: relative;
   padding: 0 !important;
 }
 
+// Custom checkbox (uses images as checks)
 .rec-input[type="checkbox"] {
   display: none;
 }
@@ -566,10 +566,12 @@ ion-datetime.rec-input {
   background-image: url('#{$image-path}/checkboxTrue.png');
 }
 
+// Ionic toggle field
 ion-toggle.rec-input {
   transform: translateY(-3px);
 }
 
+// Searchable typeahead field
 select-searchable.rec-input {
   position: relative;
   height: auto;
@@ -604,6 +606,7 @@ select-searchable.rec-input {
   }
 }
 
+// Searchable typeahead modal/page
 select-searchable-page {
   ion-content .scroll-content {
     background-color: #F5F5F5;
@@ -703,6 +706,7 @@ select-searchable-page {
   }
 }
 
+// A "dummy" field that simply is meant to trigger a modal
 .ri-modal-trigger {
   height: 25px;
 
@@ -713,6 +717,7 @@ select-searchable-page {
   }
 }
 
+// Typeahead select field
 ngb-typeahead-window {
   background-color: #FFFFFF;
   display: block;
@@ -783,9 +788,9 @@ ngb-typeahead-window button:last-child {
 
 
 
-// Form Styles
-// --------------------------------------------------
+// -------------------------------------------------------------[ Form Styles ]
 
+// Valid style
 input.ng-touched.ng-dirty.ng-valid,
 select.ng-touched.ng-dirty.ng-valid,
 ion-select.ng-touched.ng-dirty.ng-valid,
@@ -795,6 +800,7 @@ ion-datetime.ng-dirty.ng-valid  {
   border-bottom: 2px solid map-get($colors, valid);
 }
 
+// Invalid style
 input.ng-touched.ng-dirty.ng-invalid,
 select.ng-touched.ng-dirty.ng-invalid,
 ion-select.ng-touched.ng-dirty.ng-invalid,
@@ -807,8 +813,7 @@ ion-datetime.ng-dirty.ng-invalid {
 
 
 
-// Toast Message Styles
-// --------------------------------------------------
+// ----------------------------------------------------[ Toast Message Styles ]
 
 ion-toast.toast-ios {
   top: 20px;
@@ -854,8 +859,7 @@ ion-toast.toast-ios {
 
 
 
-// Platform Specific Sizing Changes
-// --------------------------------------------------
+// ------------------------------------------[ Platform Specific Size Changes ]
 .ios {
   h1 {
     font-size: map-get($font-title, size-ios);
@@ -884,14 +888,12 @@ ion-toast.toast-ios {
   button.rec-btn {
     width: 70vw;
     height: 80px;
-    border-radius: 50px;
     font-size: map-get($font-button, size-ios);
   }
 
   button.rec-btn-small-wide {
-    width: 60vw;
+    width: 100%;
     height: 70px;
-    border-radius: 50px;
     font-size: map-get($font-button-small, size-ios);
   }
 
@@ -919,17 +921,30 @@ ion-toast.toast-ios {
     }
   }
 
-  ion-navbar button.bar-buttons {
-    font-size: 22px;
-    transform: translateY(-3px);
+  ion-navbar {
+    button.bar-buttons {
+      font-size: 20px;
+      transform: translateY(-3px) scaleY(1.2);
+    }
+
+    .toolbar-title {
+      transform: scaleY(1.1);
+    }
+  }
+}
+
+.md {
+  .header-md {
+    .row-title h1 {
+      margin-top: 13px;
+    }
   }
 }
 
 
 
 
-// UI Elements Styles
-// --------------------------------------------------
+// ----------------------------------------------[ Various UI Elements Styles ]
 
 .progress-bar-label {
   font-family: map-get($font-subheading, family);
@@ -937,6 +952,7 @@ ion-toast.toast-ios {
   line-height: 14px;
   font-size: 12px;
   padding-left: 5px;
+  margin-bottom: 2px;
 }
 
 .progress-bar {
@@ -966,9 +982,10 @@ ion-toast.toast-ios {
   font-weight: normal;
 }
 
+// Structure - Header and Footer
 ion-header.rec-header > ion-row {
   padding-top: 4vh;
-  box-shadow: -1px 0px 5px 0px rgba(0, 0, 0, 0.15);
+  box-shadow: -1px 0px 5px 0px rgba(0, 0, 0, 0.3);
   background-color: map-get($colors, light);
 
   .row-back-icon {
@@ -978,13 +995,29 @@ ion-header.rec-header > ion-row {
       font-size: 60px;
     }
   }
+
+  .row-title {
+    width: 100%;
+  }
+}
+
+ion-content.rec-content .scroll-content {
+  padding-top: 2vh !important;
+
+  .row-message {
+    margin-top: 3vh;
+
+    h3 {
+      font-size: 18px;
+    }
+  }
 }
 
 ion-footer.button-footer {
   ion-row {
     padding-top: 2vh;
     padding-bottom: 2vh;
-    box-shadow: -1px 0px 5px 0px rgba(0, 0, 0, 0.15);
+    box-shadow: -1px 0px 5px 0px rgba(0, 0, 0, 0.3);
     background-color: map-get($colors, light);
   }
 }
@@ -992,6 +1025,88 @@ ion-footer.button-footer {
 ion-footer.button-footer::before {
   background: none;
 }
+
+// TODO: Remove eventually, alternate generic page style
+// ion-header.rec-header > ion-row {
+//   padding-top: 4vh;
+//   box-shadow: -1px 0px 5px 0px rgba(0, 0, 0, 0.3);
+//   background-color: map-get($colors, primary);
+//
+//   .row-back-icon {
+//     padding-top: 20px;
+//
+//     ion-icon {
+//       color: #FFFFFF;
+//       opacity: 1;
+//     }
+//
+//     .ios ion-icon {
+//       font-size: 60px;
+//     }
+//   }
+//
+//   .row-title {
+//     width: 100%;
+//
+//     h1 {
+//       color: #FFFFFF;
+//     }
+//
+//     h3 {
+//       color: #FFFFFF;
+//     }
+//   }
+//
+//   .progress-bar-wrapper {
+//     .progress-bar-label {
+//       color: #FFFFFF;
+//     }
+//
+//     .progress-bar .bar {
+//       background: map-get($colors, secondary);
+//     }
+//   }
+// }
+//
+// ion-footer.button-footer {
+//   ion-row {
+//     padding-top: 2vh;
+//     padding-bottom: 2vh;
+//     box-shadow: -1px 0px 5px 0px rgba(0, 0, 0, 0.3);
+//     background-color: map-get($colors, primary);
+//
+//     button {
+//       background: #FFFFFF;
+//       color: map-get($colors, primary);
+//     }
+//   }
+// }
+//
+// ion-footer.button-footer::before {
+//   background: none;
+// }
+
+.row-back-icon {
+    padding-left: 20px;
+    padding-top: 10px;
+    position: absolute;
+
+    .back-icon {
+      opacity: .6;
+    }
+}
+
+.row-progress {
+  width: 90%;
+  margin: auto;
+  margin-top: 1vh;
+  margin-bottom: 1vh;
+}
+
+
+
+
+// --------------------------------------------------[ Specific Page Elements ]
 
 .match-list-empty {
   width: 80%;
@@ -1016,6 +1131,7 @@ ion-footer.button-footer::before {
   }
 }
 
+// Match Cards
 .match-list {
   height: 100%;
   position: relative;
@@ -1125,4 +1241,31 @@ ion-footer.button-footer::before {
     font-size: 8px;
     text-align: center;
   }
+}
+
+.circle-icon-btn {
+  width: 15vh;
+  height: 15vh;
+  margin: auto;
+  text-align: center;
+  line-height: 15vh;
+  border-radius: 50%;
+  background-color: map-get($colors, primary);
+  color: white;
+  border: solid 10px saturate(lighten(map-get($colors, primary), 25%), 5%);
+  box-sizing: content-box;
+  display: block;
+  font-size: 50px !important;
+  font-weight: normal !important;
+}
+
+.circle-icon-btn ~ h3 {
+  margin: 0;
+  margin-top: 20px;
+  margin-bottom: 40px;
+  color: map-get($colors, primary);
+}
+
+.circle-icon-btn ~ h3:last-child {
+  margin-bottom: 0px;
 }

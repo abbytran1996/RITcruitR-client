@@ -1,36 +1,40 @@
-<ion-content padding>
+<ion-header class="rec-header">
+  <ion-row>
+    <!-- Back Icon -->
+    <ion-row class="row-back-icon">
+      <ion-icon name="arrow-round-back" class="icon-link back-icon block fg-dark opacity-50" (click)="backBtn()"></ion-icon>
+    </ion-row>
+    <!-- End Back Icon -->
 
-  <!-- Back Icon -->
-  <ion-row class="row-back-icon">
-    <ion-icon name="arrow-round-back" class="icon-link back-icon block fg-dark opacity-50" (click)="backBtn()"></ion-icon>
-  </ion-row>
-  <!-- End Back Icon -->
+    <!-- Title -->
+    <ion-row class="row-title">
+      <h1 class="fg-grey text-center no-padding">RecruitR</h1>
+      <h3 class="text-center no-padding">Job Expiration</h3>
+    </ion-row>
+    <!-- End Title -->
 
-  <!-- Title -->
-  <ion-row class="row-title">
-    <h1 class="fg-grey text-center no-padding">RecruitR</h1>
-    <h3 class="text-center no-padding">Job Expiration</h3>
-  </ion-row>
-  <!-- End Title -->
-
-  <!-- Progress Bar -->
-  <ion-row class="row-progress">
-    <ion-col>
-      <div class="progress-bar-wrapper">
-        <p class="progress-bar-label no-margin">STEP 6 of 8</p>
-        <div class="progress-bar">
-          <div class="bar" style="width: 75%;"></div>
+    <!-- Progress Bar -->
+    <ion-row class="row-progress">
+      <ion-col>
+        <div class="progress-bar-wrapper">
+          <p class="progress-bar-label no-margin">STEP 6 of 8</p>
+          <div class="progress-bar">
+            <div class="bar" style="width: 75%;"></div>
+          </div>
         </div>
-      </div>
-    </ion-col>
+      </ion-col>
+    </ion-row>
+    <!-- End Progress Bar -->
+
   </ion-row>
-  <!-- End Progress Bar -->
+</ion-header>
+
+<ion-content padding class="rec-content bg-white">
 
   <!-- Message -->
   <ion-row class="row-message">
     <ion-col>
-      <!-- <h3 class="text-center no-padding">A job position will expire after the time<br>specified below. Any applicants that<br>have not completed applying before<br>the job expires, will be unable to<br>continue. Any completed applications<br>may still be viewed.</h3> -->
-      <h3 class="text-center no-padding">A job position may no longer be applied to<br>after the time specified below. Any<br>completed applications may still be viewed.<br><br>The match threshold determines how close<br>an applicant must match in order to<br>see the position and apply.</h3>
+      <h3 class="text-center no-padding">A job position may no longer be applied to after the time specified below. Any completed applications may still be viewed.<br><br>The match threshold determines how close an applicant must match in order to see the position and apply.</h3>
     </ion-col>
   </ion-row>
   <!-- End Message -->
@@ -52,12 +56,12 @@
   </ion-row>
   <!-- End Form -->
 
-  <!-- Button -->
-  <ion-row class="row-buttons">
-    <ion-col>
-      <button class="rec-btn-small-wide rec-btn-primary btn-stacked center" (click)="continueClicked()">Continue</button>
-    </ion-col>
-  </ion-row>
-  <!-- End Button -->
-
 </ion-content>
+
+<!-- Button Footer -->
+<ion-footer class="button-footer">
+  <ion-row>
+    <button class="rec-btn rec-btn-primary btn-stacked center" (click)="continueClicked()">Continue</button>
+  </ion-row>
+</ion-footer>
+<!-- End Button Footer -->
