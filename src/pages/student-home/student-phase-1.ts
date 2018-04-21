@@ -6,6 +6,8 @@ import { MatchModel } from '../../models/match.model';
 
 import { StudentService } from '../../app/services/student.service';
 
+const fadeTime = 400;
+
 @Component({
   selector: 'page-student-phase-1',
   templateUrl: 'student-phase-1.html'
@@ -17,6 +19,12 @@ export class StudentPhase1Page {
   public match: MatchModel;
   public matchIndex = 0;
   public matchPoints = {industry: false, locations: [false, false], skills: []};
+  public stage = 0;
+  public maxStage = 2;
+  public fadeLeft = false;
+  public fadeLeftInstant = false;
+  public fadeRight = false;
+  public fadeRightInstant = false;
 
   constructor(
     public navCtrl: NavController,
@@ -38,11 +46,49 @@ export class StudentPhase1Page {
     });
   }
 
-  interested() {
-
+  backBtn() {
+    this.stage--;
   }
 
-  notInterested() {
+  interested() {
+    if (this.stage + 1 <= this.maxStage) {
+      this.stage++;
+    }
+    else {
+      // Submit to recruiter
+      this.fadeLeft = true;
+
+      setTimeout(() => {
+        this.stage = 0;
+      }, fadeTime / 2);
+
+      setTimeout(() => {
+        this.nextMatch();
+        this.fadeLeft = false;
+        this.fadeRightInstant = true;
+
+        setTimeout(() => {
+          this.fadeRightInstant = false;
+        }, 100);
+      }, fadeTime);
+    }
+  }
+
+  decline() {
+    this.fadeLeft = true;
+
+    setTimeout(() => {
+      this.nextMatch();
+      this.fadeLeft = false;
+      this.fadeRightInstant = true;
+
+      setTimeout(() => {
+        this.fadeRightInstant = false;
+      }, 100);
+    }, fadeTime);
+  }
+
+  nextMatch() {
     if (this.matchIndex + 1 < this.matchList.length) {
       this.matchIndex = this.matchIndex + 1;
     }
@@ -50,7 +96,8 @@ export class StudentPhase1Page {
       this.matchIndex = 0;
     }
 
-    this.prepMatch();
+    this.stage = 0;
+    this.prepMatch();    
   }
 
   getNewMatches() {
@@ -60,7 +107,7 @@ export class StudentPhase1Page {
       else if (a.matchStrength > b.matchStrength) return -1;
       else return 0;
     });
-
+    console.log(this.matchList);
   }
 
   // I know this function is dusgusting, but I have it in for now for sake of

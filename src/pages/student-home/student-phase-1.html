@@ -8,43 +8,79 @@
 </ion-header>
 
 <ion-content class="bg-full-image" padding>
-  <div class="match-list" [hidden]="matchList == undefined || (matchList != undefined && matchList.length == 0)">
-    <div class="match-card">
-      <div class="match-card-header">
-        <h3 class="title fg-primary text-center">{{ match.job.positionTitle }}</h3>
-        <p class="fg-grey text-center">
-          {{ (matchPoints.industry) ? match.matchedIndustry : match.job.company.industries[0] }}
-          <span class="match-check" [hidden]="!matchPoints.industry"><ion-icon name="checkmark" class=""></ion-icon></span>
-        </p>
-      </div>
-      <div class="match-card-content">
-        <div class="locations content-section">
-          <h3 class="heading fg-dark">Locations:</h3>
-          <ul class="rec-ul">
-            <li *ngFor="let location of match.job.locations; let i = index" class="fg-dark">
-              {{ location }}
-              <span class="match-check" [hidden]="!matchPoints.locations[i]"><ion-icon name="checkmark" class=""></ion-icon></span>
-            </li>
-          </ul>
+  <div class="match-card-container">
+    <div class="match-list" [hidden]="matchList == undefined || (matchList != undefined && matchList.length == 0)">
+
+      <!-- Match Card -->
+      <div class="match-card" [ngClass]="{'fade-left': fadeLeft, 'fade-right': fadeRight, 'fade-left-instant': fadeLeftInstant, 'fade-right-instant': fadeRightInstant}">
+        <!-- Card Header -->
+        <div class="match-card-header">
+          <ion-icon name="arrow-round-back" class="icon-link back-icon block fg-dark opacity-50" (click)="backBtn()" [hidden]="stage == 0"></ion-icon>
+          <h3 class="title fg-primary text-center">{{ match.job.positionTitle }}</h3>
+          <p class="fg-grey text-center">
+            {{ (matchPoints.industry) ? match.matchedIndustry : match.job.company.industries[0] }}
+            <span class="match-check" [hidden]="!matchPoints.industry"><ion-icon name="checkmark" class=""></ion-icon></span>
+          </p>
         </div>
-        <div class="skills content-section">
-          <h3 class="heading fg-dark">Top Skills:</h3>
-          <ul class="rec-ul">
-            <li *ngFor="let skill of match.skillsToShow; let i = index">
-              {{ skill.name }}
-              <span class="match-check" [hidden]="!matchPoints.skills[i]"><ion-icon name="checkmark" class=""></ion-icon></span>
-            </li>
-          </ul>
+        <!-- End Card Header -->
+
+        <!-- Match Summary Card Content -->
+        <div class="match-card-content" [ngClass]="{'slide-left': stage > 0}">
+          <div class="locations content-section">
+            <h3 class="heading fg-dark"><ion-icon name="ios-pin" class="card-heading-icon"></ion-icon>Locations:</h3>
+            <ul class="rec-ul">
+              <li *ngFor="let location of match.job.locations; let i = index" class="fg-dark">
+                {{ location }}
+                <span class="match-check" [hidden]="!matchPoints.locations[i]"><ion-icon name="checkmark" class=""></ion-icon></span>
+              </li>
+            </ul>
+          </div>
+          <div class="skills content-section">
+            <h3 class="heading fg-dark"><ion-icon name="md-construct" class="card-heading-icon"></ion-icon>Top Skills:</h3>
+            <ul class="rec-ul">
+              <li *ngFor="let skill of match.skillsToShow; let i = index">
+                {{ skill.name }}
+                <span class="match-check" [hidden]="!matchPoints.skills[i]"><ion-icon name="checkmark" class=""></ion-icon></span>
+              </li>
+            </ul>
+          </div>
+          <div class="skills content-section">
+            <h3 class="heading fg-dark"><ion-icon name="ios-paper" class="card-heading-icon"></ion-icon>Summary:</h3>
+            <p class="fg-dark">{{ (match.job.description.length > 200) ? (match.job.description | slice:0:201) + '...' : (match.job.description) }}</p>
+          </div>
         </div>
-        <div class="skills content-section">
-          <h3 class="heading fg-dark">Summary:</h3>
-          <p class="fg-dark">{{ match.job.description }}</p>
+        <!-- End Match Summary Card Content -->
+
+        <!-- Company Work Statement Card Content -->
+        <div class="match-card-content" [ngClass]="{'slide-left': stage > 1, 'slide-right': stage < 1}">
+          <div class="company-work-statement content-section">
+            <h3 class="heading fg-dark">
+              <ion-icon name="md-chatboxes" class="card-heading-icon"></ion-icon>Company Work Statement:</h3>
+            <p class="fg-dark">{{ match.job.problemStatement }}</p>
+          </div>
         </div>
+        <!-- End Company Work Statement Card Content -->
+
+        <!-- Your Work Statement Card Content -->
+        <div class="match-card-content" [ngClass]="{'slide-right': stage < 2}">
+          <div class="company-work-statement content-section">
+            <h3 class="heading fg-dark">
+              <ion-icon name="md-chatboxes" class="card-heading-icon"></ion-icon>Your Work Statement:</h3>
+            <p class="fg-dark">A work statement is a short paragraph describing a project or problem you've worked on. Give recruiters an idea of the
+              work you've done and what you like to do.</p>
+          </div>
+        </div>
+        <!-- End Your Work Statement Card Content -->
+
+        <!-- Card Footer -->
+        <div class="match-card-footer">
+          <button class="rec-btn-small rec-btn-deny float-left" (click)="decline()"><ion-icon name="md-thumbs-down" class="card-heading-icon"></ion-icon>Decline</button>
+          <button class="rec-btn-small rec-btn-accept float-right" (click)="interested()">{{ (stage == maxStage) ? "Submit" : "Interested"}}<ion-icon name="md-thumbs-up" class="card-heading-icon-right"></ion-icon></button>
+        </div>
+        <!-- End Card Footer -->
       </div>
-      <div class="match-card-footer">
-        <button class="rec-btn-small rec-btn-deny float-left" (click)="notInterested()">Decline</button>
-        <button class="rec-btn-small rec-btn-accept float-right" (click)="interested()">Interested</button>
-      </div>
+      <!-- End Match Card -->
+
     </div>
   </div>
   <div class="match-list-empty" [hidden]="matchList != undefined && matchList.length > 0">
