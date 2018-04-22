@@ -8,11 +8,14 @@
 </ion-header>
 
 <ion-content class="bg-full-image" padding>
-  <div class="match-card-container">
-    <div class="match-list" [hidden]="matchList == undefined || (matchList != undefined && matchList.length == 0)">
+  <div class="match-card-container" *ngIf="matchList != undefined && (matchList != undefined && matchList.length > 0)">
+    <div class="match-list">
+      <div class="match-card-success" [ngClass]="{'fade': matchSuccessFade, 'transform': matchSuccessTransform}" [hidden]="!matchSuccess">
+        <ion-icon name="checkmark-circle" class="content" [ngClass]="{'fade': matchSuccessContentFade}"></ion-icon>
+      </div>
 
       <!-- Match Card -->
-      <div class="match-card" [ngClass]="{'fade-left': fadeLeft, 'fade-right': fadeRight, 'fade-left-instant': fadeLeftInstant, 'fade-right-instant': fadeRightInstant}">
+      <div class="match-card" [ngClass]="{'fade-left': fadeLeft, 'fade-right': fadeRight, 'fade-left-instant': fadeLeftInstant, 'fade-right-instant': fadeRightInstant}" [hidden]="hideCard">
         <!-- Card Header -->
         <div class="match-card-header">
           <ion-icon name="arrow-round-back" class="icon-link back-icon block fg-dark opacity-50" (click)="backBtn()" [hidden]="stage == 0"></ion-icon>
@@ -83,7 +86,7 @@
 
     </div>
   </div>
-  <div class="match-list-empty" [hidden]="matchList != undefined && matchList.length > 0">
+  <div class="match-list-empty" *ngIf="matchList == undefined || matchList.length == 0">
     <ion-icon name="ios-cog" class=""></ion-icon>
     <div class="sep-horizontal-1"></div>
     <h3 class="fg-white text-center">You weren't matched with any job positions. Perhaps update your skills and job preferences to increase your number of matches.</h3>

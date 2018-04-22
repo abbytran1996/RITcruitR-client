@@ -57,8 +57,14 @@ export class StudentService {
         return this.apiService.put('/students/' + student.id, student);
     }
 
+    //=========================================================================
+    // * GET NEW MATCHES                                                      *
+    //=========================================================================
+    // - Get all new job matches (phase 1)
+    // - Expects a StudentModel id number
+    // - Returns an array of MatchModels
     getNewMatches(studentId) {
-      return [
+      let matches = [
         {
           "id": 1,
           "student": {
@@ -91,7 +97,14 @@ export class StudentService {
               "website": null,
               "preferredLocations": [],
               "preferredIndustries": [],
-              "preferredCompanySizes": []
+              "preferredCompanySizes": [],
+              "presentationLinks": [
+                  {
+                      "id": 7,
+                      "title": "Personal Website",
+                      "link": "http://www.studentsite.com"
+                  }
+              ]
           },
           "job": {
               "id": 6,
@@ -133,6 +146,13 @@ export class StudentService {
               "duration": 10,
               "problemStatement": "Job problem phase text here.",
               "video": "12",
+              "presentationLinks": [
+                  {
+                      "id": 5,
+                      "title": "Test Link",
+                      "link": "http://www.google.com"
+                  }
+              ],
               "company": {
                   "id": 1,
                   "companyName": "Apple",
@@ -149,7 +169,14 @@ export class StudentService {
                   "companyDescription": "",
                   "websiteURL": "www.apple.com",
                   "emailSuffix": "",
-                  "userId": -1
+                  "userId": -1,
+                  "presentationLinks": [
+                      {
+                          "id": 5,
+                          "title": "Test Link",
+                          "link": "http://www.google.com"
+                      }
+                  ]
               },
               "recruiter": {
                   "id": 1,
@@ -228,7 +255,14 @@ export class StudentService {
               "website": null,
               "preferredLocations": [],
               "preferredIndustries": [],
-              "preferredCompanySizes": []
+              "preferredCompanySizes": [],
+              "presentationLinks": [
+                  {
+                      "id": 7,
+                      "title": "Personal Website",
+                      "link": "http://www.studentsite.com"
+                  }
+              ]
           },
           "job": {
               "id": 6,
@@ -257,6 +291,13 @@ export class StudentService {
               "duration": 7,
               "problemStatement": "This is the problem statement",
               "video": "12",
+              "presentationLinks": [
+                  {
+                      "id": 5,
+                      "title": "Test Link",
+                      "link": "http://www.google.com"
+                  }
+              ],
               "company": {
                   "id": 1,
                   "companyName": "Apple",
@@ -272,7 +313,14 @@ export class StudentService {
                   "companyDescription": "",
                   "websiteURL": "www.apple.com",
                   "emailSuffix": "",
-                  "userId": -1
+                  "userId": -1,
+                  "presentationLinks": [
+                      {
+                          "id": 5,
+                          "title": "Test Link",
+                          "link": "http://www.google.com"
+                      }
+                  ]
               },
               "recruiter": {
                   "id": 1,
@@ -320,5 +368,197 @@ export class StudentService {
           "currentPhase": "PROBLEM_WAITING_FOR_STUDENT"
         }
       ];
+
+      matches.sort((a, b) => {
+        if (a.matchStrength < b.matchStrength) return 1;
+        else if (a.matchStrength > b.matchStrength) return -1;
+        else return 0;
+      });
+
+      return matches;
+    }
+
+    //=========================================================================
+    // * GET PHASE 2 MATCHES                                                  *
+    //=========================================================================
+    // - Get all phase 2 job matches (presentation phase)
+    // - Expects a StudentModel id number
+    // - Returns an array of MatchModels
+    getPhase2Matches(studentId) {
+        let matches = [
+            {
+                "id": 1,
+                "student": {
+                    "id": 1,
+                    "firstName": "Person",
+                    "lastName": "McPersonson",
+                    "skills": [
+                        {
+                            "id": 13,
+                            "name": "HTML5"
+                        }
+                    ],
+                    "email": "student@example.com",
+                    "graduationDate": "2018-04-12",
+                    "school": "",
+                    "major": null,
+                    "gpa": 0,
+                    "user": {
+                        "id": 1,
+                        "username": "student@example.com",
+                        "roles": [
+                            {
+                                "id": 1,
+                                "name": "student"
+                            }
+                        ]
+                    },
+                    "phoneNumber": null,
+                    "contactEmail": null,
+                    "website": null,
+                    "preferredLocations": [],
+                    "preferredIndustries": [],
+                    "preferredCompanySizes": [],
+                    "presentationLinks": [
+                        {
+                            "id": 7,
+                            "title": "Personal Website",
+                            "link": "http://www.studentsite.com"
+                        }
+                    ]
+                },
+                "job": {
+                    "id": 6,
+                    "status": 0,
+                    "positionTitle": "Front End Developer",
+                    "description": "Work in an innovative and challenging agile environment at the enterprise level with a bunch of microservices. Use the latest Javascript frameworks to help people access pictures of their friends.",
+                    "locations": [
+                        "San Francisco, CA",
+                        "New York City, NY"
+                    ],
+                    "requiredSkills": [
+                        {
+                            "id": 13,
+                            "name": "HTML5"
+                        },
+                        {
+                            "id": 14,
+                            "name": "Cascading Style Sheets (CSS)"
+                        },
+                        {
+                            "id": 15,
+                            "name": "JavaScript"
+                        },
+                        {
+                            "id": 16,
+                            "name": "Git Version Control"
+                        }
+                    ],
+                    "niceToHaveSkills": [
+                        {
+                            "id": 8,
+                            "name": "Ember"
+                        }
+                    ],
+                    "niceToHaveSkillsWeight": 0.5,
+                    "minGPA": 0,
+                    "hasWorkExperience": true,
+                    "matchThreshold": 0.8,
+                    "duration": 10,
+                    "problemStatement": "Job problem phase text here.",
+                    "video": "12",
+                    "presentationLinks": [
+                        {
+                            "id": 5,
+                            "title": "Test Link",
+                            "link": "http://www.google.com"
+                        }
+                    ],
+                    "company": {
+                        "id": 1,
+                        "companyName": "Apple",
+                        "locations": [
+                            "San Francisco, CA",
+                            "New York City, NY"
+                        ],
+                        "size": 1,
+                        "industries": [
+                            "Social Network"
+                        ],
+                        "approvalStatus": false,
+                        "presentation": "",
+                        "companyDescription": "",
+                        "websiteURL": "www.apple.com",
+                        "emailSuffix": "",
+                        "userId": -1,
+                        "presentationLinks": [
+                            {
+                                "id": 5,
+                                "title": "Test Link",
+                                "link": "http://www.google.com"
+                            }
+                        ]
+                    },
+                    "recruiter": {
+                        "id": 1,
+                        "firstName": "Recruity",
+                        "lastName": "Johnson",
+                        "email": "recruiter@email.com",
+                        "company": {
+                            "id": 1,
+                            "companyName": "Apple",
+                            "locations": [
+                                "Cupertino, California"
+                            ],
+                            "size": 1,
+                            "industries": [
+                                "Hardware"
+                            ],
+                            "approvalStatus": false,
+                            "presentation": "",
+                            "companyDescription": "",
+                            "websiteURL": "www.apple.com",
+                            "emailSuffix": "",
+                            "userId": -1
+                        },
+                        "phoneNumber": "1234567890",
+                        "contactEmail": "contact@company.com",
+                        "user": {
+                            "id": 3,
+                            "username": "recruiter@email.com",
+                            "roles": [
+                                {
+                                    "id": 2,
+                                    "name": "recruiter"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "matchStrength": 0.8,
+                "tag": null,
+                "studentProblemResponse": null,
+                "studentPresentationLink": null,
+                "studentPresentationLinks": [
+                    {
+                        "id": 7,
+                        "title": "Personal Website",
+                        "link": "http://www.studentsite.com"
+                    }
+                ],
+                "viewedSinceLastUpdate": false,
+                "timeLastUpdated": "2018-04-12",
+                "applicationStatus": "IN_PROGRESS",
+                "currentPhase": "PROBLEM_WAITING_FOR_STUDENT"
+            }
+        ];
+
+        matches.sort((a, b) => {
+            if (a.matchStrength < b.matchStrength) return 1;
+            else if (a.matchStrength > b.matchStrength) return -1;
+            else return 0;
+        });
+
+        return matches;
     }
 }

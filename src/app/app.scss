@@ -102,6 +102,10 @@
   margin-bottom: 20px;
 }
 
+.fake-link {
+  cursor: pointer;
+}
+
 
 
 
@@ -1299,6 +1303,48 @@ ion-icon.card-heading-icon-right {
   font-size: .8em;
   margin-left: 6px;
   font-weight: normal;
+}
+
+.match-card-success {
+  width: 100%;
+  position: absolute;
+  height: 100%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 7px;
+  background-color: #6fbf5b;
+  z-index: 50;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  opacity: 0;
+  transition: opacity .2s ease-in-out, width .1s ease-in-out, height .1s ease-in-out, border-radius .2s ease-in-out;
+
+  &.fade {
+    opacity: 1;
+  }
+
+  &.transform {
+    width: 175px;
+    height: 175px;
+  }
+
+  .content {
+    opacity: 0;
+    left: 50%;
+    top: 50%;
+    position: relative;
+    transform: translate(-50%, -50%);
+    font-size: 90px;
+    color: white;
+    font-weight: normal;
+    transition: opacity .2s ease-in-out;
+
+    &.fade {
+      opacity: 1;
+    }
+  }
 }
 
 .match-check {

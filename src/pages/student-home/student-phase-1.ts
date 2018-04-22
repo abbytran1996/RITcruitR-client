@@ -25,24 +25,29 @@ export class StudentPhase1Page {
   public fadeLeftInstant = false;
   public fadeRight = false;
   public fadeRightInstant = false;
+  public matchSuccess = false;
+  public matchSuccessFade = false;
+  public matchSuccessTransform = false;
+  public matchSuccessContentFade = false;
+  public hideCard = false;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public events: Events,
-    private studentService: StudentService,
+    private studentService: StudentService
   ) {
     this.student= navParams.get("student");
 
     this.getNewMatches();
-    this.prepMatch();
     this.matchIndex = 0;
+    this.prepMatch();
 
     events.subscribe('student:obtained', (student) => {
       this.student = student;
       this.getNewMatches();
-      this.prepMatch();
       this.matchIndex = 0;
+      this.prepMatch();
     });
   }
 
@@ -56,21 +61,7 @@ export class StudentPhase1Page {
     }
     else {
       // Submit to recruiter
-      this.fadeLeft = true;
-
-      setTimeout(() => {
-        this.stage = 0;
-      }, fadeTime / 2);
-
-      setTimeout(() => {
-        this.nextMatch();
-        this.fadeLeft = false;
-        this.fadeRightInstant = true;
-
-        setTimeout(() => {
-          this.fadeRightInstant = false;
-        }, 100);
-      }, fadeTime);
+      this.animateSuccess();
     }
   }
 
@@ -100,14 +91,49 @@ export class StudentPhase1Page {
     this.prepMatch();    
   }
 
+  animateSuccess() {
+    this.matchSuccess = true;
+
+    setTimeout(() => {
+      this.matchSuccessFade = true;
+      this.matchSuccessTransform = true;
+      this.hideCard = true;
+
+      setTimeout(() => {
+        this.hideCard = false;
+        this.matchSuccessContentFade = true;
+        this.fadeLeft = true;
+
+        setTimeout(() => {
+          this.stage = 0;
+        }, fadeTime / 2);
+
+        setTimeout(() => {
+          this.nextMatch();
+          this.fadeLeft = false;
+          this.fadeRightInstant = true;
+
+          setTimeout(() => {
+            this.fadeRightInstant = false;
+          }, 100);
+        }, fadeTime);
+
+        setTimeout(() => {
+          this.matchSuccessFade = false;
+
+          setTimeout(() => {
+            this.matchSuccessContentFade = false;
+
+            this.matchSuccessTransform = false;
+            this.matchSuccess = false;
+          }, 200);
+        }, 300);
+      }, 100);
+    }, 100);
+  }
+
   getNewMatches() {
     this.matchList = this.studentService.getNewMatches(this.student.id);
-    this.matchList.sort((a, b) => {
-      if (a.matchStrength < b.matchStrength) return 1;
-      else if (a.matchStrength > b.matchStrength) return -1;
-      else return 0;
-    });
-    console.log(this.matchList);
   }
 
   // I know this function is dusgusting, but I have it in for now for sake of
@@ -118,6 +144,11 @@ export class StudentPhase1Page {
   prepMatch() {
     this.match = this.matchList[this.matchIndex];
     this.matchPoints = {industry: false, locations: [false, false], skills: []};
+
+    // No matches in this phase
+    if (this.match == undefined) {
+      return;
+    }
 
     // Check industry matches
     this.student.preferredIndustries.forEach(industry => {
