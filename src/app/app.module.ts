@@ -6,7 +6,6 @@ import { FormsModule }   from '@angular/forms';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { YoutubeVideoPlayer } from '@ionic-native/youtube-video-player';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { MyApp } from './app.component';
 
@@ -158,7 +157,6 @@ import {
   providers: [
     StatusBar,
     SplashScreen,
-    YoutubeVideoPlayer,
     InAppBrowser,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     HttpClientModule,
