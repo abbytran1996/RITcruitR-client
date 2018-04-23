@@ -32,6 +32,8 @@ import { RecruiterService } from '../../app/services/recruiter.service';
 export class TabsPage {
 
   public showStudentTabs = false;
+  public skillsPageEvent;
+  public prefsPageEvent;
 
   // Student tab pages
   public studentPhase1Tab = StudentPhase1Page;
@@ -105,15 +107,6 @@ export class TabsPage {
     if (message) {
       this.presentToast(message);
     }
-
-    // Setup events to show edit pages from child tabs
-    events.subscribe('tab:editSkills', (student) => {
-      this.editSkills();
-    });
-
-    events.subscribe('tab:editPrefs', (student) => {
-      this.editStudentJobPreferences();
-    });
   }
 
   /*
@@ -170,6 +163,22 @@ export class TabsPage {
   logout() {
     this.authService.logout();
     this.navCtrl.setRoot(LoginPage, {}, {animate: true, animation: "md-transition"});
+  }
+
+  ionViewDidEnter() {
+    // Setup events to show edit pages from child tabs
+    this.events.subscribe('tab:editSkills', (student) => {
+      this.editSkills();
+    });
+
+    this.events.subscribe('tab:editPrefs', (student) => {
+      this.editStudentJobPreferences();
+    });
+  }
+
+  ionViewDidLeave() {
+    this.events.unsubscribe("tab:editSkills");
+    this.events.unsubscribe("tab:editPrefs");
   }
 
   // Present a toast message to the user

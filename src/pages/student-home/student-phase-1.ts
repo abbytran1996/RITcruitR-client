@@ -46,13 +46,19 @@ export class StudentPhase1Page {
     this.getNewMatches();
     this.matchIndex = 0;
     this.prepMatch();
+  }
 
-    events.subscribe('student:obtained', (student) => {
+  ionViewDidEnter() {
+    this.events.subscribe('student:obtained', (student) => {
       this.student = student;
       this.getNewMatches();
       this.matchIndex = 0;
       this.prepMatch();
     });
+  }
+
+  ionViewDidLeave() {
+    this.events.unsubscribe("student:obtained");
   }
 
   backBtn() {
@@ -93,7 +99,7 @@ export class StudentPhase1Page {
     }
 
     this.stage = 0;
-    this.prepMatch();    
+    this.prepMatch();
   }
 
   animateSuccess() {
