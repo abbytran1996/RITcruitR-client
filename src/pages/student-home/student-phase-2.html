@@ -8,11 +8,11 @@
 </ion-header>
 
 <ion-content class="bg-full-image" padding>
+  <div class="match-card-success" [ngClass]="{'fade': matchSuccessFade, 'transform': matchSuccessTransform}" [hidden]="!matchSuccess">
+    <ion-icon name="checkmark-circle" class="content" [ngClass]="{'fade': matchSuccessContentFade}"></ion-icon>
+  </div>
   <div class="match-card-container" *ngIf="matchList != undefined && (matchList != undefined && matchList.length > 0)">
     <div class="match-list">
-      <div class="match-card-success" [ngClass]="{'fade': matchSuccessFade, 'transform': matchSuccessTransform}" [hidden]="!matchSuccess">
-        <ion-icon name="checkmark-circle" class="content" [ngClass]="{'fade': matchSuccessContentFade}"></ion-icon>
-      </div>
   
       <!-- Match Card -->
       <div class="match-card" [ngClass]="{'fade-left': fadeLeft, 'fade-right': fadeRight, 'fade-left-instant': fadeLeftInstant, 'fade-right-instant': fadeRightInstant}" [hidden]="hideCard">
@@ -26,10 +26,14 @@
   
         <!-- Company Presentation Card Content -->
         <div class="match-card-content" [ngClass]="{'slide-left': stage > 0}">
-          <div class="company-work-statement content-section">
-            <div *ngFor="let link of match.job.presentationLinks">
-              <h3 class="heading fg-dark"><ion-icon name="md-easel" class="card-heading-icon"></ion-icon>{{ link.title }}:</h3>
-              <p class="fg-dark fake-link" (click)="openLink(link.link)">{{ link.link }}</p>
+          <div class="content-section presentation-explanation">
+            <h3 class="heading fg-dark"><ion-icon name="md-easel" class="card-heading-icon"></ion-icon>Company Presentation:</h3>
+            <p class="fg-dark">Take a look at the links below to see what the company offering the job is all about. Tap a link to open it in the app.</p>
+          </div>
+          <div class="content-section">
+            <div *ngFor="let link of match.job.presentationLinks" class="presentation-link">
+              <h3 class="heading fg-dark">{{ link.title }}:</h3>
+              <p class="fg-dark fake-link" (click)="openLink(link.link)">{{ link.link }}<ion-icon name="md-open" class="presentation-link-icon"></ion-icon></p>
             </div>
           </div>
         </div>
@@ -37,11 +41,24 @@
   
         <!-- Your Presentation Card Content -->
         <div class="match-card-content" [ngClass]="{'slide-right': stage < 1}">
-          <div class="company-work-statement content-section">
-            <h3 class="heading fg-dark">
-              <ion-icon name="md-chatboxes" class="card-heading-icon"></ion-icon>Add Presentation Links:</h3>
-            <p class="fg-dark">This is your chance to show the recruiter anything of yours that you would like to share. This could be a link to a video
-            of yourself, a GitHub link, a personal website, or anything else.</p>
+          <div class="content-section">
+            <h3 class="heading fg-dark"><ion-icon name="md-easel" class="card-heading-icon"></ion-icon>Add Presentation Links:</h3>
+            <p class="fg-dark">This is your chance to show the recruiter anything of yours that you would like to share. This could be a link to a video of yourself, a GitHub link, a personal website, or anything else.</p>
+          </div>
+          <div class="content-section">
+            <ion-list class="rec-reorder-list">
+              <div class="list-header-wrapper">
+                <ion-list-header>PRESENTATION LINKS</ion-list-header>
+                <button class="rec-btn-circle-small rec-btn-primary" (click)="addLink()"><ion-icon name="md-add" class="rec-btn-icon"></ion-icon></button>
+              </div>
+              <ion-item-group reorder="true" side="start" (ionItemReorder)="$event.applyTo(linksList)">
+                <ion-item *ngFor="let item of linksList; let i = index">
+                  <h5>{{ item.title }}</h5>
+                  <p>{{ item.link }}</p>
+                  <ion-icon name="md-close-circle" class="fake-link" (click)="removeLink(i)"></ion-icon>
+                </ion-item>
+              </ion-item-group>
+            </ion-list>
           </div>
         </div>
         <!-- End Your Presentation Card Content -->

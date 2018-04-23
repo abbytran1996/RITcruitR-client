@@ -30,7 +30,8 @@ export class RecruiterModel {
         apiData.company.companyDescription,
         apiData.company.websiteURL,
         apiData.company.emailSuffix,
-        apiData.company.userId
+        apiData.company.userId,
+        apiData.company.presentationLinks
       ),
       apiData.phoneNumber,
       apiData.contactEmail,

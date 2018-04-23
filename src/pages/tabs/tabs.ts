@@ -105,6 +105,15 @@ export class TabsPage {
     if (message) {
       this.presentToast(message);
     }
+
+    // Setup events to show edit pages from child tabs
+    events.subscribe('tab:editSkills', (student) => {
+      this.editSkills();
+    });
+
+    events.subscribe('tab:editPrefs', (student) => {
+      this.editStudentJobPreferences();
+    });
   }
 
   /*

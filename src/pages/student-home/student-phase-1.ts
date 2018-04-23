@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Events } from 'ionic-angular';
+import { NavController, NavParams, Events, ToastController } from 'ionic-angular';
+
+import { StudentJobPreferencesPage } from '../student-job-preferences/student-job-preferences';
+import { StudentSkillsPage } from '../student-skills/student-skills';
 
 import { StudentModel } from '../../models/student.model';
 import { MatchModel } from '../../models/match.model';
@@ -34,6 +37,7 @@ export class StudentPhase1Page {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
+    private toastCtrl: ToastController,
     public events: Events,
     private studentService: StudentService
   ) {
@@ -60,7 +64,7 @@ export class StudentPhase1Page {
       this.stage++;
     }
     else {
-      // Submit to recruiter
+      // TODO: Make service call to update match with work statement and update stage
       this.animateSuccess();
     }
   }
@@ -69,6 +73,7 @@ export class StudentPhase1Page {
     this.fadeLeft = true;
 
     setTimeout(() => {
+      removeMatchFromArray(this.matchList, this.match);
       this.nextMatch();
       this.fadeLeft = false;
       this.fadeRightInstant = true;
@@ -109,6 +114,7 @@ export class StudentPhase1Page {
         }, fadeTime / 2);
 
         setTimeout(() => {
+          removeMatchFromArray(this.matchList, this.match);
           this.nextMatch();
           this.fadeLeft = false;
           this.fadeRightInstant = true;
@@ -120,20 +126,27 @@ export class StudentPhase1Page {
 
         setTimeout(() => {
           this.matchSuccessFade = false;
+          this.matchSuccessContentFade = false;
+          this.matchSuccessTransform = false;
 
           setTimeout(() => {
-            this.matchSuccessContentFade = false;
-
-            this.matchSuccessTransform = false;
             this.matchSuccess = false;
           }, 200);
-        }, 300);
+        }, 500);
       }, 100);
     }, 100);
   }
 
   getNewMatches() {
     this.matchList = this.studentService.getNewMatches(this.student.id);
+  }
+
+  editSkills() {
+    this.events.publish('tab:editSkills', this.student);
+  }
+
+  editPrefs() {
+    this.events.publish('tab:editPrefs', this.student);
   }
 
   // I know this function is dusgusting, but I have it in for now for sake of
@@ -307,6 +320,23 @@ export class StudentPhase1Page {
     skillsToShow = reqSkillsToShow.concat(nthSkillsToShow);
     this.match["skillsToShow"] = skillsToShow;
   }
+
+  // Present a toast message to the user
+  presentToast(message) {
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 4000,
+      position: 'top',
+      showCloseButton: true,
+      closeButtonText: ''
+    });
+
+    toast.onDidDismiss(() => {
+
+    });
+
+    toast.present();
+  }
 }
 
 function removeSkillFromArray(array, skill) {
@@ -314,6 +344,22 @@ function removeSkillFromArray(array, skill) {
   let indexToRemove = -1;
   array.forEach(skillInArr => {
     if (skillInArr.id == skill.id) {
+      indexToRemove = index;
+    }
+
+    index++;
+  });
+
+  if (indexToRemove > -1) {
+    array.splice(indexToRemove, 1);
+  }
+}
+
+function removeMatchFromArray(array, match) {
+  let index = 0;
+  let indexToRemove = -1;
+  array.forEach(matchInArr => {
+    if (matchInArr.id == match.id) {
       indexToRemove = index;
     }
 

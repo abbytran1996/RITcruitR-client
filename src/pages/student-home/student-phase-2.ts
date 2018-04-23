@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { DomSanitizer } from '@angular/platform-browser';
+import { NavController, NavParams, ModalController, ToastController } from 'ionic-angular';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+
+import { PresentationLinkAddModal } from '../../modals/presentation-link-add/presentation-link-add';
 
 import { StudentModel } from '../../models/student.model';
 import { MatchModel } from '../../models/match.model';
@@ -20,6 +24,8 @@ export class StudentPhase2Page {
   public matchIndex = 0;
   public stage = 0;
   public maxStage = 1;
+
+  // Animation variables
   public fadeLeft = false;
   public fadeLeftInstant = false;
   public fadeRight = false;
@@ -30,10 +36,20 @@ export class StudentPhase2Page {
   public matchSuccessContentFade = false;
   public hideCard = false;
 
+  // Video variables
+  public browser;
+
+  // Reorder list of presentation links
+  public linksList = [];
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private studentService: StudentService
+    public modalCtrl: ModalController,
+    private toastCtrl: ToastController,
+    private studentService: StudentService,
+    private iab: InAppBrowser,
+    private sanitizer: DomSanitizer
   ) {
     this.student= navParams.get("student");
 
@@ -51,8 +67,13 @@ export class StudentPhase2Page {
       this.stage++;
     }
     else {
-      // Submit to recruiter
-      this.animateSuccess();
+      if (this.linksList && this.linksList.length > 0) {
+        // TODO: Make service call to update match with presentation links and update stage
+        this.animateSuccess();
+      }
+      else {
+        this.presentToast("Please add at least one presentation link for the recruiter to view");
+      }
     }
   }
 
@@ -60,6 +81,7 @@ export class StudentPhase2Page {
     this.fadeLeft = true;
 
     setTimeout(() => {
+      removeMatchFromArray(this.matchList, this.match);
       this.nextMatch();
       this.fadeLeft = false;
       this.fadeRightInstant = true;
@@ -82,6 +104,31 @@ export class StudentPhase2Page {
     this.prepMatch();
   }
 
+  sanitizeURL(url) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
+
+  openLink(link) {
+    // Open browser app separately
+    window.open(link, '_system', 'location=yes');
+  }
+
+  removeLink(index) {
+    console.log(index);
+    this.linksList.splice(index, 1);
+  }
+
+  addLink() {
+    // TODO: Change the student being passed to the actual student model not in the match
+    let modal = this.modalCtrl.create(PresentationLinkAddModal, { student: this.match.student });
+    modal.onDidDismiss(data => {
+      if (data) {
+        this.linksList.push(data);
+      }
+    });
+    modal.present();
+  }
+
   animateSuccess() {
     this.matchSuccess = true;
 
@@ -100,6 +147,7 @@ export class StudentPhase2Page {
         }, fadeTime / 2);
 
         setTimeout(() => {
+          removeMatchFromArray(this.matchList, this.match);
           this.nextMatch();
           this.fadeLeft = false;
           this.fadeRightInstant = true;
@@ -111,14 +159,13 @@ export class StudentPhase2Page {
 
         setTimeout(() => {
           this.matchSuccessFade = false;
+          this.matchSuccessContentFade = false;
+          this.matchSuccessTransform = false;
 
           setTimeout(() => {
-            this.matchSuccessContentFade = false;
-
-            this.matchSuccessTransform = false;
             this.matchSuccess = false;
           }, 200);
-        }, 300);
+        }, 500);
       }, 100);
     }, 100);
   }
@@ -148,7 +195,36 @@ export class StudentPhase2Page {
     });
   }
 
-  openLink(link) {
-    window.open(link, '_system', 'location=yes');
+  // Present a toast message to the user
+  presentToast(message) {
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 4000,
+      position: 'top',
+      showCloseButton: true,
+      closeButtonText: ''
+    });
+
+    toast.onDidDismiss(() => {
+
+    });
+
+    toast.present();
+  }
+}
+
+function removeMatchFromArray(array, match) {
+  let index = 0;
+  let indexToRemove = -1;
+  array.forEach(matchInArr => {
+    if (matchInArr.id == match.id) {
+      indexToRemove = index;
+    }
+
+    index++;
+  });
+
+  if (indexToRemove > -1) {
+    array.splice(indexToRemove, 1);
   }
 }

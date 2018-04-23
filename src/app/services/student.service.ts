@@ -469,9 +469,14 @@ export class StudentService {
                     "video": "12",
                     "presentationLinks": [
                         {
+                            "id": 8,
+                            "title": "Company Video",
+                            "link": "https://www.youtube.com/watch?v=sQYJs1rsMuo"
+                        },
+                        {
                             "id": 5,
-                            "title": "Test Link",
-                            "link": "http://www.google.com"
+                            "title": "Our Website",
+                            "link": "https://www.facebook.com/careers/"
                         }
                     ],
                     "company": {
@@ -492,6 +497,11 @@ export class StudentService {
                         "emailSuffix": "",
                         "userId": -1,
                         "presentationLinks": [
+                            {
+                                "id": 8,
+                                "title": "Company Video",
+                                "link": "https://www.youtube.com/watch?v=Bey4XXJAqS8"
+                            },
                             {
                                 "id": 5,
                                 "title": "Test Link",
@@ -552,6 +562,24 @@ export class StudentService {
                 "currentPhase": "PROBLEM_WAITING_FOR_STUDENT"
             }
         ];
+
+        matches.sort((a, b) => {
+            if (a.matchStrength < b.matchStrength) return 1;
+            else if (a.matchStrength > b.matchStrength) return -1;
+            else return 0;
+        });
+
+        return matches;
+    }
+
+    //=========================================================================
+    // * GET Final MATCHES                                                    *
+    //=========================================================================
+    // - Get all final matches (last phase)
+    // - Expects a StudentModel id number
+    // - Returns an array of MatchModels
+    getFinalMatches(studentId) {
+        let matches = [];
 
         matches.sort((a, b) => {
             if (a.matchStrength < b.matchStrength) return 1;
