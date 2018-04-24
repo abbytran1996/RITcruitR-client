@@ -11,7 +11,7 @@ import { MyApp } from './app.component';
 
 // Third party modules
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { SelectSearchableModule } from 'ionic-select-searchable';
+import { SelectSearchableModule } from '../modals/ionic-select-searchable';
 
 // Custom Modules
 import { LoginPage } from '../pages/login/login';

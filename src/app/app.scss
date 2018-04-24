@@ -755,64 +755,131 @@ select-searchable.rec-input {
   }
 }
 
+select-searchable.rec-select-searchable-btn {
+  border-bottom: none;
+  display: block;
+  width: 186px;
+  height: 50px;
+  margin: auto;
+
+  .select-searchable-label {
+    display: none;
+  }
+
+  .select-searchable-value {
+    display: none;
+  }
+
+  .select-searchable-icon {
+    display: none;
+  }
+}
+
+select-searchable.rec-select-searchable-btn.small {
+  button {
+    width: 186px;
+    height: 50px;
+    padding-top: 5px;
+    border-radius: 35px;
+    box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.15);
+    background: $color-primary-gradient;
+    position: static;
+    
+    color: map-get($font-button-small, color);
+    font-family: map-get($font-button-small, family);
+    font-size: map-get($font-button-small, size);
+
+    transition-property: background;
+    transition-duration: .3s;
+
+    &:hover, &:active, &:focus {
+      background: $color-primary-gradient-bright;
+
+      transition-property: background;
+      transition-duration: .3s;
+    }
+
+    &:disabled {
+      opacity: .5;
+    }
+
+    &::before {
+      font-family: map-get($font-button-small, family);
+      content: "Add";
+      font-size: 24px !important;
+      font-weight: normal !important;
+      text-align: center;
+      line-height: 45px;
+      width: 45px;
+    }
+  }
+}
+
 // Searchable typeahead modal/page
 select-searchable-page {
   ion-content .scroll-content {
-    background-color: #F5F5F5;
+    background-color: map-get($colors, white);
   }
 
   ion-navbar {
     .toolbar-background {
-      background-color: #FFFFFF;
+      background-color: map-get($colors, light);
     }
 
-    button.back-button-ios .button-inner {
-      ion-icon {
-        font-size: 24px;
-        display: none;
-      }
-
-      span.back-button-text {
-        font-family: map-get($font-input-value, family);
-        content: "Cancel";
-        padding-left: 5px;
-      }
+    button {
+      display: none !important;
     }
-    button.back-button-md .button-inner {
-      ion-icon {
-        font-size: 24px;
-      }
+
+    ion-icon {
+      font-size: 48px !important;
+      padding-left: 10px;
+      color: rgba(map-get($colors, dark), .5);
+    }
+
+    ion-title div {
+      padding-top: 10px;
+      font-family: map-get($font-heading, family);
+      font-weight: normal !important;
+      font-size: 24px !important;
+      color: map-get($colors, dark) !important;
     }
   }
 
   ion-toolbar {
     .toolbar-background {
-      background-color: #FFFFFF;
+      background-color: map-get($colors, light);
     }
   }
 
   ion-toolbar.toolbar-md {
     input.searchbar-input {
-      background-color: #F5F5F5;
+      background-color: map-get($colors, light);
     }
   }
 
   ion-list {
-    padding-top: 10px;
 
     button.item {
       border-bottom: 2px solid rgba(0, 0, 0, .05) !important;
       padding-top: 6px;
       padding-bottom: 6px;
       background-color: #ffffff;
-      width: 95%;
       margin: auto;
-      margin-bottom: 5px;
-      border-radius: 4px;
+      margin-bottom: 2px;
       box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, .01);
 
       ion-icon {
-        font-size: 30px;
+        font-size: 26px;
+        padding-top: 1px;
+        font-weight: normal;
+
+        &.ion-ios-radio-button-off {
+          color: rgba(map-get($colors, grey), .5);
+        }
+
+        &.ion-md-radio-button-off {
+          color: rgba(map-get($colors, grey), .5);
+        }
       }
 
       .item-inner {
@@ -820,6 +887,10 @@ select-searchable-page {
 
         ion-label {
           padding-top: 5px;
+
+          h2 {
+            font-size: 22px;
+          }
         }
       }
     }
@@ -834,23 +905,33 @@ select-searchable-page {
   }
 
   ion-footer {
-    ion-toolbar .toolbar-background {
-      background-color: #FFFFFF;
+    ion-row {
+      padding-top: 20px;
+      padding-bottom: 20px;
+      background-color: map-get($colors, light);
+      box-shadow: 1px -1px 1px 1px rgba(0, 0, 0, .05);
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
     }
 
-    .toolbar-content button {
-      border-radius: 45px;
+    button {
+      border-radius: 45px !important;
       background: $color-primary-gradient;
       font-family: map-get($font-button, family);
-      width: 70%;
-      margin: auto;
-      font-size: 26px;
-      text-transform: lowercase;
+      width: 70% !important;
+      margin: auto !important;
+      font-size: 22px !important;
+      &::before {
+        content: "Done";
+      }
+
+      .button-inner {
+        display: none;
+      }
     }
 
-    .toolbar-content button.button-md {
+    button.button-md {
       padding-top: 5px;
-      font-size: 20px;
+      font-size: 20px !important;
     }
   }
 }
@@ -959,6 +1040,10 @@ ion-datetime.ng-dirty.ng-invalid {
   border-bottom: 2px solid map-get($colors, invalid);
 }
 
+select-searchable.rec-select-searchable-btn.ng-dirty.ng-invalid,
+select-searchable.rec-select-searchable-btn.ng-dirty.ng-valid {
+  border-bottom: none;
+}
 
 
 
@@ -1203,6 +1288,11 @@ ion-footer.button-footer::before {
       font-family: map-get($font-heading, family);
       color: map-get($colors, primary);
       border-bottom: 2px solid rgba(map-get($colors, dark), .3);
+      border-top: none;
+
+      &.header-no-min-height {
+        min-height: auto;
+      }
 
       ion-label {
         margin-bottom: 1px;

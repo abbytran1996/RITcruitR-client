@@ -189,22 +189,6 @@ export class StudentPhase1Page {
       }
     }
 
-    // TODO: Remove this, just adding the matched skills to the student for testing
-    this.student.skills = [
-      {
-          "id": 13,
-          "name": "HTML5"
-      },
-      {
-          "id": 14,
-          "name": "Cascading Style Sheets (CSS)"
-      },
-      {
-          "id": 15,
-          "name": "JavaScript"
-      }
-    ];
-
     // Build the list of matched skills
     let reqSkills = this.match.job.requiredSkills.map(x => Object.assign({}, x));
     let reqSkillsMatched = [];

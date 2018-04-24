@@ -73,7 +73,15 @@ export class StudentService {
               "lastName": "McPersonson",
               "skills": [
                   {
-                      "id": 13,
+                      "id": 73,
+                      "name": "Javascript"
+                  },
+                  {
+                      "id": 72,
+                      "name": "CSS3"
+                  },
+                  {
+                      "id": 71,
                       "name": "HTML5"
                   }
               ],
@@ -117,26 +125,26 @@ export class StudentService {
               ],
               "requiredSkills": [
                   {
-                      "id": 13,
+                      "id": 71,
                       "name": "HTML5"
                   },
                   {
-                      "id": 14,
+                      "id": 72,
                       "name": "Cascading Style Sheets (CSS)"
                   },
                   {
-                      "id": 15,
-                      "name": "JavaScript"
+                      "id": 73,
+                      "name": "Javascript"
                   },
                   {
-                      "id": 16,
-                      "name": "Git Version Control"
+                      "id": 60,
+                      "name": "Agile Development"
                   }
               ],
               "niceToHaveSkills": [
                 {
-                    "id": 8,
-                    "name": "Ember"
+                    "id": 74,
+                    "name": "React"
                 }
               ],
               "niceToHaveSkillsWeight": 0.5,
@@ -231,7 +239,15 @@ export class StudentService {
               "lastName": "McPersonson",
               "skills": [
                   {
-                      "id": 13,
+                      "id": 73,
+                      "name": "Javascript"
+                  },
+                  {
+                      "id": 72,
+                      "name": "CSS3"
+                  },
+                  {
+                      "id": 71,
                       "name": "HTML5"
                   }
               ],
@@ -274,13 +290,17 @@ export class StudentService {
               ],
               "requiredSkills": [
                   {
-                      "id": 13,
-                      "name": "HTML5"
+                      "id": 73,
+                      "name": "Javascript"
+                  },
+                  {
+                      "id": 60,
+                      "name": "Agile Development"
                   }
               ],
               "niceToHaveSkills": [
                 {
-                    "id": 14,
+                    "id": 72,
                     "name": "CSS3"
                 }
               ],
@@ -394,7 +414,15 @@ export class StudentService {
                     "lastName": "McPersonson",
                     "skills": [
                         {
-                            "id": 13,
+                            "id": 73,
+                            "name": "Javascript"
+                        },
+                        {
+                            "id": 72,
+                            "name": "CSS3"
+                        },
+                        {
+                            "id": 71,
                             "name": "HTML5"
                         }
                     ],
@@ -438,26 +466,26 @@ export class StudentService {
                     ],
                     "requiredSkills": [
                         {
-                            "id": 13,
+                            "id": 71,
                             "name": "HTML5"
                         },
                         {
-                            "id": 14,
+                            "id": 72,
                             "name": "Cascading Style Sheets (CSS)"
                         },
                         {
-                            "id": 15,
+                            "id": 73,
                             "name": "JavaScript"
                         },
                         {
-                            "id": 16,
-                            "name": "Git Version Control"
+                            "id": 60,
+                            "name": "Agile Development"
                         }
                     ],
                     "niceToHaveSkills": [
                         {
-                            "id": 8,
-                            "name": "Ember"
+                            "id": 74,
+                            "name": "React"
                         }
                     ],
                     "niceToHaveSkillsWeight": 0.5,

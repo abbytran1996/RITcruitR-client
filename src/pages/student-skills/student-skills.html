@@ -35,17 +35,21 @@
   <ion-row class="row-form">
     <ion-col>
       <form #skillsForm="ngForm">
+        <select-searchable name="skills" class="rec-select-searchable-btn small clearfix" [(ngModel)]="skills" [items]="skillOptions"
+          itemTextField="name" [canSearch]="true" [multiple]="true" title="Skills">
+        </select-searchable>
         <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
-          <label class="rec-label rl-primary">SKILLS</label>
-          <select-searchable
-            name="skills"
-            class="rec-input ri-primary clearfix"
-            [(ngModel)]="student.skills"
-            [items]="skillOptions"
-            itemTextField="name"
-            [canSearch]="true"
-            [multiple]="true">
-          </select-searchable>
+          <ion-list class="rec-reorder-list">
+            <div class="list-header-wrapper">
+              <ion-list-header class="header-no-min-height"> </ion-list-header>
+            </div>
+            <ion-item-group reorder="true" side="start" (ionItemReorder)="$event.applyTo(skills)">
+              <ion-item *ngFor="let skill of skills; let i = index">
+                <h5>{{ skill.name }}</h5>
+                <ion-icon name="md-close-circle" class="fake-link" (click)="removeSkill(i)"></ion-icon>
+              </ion-item>
+            </ion-item-group>
+          </ion-list>
         </div>
       </form>
     </ion-col>

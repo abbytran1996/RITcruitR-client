@@ -114,7 +114,6 @@ export class StudentPhase2Page {
   }
 
   removeLink(index) {
-    console.log(index);
     this.linksList.splice(index, 1);
   }
 
