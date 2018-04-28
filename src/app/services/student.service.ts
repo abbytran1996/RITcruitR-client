@@ -48,6 +48,17 @@ export class StudentService {
     }
 
     //=========================================================================
+    // * UPDATE STUDENT SKILLS                                                *
+    //=========================================================================
+    // - Updates an existing student's skills
+    // - Expects a StudentModel id number, and an array of skills from a
+    //   StudentModel
+    // - Returns 200 (OK) response with the updated StudentModel
+    updateStudentSkills(student_id, skills) {
+        return this.apiService.post('/students/' + student_id + '/skills', skills);
+    }
+
+    //=========================================================================
     // * UPDATE STUDENT                                                       *
     //=========================================================================
     // - Updates an existing student

@@ -7,6 +7,7 @@ import { StudentWorkExperiencePage } from '../student-work-experience/student-wo
 import { StudentModel } from '../../models/student.model';
 
 import { DataService } from '../../app/services/data.service';
+import { StudentService } from '../../app/services/student.service';
 
 @Component({
   selector: 'page-student-skills',
@@ -26,7 +27,8 @@ export class StudentSkillsPage {
     public navCtrl: NavController,
     private toastCtrl: ToastController,
     public navParams: NavParams,
-    public dataService: DataService
+    public dataService: DataService,
+    private studentService: StudentService
   ) {
     this.student = navParams.get("student");
 
@@ -73,8 +75,14 @@ export class StudentSkillsPage {
     if (this.skillsForm && this.skillsForm.valid) {
       this.student.skills = this.skills;
       
-      // TODO: Call API to add skills
-      this.navCtrl.push(StudentWorkExperiencePage, {student: this.student, setup: true});
+      this.studentService.updateStudentSkills(this.student.id, this.student.skills).subscribe(
+        data => {
+          this.navCtrl.push(StudentWorkExperiencePage, { student: this.student, setup: true });
+        },
+        res => {
+          this.presentToast("There was an error updating your skills, please try again");
+        }
+      );
     }
     else {
       this.presentToast("Please select valid skills");
@@ -89,8 +97,14 @@ export class StudentSkillsPage {
     if (this.skillsForm && this.skillsForm.valid) {
       this.student.skills = this.skills;
 
-      // TODO: Call API to update skills
-      this.navCtrl.setRoot(TabsPage, {message: "Skills updated successfully"});
+      this.studentService.updateStudentSkills(this.student.id, this.student.skills).subscribe(
+        data => {
+          this.navCtrl.setRoot(TabsPage, { message: "Skills updated successfully" });
+        },
+        res => {
+          this.presentToast("There was an error updating your skills, please try again");
+        }
+      );
     }
     else {
       this.presentToast("Please select valid skills");
