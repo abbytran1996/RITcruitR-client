@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, ToastController, NavParams } from 'ionic-angular';
+import { NavController, ToastController, NavParams, AlertController } from 'ionic-angular';
 
 import { CompanyJobCreate8Page } from './company-job-create-8';
 
@@ -21,10 +21,18 @@ export class CompanyJobCreate7Page {
   constructor(
     public navCtrl: NavController,
     private toastCtrl: ToastController,
-    public navParams: NavParams
+    public navParams: NavParams,
+    private alertCtrl: AlertController
   ) {
     this.recruiter = navParams.get("recruiter");
     this.jobModel = navParams.get("job");
+  }
+
+  problemStatementInfo() {
+    this.showAlert(
+      "Problem Statement",
+      "Provide a short statement specifying a problem that may often be encountered in the job position and describe some of the technologies and techniques typically used. This isn't intended to be a question for the student, but a short statement giving a good idea of what work to expect on the job."
+    );
   }
 
   continueClicked() {
@@ -56,5 +64,14 @@ export class CompanyJobCreate7Page {
     });
 
     toast.present();
+  }
+
+  showAlert(title, message) {
+    let alert = this.alertCtrl.create({
+      title: title,
+      message: message,
+      buttons: ['Dismiss']
+    });
+    alert.present();
   }
 }

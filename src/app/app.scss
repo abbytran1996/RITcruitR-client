@@ -106,6 +106,10 @@
   cursor: pointer;
 }
 
+.relative {
+  position: relative;
+}
+
 
 
 
@@ -815,6 +819,58 @@ select-searchable.rec-select-searchable-btn.small {
   }
 }
 
+select-searchable.rec-select-searchable-btn.circle {
+  height: auto;
+  margin: 0;
+
+  button {
+    width: 30px !important;
+    height: 30px  !important;
+    border-radius: 50px;
+    box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.15);
+    background: $color-primary-gradient;
+    position: absolute;
+    left: 100%;
+    transform: translateX(-118%);
+    text-align: center;
+    padding: 0 !important;
+    
+    color: map-get($font-button-small, color);
+    font-size: map-get($font-button-small, size);
+
+    transition-property: background;
+    transition-duration: .3s;
+
+    &:hover, &:active, &:focus {
+      background: $color-primary-gradient-bright;
+
+      transition-property: background;
+      transition-duration: .3s;
+    }
+
+    &:disabled {
+      opacity: .5;
+    }
+
+    &::before {
+      content: "\f273";
+      font-family: "Ionicons";
+      -moz-osx-font-smoothing: grayscale;
+      -webkit-font-smoothing: antialiased;
+      font-style: normal;
+      font-variant: normal;
+      text-rendering: auto;
+      text-transform: none;
+      speak: none;
+      font-size: 22px !important;
+      font-weight: normal !important;
+      text-align: center;
+      line-height: 29px !important;
+      width: 30px !important;
+    }
+  }
+}
+
 // Searchable typeahead modal/page
 select-searchable-page {
   ion-content .scroll-content {
@@ -1375,6 +1431,31 @@ ion-footer.button-footer::before {
     &:last-child {
       margin-left: 10px;
     }
+  }
+}
+
+// Alerts
+.alert-wrapper {
+  h2.alert-title {
+    font-weight: normal;
+  }
+
+  .alert-message {
+    font-size: 14px;
+  }
+}
+
+.info-icon {
+  font-size: 22px !important;
+  font-weight: normal !important;
+  transform: translateY(3px);
+
+  &.to-right {
+    margin-left: 8px;
+  }
+
+  &.to-left {
+    margin-right: 8px;
   }
 }
 

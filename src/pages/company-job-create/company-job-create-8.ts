@@ -1,7 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, ToastController, NavParams } from 'ionic-angular';
+import { NavController, ToastController, NavParams, ModalController, AlertController } from 'ionic-angular';
 
 import { TabsPage } from '../tabs/tabs';
+import { PresentationLinkAddModal } from '../../modals/presentation-link-add/presentation-link-add';
 
 import { NewJobModel } from '../../models/new-job.model';
 import { JobModel } from '../../models/job.model';
@@ -26,18 +27,45 @@ export class CompanyJobCreate8Page {
 
   videoOptions = videos;
 
+  // Reorder list of presentation links
+  public linksList = [];
+
   constructor(
     public navCtrl: NavController,
     private toastCtrl: ToastController,
     public navParams: NavParams,
+    public modalCtrl: ModalController,
+    private alertCtrl: AlertController,
     public jobPostingService: JobPostingService
   ) {
     this.recruiter = navParams.get("recruiter");
     this.jobModel = navParams.get("job");
   }
 
+  presentationInfo() {
+    this.showAlert(
+      "Presentation Links",
+      "Provide any links that you would like students to see when applying to the job. A link could be to a company video, a website, or anything else you'd like."
+    );
+  }
+
+  removeLink(index) {
+    this.linksList.splice(index, 1);
+  }
+
+  addLink() {
+    let modal = this.modalCtrl.create(PresentationLinkAddModal, { model: this.recruiter.company });
+    modal.onDidDismiss(data => {
+      if (data) {
+        this.linksList.push(data);
+      }
+    });
+    modal.present();
+  }
+
   finishClicked() {
-    if (this.jobForm && (this.jobForm.controls.video.valid || this.jobForm.controls.videoNew.valid)) {
+    if (this.linksList && this.linksList.length > 0 && this.linksList.length <= 3) {
+      this.jobModel.presentationLinks = this.linksList;
       this.jobModel.recruiterId = this.recruiter.id;
       this.jobModel.niceToHaveSkillsWeight = this.jobModel.niceToHaveSkillsWeight / 100;
       this.jobModel.matchThreshold = this.jobModel.matchThreshold / 100;
@@ -54,7 +82,7 @@ export class CompanyJobCreate8Page {
       );
     }
     else {
-      this.presentToast("Please select an existing video or add a new video URL");
+      this.presentToast("Please add at least one, and at most three presentation link(s) for applicants to view.");
     }
   }
 
@@ -78,5 +106,14 @@ export class CompanyJobCreate8Page {
     });
 
     toast.present();
+  }
+
+  showAlert(title, message) {
+    let alert = this.alertCtrl.create({
+      title: title,
+      message: message,
+      buttons: ['Dismiss']
+    });
+    alert.present();
   }
 }

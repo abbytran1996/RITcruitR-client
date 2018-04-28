@@ -31,29 +31,25 @@
 
 <ion-content padding class="rec-content bg-white">
 
-  <!-- Message -->
-  <ion-row class="row-message">
-    <ion-col>
-      <h3 class="text-center no-padding">In one of the application phases, applicants will view a video meant to represent the company or the position.</h3>
-      <h3 class="text-center no-padding">A YouTuve video URL can be added here, or you may select one that you've already used.</h3>
-    </ion-col>
-  </ion-row>
-  <!-- End Message -->
-
   <!-- Form -->
   <ion-row class="row-form">
     <ion-col>
       <form #jobForm="ngForm">
-        <div class="rec-input-group">
-          <label class="rec-label rl-primary">SELECT VIDEO</label>
-          <ion-select name="video" class="rec-input ri-primary" required [(ngModel)]="jobModel.video">
-            <ion-option *ngFor="let option of videoOptions" value="{{ option.text }}">{{ option.text }}</ion-option>
-          </ion-select>
-        </div>
-        <div class="rec-input-group">
-          <label class="rec-label rl-primary">NEW VIDEO URL</label>
-          <input type="text" name="newVideo" class="rec-input ri-primary" required [(ngModel)]="jobModel.newVideo">
-        </div>
+        <ion-list class="rec-reorder-list">
+          <div class="list-header-wrapper">
+            <ion-list-header>PRESENTATION LINKS<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="presentationInfo()"></ion-icon></ion-list-header>
+            <button class="rec-btn-circle-small rec-btn-primary" (click)="addLink()">
+              <ion-icon name="md-add" class="rec-btn-icon"></ion-icon>
+            </button>
+          </div>
+          <ion-item-group reorder="true" side="start" (ionItemReorder)="$event.applyTo(linksList)">
+            <ion-item *ngFor="let item of linksList; let i = index">
+              <h5>{{ item.title }}</h5>
+              <p>{{ item.link }}</p>
+              <ion-icon name="md-close-circle" class="fake-link" (click)="removeLink(i)"></ion-icon>
+            </ion-item>
+          </ion-item-group>
+        </ion-list>
       </form>
     </ion-col>
   </ion-row>

@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, ToastController, NavParams } from 'ionic-angular';
+import { NavController, ToastController, NavParams, AlertController } from 'ionic-angular';
 
 import { CompanyJobCreate6Page } from './company-job-create-6';
 
@@ -21,10 +21,25 @@ export class CompanyJobCreate5Page {
   constructor(
     public navCtrl: NavController,
     private toastCtrl: ToastController,
-    public navParams: NavParams
+    public navParams: NavParams,
+    private alertCtrl: AlertController
   ) {
     this.recruiter = navParams.get("recruiter");
     this.jobModel = navParams.get("job");
+  }
+
+  minGpaInfo() {
+    this.showAlert(
+      "Minimum GPA",
+      "Students with a GPA below this number will not be matched."
+    );
+  }
+
+  workExperienceInfo() {
+    this.showAlert(
+      "Has Work Experience",
+      "If toggled on, students with no work experience on their profile will not be matched."
+    );
   }
 
   continueClicked() {
@@ -53,5 +68,14 @@ export class CompanyJobCreate5Page {
     });
 
     toast.present();
+  }
+
+  showAlert(title, message) {
+    let alert = this.alertCtrl.create({
+      title: title,
+      message: message,
+      buttons: ['Dismiss']
+    });
+    alert.present();
   }
 }

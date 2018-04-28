@@ -31,29 +31,28 @@
 
 <ion-content padding class="rec-content bg-white">
 
-  <!-- Message -->
-  <ion-row class="row-message">
-    <ion-col>
-      <h3 class="text-center no-padding">Add skills that are required for<br>the position.</h3>
-    </ion-col>
-  </ion-row>
-  <!-- End Message -->
-
   <!-- Form -->
   <ion-row class="row-form">
     <ion-col>
       <form #jobForm="ngForm">
-        <div class="rec-input-group">
-          <label class="rec-label rl-primary">REQUIRED SKILLS</label>
-          <select-searchable
-            name="requiredSkills"
-            class="rec-input ri-primary clearfix"
-            [(ngModel)]="jobModel.requiredSkills"
-            [items]="skillOptions"
-            itemTextField="name"
-            [canSearch]="true"
-            [multiple]="true">
+        <div class="rec-input-group relative">
+          <label class="rec-label full-width rl-primary">REQUIRED SKILLS<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="reqSkillsInfo()"></ion-icon></label>
+          <select-searchable name="skills" class="rec-select-searchable-btn circle clearfix" [(ngModel)]="skills" [items]="skillOptions"
+            itemTextField="name" [canSearch]="true" [multiple]="true" title="Required Skills">
           </select-searchable>
+          <div class="rec-input-group">
+            <ion-list class="rec-reorder-list">
+              <div class="list-header-wrapper">
+                <ion-list-header class="header-no-min-height"> </ion-list-header>
+              </div>
+              <ion-item-group reorder="true" side="start" (ionItemReorder)="$event.applyTo(skills)">
+                <ion-item *ngFor="let skill of skills; let i = index">
+                  <h5>{{ skill.name }}</h5>
+                  <ion-icon name="md-close-circle" class="fake-link" (click)="removeSkill(i)"></ion-icon>
+                </ion-item>
+              </ion-item-group>
+            </ion-list>
+          </div>
         </div>
       </form>
     </ion-col>

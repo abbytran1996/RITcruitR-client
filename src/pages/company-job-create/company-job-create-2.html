@@ -36,7 +36,7 @@
     <ion-col>
       <form #jobForm="ngForm">
         <div class="rec-input-group">
-          <label class="rec-label rl-primary">JOB DESCRIPTION</label>
+          <label class="rec-label rl-primary">JOB DESCRIPTION<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="descriptionInfo()"></ion-icon></label>
           <textarea name="description" class="rec-input ri-primary" required [(ngModel)]="jobModel.description">
           </textarea>
         </div>

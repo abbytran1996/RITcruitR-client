@@ -1,8 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { ModalController, Platform, NavParams, ViewController, ToastController } from 'ionic-angular';
 
-import { StudentModel } from '../../models/student.model';
-
 @Component({
   selector: 'modal-presentation-link-add',
   templateUrl: 'presentation-link-add.html'
@@ -15,7 +13,7 @@ export class PresentationLinkAddModal {
   public newLinkModel = {title: "", link: "", save: false};
   public existingLinkModel = undefined;
   public existingLinkOptions = [];
-  public student: StudentModel;
+  public model = { presentationLinks: [] };
 
   constructor(
     public platform: Platform,
@@ -23,8 +21,8 @@ export class PresentationLinkAddModal {
     public viewCtrl: ViewController,
     private toastCtrl: ToastController
   ) {
-    this.student = navParams.get("student");
-    this.existingLinkOptions = this.student.presentationLinks;
+    this.model = navParams.get("model");
+    this.existingLinkOptions = this.model.presentationLinks;
   }
 
   backClicked() {

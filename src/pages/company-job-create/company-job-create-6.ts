@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, ToastController, NavParams } from 'ionic-angular';
+import { NavController, ToastController, NavParams, AlertController } from 'ionic-angular';
 
 import { CompanyJobCreate7Page } from './company-job-create-7';
 
@@ -21,10 +21,25 @@ export class CompanyJobCreate6Page {
   constructor(
     public navCtrl: NavController,
     private toastCtrl: ToastController,
-    public navParams: NavParams
+    public navParams: NavParams,
+    private alertCtrl: AlertController
   ) {
     this.recruiter = navParams.get("recruiter");
     this.jobModel = navParams.get("job");
+  }
+
+  durationInfo() {
+    this.showAlert(
+      "Job Duration",
+      "A job position may no longer be applied to after the time specified in this field. Any students in the process of applying will lose the ability to finish, but any completed applications may still be viewed on both ends."
+    );
+  }
+
+  thresholdInfo() {
+    this.showAlert(
+      "Match Threshold",
+      "The match threshold determines how close an applicant must match in order to see the position and apply. A higher value will result in less matches, but those matches will fit the job's requirements more closely."
+    );
   }
 
   continueClicked() {
@@ -56,5 +71,14 @@ export class CompanyJobCreate6Page {
     });
 
     toast.present();
+  }
+
+  showAlert(title, message) {
+    let alert = this.alertCtrl.create({
+      title: title,
+      message: message,
+      buttons: ['Dismiss']
+    });
+    alert.present();
   }
 }

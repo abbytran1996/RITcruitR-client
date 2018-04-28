@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, ToastController, NavParams } from 'ionic-angular';
+import { NavController, ToastController, NavParams, AlertController } from 'ionic-angular';
 
 import { CompanyJobCreate4Page } from './company-job-create-4';
 
@@ -21,11 +21,13 @@ export class CompanyJobCreate3Page {
   recruiter: RecruiterModel;
 
   skillOptions = [];
+  skills = [];
 
   constructor(
     public navCtrl: NavController,
     private toastCtrl: ToastController,
     public navParams: NavParams,
+    private alertCtrl: AlertController,
     public dataService: DataService
   ) {
     this.recruiter = navParams.get("recruiter");
@@ -42,12 +44,24 @@ export class CompanyJobCreate3Page {
     );
   }
 
+  reqSkillsInfo() {
+    this.showAlert(
+      "Required Skills",
+      "Required skills are skills that a student must have in order to be matched with a job position. Adding more will refine your matches to ensure applicants are closer to what you're looking for, but too many can result in fewer matches."
+    );
+  }
+
+  removeSkill(index) {
+    this.skills.splice(index, 1);
+  }
+
   continueClicked() {
-    if (this.jobForm && this.jobForm.valid) {
+    if (this.jobForm && this.jobForm.valid && this.skills.length > 0) {
+      this.jobModel.requiredSkills = this.skills;
       this.navCtrl.push(CompanyJobCreate4Page, {recruiter: this.recruiter, job: this.jobModel});
     }
     else {
-      this.presentToast("There is a problem with the skills you have selected, please review them and try again");
+      this.presentToast("Please select at least one required skill. Having no required skills will result in no matches.");
     }
   }
 
@@ -71,5 +85,14 @@ export class CompanyJobCreate3Page {
     });
 
     toast.present();
+  }
+
+  showAlert(title, message) {
+    let alert = this.alertCtrl.create({
+      title: title,
+      message: message,
+      buttons: ['Dismiss']
+    });
+    alert.present();
   }
 }

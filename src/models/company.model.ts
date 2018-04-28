@@ -27,7 +27,7 @@ export class CompanyModel {
       apiData.websiteURL,
       apiData.emailSuffix,
       apiData.userId,
-      apiData.presentationLinks
+      (apiData.presentationLinks) ? apiData.presentationLinks : []
     );
   }
 }

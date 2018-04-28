@@ -67,12 +67,12 @@ export class StudentPhase2Page {
       this.stage++;
     }
     else {
-      if (this.linksList && this.linksList.length > 0) {
+      if (this.linksList && this.linksList.length > 0 && this.linksList.length <= 3) {
         // TODO: Make service call to update match with presentation links and update stage
         this.animateSuccess();
       }
       else {
-        this.presentToast("Please add at least one presentation link for the recruiter to view");
+        this.presentToast("Please add at least one, and at most three presentation link(s) for the recruiter to view.");
       }
     }
   }
@@ -119,7 +119,7 @@ export class StudentPhase2Page {
 
   addLink() {
     // TODO: Change the student being passed to the actual student model not in the match
-    let modal = this.modalCtrl.create(PresentationLinkAddModal, { student: this.match.student });
+    let modal = this.modalCtrl.create(PresentationLinkAddModal, { model: this.match.student });
     modal.onDidDismiss(data => {
       if (data) {
         this.linksList.push(data);

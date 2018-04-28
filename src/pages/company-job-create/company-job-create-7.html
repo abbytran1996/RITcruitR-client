@@ -31,20 +31,12 @@
 
 <ion-content padding class="rec-content bg-white">
 
-  <!-- Message -->
-  <ion-row class="row-message">
-    <ion-col>
-      <h3 class="text-center no-padding">Specifiy a problem that may often be encountered in the job position and describe some of the technologies and techniques typically used.</h3>
-    </ion-col>
-  </ion-row>
-  <!-- End Message -->
-
   <!-- Form -->
   <ion-row class="row-form">
     <ion-col>
       <form #jobForm="ngForm">
         <div class="rec-input-group">
-          <label class="rec-label rl-primary">JOB PROBLEM STATEMENT</label>
+          <label class="rec-label rl-primary">JOB PROBLEM STATEMENT<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="problemStatementInfo()"></ion-icon></label>
           <textarea name="problemStatement" class="rec-input ri-primary" required [(ngModel)]="jobModel.problemStatement">
           </textarea>
         </div>

@@ -24,9 +24,9 @@
         <div class="rec-input-group-small">
           <label class="rec-label rl-primary">SELECT EXISTING LINK</label>
           <ion-select name="selectedLink" class="rec-input ri-primary" [(ngModel)]="existingLinkModel" multiple="false" (ionChange)="selectChanged($event)">
-            <ion-option *ngIf="existingLinkOptions.length > 0" value="-1">None</ion-option>
+            <ion-option *ngIf="existingLinkOptions && existingLinkOptions.length > 0" value="-1">None</ion-option>
             <ion-option *ngFor="let link of existingLinkOptions" [value]="link">{{ link.title }}</ion-option>
-            <ion-option *ngIf="existingLinkOptions.length == 0" value="-1">No Profile Presentation Links</ion-option>
+            <ion-option *ngIf="!existingLinkOptions || existingLinkOptions.length == 0" value="-1">No Profile Presentation Links</ion-option>
           </ion-select>
         </div>
       </form>

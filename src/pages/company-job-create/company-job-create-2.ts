@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, ToastController, NavParams } from 'ionic-angular';
+import { NavController, ToastController, NavParams, AlertController } from 'ionic-angular';
 
 import { CompanyJobCreate3Page } from './company-job-create-3';
 
@@ -21,7 +21,8 @@ export class CompanyJobCreate2Page {
   constructor(
     public navCtrl: NavController,
     private toastCtrl: ToastController,
-    public navParams: NavParams
+    public navParams: NavParams,
+    private alertCtrl: AlertController
   ) {
     this.recruiter = navParams.get("recruiter");
     this.jobModel = navParams.get("job");
@@ -34,6 +35,13 @@ export class CompanyJobCreate2Page {
     else {
       this.presentToast("Please enter a job description");
     }
+  }
+
+  descriptionInfo() {
+    this.showAlert(
+      "Job Description",
+      "Write a description of the job, the responsibilities involved, and other details you may want a student to know about the position. Avoid writing out job skills in the description, for those will be added later. The first 200 characters of the description will be shown to students when they first match."
+    );
   }
 
   // Navigate back to the previous screen
@@ -56,5 +64,14 @@ export class CompanyJobCreate2Page {
     });
 
     toast.present();
+  }
+
+  showAlert(title, message) {
+    let alert = this.alertCtrl.create({
+      title: title,
+      message: message,
+      buttons: ['Dismiss']
+    });
+    alert.present();
   }
 }
