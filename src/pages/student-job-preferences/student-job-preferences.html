@@ -43,7 +43,8 @@
             [(ngModel)]="model.preferredLocations"
             [items]="locationOptions"
             [canSearch]="true"
-            [multiple]="true">
+            [multiple]="true"
+            title="Locations">
           </select-searchable>
         </div>
         <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
@@ -54,7 +55,8 @@
             [(ngModel)]="model.preferredIndustries"
             [items]="industryOptions"
             [canSearch]="true"
-            [multiple]="true">
+            [multiple]="true"
+            title="Industries">
           </select-searchable>
         </div>
         <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">

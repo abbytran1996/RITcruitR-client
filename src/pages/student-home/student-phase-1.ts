@@ -1,10 +1,15 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Events } from 'ionic-angular';
+import { NavController, NavParams, Events, ToastController } from 'ionic-angular';
+
+import { StudentJobPreferencesPage } from '../student-job-preferences/student-job-preferences';
+import { StudentSkillsPage } from '../student-skills/student-skills';
 
 import { StudentModel } from '../../models/student.model';
 import { MatchModel } from '../../models/match.model';
 
 import { StudentService } from '../../app/services/student.service';
+
+const fadeTime = 400;
 
 @Component({
   selector: 'page-student-phase-1',
@@ -17,32 +22,75 @@ export class StudentPhase1Page {
   public match: MatchModel;
   public matchIndex = 0;
   public matchPoints = {industry: false, locations: [false, false], skills: []};
+  public stage = 0;
+  public maxStage = 2;
+  public fadeLeft = false;
+  public fadeLeftInstant = false;
+  public fadeRight = false;
+  public fadeRightInstant = false;
+  public matchSuccess = false;
+  public matchSuccessFade = false;
+  public matchSuccessTransform = false;
+  public matchSuccessContentFade = false;
+  public hideCard = false;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
+    private toastCtrl: ToastController,
     public events: Events,
-    private studentService: StudentService,
+    private studentService: StudentService
   ) {
     this.student= navParams.get("student");
 
     this.getNewMatches();
-    this.prepMatch();
     this.matchIndex = 0;
+    this.prepMatch();
+  }
 
-    events.subscribe('student:obtained', (student) => {
+  ionViewDidEnter() {
+    this.events.subscribe('student:obtained', (student) => {
       this.student = student;
       this.getNewMatches();
-      this.prepMatch();
       this.matchIndex = 0;
+      this.prepMatch();
     });
   }
 
-  interested() {
-
+  ionViewDidLeave() {
+    this.events.unsubscribe("student:obtained");
   }
 
-  notInterested() {
+  backBtn() {
+    this.stage--;
+  }
+
+  interested() {
+    if (this.stage + 1 <= this.maxStage) {
+      this.stage++;
+    }
+    else {
+      // TODO: Make service call to update match with work statement and update stage
+      this.animateSuccess();
+    }
+  }
+
+  decline() {
+    this.fadeLeft = true;
+
+    setTimeout(() => {
+      removeMatchFromArray(this.matchList, this.match);
+      this.nextMatch();
+      this.fadeLeft = false;
+      this.fadeRightInstant = true;
+
+      setTimeout(() => {
+        this.fadeRightInstant = false;
+      }, 100);
+    }, fadeTime);
+  }
+
+  nextMatch() {
     if (this.matchIndex + 1 < this.matchList.length) {
       this.matchIndex = this.matchIndex + 1;
     }
@@ -50,17 +98,61 @@ export class StudentPhase1Page {
       this.matchIndex = 0;
     }
 
+    this.stage = 0;
     this.prepMatch();
+  }
+
+  animateSuccess() {
+    this.matchSuccess = true;
+
+    setTimeout(() => {
+      this.matchSuccessFade = true;
+      this.matchSuccessTransform = true;
+      this.hideCard = true;
+
+      setTimeout(() => {
+        this.hideCard = false;
+        this.matchSuccessContentFade = true;
+        this.fadeLeft = true;
+
+        setTimeout(() => {
+          this.stage = 0;
+        }, fadeTime / 2);
+
+        setTimeout(() => {
+          removeMatchFromArray(this.matchList, this.match);
+          this.nextMatch();
+          this.fadeLeft = false;
+          this.fadeRightInstant = true;
+
+          setTimeout(() => {
+            this.fadeRightInstant = false;
+          }, 100);
+        }, fadeTime);
+
+        setTimeout(() => {
+          this.matchSuccessFade = false;
+          this.matchSuccessContentFade = false;
+          this.matchSuccessTransform = false;
+
+          setTimeout(() => {
+            this.matchSuccess = false;
+          }, 200);
+        }, 500);
+      }, 100);
+    }, 100);
   }
 
   getNewMatches() {
     this.matchList = this.studentService.getNewMatches(this.student.id);
-    this.matchList.sort((a, b) => {
-      if (a.matchStrength < b.matchStrength) return 1;
-      else if (a.matchStrength > b.matchStrength) return -1;
-      else return 0;
-    });
+  }
 
+  editSkills() {
+    this.events.publish('tab:editSkills', this.student);
+  }
+
+  editPrefs() {
+    this.events.publish('tab:editPrefs', this.student);
   }
 
   // I know this function is dusgusting, but I have it in for now for sake of
@@ -71,6 +163,11 @@ export class StudentPhase1Page {
   prepMatch() {
     this.match = this.matchList[this.matchIndex];
     this.matchPoints = {industry: false, locations: [false, false], skills: []};
+
+    // No matches in this phase
+    if (this.match == undefined) {
+      return;
+    }
 
     // Check industry matches
     this.student.preferredIndustries.forEach(industry => {
@@ -91,22 +188,6 @@ export class StudentPhase1Page {
         this.matchPoints.locations[locIndex] = true;
       }
     }
-
-    // TODO: Remove this, just adding the matched skills to the student for testing
-    this.student.skills = [
-      {
-          "id": 13,
-          "name": "HTML5"
-      },
-      {
-          "id": 14,
-          "name": "Cascading Style Sheets (CSS)"
-      },
-      {
-          "id": 15,
-          "name": "JavaScript"
-      }
-    ];
 
     // Build the list of matched skills
     let reqSkills = this.match.job.requiredSkills.map(x => Object.assign({}, x));
@@ -229,6 +310,23 @@ export class StudentPhase1Page {
     skillsToShow = reqSkillsToShow.concat(nthSkillsToShow);
     this.match["skillsToShow"] = skillsToShow;
   }
+
+  // Present a toast message to the user
+  presentToast(message) {
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 4000,
+      position: 'top',
+      showCloseButton: true,
+      closeButtonText: ''
+    });
+
+    toast.onDidDismiss(() => {
+
+    });
+
+    toast.present();
+  }
 }
 
 function removeSkillFromArray(array, skill) {
@@ -236,6 +334,22 @@ function removeSkillFromArray(array, skill) {
   let indexToRemove = -1;
   array.forEach(skillInArr => {
     if (skillInArr.id == skill.id) {
+      indexToRemove = index;
+    }
+
+    index++;
+  });
+
+  if (indexToRemove > -1) {
+    array.splice(indexToRemove, 1);
+  }
+}
+
+function removeMatchFromArray(array, match) {
+  let index = 0;
+  let indexToRemove = -1;
+  array.forEach(matchInArr => {
+    if (matchInArr.id == match.id) {
       indexToRemove = index;
     }
 

@@ -13,6 +13,7 @@ export class NewJobModel {
     public duration: number,
     public problemStatement: string,
     public video: string,
+    public presentationLinks: any,
     public recruiterId: number,
     public newVideo: string
   ) {}
@@ -32,6 +33,7 @@ export class NewJobModel {
       null,
       "",
       "",
+      [],
       0,
       ""
     );
