@@ -27,8 +27,7 @@
         <!-- Company Presentation Card Content -->
         <div class="match-card-content" [ngClass]="{'slide-left': stage > 0}">
           <div class="content-section presentation-explanation">
-            <h3 class="heading fg-dark"><ion-icon name="md-easel" class="card-heading-icon"></ion-icon>Company Presentation:</h3>
-            <p class="fg-dark">Take a look at the links below to see what the company offering the job is all about. Tap a link to open it in the app.</p>
+            <h3 class="heading heading-spacer fg-dark"><ion-icon name="md-easel" class="card-heading-icon"></ion-icon>Company Presentation<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="companyPresentationInfo()"></ion-icon></h3>
           </div>
           <div class="content-section">
             <div *ngFor="let link of match.job.presentationLinks" class="presentation-link">
@@ -42,8 +41,7 @@
         <!-- Your Presentation Card Content -->
         <div class="match-card-content" [ngClass]="{'slide-right': stage < 1}">
           <div class="content-section">
-            <h3 class="heading fg-dark"><ion-icon name="md-easel" class="card-heading-icon"></ion-icon>Add Presentation Links:</h3>
-            <p class="fg-dark">This is your chance to show the recruiter anything of yours that you would like to share. This could be a link to a video of yourself, a GitHub link, a personal website, or anything else.</p>
+            <h3 class="heading heading-spacer fg-dark"><ion-icon name="md-easel" class="card-heading-icon"></ion-icon>Add Presentation Links<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="yourPresentationInfo()"></ion-icon></h3>
           </div>
           <div class="content-section">
             <ion-list class="rec-reorder-list">

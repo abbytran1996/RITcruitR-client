@@ -31,7 +31,7 @@ export class CompanyJobCreate6Page {
   durationInfo() {
     this.showAlert(
       "Job Duration",
-      "A job position may no longer be applied to after the time specified in this field. Any students in the process of applying will lose the ability to finish, but any completed applications may still be viewed on both ends."
+      "A job position may no longer be applied to after the time specified in this field has passed. Any students in the process of applying will lose the ability to finish, but any completed applications may still be viewed on both ends."
     );
   }
 

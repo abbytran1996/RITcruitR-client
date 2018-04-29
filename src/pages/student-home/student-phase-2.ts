@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { NavController, NavParams, ModalController, ToastController } from 'ionic-angular';
+import { NavController, NavParams, ModalController, ToastController, AlertController } from 'ionic-angular';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { PresentationLinkAddModal } from '../../modals/presentation-link-add/presentation-link-add';
@@ -47,6 +47,7 @@ export class StudentPhase2Page {
     public navParams: NavParams,
     public modalCtrl: ModalController,
     private toastCtrl: ToastController,
+    private alertCtrl: AlertController,
     private studentService: StudentService,
     private iab: InAppBrowser,
     private sanitizer: DomSanitizer
@@ -56,6 +57,20 @@ export class StudentPhase2Page {
     this.getPhase2Matches();
     this.matchIndex = 0;
     this.prepMatch();
+  }
+
+  companyPresentationInfo() {
+    this.showAlert(
+      "Company Presentation",
+      "Take a look at these links to see what the company offering the job is all about. A link could be to a company video, website, project repository, or anything they'd like you to see. Tap a link to open it."
+    );
+  }
+
+  yourPresentationInfo() {
+    this.showAlert(
+      "Your Presentation",
+      "This is your chance to show the recruiter anything of yours that you would like to share. This could be a link to a video of yourself, a project link, a personal website, or anything else."
+    );
   }
 
   backBtn() {
@@ -209,6 +224,15 @@ export class StudentPhase2Page {
     });
 
     toast.present();
+  }
+
+  showAlert(title, message) {
+    let alert = this.alertCtrl.create({
+      title: title,
+      message: message,
+      buttons: ['Dismiss']
+    });
+    alert.present();
   }
 }
 

@@ -3,6 +3,15 @@
 
 // --------------------------------------------------------------[ App Global ]
 
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+
 .no-margin {
   margin: 0;
 }
@@ -337,7 +346,68 @@ ion-icon.block::before {
   ion-icon.rec-btn-icon {
     font-size: 24px !important;
     font-weight: normal !important;
-    margin-right: 5px;
+  }
+}
+
+.rec-btn-short {
+  width: 250px;
+  height: 60px;
+  padding-top: 5px;
+  border-radius: 35px;
+  box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.15);
+  background-color: map-get($colors, primary);
+  color: map-get($font-button-small, color);
+  font-family: map-get($font-button-small, family);
+  font-size: map-get($font-button-small, size);
+
+  transition-property: background-color;
+  transition-duration: .3s;
+
+  &:hover, &:active, &:focus {
+    background-color: saturate(map-get($colors, primary), 8%);
+
+    transition-property: background-color;
+    transition-duration: .3s;
+  }
+
+  &:disabled {
+    opacity: .5;
+  }
+
+  ion-icon.rec-btn-icon {
+    font-size: 22px !important;
+    font-weight: normal !important;
+  }
+}
+
+.rec-btn-wide-short {
+  width: 100%;
+  height: 60px;
+  padding-top: 5px;
+  border-radius: 35px;
+  box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.15);
+  background-color: map-get($colors, primary);
+  color: map-get($font-button-small, color);
+  font-family: map-get($font-button-small, family);
+  font-size: map-get($font-button-small, size);
+
+  transition-property: background-color;
+  transition-duration: .3s;
+
+  &:hover, &:active, &:focus {
+    background-color: saturate(map-get($colors, primary), 8%);
+
+    transition-property: background-color;
+    transition-duration: .3s;
+  }
+
+  &:disabled {
+    opacity: .5;
+  }
+
+  ion-icon.rec-btn-icon {
+    font-size: 22px !important;
+    font-weight: normal !important;
   }
 }
 
@@ -369,7 +439,6 @@ ion-icon.block::before {
   ion-icon.rec-btn-icon {
     font-size: 22px !important;
     font-weight: normal !important;
-    margin-right: 5px;
   }
 }
 
@@ -401,7 +470,6 @@ ion-icon.block::before {
   ion-icon.rec-btn-icon {
     font-size: 22px !important;
     font-weight: normal !important;
-    margin-right: 5px;
   }
 }
 
@@ -433,7 +501,16 @@ ion-icon.block::before {
   ion-icon.rec-btn-icon {
     font-size: 22px !important;
     font-weight: normal !important;
+  }
+}
+
+ion-icon.rec-btn-icon {
+  &.to-left {
     margin-right: 5px;
+  }
+  
+  &.to-right {
+    margin-left: 5px;
   }
 }
 
@@ -1419,7 +1496,7 @@ ion-footer.button-footer::before {
 
   span {
     display: inline-block;
-    width: 43%;
+    width: 42%;
     height: 2px;
     background-color: rgba(map-get($colors, grey), .6);
     transform: translateY(-3px);
@@ -1619,7 +1696,12 @@ $card-footer-height: 70px;
 
   h3.heading {
     margin: 0;
-    font-size: 22px;
+    margin-bottom: 2px;
+    font-size: 20px;
+
+    &.heading-spacer {
+      margin-bottom: 2vh !important;
+    }
   }
 
   p {

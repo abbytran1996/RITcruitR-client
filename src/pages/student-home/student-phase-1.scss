@@ -6,4 +6,18 @@ page-student-phase-1 {
       color: map-get($colors, primary);
     }
   }
+
+  .row-sep {
+    margin-top: 6vh;
+    margin-bottom: 6vh;
+  }
+
+  .custom-statement-buttons {
+    margin-bottom: 2vh;
+
+    button {
+      height: 45px;
+      width: 140px;
+    }
+  }
 }

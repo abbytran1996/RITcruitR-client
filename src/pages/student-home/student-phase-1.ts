@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams, Events, ToastController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { NavController, NavParams, Events, ToastController, AlertController, ModalController } from 'ionic-angular';
 
 import { StudentJobPreferencesPage } from '../student-job-preferences/student-job-preferences';
 import { StudentSkillsPage } from '../student-skills/student-skills';
+import { ProblemStatementAddModal } from '../../modals/problem-statement-add/problem-statement-add';
 
 import { StudentModel } from '../../models/student.model';
 import { MatchModel } from '../../models/match.model';
@@ -34,14 +35,25 @@ export class StudentPhase1Page {
   public matchSuccessContentFade = false;
   public hideCard = false;
 
+  @ViewChild('problemStatementForm') problemStatementForm;
+  public existingStatementModel;
+  public existingStatementOptions = [];
+  public problemStatement = undefined;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private toastCtrl: ToastController,
+    private alertCtrl: AlertController,
+    public modalCtrl: ModalController,
     public events: Events,
     private studentService: StudentService
   ) {
     this.student= navParams.get("student");
+
+    // if (this.student.problemStatements) {
+    //   this.existingStatementOptions = this.student.problemStatements;
+    // }
 
     this.getNewMatches();
     this.matchIndex = 0;
@@ -61,6 +73,51 @@ export class StudentPhase1Page {
     this.events.unsubscribe("student:obtained");
   }
 
+  selectChanged() {
+    if (this.existingStatementModel == -1) {
+      this.existingStatementModel = undefined;
+      this.problemStatementForm.reset();
+    }
+  }
+
+  newStatement() {
+    let modal = this.modalCtrl.create(ProblemStatementAddModal, {});
+    modal.onDidDismiss(data => {
+      if (data) {
+        this.problemStatement = data;
+      }
+    });
+    modal.present();
+  }
+
+  editStatement() {
+    let modal = this.modalCtrl.create(ProblemStatementAddModal, { statement: this.problemStatement });
+    modal.onDidDismiss(data => {
+      if (data) {
+        this.problemStatement = data;
+      }
+    });
+    modal.present();
+  }
+
+  clearStatement() {
+    this.problemStatement = undefined;
+  }
+
+  companyProbStatementInfo() {
+    this.showAlert(
+      "Company Problem Statement",
+      "This statement is intended to give you a better idea of what the job is like day-to-day and provide what tasks and technologies are typically encountered."
+    );
+  }
+
+  yourProbStatementInfo() {
+    this.showAlert(
+      "Your Problem Statement",
+      "Your problem statement should be a short paragraph describing a project or problem you've worked on. Give recruiters an idea of the work you've done and what you like to do."
+    );
+  }
+
   backBtn() {
     this.stage--;
   }
@@ -70,8 +127,22 @@ export class StudentPhase1Page {
       this.stage++;
     }
     else {
-      // TODO: Make service call to update match with work statement and update stage
-      this.animateSuccess();
+      if ((this.existingStatementOptions && this.existingStatementOptions.length > 0 && this.problemStatementForm && this.problemStatementForm.valid)
+          || this.problemStatement != undefined) {
+
+        if (this.problemStatement) {
+          this.match.studentProblemResponse = this.problemStatement.statement;
+        }
+        else {
+          this.match.studentProblemResponse = this.existingStatementModel.statement;
+        }
+
+        // TODO: Make service call to update match with work statement and update stage
+        this.animateSuccess();
+      }
+      else {
+        this.presentToast("Please enter a problem statement");
+      }
     }
   }
 
@@ -326,6 +397,15 @@ export class StudentPhase1Page {
     });
 
     toast.present();
+  }
+
+  showAlert(title, message) {
+    let alert = this.alertCtrl.create({
+      title: title,
+      message: message,
+      buttons: ['Dismiss']
+    });
+    alert.present();
   }
 }
 

@@ -31,7 +31,7 @@ export class CompanyJobCreate7Page {
   problemStatementInfo() {
     this.showAlert(
       "Problem Statement",
-      "Provide a short statement specifying a problem that may often be encountered in the job position and describe some of the technologies and techniques typically used. This isn't intended to be a question for the student, but a short statement giving a good idea of what work to expect on the job."
+      "Provide a short statement specifying a problem that may often be encountered in the job position and describe some of the technologies and techniques typically used. This isn't intended to be a question for the student, but a short statement giving an idea of what work to expect on the job."
     );
   }
 

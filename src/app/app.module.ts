@@ -44,6 +44,7 @@ import { RecruiterRegisterPage } from '../pages/recruiter-register/recruiter-reg
 import { RecruiterContactPage } from '../pages/recruiter-contact/recruiter-contact';
 
 import { PresentationLinkAddModal } from '../modals/presentation-link-add/presentation-link-add';
+import { ProblemStatementAddModal } from '../modals/problem-statement-add/problem-statement-add';
 
 import {
   CompanyJobCreate1Page,
@@ -103,7 +104,8 @@ import {
     RecruiterRegisterPage,
     RecruiterContactPage,
     TabsPage,
-    PresentationLinkAddModal
+    PresentationLinkAddModal,
+    ProblemStatementAddModal
   ],
   imports: [
     BrowserModule,
@@ -152,7 +154,8 @@ import {
     RecruiterRegisterPage,
     RecruiterContactPage,
     TabsPage,
-    PresentationLinkAddModal
+    PresentationLinkAddModal,
+    ProblemStatementAddModal
   ],
   providers: [
     StatusBar,

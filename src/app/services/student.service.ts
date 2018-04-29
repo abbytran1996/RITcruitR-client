@@ -163,7 +163,7 @@ export class StudentService {
               "hasWorkExperience": true,
               "matchThreshold": 0.8,
               "duration": 10,
-              "problemStatement": "Job problem phase text here.",
+              "problemStatement": "We work on a lot of web-based applications, and our front end developers often make decisions on which Javascript frameworks to use. We typically use ReactJS alongside many others. We also have well organized style guides and design templates for our front end developers to follow and have good visibility into what they're making. Attention to detail and an emphasis on UX is important with the front end work that we do so the many people that use our products are happy to do so.",
               "video": "12",
               "presentationLinks": [
                   {
@@ -174,7 +174,7 @@ export class StudentService {
               ],
               "company": {
                   "id": 1,
-                  "companyName": "Apple",
+                  "companyName": "Facebook",
                   "locations": [
                       "San Francisco, CA",
                       "New York City, NY"
@@ -186,7 +186,7 @@ export class StudentService {
                   "approvalStatus": false,
                   "presentation": "",
                   "companyDescription": "",
-                  "websiteURL": "www.apple.com",
+                  "websiteURL": "www.facebook.com",
                   "emailSuffix": "",
                   "userId": -1,
                   "presentationLinks": [
@@ -204,7 +204,7 @@ export class StudentService {
                   "email": "recruiter@email.com",
                   "company": {
                       "id": 1,
-                      "companyName": "Apple",
+                      "companyName": "Facebook",
                       "locations": [
                           "Cupertino, California"
                       ],
@@ -331,7 +331,7 @@ export class StudentService {
               ],
               "company": {
                   "id": 1,
-                  "companyName": "Apple",
+                  "companyName": "Facebook",
                   "locations": [
                       "Cupertino, California"
                   ],
@@ -520,7 +520,7 @@ export class StudentService {
                     ],
                     "company": {
                         "id": 1,
-                        "companyName": "Apple",
+                        "companyName": "Facebook",
                         "locations": [
                             "San Francisco, CA",
                             "New York City, NY"
@@ -555,7 +555,7 @@ export class StudentService {
                         "email": "recruiter@email.com",
                         "company": {
                             "id": 1,
-                            "companyName": "Apple",
+                            "companyName": "Facebook",
                             "locations": [
                                 "Cupertino, California"
                             ],

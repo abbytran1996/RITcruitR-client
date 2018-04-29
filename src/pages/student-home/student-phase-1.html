@@ -57,8 +57,8 @@
         <!-- Company Work Statement Card Content -->
         <div class="match-card-content" [ngClass]="{'slide-left': stage > 1, 'slide-right': stage < 1}">
           <div class="company-work-statement content-section">
-            <h3 class="heading fg-dark">
-              <ion-icon name="md-chatboxes" class="card-heading-icon"></ion-icon>Company Work Statement:</h3>
+            <h3 class="heading fg-dark heading-spacer">
+              <ion-icon name="md-chatboxes" class="card-heading-icon"></ion-icon>Company Problem Statement<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="companyProbStatementInfo()"></ion-icon></h3>
             <p class="fg-dark">{{ match.job.problemStatement }}</p>
           </div>
         </div>
@@ -67,10 +67,40 @@
         <!-- Your Work Statement Card Content -->
         <div class="match-card-content" [ngClass]="{'slide-right': stage < 2}">
           <div class="company-work-statement content-section">
-            <h3 class="heading fg-dark">
-              <ion-icon name="md-chatboxes" class="card-heading-icon"></ion-icon>Your Work Statement:</h3>
-            <p class="fg-dark">A work statement is a short paragraph describing a project or problem you've worked on. Give recruiters an idea of the
-              work you've done and what you like to do.</p>
+            <h3 class="heading fg-dark heading-spacer">
+              <ion-icon name="md-chatboxes" class="card-heading-icon"></ion-icon>Your Problem Statement<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="yourProbStatementInfo()"></ion-icon>
+            </h3>
+
+            <form #problemStatementForm="ngForm" [hidden]="!existingStatementOptions || existingStatementOptions.length == 0">
+              <div class="rec-input-group-small">
+                <label class="rec-label rl-primary">SELECT EXISTING STATEMENT</label>
+                <ion-select name="selectedLink" class="rec-input ri-primary" [(ngModel)]="existingStatementModel" multiple="false" (ionChange)="selectChanged($event)">
+                  <ion-option *ngIf="existingStatementOptions && existingStatementOptions.length > 0" value="-1">None</ion-option>
+                  <ion-option *ngFor="let link of existingStatementOptions" [value]="link">{{ link.title }}</ion-option>
+                  <ion-option *ngIf="!existingStatementOptions || existingStatementOptions.length == 0" value="-1">No Profile Statements Found</ion-option>
+                </ion-select>
+              </div>
+            </form>
+
+            <ion-row class="row-sep" [hidden]="!existingStatementOptions || existingStatementOptions.length == 0">
+              <div class="rec-sep-or">
+                <span class="left"></span>OR<span class="right"></span>
+              </div>
+            </ion-row>
+
+            <div class="custom-statement-section">
+              <div class="custom-statement-button" *ngIf="problemStatement == undefined">
+                <button class="rec-btn-wide-short rec-btn-primary btn-stacked center" (click)="newStatement()"><ion-icon name="md-add-circle" class="rec-btn-icon to-left"></ion-icon>New Statement</button>
+              </div>
+              <div class="custom-statement" *ngIf="problemStatement != undefined">
+                <div class="clearfix custom-statement-buttons">
+                  <button class="rec-btn-small rec-btn-primary float-left" (click)="editStatement()"><ion-icon name="md-create" class="rec-btn-icon to-left"></ion-icon>Edit</button>
+                  <button class="rec-btn-small rec-btn-deny float-right" (click)="clearStatement()"><ion-icon name="md-close-circle" class="rec-btn-icon to-left"></ion-icon>Clear</button>
+                </div>
+                <label class="rec-label rl-primary">STATEMENT</label>
+                <p class="fg-dark">{{ problemStatement.statement }}</p>
+              </div>
+            </div>
           </div>
         </div>
         <!-- End Your Work Statement Card Content -->
