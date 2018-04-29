@@ -400,13 +400,7 @@ export class StudentService {
         }
       ];
 
-      matches.sort((a, b) => {
-        if (a.matchStrength < b.matchStrength) return 1;
-        else if (a.matchStrength > b.matchStrength) return -1;
-        else return 0;
-      });
-
-      return matches;
+      return this.apiService.get("/matches/studentMatches/" + studentId + "?phase=none");
     }
 
     //=========================================================================

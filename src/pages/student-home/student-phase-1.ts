@@ -56,16 +56,12 @@ export class StudentPhase1Page {
     // }
 
     this.getNewMatches();
-    this.matchIndex = 0;
-    this.prepMatch();
   }
 
   ionViewDidEnter() {
     this.events.subscribe('student:obtained', (student) => {
       this.student = student;
       this.getNewMatches();
-      this.matchIndex = 0;
-      this.prepMatch();
     });
   }
 
@@ -215,7 +211,23 @@ export class StudentPhase1Page {
   }
 
   getNewMatches() {
-    this.matchList = this.studentService.getNewMatches(this.student.id);
+    this.studentService.getNewMatches(this.student.id).subscribe(
+      data => {
+        this.matchList = data;
+        this.matchList.sort((a, b) => {
+          if (a.matchStrength < b.matchStrength) return 1;
+          else if (a.matchStrength > b.matchStrength) return -1;
+          else return 0;
+        });
+
+        this.matchIndex = 0;
+        this.prepMatch();
+      },
+      error => {
+
+      }
+    );
+    // this.matchList = this.studentService.getNewMatches(this.student.id);
   }
 
   editSkills() {
