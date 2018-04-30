@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, ToastController, NavParams, ModalController, AlertController } from 'ionic-angular';
 
-import { TabsPage } from '../tabs/tabs';
+import { CompanyTabsPage } from '../company-tabs/company-tabs';
 import { PresentationLinkAddModal } from '../../modals/presentation-link-add/presentation-link-add';
 
 import { NewJobModel } from '../../models/new-job.model';
@@ -74,7 +74,7 @@ export class CompanyJobCreate8Page {
       this.jobPostingService.addJob(this.recruiter.company.id, this.jobModel).subscribe(
         data => {
           let job = JobModel.createJobFromApiData(data);
-          this.navCtrl.setRoot(TabsPage, {message: "New job successfully created"});
+          this.navCtrl.setRoot(CompanyTabsPage, {message: "New job successfully created"});
         },
         error => {
           this.presentToast("There was an error creating the job, please try again later");

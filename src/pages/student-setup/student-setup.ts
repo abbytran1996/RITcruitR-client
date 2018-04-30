@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { TabsPage } from '../tabs/tabs';
 import { StudentEducationPage } from '../student-education/student-education';
 
 import { StudentModel } from '../../models/student.model';

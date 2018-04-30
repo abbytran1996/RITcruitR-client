@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { TabsPage } from '../tabs/tabs';
+import { CompanyTabsPage } from '../company-tabs/company-tabs';
 
 @Component({
   selector: 'page-company-register-confirm',
@@ -20,6 +20,6 @@ export class CompanyRegisterConfirmPage {
 
   continueClicked() {
      // TODO: Change this so it leads back to the login screen, keep for dev
-    this.navCtrl.push(TabsPage, {user: this.user, companyId: 0, isStudent: false});
+    this.navCtrl.push(CompanyTabsPage);
   }
 }

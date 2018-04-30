@@ -18,6 +18,7 @@ const fadeTime = 400;
 })
 export class StudentPhase2Page {
 
+  public pageLoading = true;
   public student: StudentModel;
   public matchList: any;
   public match: MatchModel;
@@ -53,10 +54,13 @@ export class StudentPhase2Page {
     private sanitizer: DomSanitizer
   ) {
     this.student= navParams.get("student");
+  }
 
-    this.getPhase2Matches();
-    this.matchIndex = 0;
-    this.prepMatch();
+  ionViewDidEnter() {
+    if (this.matchList == undefined || this.matchList.length < 1) {
+      this.pageLoading = true;
+      this.getPhase2Matches();
+    }
   }
 
   companyPresentationInfo() {
@@ -83,7 +87,18 @@ export class StudentPhase2Page {
     }
     else {
       if (this.linksList && this.linksList.length > 0 && this.linksList.length <= 3) {
-        // TODO: Make service call to update match with presentation links and update stage
+        this.match.studentPresentationLinks = this.linksList;
+
+        // API call to submit match with presentation links
+        this.studentService.submitMatchPresentationPhase(this.match.id, this.match.studentPresentationLinks).subscribe(
+          res => { },
+          error => {
+            if (!error || error.status != 200) {
+              console.log("Error submitting presentation links");
+              console.log(error);
+            }
+          }
+        );
         this.animateSuccess();
       }
       else {
@@ -93,6 +108,16 @@ export class StudentPhase2Page {
   }
 
   decline() {
+    this.studentService.declineMatch(this.match.id).subscribe(
+      data => { },
+      error => {
+        if (!error || error.status != 200) {
+          console.log("Error declining match");
+          console.log(error);
+        }
+      }
+    );
+    
     this.fadeLeft = true;
 
     setTimeout(() => {
@@ -133,8 +158,7 @@ export class StudentPhase2Page {
   }
 
   addLink() {
-    // TODO: Change the student being passed to the actual student model not in the match
-    let modal = this.modalCtrl.create(PresentationLinkAddModal, { model: this.match.student });
+    let modal = this.modalCtrl.create(PresentationLinkAddModal, { model: this.student });
     modal.onDidDismiss(data => {
       if (data) {
         this.linksList.push(data);
@@ -185,7 +209,29 @@ export class StudentPhase2Page {
   }
 
   getPhase2Matches() {
-    this.matchList = this.studentService.getPhase2Matches(this.student.id);
+    this.matchList = this.studentService.getPhase2Matches(this.student.id).subscribe(
+      res => {
+        this.matchList = res;
+
+        if (this.matchList != undefined && this.matchList.length > 0) {
+          this.matchList.sort((a, b) => {
+            if (a.matchStrength < b.matchStrength) return 1;
+            else if (a.matchStrength > b.matchStrength) return -1;
+            else return 0;
+          });
+
+          this.matchIndex = 0;
+          this.prepMatch();
+        }
+        else {
+          this.pageLoading = false;
+        }
+      },
+      error => {
+        console.log("Error getting presentation phase matches");
+        console.log(error);
+      }
+    );
   }
 
   prepMatch() {
@@ -207,6 +253,8 @@ export class StudentPhase2Page {
         }
       }
     });
+
+    this.pageLoading = false;
   }
 
   // Present a toast message to the user

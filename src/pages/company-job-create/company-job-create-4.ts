@@ -65,7 +65,7 @@ export class CompanyJobCreate4Page {
 
   continueClicked() {
     if (this.jobForm && this.jobForm.valid) {
-      this.jobModel.requiredSkills = this.skills;
+      this.jobModel.niceToHaveSkills = this.skills;
       this.navCtrl.push(CompanyJobCreate5Page, {recruiter: this.recruiter, job: this.jobModel});
     }
     else {
@@ -83,7 +83,7 @@ export class CompanyJobCreate4Page {
 
     values.forEach(value => {
       let skillIndex = this.skillOptions.findIndex(skill => skill.id == value.id);
-      if (skillIndex && skillIndex > -1) {
+      if (skillIndex != undefined && skillIndex > -1) {
         this.skillOptions.splice(skillIndex, 1);
       }
     });

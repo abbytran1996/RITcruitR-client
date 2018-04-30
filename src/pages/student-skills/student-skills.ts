@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, ToastController, NavParams } from 'ionic-angular';
 
-import { TabsPage } from '../tabs/tabs';
+import { StudentTabsPage } from '../student-tabs/student-tabs';
 import { StudentWorkExperiencePage } from '../student-work-experience/student-work-experience';
 
 import { StudentModel } from '../../models/student.model';
@@ -99,7 +99,7 @@ export class StudentSkillsPage {
 
       this.studentService.updateStudentSkills(this.student.id, this.student.skills).subscribe(
         data => {
-          this.navCtrl.setRoot(TabsPage, { message: "Skills updated successfully" });
+          this.navCtrl.setRoot(StudentTabsPage, { message: "Skills updated successfully" });
         },
         res => {
           this.presentToast("There was an error updating your skills, please try again");

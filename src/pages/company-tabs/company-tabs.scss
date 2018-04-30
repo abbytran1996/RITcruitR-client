@@ -1,23 +1,4 @@
-page-tabs {
-  ion-tabs {
-    .tabbar {
-      // Keeping this here for now in case we want to switch the icons back to numbers
-      // a#tab-t0-1 ion-icon::before {
-      //   content: "2";
-      //   font-family: map-get($font-subheading, family);
-      //   font-size: 26px;
-      //   padding-top: 7px;
-      // }
-      //
-      // a#tab-t0-2 ion-icon::before {
-      //   content: "3";
-      //   font-family: map-get($font-subheading, family);
-      //   font-size: 26px;
-      //   padding-top: 7px;
-      // }
-    }
-  }
-
+page-company-tabs {
   ion-menu {
     ion-header ion-toolbar {
       .toolbar-background {

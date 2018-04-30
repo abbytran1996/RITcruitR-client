@@ -38,10 +38,17 @@ export class AuthService {
     setLocalVars(user) {
       window.localStorage.setItem('id', user.id);
       window.localStorage.setItem('email', user.username);
+    }
 
+    //=========================================================================
+    // * GET USER ROLE                                                        *
+    //=========================================================================
+    // - Gets the first role of the given user
+    getUserRole(user) {
       let isStudent = false;
       let isRecruiter = false;
       let isAdmin = false;
+      let role = 0;
 
       user.roles.forEach(role => {
         if (role.name == "student") {
@@ -57,10 +64,12 @@ export class AuthService {
 
       // TODO: Update these role IDs so they can't be changed through local storage
       if (isStudent) {
-        window.localStorage.setItem('role', "0");
+        role = 0;
       }
       else if (isRecruiter) {
-        window.localStorage.setItem('role', "1");
+        role = 1;
       }
+
+      return role;
     }
 }

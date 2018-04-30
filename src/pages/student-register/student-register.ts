@@ -1,7 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, ToastController } from 'ionic-angular';
 
-import { TabsPage } from '../tabs/tabs';
 import { StudentSetupPage } from '../student-setup/student-setup';
 
 import { StudentRegisterModel } from '../../models/student-register.model';

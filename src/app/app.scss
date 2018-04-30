@@ -318,6 +318,12 @@ ion-icon.block::before {
   margin-bottom: inherit;
 }
 
+button {
+  &:disabled {
+    opacity: .8;
+  }
+}
+
 .rec-btn {
   width: 250px;
   height: 70px;
@@ -337,10 +343,6 @@ ion-icon.block::before {
 
     transition-property: background-color;
     transition-duration: .3s;
-  }
-
-  &:disabled {
-    opacity: .5;
   }
 
   ion-icon.rec-btn-icon {
@@ -370,10 +372,6 @@ ion-icon.block::before {
     transition-duration: .3s;
   }
 
-  &:disabled {
-    opacity: .5;
-  }
-
   ion-icon.rec-btn-icon {
     font-size: 22px !important;
     font-weight: normal !important;
@@ -399,10 +397,6 @@ ion-icon.block::before {
 
     transition-property: background-color;
     transition-duration: .3s;
-  }
-
-  &:disabled {
-    opacity: .5;
   }
 
   ion-icon.rec-btn-icon {
@@ -432,10 +426,6 @@ ion-icon.block::before {
     transition-duration: .3s;
   }
 
-  &:disabled {
-    opacity: .5;
-  }
-
   ion-icon.rec-btn-icon {
     font-size: 22px !important;
     font-weight: normal !important;
@@ -463,10 +453,6 @@ ion-icon.block::before {
     transition-duration: .3s;
   }
 
-  &:disabled {
-    opacity: .5;
-  }
-
   ion-icon.rec-btn-icon {
     font-size: 22px !important;
     font-weight: normal !important;
@@ -492,10 +478,6 @@ ion-icon.block::before {
 
     transition-property: background-color;
     transition-duration: .3s;
-  }
-
-  &:disabled {
-    opacity: .5;
   }
 
   ion-icon.rec-btn-icon {
@@ -535,10 +517,6 @@ ion-icon.rec-btn-icon {
     transition-duration: .3s;
   }
 
-  &:disabled {
-    opacity: .5;
-  }
-
   ion-icon.rec-btn-icon {
     font-size: 22px !important;
     font-weight: normal !important;
@@ -567,10 +545,6 @@ ion-icon.rec-btn-icon {
 
     transition-property: background-color;
     transition-duration: .3s;
-  }
-
-  &:disabled {
-    opacity: .5;
   }
 
   ion-icon.rec-btn-icon {
@@ -712,6 +686,24 @@ ion-icon.rec-btn-icon {
 
 .circle-icon-btn ~ h3:last-child {
   margin-bottom: 0px;
+}
+
+.rec-load-btn {
+  ion-spinner {
+    transform: scale(2);
+
+    &.primary * {
+      fill: map-get($colors, primary);
+    }
+
+    &.dark * {
+      fill: map-get($colors, dark);
+    }
+
+    &.white * {
+      fill: #FFFFFF;
+    }
+  }
 }
 
 
@@ -1536,6 +1528,21 @@ ion-footer.button-footer::before {
   }
 }
 
+.loader-wrapper {
+  height: 100%;
+  text-align: center;
+
+  ion-spinner {
+    top: 50%;
+    transform: translateY(-50%) scale(2);
+    font-size: 32px;
+
+    * {
+      fill: #FFFFFF;
+    }
+  }
+}
+
 
 
 
@@ -1865,4 +1872,8 @@ ion-icon.card-heading-icon-right {
 ion-icon.presentation-link-icon {
   font-size: 16px;
   margin-left: 10px;
+}
+
+.phase-wrapper {
+  height: 100%;
 }

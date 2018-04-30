@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, ToastController, NavParams } from 'ionic-angular';
 
-import { TabsPage } from '../tabs/tabs';
+import { StudentTabsPage } from '../student-tabs/student-tabs';
 import { StudentContactPage } from '../student-contact/student-contact';
 
 import { EducationDetailsModel } from '../../models/education-details.model';
@@ -73,7 +73,7 @@ export class StudentEducationPage {
         data => {},
         res => {
           if (res.status == 200) {
-              this.navCtrl.setRoot(TabsPage, {message: "Education details updated successfully"});
+              this.navCtrl.setRoot(StudentTabsPage, {message: "Education details updated successfully"});
           }
           else {
             this.presentToast("There was an error updating your education details, please try again");

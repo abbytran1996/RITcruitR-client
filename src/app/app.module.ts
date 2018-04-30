@@ -16,8 +16,8 @@ import { SelectSearchableModule } from '../modals/ionic-select-searchable';
 // Custom Modules
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
-import { TabsPage } from '../pages/tabs/tabs';
 
+import { StudentTabsPage } from '../pages/student-tabs/student-tabs';
 import { StudentRegisterPage } from '../pages/student-register/student-register';
 import { StudentSetupPage } from '../pages/student-setup/student-setup';
 import { StudentEducationPage } from '../pages/student-education/student-education';
@@ -30,6 +30,7 @@ import { StudentPhase2Page } from '../pages/student-home/student-phase-2';
 import { StudentPhase3Page } from '../pages/student-home/student-phase-3';
 import { StudentProfileDetailsPage } from '../pages/student-profile-details/student-profile-details';
 
+import { CompanyTabsPage } from '../pages/company-tabs/company-tabs';
 import { CompanyRegister1Page } from '../pages/company-register/company-register-1';
 import { CompanyRegister2Page } from '../pages/company-register/company-register-2';
 import { CompanyRegisterConfirmPage } from '../pages/company-register-confirm/company-register-confirm';
@@ -72,6 +73,7 @@ import {
     MyApp,
     LoginPage,
     RegisterPage,
+    StudentTabsPage,
     StudentRegisterPage,
     StudentSetupPage,
     StudentEducationPage,
@@ -83,6 +85,7 @@ import {
     StudentPhase2Page,
     StudentPhase3Page,
     StudentProfileDetailsPage,
+    CompanyTabsPage,
     CompanyRegister1Page,
     CompanyRegister2Page,
     CompanyRegisterConfirmPage,
@@ -103,7 +106,6 @@ import {
     RecruiterCompanySelectPage,
     RecruiterRegisterPage,
     RecruiterContactPage,
-    TabsPage,
     PresentationLinkAddModal,
     ProblemStatementAddModal
   ],
@@ -122,6 +124,7 @@ import {
     MyApp,
     LoginPage,
     RegisterPage,
+    StudentTabsPage,
     StudentRegisterPage,
     StudentSetupPage,
     StudentEducationPage,
@@ -133,6 +136,7 @@ import {
     StudentPhase2Page,
     StudentPhase3Page,
     StudentProfileDetailsPage,
+    CompanyTabsPage,
     CompanyRegister1Page,
     CompanyRegister2Page,
     CompanyRegisterConfirmPage,
@@ -153,7 +157,6 @@ import {
     RecruiterCompanySelectPage,
     RecruiterRegisterPage,
     RecruiterContactPage,
-    TabsPage,
     PresentationLinkAddModal,
     ProblemStatementAddModal
   ],

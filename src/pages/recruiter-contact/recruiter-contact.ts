@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, ToastController, NavParams } from 'ionic-angular';
 
-import { TabsPage } from '../tabs/tabs';
+import { CompanyTabsPage } from '../company-tabs/company-tabs';
 import { CompanyRegisterConfirmPage } from '../company-register-confirm/company-register-confirm';
 
 import { CompanyRegisterModel } from '../../models/company-register.model';
@@ -100,7 +100,7 @@ export class RecruiterContactPage {
       }
       else {
         // TODO: Call API to create recruiter (not for company registration).
-        this.navCtrl.setRoot(TabsPage, {message: "New recruiter added successfully"});
+        this.navCtrl.setRoot(CompanyTabsPage, {message: "New recruiter added successfully"});
       }
     }
     else {
@@ -111,7 +111,7 @@ export class RecruiterContactPage {
   saveClicked() {
     if (this.contactForm && this.contactForm.valid) {
       // TODO: Call API to update contact info for recruiter (edit mode)
-      this.navCtrl.setRoot(TabsPage, {message: "Contact Information updated successfully"});
+      this.navCtrl.setRoot(CompanyTabsPage, {message: "Contact Information updated successfully"});
     }
     else {
       this.presentToast("Please enter a contact email and a phone number");

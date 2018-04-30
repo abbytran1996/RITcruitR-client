@@ -18,6 +18,7 @@ const fadeTime = 400;
 })
 export class StudentPhase1Page {
 
+  public pageLoading = true;
   public student: StudentModel;
   public matchList: any;
   public match: MatchModel;
@@ -54,19 +55,26 @@ export class StudentPhase1Page {
     // if (this.student.problemStatements) {
     //   this.existingStatementOptions = this.student.problemStatements;
     // }
-
-    this.getNewMatches();
   }
 
   ionViewDidEnter() {
-    this.events.subscribe('student:obtained', (student) => {
-      this.student = student;
-      this.getNewMatches();
-    });
+    if (this.matchList == undefined || this.matchList.length < 1) {
+      this.pageLoading = true;
+
+      if (this.student != undefined) {
+        this.getNewMatches();
+      }
+      else {
+        this.events.subscribe('tabs:student', (student) => {
+          this.student = student;
+          this.getNewMatches();
+        });
+      }
+    }
   }
 
   ionViewDidLeave() {
-    this.events.unsubscribe("student:obtained");
+   this.events.unsubscribe("tabs:student");
   }
 
   selectChanged() {
@@ -133,7 +141,16 @@ export class StudentPhase1Page {
           this.match.studentProblemResponse = this.existingStatementModel.statement;
         }
 
-        // TODO: Make service call to update match with work statement and update stage
+        // API call to submit match with problem statement
+        this.studentService.submitMatchProblemStatement(this.match.id, this.match.studentProblemResponse).subscribe(
+          res => { },
+          error => {
+            if (!error || error.status != 200) {
+              console.log("Error submitting problem statement");
+              console.log(error);
+            }
+          }
+        );
         this.animateSuccess();
       }
       else {
@@ -143,6 +160,16 @@ export class StudentPhase1Page {
   }
 
   decline() {
+    this.studentService.declineMatch(this.match.id).subscribe(
+      data => { },
+      error => {
+        if (!error || error.status != 200) {
+          console.log("Error declining match");
+          console.log(error);
+        }
+      }
+    );
+
     this.fadeLeft = true;
 
     setTimeout(() => {
@@ -214,17 +241,24 @@ export class StudentPhase1Page {
     this.studentService.getNewMatches(this.student.id).subscribe(
       data => {
         this.matchList = data;
-        this.matchList.sort((a, b) => {
-          if (a.matchStrength < b.matchStrength) return 1;
-          else if (a.matchStrength > b.matchStrength) return -1;
-          else return 0;
-        });
 
-        this.matchIndex = 0;
-        this.prepMatch();
+        if (this.matchList != undefined && this.matchList.length > 0) {
+          this.matchList.sort((a, b) => {
+            if (a.matchStrength < b.matchStrength) return 1;
+            else if (a.matchStrength > b.matchStrength) return -1;
+            else return 0;
+          });
+  
+          this.matchIndex = 0;
+          this.prepMatch();
+        }
+        else {
+          this.pageLoading = false;
+        }
       },
       error => {
-
+        console.log("Error getting problem phase matches");
+        console.log(error);
       }
     );
     // this.matchList = this.studentService.getNewMatches(this.student.id);
@@ -392,6 +426,8 @@ export class StudentPhase1Page {
 
     skillsToShow = reqSkillsToShow.concat(nthSkillsToShow);
     this.match["skillsToShow"] = skillsToShow;
+
+    this.pageLoading = false;
   }
 
   // Present a toast message to the user

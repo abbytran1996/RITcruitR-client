@@ -1,0 +1,34 @@
+<ion-menu [content]="content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>RecruitR</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <button ion-item menuToggle (click)="editSkills()">
+        <ion-icon name="md-construct" class="opacity-50"></ion-icon>
+        Skills
+      </button>
+      <button ion-item menuToggle (click)="editStudentJobPreferences()">
+        <ion-icon name="ios-cog" class="opacity-50"></ion-icon>
+        Job Preferences
+      </button>
+      <button ion-item menuToggle (click)="editStudentDetails()">
+        <ion-icon name="md-contact" class="opacity-50"></ion-icon>
+        Profile Details
+      </button>
+      <button ion-item menuToggle (click)="logout()">
+        <ion-icon name="ios-exit" class="opacity-50"></ion-icon>
+        Logout
+      </button>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<ion-tabs selectedIndex="0" #content>
+  <ion-tab [root]="studentPhase1Tab" tabTitle="Matched Jobs" tabIcon="md-list" [rootParams]="studentTabParams"></ion-tab>
+  <ion-tab [root]="studentPhase2Tab" tabTitle="Presentation" tabIcon="md-easel" [rootParams]="studentTabParams"></ion-tab>
+  <ion-tab [root]="studentPhase3Tab" tabTitle="Final Jobs" tabIcon="md-checkmark-circle" [rootParams]="studentTabParams"></ion-tab>
+</ion-tabs>
+

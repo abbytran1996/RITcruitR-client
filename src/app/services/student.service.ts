@@ -69,6 +69,46 @@ export class StudentService {
     }
 
     //=========================================================================
+    // * SUBMIT MATCH PROBLEM STATEMENT                                       *
+    //=========================================================================
+    // - Submits a match problem statement and moves it to the next phase
+    // - Expects a Match id number and a problem statement string
+    // - Returns 200 (OK) response
+    submitMatchProblemStatement(matchId, problemStatement) {
+        return this.apiService.post('/matches/' + matchId + "/problem", problemStatement);
+    }
+
+    //=========================================================================
+    // * SUBMIT MATCH PRESENTATION PHASE                                      *
+    //=========================================================================
+    // - Submits match presentation links and moves it to the next phase
+    // - Expects a Match id number and an array of presentation links
+    // - Returns 200 (OK) response
+    submitMatchPresentationPhase(matchId, presentationLinks) {
+        return this.apiService.post('/matches/' + matchId + "/presentation", presentationLinks);
+    }
+
+    //=========================================================================
+    // * ACCEPT MATCH                                                         *
+    //=========================================================================
+    // - Accepts a given match
+    // - Expects a Match id number
+    // - Returns 200 (OK) response
+    acceptMatch(matchId) {
+        return this.apiService.patch('/matches/' + matchId + "/approve");
+    }
+
+    //=========================================================================
+    // * DECLINE MATCH                                                        *
+    //=========================================================================
+    // - Declines a given match
+    // - Expects a Match id number
+    // - Returns 200 (OK) response
+    declineMatch(matchId) {
+        return this.apiService.patch('/matches/' + matchId + "/decline");
+    }
+
+    //=========================================================================
     // * GET NEW MATCHES                                                      *
     //=========================================================================
     // - Get all new job matches (phase 1)
@@ -400,7 +440,7 @@ export class StudentService {
         }
       ];
 
-      return this.apiService.get("/matches/studentMatches/" + studentId + "?phase=none");
+      return this.apiService.get("/matches/studentMatches/" + studentId + "?phase=problem");
     }
 
     //=========================================================================
@@ -596,13 +636,7 @@ export class StudentService {
             }
         ];
 
-        matches.sort((a, b) => {
-            if (a.matchStrength < b.matchStrength) return 1;
-            else if (a.matchStrength > b.matchStrength) return -1;
-            else return 0;
-        });
-
-        return matches;
+        return this.apiService.get("/matches/studentMatches/" + studentId + "?phase=presentation");
     }
 
     //=========================================================================

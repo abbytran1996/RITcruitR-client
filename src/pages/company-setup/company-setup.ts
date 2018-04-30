@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { TabsPage } from '../tabs/tabs';
+import { CompanyTabsPage } from '../company-tabs/company-tabs';
 import { CompanyJobCreate1Page } from '../company-job-create/company-job-create-1';
 
 @Component({
@@ -25,6 +25,6 @@ export class CompanySetupPage {
 
   importJobClicked() {
     // TODO: Implement Handshake job importing here (future iteration)
-    this.navCtrl.push(TabsPage);
+    this.navCtrl.push(CompanyTabsPage);
   }
 }

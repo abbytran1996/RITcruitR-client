@@ -27,8 +27,11 @@
   <ion-row class="row-login-buttons">
     <ion-col>
       <div>
-        <button class="rec-btn-small-wide rec-btn-white btn-stacked center" (click)="login()">Login</button>
-        <button class="rec-btn-small-wide rec-btn-accent btn-stacked center" (click)="register()">Register</button>
+        <button class="rec-btn-small-wide rec-btn-white btn-stacked center rec-load-btn" (click)="login()" [disabled]="loadingLogin">
+          {{ (loadingLogin) ? '' : 'Login' }}
+          <ion-spinner class="primary" name="dots" [hidden]="!loadingLogin"></ion-spinner>
+        </button>
+        <button class="rec-btn-small-wide rec-btn-accent btn-stacked center" (click)="register()" [disabled]="loadingLogin">Register</button>
       </div>
     </ion-col>
   </ion-row>

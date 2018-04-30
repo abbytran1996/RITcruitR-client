@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, ToastController, NavParams } from 'ionic-angular';
 
-import { TabsPage } from '../tabs/tabs';
+import { StudentTabsPage } from '../student-tabs/student-tabs';
 import { StudentSkillsPage } from '../student-skills/student-skills';
 
 import { StudentJobPreferencesModel } from '../../models/student-job-preferences.model';
@@ -84,7 +84,7 @@ export class StudentJobPreferencesPage {
         data => {},
         res => {
           if (res.status == 200) {
-              this.navCtrl.setRoot(TabsPage, {message: "Match Preferences updated successfully"});
+              this.navCtrl.setRoot(StudentTabsPage, {message: "Match Preferences updated successfully"});
           }
           else {
             this.presentToast("There was an error updating your education details, please try again");

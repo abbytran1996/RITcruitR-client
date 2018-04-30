@@ -17,9 +17,15 @@ export class CompanyPhase1Page {
     public events: Events
   ) {
     this.recruiter = navParams.get("recruiter");
+  }
 
-    events.subscribe('recruiter:obtained', (recruiter) => {
+  ionViewDidEnter() {
+    this.events.subscribe('tabs:recruiter', (recruiter) => {
       this.recruiter = recruiter;
     });
+  }
+
+  ionViewDidLeave() {
+   this.events.unsubscribe("tabs:recruiter");
   }
 }

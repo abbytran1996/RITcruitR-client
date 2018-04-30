@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, ToastController, NavParams } from 'ionic-angular';
 
-import { TabsPage } from '../tabs/tabs';
+import { StudentTabsPage } from '../student-tabs/student-tabs';
 
 import { StudentModel } from '../../models/student.model';
 
@@ -27,15 +27,15 @@ export class StudentWorkExperiencePage {
   }
 
   continueClicked() {
-    this.navCtrl.push(TabsPage, {student: this.student});
+    this.navCtrl.push(StudentTabsPage, {student: this.student});
   }
 
   skipClicked() {
-    this.navCtrl.push(TabsPage, {student: this.student, setup: true});
+    this.navCtrl.push(StudentTabsPage, {student: this.student, setup: true});
   }
 
   saveClicked() {
-    this.navCtrl.setRoot(TabsPage, {message: "Work experience updated successfully"});
+    this.navCtrl.setRoot(StudentTabsPage, {message: "Work experience updated successfully"});
   }
 
   // Navigate back to the previous screen
