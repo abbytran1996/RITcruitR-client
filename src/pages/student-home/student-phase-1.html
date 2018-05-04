@@ -53,7 +53,7 @@
             </div>
             <div class="skills content-section">
               <h3 class="heading fg-dark"><ion-icon name="ios-paper" class="card-heading-icon"></ion-icon>Summary:</h3>
-              <p class="fg-dark">{{ (match.job.description.length > 200) ? (match.job.description | slice:0:201) + '...' : (match.job.description) }}</p>
+              <p class="fg-dark">{{ (match.job.description.length > 4000) ? (match.job.description | slice:0:201) + '...' : (match.job.description) }}</p>
             </div>
           </div>
           <!-- End Match Summary Card Content -->
