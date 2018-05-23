@@ -76,9 +76,7 @@ export class JobModel {
         apiData.recruiter.phoneNumber,
         apiData.recruiter.contactEmail,
         new UserModel(
-          apiData.recruiter.user.id,
-          apiData.recruiter.user.username,
-          apiData.recruiter.user.roles
+          apiData.recruiter.user
         )
       )
     );

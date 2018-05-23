@@ -36,9 +36,7 @@ export class RecruiterModel {
       apiData.phoneNumber,
       apiData.contactEmail,
       new UserModel(
-        apiData.user.id,
-        apiData.user.username,
-        apiData.user.roles
+        apiData.user
       )
     );
   }

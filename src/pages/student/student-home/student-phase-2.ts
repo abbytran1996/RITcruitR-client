@@ -1,0 +1,366 @@
+import { Component } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
+import { NavController, NavParams, ModalController, ToastController, AlertController } from 'ionic-angular';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+
+import { PresentationLinkAddModal } from '@app/pages/modals';
+
+import { 
+  StudentModel,
+  MatchModel
+} from '@app/models';
+
+import { StudentService } from '@app/services';
+
+const fadeTime = 400;
+
+//=========================================================================
+// * StudentPhase2Page                                                   
+//=========================================================================
+// - Shows any phase 2 matches that a student has. Each match is shown
+//   one at a time on an easy to read "card". Students can declare if
+//   they are interested in the matched job, or can decline it.
+//   Any matched jobs that are "accepted" at this stage go to the
+//   recruiter for the job.
+//_________________________________________________________________________
+@Component({
+  selector: 'page-student-phase-2',
+  templateUrl: 'student-phase-2.html'
+})
+export class StudentPhase2Page {
+
+  public student: StudentModel;
+  public match: MatchModel;
+  public pageLoading = true;
+
+  // Match fields
+  public matchList: any;
+  public matchIndex = 0;
+  public stage = 0;
+  public maxStage = 1;
+
+  // Match animation fields
+  public fadeLeft = false;
+  public fadeLeftInstant = false;
+  public fadeRight = false;
+  public fadeRightInstant = false;
+  public matchSuccess = false;
+  public matchSuccessFade = false;
+  public matchSuccessTransform = false;
+  public matchSuccessContentFade = false;
+  public hideCard = false;
+
+  // Video variables
+  public browser;
+
+  // Reorder list of presentation links
+  public linksList = [];
+
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public modalCtrl: ModalController,
+    private toastCtrl: ToastController,
+    private alertCtrl: AlertController,
+    private studentService: StudentService,
+    private iab: InAppBrowser,
+    private sanitizer: DomSanitizer
+  ) {
+    this.student= navParams.get("student");
+  }
+
+  /*
+    Called when this page is "entered".
+    Get the list of phase 2 matches with the student model.
+  */
+  ionViewDidEnter() {
+    if (this.matchList == undefined || this.matchList.length < 1) {
+      this.pageLoading = true;
+      this.getPhase2Matches();
+    }
+  }
+
+  /*
+    Show an alert dialog explaining what a company presentation phase is.
+  */
+  companyPresentationInfo() {
+    this.showAlert(
+      "Company Presentation",
+      "Take a look at these links to see what the company offering the job is all about. A link could be to a company video, website, project repository, or anything they'd like you to see. Tap a link to open it."
+    );
+  }
+
+  /*
+    Show an alert dialog explaining what a student presentation phase is.
+  */
+  yourPresentationInfo() {
+    this.showAlert(
+      "Your Presentation",
+      "This is your chance to show the recruiter anything of yours that you would like to share. This could be a link to a video of yourself, a project link, a personal website, or anything else."
+    );
+  }
+
+  previousStage() {
+    this.stage--;
+  }
+
+  /*
+    Called when the "Interested" button is tapped on a match card.
+    Proceed to the next stage. If on the last stage, submit the presentation
+    phase and "accept" the match, then show the next match.
+  */
+  interested() {
+    if (this.stage + 1 <= this.maxStage) {
+      this.stage++;
+    }
+    else {
+      if (this.linksList && this.linksList.length > 0 && this.linksList.length <= 3) {
+        this.match.studentPresentationLinks = this.linksList;
+
+        // API call to submit match with presentation links
+        this.studentService.submitMatchPresentationPhase(this.match.id, this.match.studentPresentationLinks).subscribe(
+          res => { },
+          error => {
+            if (!error || error.status != 200) {
+              console.log("Error submitting presentation links");
+              console.log(error);
+            }
+          }
+        );
+        this.animateSuccess();
+      }
+      else {
+        this.presentToast("Please add at least one, and at most three presentation link(s) for the recruiter to view.");
+      }
+    }
+  }
+
+  /*
+    Called when the "Decline" button is tapped on a match card.
+    Decline the current match, dismiss it and notify the DB of such. Show the next match.
+  */
+  decline() {
+    this.studentService.declineMatch(this.match.id).subscribe(
+      data => { },
+      error => {
+        if (!error || error.status != 200) {
+          console.log("Error declining match");
+          console.log(error);
+        }
+      }
+    );
+    
+    this.fadeLeft = true;
+
+    setTimeout(() => {
+      removeMatchFromArray(this.matchList, this.match);
+      this.nextMatch();
+      this.fadeLeft = false;
+      this.fadeRightInstant = true;
+
+      setTimeout(() => {
+        this.fadeRightInstant = false;
+      }, 100);
+    }, fadeTime);
+  }
+
+  /*
+    Show the next match in the match list of this phase.
+  */
+  nextMatch() {
+    if (this.matchIndex + 1 < this.matchList.length) {
+      this.matchIndex = this.matchIndex + 1;
+    }
+    else {
+      this.matchIndex = 0;
+    }
+
+    this.stage = 0;
+    this.prepMatch();
+  }
+
+  /*
+    Open the given URL(link) in the browser.
+  */
+  openLink(link) {
+    // Open browser app separately
+    window.open(link, '_system', 'location=yes');
+  }
+
+  /*
+    Remove the presentation link at the given index from the list of ones
+    for the current match.
+  */
+  removeLink(index) {
+    this.linksList.splice(index, 1);
+  }
+
+  /*
+    Called when adding a new presentation link to the current match.
+    Show the new presentation list modal.
+  */
+  addLink() {
+    let modal = this.modalCtrl.create(PresentationLinkAddModal, { model: this.student });
+    modal.onDidDismiss(data => {
+      if (data) {
+        this.linksList.push(data);
+      }
+    });
+    modal.present();
+  }
+
+  /*
+    Show the match "success" animation.
+    Animates a green checkmark circle to confirm the submission
+    and acceptance of a match.
+  */
+  animateSuccess() {
+    this.matchSuccess = true;
+
+    setTimeout(() => {
+      this.matchSuccessFade = true;
+      this.matchSuccessTransform = true;
+      this.hideCard = true;
+
+      setTimeout(() => {
+        this.hideCard = false;
+        this.matchSuccessContentFade = true;
+        this.fadeLeft = true;
+
+        setTimeout(() => {
+          this.stage = 0;
+        }, fadeTime / 2);
+
+        setTimeout(() => {
+          removeMatchFromArray(this.matchList, this.match);
+          this.nextMatch();
+          this.fadeLeft = false;
+          this.fadeRightInstant = true;
+
+          setTimeout(() => {
+            this.fadeRightInstant = false;
+          }, 100);
+        }, fadeTime);
+
+        setTimeout(() => {
+          this.matchSuccessFade = false;
+          this.matchSuccessContentFade = false;
+          this.matchSuccessTransform = false;
+
+          setTimeout(() => {
+            this.matchSuccess = false;
+          }, 200);
+        }, 500);
+      }, 100);
+    }, 100);
+  }
+
+  /*
+    Get the list of phase 2 matches for the student.
+  */
+  getPhase2Matches() {
+    this.matchList = this.studentService.getPhase2Matches(this.student.id).subscribe(
+      res => {
+        this.matchList = res;
+
+        if (this.matchList != undefined && this.matchList.length > 0) {
+          this.matchList.sort((a, b) => {
+            if (a.matchStrength < b.matchStrength) return 1;
+            else if (a.matchStrength > b.matchStrength) return -1;
+            else return 0;
+          });
+
+          this.matchIndex = 0;
+          this.prepMatch();
+        }
+        else {
+          this.pageLoading = false;
+        }
+      },
+      error => {
+        console.log("Error getting presentation phase matches");
+        console.log(error);
+      }
+    );
+  }
+
+  /*
+    Prepare the current match for the view. Gathers data and sets flags based on matched
+    preferences to show match indicators on the match card. Thisa only matches industries.
+  */
+  prepMatch() {
+    // Set the current match to the current index
+    this.match = this.matchList[this.matchIndex];
+
+    // No matches in this phase, nothing to prep
+    if (this.match == undefined) {
+      return;
+    }
+
+    let matchPoints = { industry: false };
+
+    // Check if any preferred industries match
+    this.student.preferredIndustries.forEach(industry => {
+      if (this.match.job.company.industries.some(ind => ind === industry)) {
+        if (!matchPoints.industry) {
+          this.match["matchedIndustry"] = industry;
+          matchPoints.industry = true;
+        }
+      }
+    });
+
+    this.pageLoading = false;
+  }
+
+  /*
+    Present a toast message to the user.
+  */
+  presentToast(message) {
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 4000,
+      position: 'top',
+      showCloseButton: true,
+      closeButtonText: ''
+    });
+
+    toast.onDidDismiss(() => {
+
+    });
+
+    toast.present();
+  }
+
+  /*
+    Show an alert dialog with the given title and message.
+  */
+  showAlert(title, message) {
+    let alert = this.alertCtrl.create({
+      title: title,
+      message: message,
+      buttons: ['Dismiss']
+    });
+    alert.present();
+  }
+}
+
+/*
+  Remove the given match from the given array.
+  This is needed because a simple index splice inline
+  is causing ordering issues.
+*/
+function removeMatchFromArray(array, match) {
+  let index = 0;
+  let indexToRemove = -1;
+  array.forEach(matchInArr => {
+    if (matchInArr.id == match.id) {
+      indexToRemove = index;
+    }
+
+    index++;
+  });
+
+  if (indexToRemove > -1) {
+    array.splice(indexToRemove, 1);
+  }
+}

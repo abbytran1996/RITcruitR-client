@@ -21,7 +21,7 @@ export class MatchModel {
   public static createMatchFromApiData(apiData: any): MatchModel {
     return new MatchModel(
       apiData.id,
-      StudentModel.createStudentFromApiData(apiData.student),
+      new StudentModel(apiData.student),
       JobModel.createJobFromApiData(apiData.job),
       apiData.matchStrength,
       apiData.tag,

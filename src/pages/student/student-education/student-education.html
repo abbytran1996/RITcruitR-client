@@ -1,0 +1,68 @@
+<ion-header class="rec-header">
+  <ion-row>
+    <!-- Back Icon -->
+    <ion-row class="row-back-icon">
+      <ion-icon name="arrow-round-back" class="icon-link back-icon block fg-dark opacity-50" (click)="backBtn()"></ion-icon>
+    </ion-row>
+    <!-- End Back Icon -->
+
+    <!-- Title -->
+    <ion-row class="row-title">
+      <h1 class="fg-grey text-center no-padding">RecruitR</h1>
+      <h3 class="text-center no-padding">Education Details</h3>
+    </ion-row>
+    <!-- End Title -->
+
+    <!-- Progress Bar -->
+    <ion-row class="row-progress" [hidden]="!isSetup">
+      <ion-col>
+        <div class="progress-bar-wrapper">
+          <p class="progress-bar-label no-margin">STEP 1 of 5</p>
+          <div class="progress-bar">
+            <div class="bar" style="width: 20%;"></div>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+    <!-- End Progress Bar -->
+
+  </ion-row>
+</ion-header>
+
+<ion-content padding class="rec-content bg-white">
+
+  <!-- Form -->
+  <ion-row class="row-form">
+    <ion-col>
+      <form #educationForm="ngForm">
+        <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
+          <label class="rec-label rl-primary">UNIVERSITY</label>
+          <input type="text" name="school" class="rec-input ri-primary" required [(ngModel)]="model.school">
+        </div>
+        <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
+          <label class="rec-label rl-primary">MAJOR</label>
+          <input type="text" name="major" class="rec-input ri-primary" required [(ngModel)]="model.major">
+        </div>
+        <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
+          <label class="rec-label rl-primary">GPA</label>
+          <input type="text" name="gpa" class="rec-input ri-primary" required [(ngModel)]="model.gpa">
+        </div>
+        <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
+          <label class="rec-label rl-primary">EXPECTED GRADUATION DATE</label>
+          <ion-datetime name="graduationDate"  required class="rec-input ri-primary" displayFormat="MM/YYYY" pickerFormat="MM YYYY" max="{{ maxYear }}" [(ngModel)]="model.graduationDate"></ion-datetime>
+        </div>
+      </form>
+    </ion-col>
+  </ion-row>
+  <!-- End Form -->
+
+</ion-content>
+
+<!-- Button Footer -->
+<ion-footer class="button-footer">
+  <ion-row>
+    <button class="rec-btn rec-btn-primary btn-stacked center" (click)="saveChanges()" [hidden]="!isSetup">Continue</button>
+    <button class="rec-btn rec-btn-primary btn-stacked center" (click)="saveChanges()" [hidden]="isSetup">Save</button>
+  </ion-row>
+</ion-footer>
+<!-- End Button Footer -->
