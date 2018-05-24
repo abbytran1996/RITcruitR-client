@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 import { NavController, NavParams, ModalController, ToastController, AlertController } from 'ionic-angular';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 
@@ -63,8 +62,7 @@ export class StudentPhase2Page {
     private toastCtrl: ToastController,
     private alertCtrl: AlertController,
     private studentService: StudentService,
-    private iab: InAppBrowser,
-    private sanitizer: DomSanitizer
+    private iab: InAppBrowser
   ) {
     this.student= navParams.get("student");
   }
@@ -290,7 +288,7 @@ export class StudentPhase2Page {
   */
   prepMatch() {
     // Set the current match to the current index
-    this.match = this.matchList[this.matchIndex];
+    this.match = new MatchModel(this.matchList[this.matchIndex]);
 
     // No matches in this phase, nothing to prep
     if (this.match == undefined) {

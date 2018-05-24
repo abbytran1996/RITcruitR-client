@@ -6,26 +6,32 @@ import { PresentationLinkAddModal } from '@app/pages/modals';
 
 import {
   NewJobModel,
-  JobModel,
   RecruiterModel
 } from '@app/models';
 
 import { JobPostingService } from '@app/services';
 
-// TEMP lists, replace with API calls
+// TODO: Remove - TEMP lists, replace with API calls
 const videos = [{text: "Company Advertisement Video", id: 0}, {text: "UI Developer Video", id: 1}];
 
+//=========================================================================
+// * CompanyJobCreate8Page                                                   
+//=========================================================================
+// - Page for the job creation process. This is part 8 of 8.
+// - In part 8, the job presentation links are entered.
+// - This is ther last part, the job will be created after finishing.
+//_________________________________________________________________________
 @Component({
   selector: 'page-company-job-create-8',
   templateUrl: 'company-job-create-8.html'
 })
 export class CompanyJobCreate8Page {
 
+  public jobModel: NewJobModel;
+  public recruiter: RecruiterModel;
+
   // ngForm object for validation control
   @ViewChild('jobForm') jobForm;
-
-  jobModel: NewJobModel;
-  recruiter: RecruiterModel;
 
   videoOptions = videos;
 
@@ -44,6 +50,9 @@ export class CompanyJobCreate8Page {
     this.jobModel = navParams.get("job");
   }
 
+  /*
+    Show an alert dialog explaining the presentation phase.
+  */
   presentationInfo() {
     this.showAlert(
       "Presentation Links",
@@ -51,10 +60,17 @@ export class CompanyJobCreate8Page {
     );
   }
 
+  /*
+    Remove the presentation link at the given index from the "instance" list of links.
+  */
   removeLink(index) {
     this.linksList.splice(index, 1);
   }
 
+  /*
+    Add a new presentation link to the list for this job. Shows a modal to choose
+    profile link or create a new one.
+  */
   addLink() {
     let modal = this.modalCtrl.create(PresentationLinkAddModal, { model: this.recruiter.company });
     modal.onDidDismiss(data => {
@@ -65,6 +81,10 @@ export class CompanyJobCreate8Page {
     modal.present();
   }
 
+  /*
+    Finished entering job data for asll parts, create the job in the DB and return
+    to the company tabs page.
+  */
   finishClicked() {
     if (this.linksList && this.linksList.length > 0 && this.linksList.length <= 3) {
       this.jobModel.presentationLinks = this.linksList;
@@ -75,7 +95,6 @@ export class CompanyJobCreate8Page {
       // Create the job using the API
       this.jobPostingService.addJob(this.recruiter.company.id, this.jobModel).subscribe(
         data => {
-          let job = JobModel.createJobFromApiData(data);
           this.navCtrl.setRoot(CompanyTabsPage, {message: "New job successfully created"});
         },
         error => {
@@ -88,12 +107,16 @@ export class CompanyJobCreate8Page {
     }
   }
 
-  // Navigate back to the previous screen
+  /*
+    Navigate back to the previous screen.
+  */
   backBtn() {
     this.navCtrl.pop();
   }
 
-  // Present a toast message to the user
+  /*
+    Present a toast message to the user.
+  */
   presentToast(message) {
     let toast = this.toastCtrl.create({
       message: message,
@@ -110,6 +133,9 @@ export class CompanyJobCreate8Page {
     toast.present();
   }
 
+  /*
+    Show an alert dialog with the given title and message.
+  */
   showAlert(title, message) {
     let alert = this.alertCtrl.create({
       title: title,

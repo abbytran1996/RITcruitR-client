@@ -7,16 +7,22 @@ import { CompanyRegisterModel } from '@app/models';
 
 import { DataService } from '@app/services';
 
+//=========================================================================
+// * CompanyRegister2Page
+//=========================================================================
+// - The second page for registering a new company.
+// - In this step, the company locations, size, and website are entered.
+//_________________________________________________________________________
 @Component({
   selector: 'page-company-register-2',
   templateUrl: 'company-register-2.html'
 })
 export class CompanyRegister2Page {
 
+  public companyModel: CompanyRegisterModel;
+
   // ngForm object for validation control
   @ViewChild('companyForm') companyForm;
-
-  companyModel = new CompanyRegisterModel("", [], [], null, "");
 
   locationOptions = [];
   companySizeOptions = [];
@@ -34,6 +40,9 @@ export class CompanyRegister2Page {
     this.companySizeOptions = this.dataService.getCompanySizesForCompany();
   }
 
+  /*
+    Continue to the next step of company registration.
+  */
   continueClicked() {
     if (this.companyForm && this.companyForm.valid) {
       this.navCtrl.push(RecruiterRegisterPage, {company: this.companyModel, setup: true});
@@ -43,12 +52,16 @@ export class CompanyRegister2Page {
     }
   }
 
-  // Navigate back to the previous screen
+  /*
+    Navigate back to the previous screen.
+  */
   backBtn() {
     this.navCtrl.pop();
   }
 
-  // Present a toast message to the user
+  /*
+    Present a toast message to the user.
+  */
   presentToast(message) {
     let toast = this.toastCtrl.create({
       message: message,

@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { ModalController, Platform, NavParams, ViewController } from 'ionic-angular';
+import { Platform, NavParams, ViewController } from 'ionic-angular';
 
 import {NgbTypeahead} from '@ng-bootstrap/ng-bootstrap';
 import {Observable} from 'rxjs/Observable';

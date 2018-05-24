@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { ModalController, Platform, NavParams, ViewController, ToastController } from 'ionic-angular';
+import { Platform, NavParams, ViewController, ToastController } from 'ionic-angular';
 
 //=========================================================================
 // * ProblemStatementAddModal                                                   

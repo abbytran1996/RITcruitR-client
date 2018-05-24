@@ -8,17 +8,23 @@ import {
   RecruiterModel
 } from '@app/models';
 
+//=========================================================================
+// * CompanyJobCreate5Page                                                   
+//=========================================================================
+// - Page for the job creation process. This is part 5 of 8.
+// - In part 5, the job filters (min gpa, has work experience) are entered.
+//_________________________________________________________________________
 @Component({
   selector: 'page-company-job-create-5',
   templateUrl: 'company-job-create-5.html'
 })
 export class CompanyJobCreate5Page {
 
+  public jobModel: NewJobModel;
+  public recruiter: RecruiterModel;
+
   // ngForm object for validation control
   @ViewChild('jobForm') jobForm;
-
-  jobModel: NewJobModel;
-  recruiter: RecruiterModel;
 
   constructor(
     public navCtrl: NavController,
@@ -30,6 +36,9 @@ export class CompanyJobCreate5Page {
     this.jobModel = navParams.get("job");
   }
 
+  /*
+    Show an alert dialog explaining the minimum GPA.
+  */
   minGpaInfo() {
     this.showAlert(
       "Minimum GPA",
@@ -37,6 +46,9 @@ export class CompanyJobCreate5Page {
     );
   }
 
+  /*
+    Show an alert dialog explaining has work experience.
+  */
   workExperienceInfo() {
     this.showAlert(
       "Has Work Experience",
@@ -44,18 +56,25 @@ export class CompanyJobCreate5Page {
     );
   }
 
+  /*
+    Continue to the next part of job creation.
+  */
   continueClicked() {
     if (this.jobForm && this.jobForm.valid) {
       this.navCtrl.push(CompanyJobCreate6Page, {recruiter: this.recruiter, job: this.jobModel});
     }
   }
 
-  // Navigate back to the previous screen
+  /*
+    Navigate back to the previous screen.
+  */
   backBtn() {
     this.navCtrl.pop();
   }
 
-  // Present a toast message to the user
+  /*
+    Present a toast message to the user.
+  */
   presentToast(message) {
     let toast = this.toastCtrl.create({
       message: message,
@@ -72,6 +91,9 @@ export class CompanyJobCreate5Page {
     toast.present();
   }
 
+  /*
+    Show an alert dialog with the given title and message.
+  */
   showAlert(title, message) {
     let alert = this.alertCtrl.create({
       title: title,

@@ -31,13 +31,12 @@ import {
 })
 export class LoginPage {
 
+  public model = new LoginModel();
+  public loadingLogin = false;
+  private loginMode = 0; // TODO: Remove, only used in dev
+
   // ngForm object for validation control
   @ViewChild('loginForm') loginForm;
-
-  // Form model for login fields
-  model = new LoginModel();
-
-  public loadingLogin = false;
 
   constructor(
     public navCtrl: NavController,
@@ -46,11 +45,32 @@ export class LoginPage {
     private studentService: StudentService,
     private recruiterService: RecruiterService
   ) {
-    // TODO: Remove eventually, for now I'm leaving it here for simplicity with future dev
-    this.model.username = "student@rit.edu";
-    this.model.password = "Student1!";
-    // this.model.username = "recruiter@facebook.com";
-    // this.model.password = "Recruiter1!";
+  }
+
+  /*
+    Used for quick login in development.
+    TODO: Remove this, and the (click) directive in the template.
+  */
+  devLogin() {
+    switch (this.loginMode) {
+      case 0:
+        this.model.username = "student@rit.edu";
+        this.model.password = "Student1!";
+        this.loginMode = 1;
+        break;
+
+      case 1:
+        this.model.username = "recruiter@facebook.com";
+        this.model.password = "Recruiter1!";
+        this.loginMode = 2;
+        break;
+    
+      default:
+        this.model.username = "";
+        this.model.password = "";
+        this.loginMode = 0;
+        break;
+    }
   }
 
   /*
@@ -79,24 +99,27 @@ export class LoginPage {
               },
               error => {
                 this.presentToast("An error occurred loading your account, please try again later");
+                this.loadingLogin = false;
               }
             );
           }
           else {
             this.recruiterService.getRecruiterByEmail(userEmail).subscribe(
               data => {
-                let recruiter = RecruiterModel.createRecruiterFromApiData(data);
+                let recruiter = new RecruiterModel(data);
                 this.loadingLogin = false;
                 this.navCtrl.push(CompanyTabsPage, {recruiter: recruiter}, { animation: "md-transition" });
               },
               error => {
                 this.presentToast("An error occurred loading your account, please try again later");
+                this.loadingLogin = false;
               }
             );
           }
         },
         error => {
           this.presentToast("No user found with that email and password combination");
+          this.loadingLogin = false;
         }
       );
     }

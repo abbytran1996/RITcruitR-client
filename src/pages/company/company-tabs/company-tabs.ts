@@ -20,6 +20,13 @@ import {
   RecruiterService
 } from '@app/services';
 
+//=========================================================================
+// * CompanyTabsPage
+//=========================================================================
+// - Main "dashboard" parent page. Contains tabs and side drawer navigation
+//   to navigate to anywhere in the app.
+// - Shows CompanyPhase1Page initially.
+//_________________________________________________________________________
 @Component({
   selector: 'page-company-tabs',
   templateUrl: 'company-tabs.html'
@@ -46,6 +53,7 @@ export class CompanyTabsPage {
   ) {
     this.recruiter = navParams.get("recruiter");
 
+    // If recruiter is sent in from previous page, use it, otherwise get the recruiter from the DB.
     if (this.recruiter != undefined) {
       this.recruiterTabParams = {recruiter: this.recruiter};
       this.loadingRecruiter = false;
@@ -54,7 +62,7 @@ export class CompanyTabsPage {
       let userEmail = window.localStorage.getItem("email");
       this.recruiterService.getRecruiterByEmail(userEmail).subscribe(
         data => {
-          this.recruiter = RecruiterModel.createRecruiterFromApiData(data);
+          this.recruiter = new RecruiterModel(data);
           this.recruiterTabParams = {recruiter: this.recruiter};
           this.events.publish('tabs:recruiter', this.recruiter, Date.now());
           this.loadingRecruiter = false;
@@ -73,42 +81,51 @@ export class CompanyTabsPage {
   }
 
   /*
-    Recruiter Nav Options
-    ===========================================================================
+    Create a job as a recruiter.
   */
-
-  // Create a job as a recruiter
   createCompanyJob() {
     this.navCtrl.push(CompanyJobCreate1Page, {recruiter: this.recruiter});
   }
 
-  // Edit the details for a company
+  /*
+    Edit the details for a company.
+  */
   editCompanyDetails() {
     this.navCtrl.push(CompanyDetailsPage, {recruiter: this.recruiter});
   }
 
-  // Add a new recruiter to the company
+  /*
+    Add a new recruiter to the company.
+  */
   addRecruiter() {
     this.navCtrl.push(RecruiterRegisterPage, {recruiter: this.recruiter});
   }
 
-  // Edit the recruiters in a company
+  /*
+    Edit the recruiters in a company.
+  */
   editRecruiters() {
 
   }
 
-  // Edit the recruiters contact info
+  /*
+    Edit the recruiters contact info.
+  */
   editContact() {
     this.navCtrl.push(RecruiterContactPage, {recruiter: this.recruiter, edit: true});
   }
 
-  // Logout the current user and return to the login screen.
+  /*
+    Logout the current user and return to the login screen..
+  */
   logout() {
     this.authService.logout();
     this.navCtrl.setRoot(LoginPage, {}, {animate: true, animation: "md-transition"});
   }
 
-  // Present a toast message to the user
+  /*
+    Present a toast message to the user.
+  */
   presentToast(message) {
     let toast = this.toastCtrl.create({
       message: message,

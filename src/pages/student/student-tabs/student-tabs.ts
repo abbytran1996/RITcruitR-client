@@ -1,5 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController, ToastController, NavParams, Events } from 'ionic-angular';
+import {
+  NavController,
+  ToastController,
+  MenuController,
+  NavParams,
+  Events
+} from 'ionic-angular';
 
 import {
   StudentPhase1Page,
@@ -48,6 +54,7 @@ export class StudentTabsPage {
   constructor(
     public navCtrl: NavController,
     private toastCtrl: ToastController,
+    public menuCtrl: MenuController,
     public navParams: NavParams,
     private authService: AuthService,
     private studentService: StudentService,

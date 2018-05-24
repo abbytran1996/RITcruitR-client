@@ -13,13 +13,19 @@ import {
   CompanyService
 } from '@app/services';
 
+//=========================================================================
+// * CompanyDetailsPage                                                   
+//=========================================================================
+// - Page to update company detail info like company name, website, etc.
+//_________________________________________________________________________
 @Component({
   selector: 'page-company-details',
   templateUrl: 'company-details.html'
 })
 export class CompanyDetailsPage {
 
-  public user: any;
+  public recruiterModel: RecruiterModel = new RecruiterModel();
+  public companyModel: CompanyModel = new CompanyModel();
 
   industryOptions = [];
   locationOptions = [];
@@ -27,10 +33,6 @@ export class CompanyDetailsPage {
 
   // ngForm object for validation control
   @ViewChild('companyForm') companyForm;
-
-  // Form model
-  recruiterModel: RecruiterModel;
-  companyModel = new CompanyModel(0, "", [], [], null, true, "", "", "", "", null, []);
 
   constructor(
     public navCtrl: NavController,
@@ -41,7 +43,6 @@ export class CompanyDetailsPage {
   ) {
     this.recruiterModel = navParams.get("recruiter");
     this.companyModel = this.recruiterModel.company;
-    console.log(this.companyModel);
 
     // Get the data for the select fields
     this.locationOptions = this.dataService.getLocations();
@@ -49,7 +50,10 @@ export class CompanyDetailsPage {
     this.companySizeOptions = this.dataService.getCompanySizesForCompany();
   }
 
-  saveClicked() {
+  /*
+    Save changes to the company details in the model and the DB. Return to company tabs page.
+  */
+  saveChanges() {
     if (this.companyForm && this.companyForm.valid) {
       this.companyService.updateCompany(this.companyModel).subscribe(
         data => {},
@@ -68,12 +72,16 @@ export class CompanyDetailsPage {
     }
   }
 
-  // Navigate back to the previous screen
+  /*
+    Navigate back to the previous screen.
+  */
   backBtn() {
     this.navCtrl.pop();
   }
 
-  // Present a toast message to the user
+  /*
+    Present a toast message to the user.
+  */
   presentToast(message) {
     let toast = this.toastCtrl.create({
       message: message,

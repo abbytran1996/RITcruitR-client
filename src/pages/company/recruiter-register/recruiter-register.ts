@@ -8,17 +8,22 @@ import {
   RecruiterRegisterModel
 } from '@app/models';
 
+//=========================================================================
+// * RecruiterRegisterPage
+//=========================================================================
+// - Page to enter recruiter info to register a new recruiter.
+//_________________________________________________________________________
 @Component({
   selector: 'page-recruiter-register',
   templateUrl: 'recruiter-register.html'
 })
 export class RecruiterRegisterPage {
 
+  public companyModel: CompanyRegisterModel;
+  public recruiterModel = new RecruiterRegisterModel();
+
   // ngForm object for validation control
   @ViewChild('registerForm') registerForm;
-
-  companyModel = new CompanyRegisterModel("", [], [], null, "");
-  recruiterModel = new RecruiterRegisterModel("", "", "", "", "", "", "");
   isSetup = false;
 
   constructor(
@@ -28,12 +33,15 @@ export class RecruiterRegisterPage {
   ) {
     this.companyModel = navParams.get("company");
 
+    // Determine if in setup or not
     if (navParams.get("setup") == true) {
       this.isSetup = true;
     }
   }
 
-  // Attempt to register the recruiter
+  /*
+    Continue to the recruiter contact page to complete recruiter registration there.
+  */
   continueClicked() {
     if (this.registerForm && this.registerForm.valid) {
       this.recruiterModel.passwordConfirm = this.recruiterModel.password;
@@ -48,12 +56,16 @@ export class RecruiterRegisterPage {
     }
   }
 
-  // Navigate back to the previous screen
+  /*
+    Navigate back to the previous screen.
+  */
   backBtn() {
     this.navCtrl.pop();
   }
 
-  // Present a toast message to the user
+  /*
+    Present a toast message to the user.
+  */
   presentToast(message) {
     let toast = this.toastCtrl.create({
       message: message,

@@ -10,7 +10,8 @@ import {
   CompanyRegisterModel,
   RecruiterRegisterModel,
   RecruiterContactModel,
-  RecruiterModel
+  RecruiterModel,
+  UserModel
 } from '@app/models';
 
 import {
@@ -19,24 +20,33 @@ import {
   CompanyService
 } from '@app/services';
 
+//=========================================================================
+// * RecruiterContactPage
+//=========================================================================
+// - Page to enter recruiter contact information
+//   (contact email, phone, etc).
+// - This is also the last step in company creation, so the company is
+//   actually "created" here if in setup.
+// - This same page is used for company primary recruiter setup, adding
+//   a new recruiter to a company, and editing an existing recruiter's
+//   contact info.
+//_________________________________________________________________________
 @Component({
   selector: 'page-recruiter-contact',
   templateUrl: 'recruiter-contact.html'
 })
 export class RecruiterContactPage {
 
-  public user: any;
+  public user: UserModel;
+  public companyModel: CompanyRegisterModel;
+  public recruiterModel: RecruiterRegisterModel;
+  public model = new RecruiterContactModel();
   public companyId: any;
   public isSetup = false;
   public isEdit = false;
 
   // ngForm object for validation control
   @ViewChild('contactForm') contactForm;
-
-  // Form models
-  companyModel = new CompanyRegisterModel("", [], [], null, "");
-  recruiterModel = new RecruiterRegisterModel("", "", "", "", "", "", "");
-  model = new RecruiterContactModel("", "");
 
   constructor(
     public navCtrl: NavController,
@@ -49,19 +59,25 @@ export class RecruiterContactPage {
     this.companyModel = navParams.get("company");
     this.recruiterModel = navParams.get("recruiter");
 
+    // Determine if in setup or not
     if (navParams.get("setup") == true) {
       this.isSetup = true;
     }
 
+    // Determine if in edit mode or not
     if (navParams.get("edit") == true) {
       this.isEdit = true;
-
-      // TODO: Set these fields using actual incoming recruiter data
-      this.model.contactEmail = "contact@example.com";
-      this.model.phoneNumber = "716-123-4567";
+      this.model.contactEmail = this.recruiterModel.contactEmail;
+      this.model.phoneNumber = this.recruiterModel.phoneNumber;
     }
   }
 
+  /*
+    Only available when in setup or creating a new recruiter, not editing.
+    If in setup, create a new company with the information passed in and
+    create the primary recruiter for that company.
+    If not in setup and not in edit, create the new recruiter.
+  */
   continueClicked() {
     if (this.contactForm && this.contactForm.valid) {
       if (this.isSetup) {
@@ -82,7 +98,7 @@ export class RecruiterContactPage {
             */
             this.recruiterService.addRecruiter(companyData.id, this.recruiterModel).subscribe(
               recruiterData => {
-                let recruiter = RecruiterModel.createRecruiterFromApiData(recruiterData);
+                let recruiter = new RecruiterModel(recruiterData);
 
                 // TODO: Remove this setLocalVars call after dev. We don't want
                 // to "login" the recruiter after company creation because they
@@ -114,6 +130,10 @@ export class RecruiterContactPage {
     }
   }
 
+  /*
+    Only available when editing an existing recruiter's contact info.
+    Save the changes to the DB and return to the company tabs page.
+  */
   saveClicked() {
     if (this.contactForm && this.contactForm.valid) {
       // TODO: Call API to update contact info for recruiter (edit mode)
@@ -124,12 +144,16 @@ export class RecruiterContactPage {
     }
   }
 
-  // Navigate back to the previous screen
+  /*
+    Navigate back to the previous screen.
+  */
   backBtn() {
     this.navCtrl.pop();
   }
 
-  // Present a toast message to the user
+  /*
+    Present a toast message to the user.
+  */
   presentToast(message) {
     let toast = this.toastCtrl.create({
       message: message,

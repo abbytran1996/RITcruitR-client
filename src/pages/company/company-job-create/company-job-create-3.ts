@@ -10,17 +10,23 @@ import {
 
 import { DataService } from '@app/services';
 
+//=========================================================================
+// * CompanyJobCreate3Page                                                   
+//=========================================================================
+// - Page for the job creation process. This is part 3 of 8.
+// - In part 3, the job required skills are entered.
+//_________________________________________________________________________
 @Component({
   selector: 'page-company-job-create-3',
   templateUrl: 'company-job-create-3.html'
 })
 export class CompanyJobCreate3Page {
-
+  
+  public jobModel: NewJobModel;
+  public recruiter: RecruiterModel;
+  
   // ngForm object for validation control
   @ViewChild('jobForm') jobForm;
-
-  jobModel: NewJobModel;
-  recruiter: RecruiterModel;
 
   skillOptions = [];
   skills = [];
@@ -46,6 +52,9 @@ export class CompanyJobCreate3Page {
     );
   }
 
+  /*
+    Show an alert dialog explaining required skills.
+  */
   reqSkillsInfo() {
     this.showAlert(
       "Required Skills",
@@ -53,10 +62,16 @@ export class CompanyJobCreate3Page {
     );
   }
 
+  /*
+    Remove the skill at the given index from the "instance" list of skills for the job.
+  */
   removeSkill(index) {
     this.skills.splice(index, 1);
   }
 
+  /*
+    Continue to the next part of job creation.
+  */
   continueClicked() {
     if (this.jobForm && this.jobForm.valid && this.skills.length > 0) {
       this.jobModel.requiredSkills = this.skills;
@@ -67,12 +82,16 @@ export class CompanyJobCreate3Page {
     }
   }
 
-  // Navigate back to the previous screen
+  /*
+    Navigate back to the previous screen.
+  */
   backBtn() {
     this.navCtrl.pop();
   }
 
-  // Present a toast message to the user
+  /*
+    Present a toast message to the user.
+  */
   presentToast(message) {
     let toast = this.toastCtrl.create({
       message: message,
@@ -89,6 +108,9 @@ export class CompanyJobCreate3Page {
     toast.present();
   }
 
+  /*
+    Show an alert dialog with the given title and message.
+  */
   showAlert(title, message) {
     let alert = this.alertCtrl.create({
       title: title,

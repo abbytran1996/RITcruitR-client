@@ -10,17 +10,23 @@ import {
 
 import { DataService } from '@app/services';
 
+//=========================================================================
+// * CompanyJobCreate4Page                                                   
+//=========================================================================
+// - Page for the job creation process. This is part 4 of 8.
+// - In part 4, the job nice to have skills are entered.
+//_________________________________________________________________________
 @Component({
   selector: 'page-company-job-create-4',
   templateUrl: 'company-job-create-4.html'
 })
 export class CompanyJobCreate4Page {
 
+  public jobModel: NewJobModel;
+  public recruiter: RecruiterModel;
+
   // ngForm object for validation control
   @ViewChild('jobForm') jobForm;
-
-  jobModel: NewJobModel;
-  recruiter: RecruiterModel;
 
   skillOptions = [];
   skills = [];
@@ -47,10 +53,9 @@ export class CompanyJobCreate4Page {
     );
   }
 
-  removeSkill(index) {
-    this.skills.splice(index, 1);
-  }
-
+  /* 
+    Show an alert dialog explaining nice to have skills weight.
+  */
   nthSkillsWeightInfo() {
     this.showAlert(
       "Nice to Have Skills Weight",
@@ -58,6 +63,9 @@ export class CompanyJobCreate4Page {
     );
   }
 
+  /* 
+    Show an alert dialog explaining nice to have skills.
+  */
   nthSkillsInfo() {
     this.showAlert(
       "Nice to Have Skills",
@@ -65,21 +73,18 @@ export class CompanyJobCreate4Page {
     );
   }
 
-  continueClicked() {
-    if (this.jobForm && this.jobForm.valid) {
-      this.jobModel.niceToHaveSkills = this.skills;
-      this.navCtrl.push(CompanyJobCreate5Page, {recruiter: this.recruiter, job: this.jobModel});
-    }
-    else {
-      this.presentToast("There is a problem with the skills you have selected, please review them and try again");
-    }
+  /*
+    Remove the skill at the given index from the "instance" list of skills for the job.
+  */
+  removeSkill(index) {
+    this.skills.splice(index, 1);
   }
 
-  // Navigate back to the previous screen
-  backBtn() {
-    this.navCtrl.pop();
-  }
-
+  /*
+    Remove the given array of skills from the skills options.
+    Used to remove skills selected as required skills from the previous
+    step to prevent duplicates.
+  */
   removeSkillOptions(toRemove) {
     let values = toRemove;
 
@@ -91,7 +96,29 @@ export class CompanyJobCreate4Page {
     });
   }
 
-  // Present a toast message to the user
+  /*
+    Continue to the next part of job creation.
+  */
+  continueClicked() {
+    if (this.jobForm && this.jobForm.valid) {
+      this.jobModel.niceToHaveSkills = this.skills;
+      this.navCtrl.push(CompanyJobCreate5Page, {recruiter: this.recruiter, job: this.jobModel});
+    }
+    else {
+      this.presentToast("There is a problem with the skills you have selected, please review them and try again");
+    }
+  }
+
+  /*
+    Navigate back to the previous screen.
+  */
+  backBtn() {
+    this.navCtrl.pop();
+  }
+
+  /*
+    Present a toast message to the user.
+  */
   presentToast(message) {
     let toast = this.toastCtrl.create({
       message: message,
@@ -108,6 +135,9 @@ export class CompanyJobCreate4Page {
     toast.present();
   }
 
+  /*
+    Show an alert dialog with the given title and message.
+  */
   showAlert(title, message) {
     let alert = this.alertCtrl.create({
       title: title,

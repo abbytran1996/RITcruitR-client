@@ -7,18 +7,22 @@ import { CompanyRegisterModel } from '@app/models';
 
 import { DataService } from '@app/services';
 
-import { SelectSearchable } from 'ionic-select-searchable';
-
+//=========================================================================
+// * CompanyRegister1Page
+//=========================================================================
+// - The first page for registering a new company.
+// - In this step, the company name and industries are entered.
+//_________________________________________________________________________
 @Component({
   selector: 'page-company-register-1',
   templateUrl: 'company-register-1.html'
 })
 export class CompanyRegister1Page {
 
+  public companyModel = new CompanyRegisterModel();
+
   // ngForm object for validation control
   @ViewChild('companyForm') companyForm;
-
-  companyModel = new CompanyRegisterModel("", [], [], null, "");
   industryOptions = [];
 
   constructor(
@@ -30,6 +34,9 @@ export class CompanyRegister1Page {
     this.industryOptions = this.dataService.getIndustries();
   }
 
+  /*
+    Continue to the next step of company registration.
+  */
   continueClicked() {
     if (this.companyForm && this.companyForm.valid) {
       this.navCtrl.push(CompanyRegister2Page, {company: this.companyModel});
@@ -39,12 +46,16 @@ export class CompanyRegister1Page {
     }
   }
 
-  // Navigate back to the previous screen
+  /*
+    Navigate back to the previous screen.
+  */
   backBtn() {
     this.navCtrl.pop();
   }
 
-  // Present a toast message to the user
+  /*
+    Present a toast message to the user.
+  */
   presentToast(message) {
     let toast = this.toastCtrl.create({
       message: message,

@@ -8,17 +8,23 @@ import {
   RecruiterModel
 } from '@app/models';
 
+//=========================================================================
+// * CompanyJobCreate6Page                                                   
+//=========================================================================
+// - Page for the job creation process. This is part 6 of 8.
+// - In part 6, the job match threshold and duration are entered.
+//_________________________________________________________________________
 @Component({
   selector: 'page-company-job-create-6',
   templateUrl: 'company-job-create-6.html'
 })
 export class CompanyJobCreate6Page {
 
+  public jobModel: NewJobModel;
+  public recruiter: RecruiterModel;
+
   // ngForm object for validation control
   @ViewChild('jobForm') jobForm;
-
-  jobModel: NewJobModel;
-  recruiter: RecruiterModel;
 
   constructor(
     public navCtrl: NavController,
@@ -30,6 +36,9 @@ export class CompanyJobCreate6Page {
     this.jobModel = navParams.get("job");
   }
 
+  /*
+    Show an alert dialog explaining the job duration.
+  */
   durationInfo() {
     this.showAlert(
       "Job Duration",
@@ -37,6 +46,9 @@ export class CompanyJobCreate6Page {
     );
   }
 
+  /*
+    Show an alert dialog explaining the match threshold.
+  */
   thresholdInfo() {
     this.showAlert(
       "Match Threshold",
@@ -44,6 +56,9 @@ export class CompanyJobCreate6Page {
     );
   }
 
+  /*
+    Continue to the next part of job creation.
+  */
   continueClicked() {
     if (this.jobForm && this.jobForm.valid) {
       this.navCtrl.push(CompanyJobCreate7Page, {recruiter: this.recruiter, job: this.jobModel});
@@ -53,12 +68,16 @@ export class CompanyJobCreate6Page {
     }
   }
 
-  // Navigate back to the previous screen
+  /*
+    Navigate back to the previous screen.
+  */
   backBtn() {
     this.navCtrl.pop();
   }
 
-  // Present a toast message to the user
+  /*
+    Present a toast message to the user.
+  */
   presentToast(message) {
     let toast = this.toastCtrl.create({
       message: message,
@@ -75,6 +94,9 @@ export class CompanyJobCreate6Page {
     toast.present();
   }
 
+  /*
+    Show an alert dialog with the given title and message.
+  */
   showAlert(title, message) {
     let alert = this.alertCtrl.create({
       title: title,

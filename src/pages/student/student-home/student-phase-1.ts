@@ -1,11 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams, Events, ToastController, AlertController, ModalController } from 'ionic-angular';
 
-import {
-  StudentJobPreferencesPage,
-  StudentSkillsPage
-} from '@app/pages/student';
-
 import { ProblemStatementAddModal } from '@app/pages/modals';
 
 import {
@@ -362,7 +357,7 @@ export class StudentPhase1Page {
   */
   prepMatch() {
     // Set the current match to the current index
-    this.match = this.matchList[this.matchIndex];
+    this.match = new MatchModel(this.matchList[this.matchIndex]);
     this.matchPoints = {industry: false, locations: [false, false], skills: []};
 
     // No matches in this phase, nothing to prep

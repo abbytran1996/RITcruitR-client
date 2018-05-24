@@ -8,17 +8,23 @@ import {
   RecruiterModel
 } from '@app/models';
 
+//=========================================================================
+// * CompanyJobCreate2Page                                                   
+//=========================================================================
+// - Page for the job creation process. This is part 2 of 8.
+// - In part 2, the job description is entered.
+//_________________________________________________________________________
 @Component({
   selector: 'page-company-job-create-2',
   templateUrl: 'company-job-create-2.html'
 })
 export class CompanyJobCreate2Page {
 
+  public jobModel: NewJobModel;
+  public recruiter: RecruiterModel;
+
   // ngForm object for validation control
   @ViewChild('jobForm') jobForm;
-
-  jobModel: NewJobModel;
-  recruiter: RecruiterModel;
 
   constructor(
     public navCtrl: NavController,
@@ -30,6 +36,9 @@ export class CompanyJobCreate2Page {
     this.jobModel = navParams.get("job");
   }
 
+  /*
+    Continue to the next part of job creation.
+  */
   continueClicked() {
     if (this.jobForm && this.jobForm.valid) {
       this.navCtrl.push(CompanyJobCreate3Page, {recruiter: this.recruiter, job: this.jobModel});
@@ -39,6 +48,9 @@ export class CompanyJobCreate2Page {
     }
   }
 
+  /*
+    Show an alert dialog explaining the job description.
+  */
   descriptionInfo() {
     this.showAlert(
       "Job Description",
@@ -46,12 +58,16 @@ export class CompanyJobCreate2Page {
     );
   }
 
-  // Navigate back to the previous screen
+  /*
+    Navigate back to the previous screen.
+  */
   backBtn() {
     this.navCtrl.pop();
   }
 
-  // Present a toast message to the user
+  /*
+    Present a toast message to the user.
+  */
   presentToast(message) {
     let toast = this.toastCtrl.create({
       message: message,
@@ -68,6 +84,9 @@ export class CompanyJobCreate2Page {
     toast.present();
   }
 
+  /*
+    Show an alert dialog with the given title and message.
+  */
   showAlert(title, message) {
     let alert = this.alertCtrl.create({
       title: title,

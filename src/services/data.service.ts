@@ -1,15 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
 
 import { ApiService } from './api.service';
-import { distinctUntilChanged, map } from 'rxjs/operators';
 
 @Injectable()
 export class DataService {
     constructor(
-        private apiService: ApiService,
-        private http: HttpClient
+        private apiService: ApiService
     ) {}
 
     // TODO: Update this to pull real structured data from the API
