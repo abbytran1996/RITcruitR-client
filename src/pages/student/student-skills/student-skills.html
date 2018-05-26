@@ -49,6 +49,9 @@
                 <ion-icon name="md-close-circle" class="fake-link" (click)="removeSkill(i)"></ion-icon>
               </ion-item>
             </ion-item-group>
+            <ion-item-group [hidden]="skills.length > 0">
+              <h5 class="list-empty-message">You currently have no skills saved, add some by tapping the <span class="fg-accent">Add</span> button above.</h5>
+            </ion-item-group>
           </ion-list>
         </div>
       </form>

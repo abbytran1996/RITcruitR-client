@@ -10,3 +10,5 @@ export * from './student-setup/student-setup';
 export * from './student-skills/student-skills';
 export * from './student-tabs/student-tabs';
 export * from './student-work-experience/student-work-experience';
+export * from './student-presentation-links/student-presentation-links';
+export * from './student-problem-statements/student-problem-statements';

@@ -33,7 +33,9 @@ import {
   StudentPhase1Page,
   StudentPhase2Page,
   StudentPhase3Page,
-  StudentProfileDetailsPage
+  StudentProfileDetailsPage,
+  StudentPresentationLinksPage,
+  StudentProblemStatementsPage
 } from '@app/pages/student';
 
 // Company Module
@@ -82,6 +84,7 @@ import {
     MyApp,
     LoginPage,
     RegisterPage,
+
     StudentTabsPage,
     StudentRegisterPage,
     StudentSetupPage,
@@ -94,6 +97,9 @@ import {
     StudentPhase2Page,
     StudentPhase3Page,
     StudentProfileDetailsPage,
+    StudentPresentationLinksPage,
+    StudentProblemStatementsPage,
+
     CompanyTabsPage,
     CompanyRegister1Page,
     CompanyRegister2Page,
@@ -115,6 +121,7 @@ import {
     RecruiterCompanySelectPage,
     RecruiterRegisterPage,
     RecruiterContactPage,
+
     PresentationLinkAddModal,
     ProblemStatementAddModal
   ],
@@ -133,6 +140,7 @@ import {
     MyApp,
     LoginPage,
     RegisterPage,
+
     StudentTabsPage,
     StudentRegisterPage,
     StudentSetupPage,
@@ -145,6 +153,9 @@ import {
     StudentPhase2Page,
     StudentPhase3Page,
     StudentProfileDetailsPage,
+    StudentPresentationLinksPage,
+    StudentProblemStatementsPage,
+
     CompanyTabsPage,
     CompanyRegister1Page,
     CompanyRegister2Page,
@@ -166,6 +177,7 @@ import {
     RecruiterCompanySelectPage,
     RecruiterRegisterPage,
     RecruiterContactPage,
+
     PresentationLinkAddModal,
     ProblemStatementAddModal
   ],
@@ -175,6 +187,7 @@ import {
     InAppBrowser,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     HttpClientModule,
+
     ApiService,
     AuthService,
     CompanyService,

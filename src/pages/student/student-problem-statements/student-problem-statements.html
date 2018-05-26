@@ -1,0 +1,58 @@
+<ion-header class="rec-header">
+  <ion-row>
+    <!-- Back Icon -->
+    <ion-row class="row-back-icon">
+      <ion-icon name="arrow-round-back" class="icon-link back-icon block fg-dark opacity-50" (click)="backBtn()"></ion-icon>
+    </ion-row>
+    <!-- End Back Icon -->
+
+    <!-- Title -->
+    <ion-row class="row-title">
+      <h1 class="fg-grey text-center no-padding">RecruitR</h1>
+      <h3 class="text-center no-padding">Problem Statements</h3>
+    </ion-row>
+    <!-- End Title -->
+  </ion-row>
+</ion-header>
+
+<ion-content padding class="rec-content bg-white">
+
+  <!-- Form -->
+  <ion-row class="row-form">
+    <ion-col>
+      <form #statementForm="ngForm">
+
+        <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
+          <ion-list class="rec-reorder-list">
+            <div class="list-header-wrapper">
+            <ion-list-header>PROBLEM STATEMENTS<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="problemStatementInfo()"></ion-icon></ion-list-header>
+            <button class="rec-btn-circle-small rec-btn-primary" (click)="addStatement()">
+              <ion-icon name="md-add" class="rec-btn-icon"></ion-icon>
+            </button>
+          </div>
+            <ion-item-group reorder="false" side="start" (ionItemReorder)="$event.applyTo(statements)">
+              <ion-item *ngFor="let statement of statements; let i = index">
+                <h5>{{ statement.name }}</h5>
+                <p>{{ statement.statement }}</p>
+                <ion-icon name="md-close-circle" class="fake-link" (click)="removeStatement(i)"></ion-icon>
+              </ion-item>
+            </ion-item-group>
+            <ion-item-group [hidden]="statements.length > 0">
+              <h5 class="list-empty-message">You currently have no statements saved, add a new one by tapping the <span class="fg-accent">plus</span> button above.</h5>
+            </ion-item-group>
+          </ion-list>
+        </div>
+      </form>
+    </ion-col>
+  </ion-row>
+  <!-- End Form -->
+
+</ion-content>
+
+<!-- Button Footer -->
+<ion-footer class="button-footer">
+  <ion-row>
+    <button class="rec-btn rec-btn-primary btn-stacked center" (click)="saveChanges()">Save</button>
+  </ion-row>
+</ion-footer>
+<!-- End Button Footer -->

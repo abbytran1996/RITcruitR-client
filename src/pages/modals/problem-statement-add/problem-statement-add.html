@@ -29,7 +29,7 @@
           <label class="rec-label rl-primary">STATEMENT</label>
           <textarea name="statement" class="rec-input ri-primary" required [(ngModel)]="newStatementModel.statement"></textarea>
         </div>
-        <div class="rec-input-group-small">
+        <div class="rec-input-group-small" [hidden]="!allowSave">
           <label class="rec-label rl-primary">SAVE TO PROFILE</label>
           <ion-toggle name="saveToProfile" class="rec-input float-right" checked="false" [(ngModel)]="newStatementModel.save"></ion-toggle>
         </div>

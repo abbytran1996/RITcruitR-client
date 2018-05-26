@@ -21,6 +21,7 @@ export class PresentationLinkAddModal {
   public existingLinkModel = undefined;
   public existingLinkOptions = [];
   public model = { presentationLinks: [] };
+  public allowExisting = true;
 
   constructor(
     public platform: Platform,
@@ -29,6 +30,8 @@ export class PresentationLinkAddModal {
     private toastCtrl: ToastController
   ) {
     this.model = navParams.get("model");
+    this.allowExisting = navParams.get("allowExisting");
+    if (this.allowExisting == undefined) this.allowExisting = true;
     this.existingLinkOptions = this.model.presentationLinks;
   }
 
@@ -63,7 +66,12 @@ export class PresentationLinkAddModal {
 
     // Neither form valid
     else {
-      this.presentToast("Please either select an existing presentation link, or create a new one");
+      if (this.allowExisting) {
+        this.presentToast("Please either select an existing presentation link, or create a new one");
+      }
+      else {
+        this.presentToast("Please enter a link title and url");
+      }
     }
   }
 
@@ -78,7 +86,10 @@ export class PresentationLinkAddModal {
     Dismiss the modal and send back the newly created presentation link.
   */
   dismissNew() {
-    // TODO: Add service call to save new link to profile
+    if (this.allowExisting) {
+      // TODO: Add service call to save new link to profile
+    }
+    
     this.viewCtrl.dismiss(this.newLinkModel);
   }
 

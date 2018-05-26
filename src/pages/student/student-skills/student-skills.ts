@@ -83,7 +83,7 @@ export class StudentSkillsPage {
 
   /*
     Remove the skill at the given index from the list of the student's skills.
-    Doesn't update in the DB ast this point, just makes the "unsaved" change locally.
+    Doesn't update in the DB at this point, just makes the "unsaved" change locally.
   */
   removeSkill(index) {
     this.skills.splice(index, 1);

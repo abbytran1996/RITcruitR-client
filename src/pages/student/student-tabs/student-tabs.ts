@@ -13,6 +13,8 @@ import {
   StudentPhase3Page,
   StudentSkillsPage,
   StudentJobPreferencesPage,
+  StudentPresentationLinksPage,
+  StudentProblemStatementsPage,
   StudentProfileDetailsPage
 } from '@app/pages/student';
 
@@ -125,6 +127,20 @@ export class StudentTabsPage {
   */
   editStudentJobPreferences() {
     this.navCtrl.push(StudentJobPreferencesPage, {student: this.student});
+  }
+
+  /*
+    Show the student presentation links page.
+  */
+  editStudentPresentationLinks() {
+    this.navCtrl.push(StudentPresentationLinksPage, { student: this.student });
+  }
+
+  /*
+    Show the student problem statements page.
+  */
+  editStudentProblemStatements() {
+    this.navCtrl.push(StudentProblemStatementsPage, { student: this.student });
   }
 
   /*

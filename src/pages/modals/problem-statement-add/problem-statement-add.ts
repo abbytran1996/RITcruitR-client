@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { Platform, NavParams, ViewController, ToastController } from 'ionic-angular';
+import { StudentModel } from '@app/models';
 
 //=========================================================================
 // * ProblemStatementAddModal                                                   
@@ -14,6 +15,8 @@ export class ProblemStatementAddModal {
 
   @ViewChild('newForm') newForm;
   public newStatementModel = {name: "", statement: "", save: false};
+  public student: StudentModel;
+  public allowSave = true;
 
   constructor(
     public platform: Platform,
@@ -21,6 +24,10 @@ export class ProblemStatementAddModal {
     public viewCtrl: ViewController,
     private toastCtrl: ToastController
   ) {
+    this.student = navParams.get("student");
+    this.allowSave = navParams.get("allowSave");
+    if (this.allowSave == undefined) this.allowSave = true;
+
     // If receiving a statement from the invoker, set the field values
     // to its values.
     if (navParams.get("statement")) {
