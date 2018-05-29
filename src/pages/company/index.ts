@@ -18,3 +18,4 @@ export * from './company-tabs/company-tabs';
 export * from './recruiter-company-select/recruiter-company-select';
 export * from './recruiter-contact/recruiter-contact';
 export * from './recruiter-register/recruiter-register';
+export * from './company-presentation-links/company-presentation-links';

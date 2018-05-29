@@ -8,7 +8,8 @@ import {
   CompanyDetailsPage,
   CompanyJobCreate1Page,
   RecruiterContactPage,
-  RecruiterRegisterPage
+  RecruiterRegisterPage,
+  CompanyPresentationLinksPage
 } from '@app/pages/company';
 
 import { LoginPage } from '@app/pages/general';
@@ -85,6 +86,13 @@ export class CompanyTabsPage {
   */
   createCompanyJob() {
     this.navCtrl.push(CompanyJobCreate1Page, {recruiter: this.recruiter});
+  }
+
+  /*
+    Edit the company's saved presentation links.
+  */
+  editPresentationLinks() {
+    this.navCtrl.push(CompanyPresentationLinksPage, { recruiter: this.recruiter });
   }
 
   /*

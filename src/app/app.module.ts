@@ -59,7 +59,8 @@ import {
   CompanyJobCreate5Page,
   CompanyJobCreate6Page,
   CompanyJobCreate7Page,
-  CompanyJobCreate8Page
+  CompanyJobCreate8Page,
+  CompanyPresentationLinksPage
 } from '@app/pages/company';
 
 // Modals
@@ -121,6 +122,7 @@ import {
     RecruiterCompanySelectPage,
     RecruiterRegisterPage,
     RecruiterContactPage,
+    CompanyPresentationLinksPage,
 
     PresentationLinkAddModal,
     ProblemStatementAddModal
@@ -177,6 +179,7 @@ import {
     RecruiterCompanySelectPage,
     RecruiterRegisterPage,
     RecruiterContactPage,
+    CompanyPresentationLinksPage,
 
     PresentationLinkAddModal,
     ProblemStatementAddModal

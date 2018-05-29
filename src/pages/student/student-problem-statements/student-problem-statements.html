@@ -31,7 +31,7 @@
             </button>
           </div>
             <ion-item-group reorder="false" side="start" (ionItemReorder)="$event.applyTo(statements)">
-              <ion-item *ngFor="let statement of statements; let i = index">
+              <ion-item *ngFor="let statement of statements; let i = index" class="boxed bg-superlight">
                 <h5>{{ statement.name }}</h5>
                 <p>{{ statement.statement }}</p>
                 <ion-icon name="md-close-circle" class="fake-link" (click)="removeStatement(i)"></ion-icon>

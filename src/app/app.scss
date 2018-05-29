@@ -148,6 +148,10 @@
   background-color: map-get($colors, light);
 }
 
+.bg-superlight {
+  background-color: map-get($colors, superlight);
+}
+
 .bg-valid {
   background-color: map-get($colors, valid);
 }
@@ -182,6 +186,10 @@
 
 .fg-light {
   color: map-get($colors, light);
+}
+
+.fg-superlight {
+  color: map-get($colors, superlight);
 }
 
 .fg-valid {
@@ -1433,7 +1441,7 @@ ion-footer.button-footer::before {
   }
 
   ion-item-group {
-    padding-top: 5px;
+    padding-top: 10px;
   }
 
   ion-item {
@@ -1464,6 +1472,19 @@ ion-footer.button-footer::before {
         top: 50%;
         transform: translateY(-50%);
         right: 5px;
+      }
+    }
+
+    &.boxed {
+      margin-bottom: 10px;
+      box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.08);
+
+      ion-label {
+        padding-left: 15px;
+
+        ion-icon {
+          right: 15px;
+        }
       }
     }
 

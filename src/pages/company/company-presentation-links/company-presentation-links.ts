@@ -1,29 +1,29 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, ToastController, NavParams, AlertController, ModalController } from 'ionic-angular';
 
-import { StudentTabsPage } from '@app/pages/student';
+import { CompanyTabsPage } from '@app/pages/company';
 
 import { PresentationLinkAddModal } from '@app/pages/modals';
 
-import { StudentModel } from '@app/models';
+import { RecruiterModel } from '@app/models';
 
 import {
   DataService,
-  StudentService
+  CompanyService
 } from '@app/services';
 
 //=========================================================================
-// * StudentPresentationLinksPage                                                   
+// * CompanyPresentationLinksPage                                                   
 //=========================================================================
-// - Page to edit a student's saved profile presentation links.
+// - Page to edit a company's saved profile presentation links.
 //_________________________________________________________________________
 @Component({
-  selector: 'page-student-presentation-links',
-  templateUrl: 'student-presentation-links.html'
+  selector: 'page-company-presentation-links',
+  templateUrl: 'company-presentation-links.html'
 })
-export class StudentPresentationLinksPage {
+export class CompanyPresentationLinksPage {
 
-  public student: StudentModel;
+  public recruiter: RecruiterModel;
 
   // ngForm object for validation control
   @ViewChild('linksForm') linksForm;
@@ -36,10 +36,10 @@ export class StudentPresentationLinksPage {
     private alertCtrl: AlertController,
     public modalCtrl: ModalController,
     public dataService: DataService,
-    private studentService: StudentService
+    private companyService: CompanyService
   ) {
-    this.student = navParams.get("student");
-    this.links = this.student.presentationLinks.slice(0);
+    this.recruiter = navParams.get("recruiter");
+    this.links = this.recruiter.company.presentationLinks.slice(0);
   }
 
   /*
@@ -48,7 +48,7 @@ export class StudentPresentationLinksPage {
   presentationInfo() {
     this.showAlert(
       "Presentation Links",
-      "Presentation links are links to anything you may want an employer to see when applying to a job. A link could be to a video of yourself, a personal website, a project you've worked on, etc. These links will be used later when applying to jobs."
+      "Presentation links are links to anything you may want to present to an applicant applying to a job you're offering. A link could be to a company video, a company website, a product website, etc. These links can be used later when creating jobs."
     );
   }
 
@@ -64,7 +64,7 @@ export class StudentPresentationLinksPage {
     Add a new presentation link to the list. Shows a modal to create a new link.
   */
   addLink() {
-    let modal = this.modalCtrl.create(PresentationLinkAddModal, { model: this.student, allowExisting: false });
+    let modal = this.modalCtrl.create(PresentationLinkAddModal, { model: this.recruiter.company, allowExisting: false });
     modal.onDidDismiss(data => {
       if (data) {
         this.links.push(data);
@@ -78,10 +78,10 @@ export class StudentPresentationLinksPage {
   */
   saveChanges() {
     if (this.linksForm && this.linksForm.valid) {
-      this.student.presentationLinks = this.links;
+      this.recruiter.company.presentationLinks = this.links;
       
       // TODO: Make API call to save presentation links (endpoint for mass update needs to be made)
-      this.navCtrl.setRoot(StudentTabsPage, { message: "Presentation Links updated successfully" });
+      this.navCtrl.setRoot(CompanyTabsPage, { message: "Presentation Links updated successfully" });
     }
     else {
       this.presentToast("There was an error saving your presentation links");

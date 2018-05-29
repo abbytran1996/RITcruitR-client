@@ -40,6 +40,8 @@ export class StudentProblemStatementsPage {
     private studentService: StudentService
   ) {
     this.student = navParams.get("student");
+
+    // TODO: Set this.statements = this.student.problemStatements.slice(0) when student model is updated in DB
   }
 
   /*
