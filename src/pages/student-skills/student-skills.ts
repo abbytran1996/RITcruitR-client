@@ -19,7 +19,7 @@ export class StudentSkillsPage {
 
   // ngForm object for validation control
   @ViewChild('skillsForm') skillsForm;
-
+  skills = [];
   skillOptions = [];
 
   constructor(
@@ -34,6 +34,15 @@ export class StudentSkillsPage {
     this.dataService.getSkills().subscribe(
       data => {
         this.skillOptions = data;
+        
+        // Transfer student skills to skills array (needed to get searchable modal to reflect the proper values)
+        this.skills = [];
+        this.student.skills.forEach(skill => {
+          let skillIndex = this.skillOptions.findIndex(skillOption => skillOption.id == skill.id);
+          if (skillIndex && skillIndex > -1) {
+            this.skills.push(this.skillOptions[skillIndex]);
+          }
+        });
       },
       error => {
         this.presentToast("There was an error retrieving the list of skills, please try again");
@@ -45,8 +54,25 @@ export class StudentSkillsPage {
     }
   }
 
+  removeSkillOptions(toRemove) {
+    let values = toRemove;
+
+    values.forEach(value => {
+      let skillIndex = this.skillOptions.findIndex(skill => skill.id == value.id);
+      if (skillIndex && skillIndex > -1) {
+        this.skillOptions.splice(skillIndex, 1);
+      }
+    });
+  }
+
+  removeSkill(index) {
+    this.skills.splice(index, 1);
+  }
+
   continueClicked() {
     if (this.skillsForm && this.skillsForm.valid) {
+      this.student.skills = this.skills;
+      
       // TODO: Call API to add skills
       this.navCtrl.push(StudentWorkExperiencePage, {student: this.student, setup: true});
     }
@@ -61,6 +87,8 @@ export class StudentSkillsPage {
 
   saveClicked() {
     if (this.skillsForm && this.skillsForm.valid) {
+      this.student.skills = this.skills;
+
       // TODO: Call API to update skills
       this.navCtrl.setRoot(TabsPage, {message: "Skills updated successfully"});
     }
@@ -71,6 +99,10 @@ export class StudentSkillsPage {
 
   // Navigate back to the previous screen
   backBtn() {
+    if (this.isSetup) {
+     this.student.skills = this.skills;
+    }
+
     this.navCtrl.pop();
   }
 

@@ -102,6 +102,10 @@
   margin-bottom: 20px;
 }
 
+.fake-link {
+  cursor: pointer;
+}
+
 
 
 
@@ -314,17 +318,23 @@ ion-icon.block::before {
 
   transition-property: background-color;
   transition-duration: .3s;
-}
 
-.rec-btn:hover, .rec-btn:active, .rec-btn:focus {
-  background-color: saturate(map-get($colors, primary), 8%);
+  &:hover, &:active, &:focus {
+    background-color: saturate(map-get($colors, primary), 8%);
 
-  transition-property: background-color;
-  transition-duration: .3s;
-}
+    transition-property: background-color;
+    transition-duration: .3s;
+  }
 
-.rec-btn:disabled {
-  opacity: .5;
+  &:disabled {
+    opacity: .5;
+  }
+
+  ion-icon.rec-btn-icon {
+    font-size: 24px !important;
+    font-weight: normal !important;
+    margin-right: 5px;
+  }
 }
 
 .rec-btn-small {
@@ -340,17 +350,23 @@ ion-icon.block::before {
 
   transition-property: background-color;
   transition-duration: .3s;
-}
 
-.rec-btn-small:hover, .rec-btn-small:active, .rec-btn-small:focus {
-  background-color: saturate(map-get($colors, primary), 8%);
+  &:hover, &:active, &:focus {
+    background-color: saturate(map-get($colors, primary), 8%);
 
-  transition-property: background-color;
-  transition-duration: .3s;
-}
+    transition-property: background-color;
+    transition-duration: .3s;
+  }
 
-.rec-btn-small:disabled {
-  opacity: .5;
+  &:disabled {
+    opacity: .5;
+  }
+
+  ion-icon.rec-btn-icon {
+    font-size: 22px !important;
+    font-weight: normal !important;
+    margin-right: 5px;
+  }
 }
 
 .rec-btn-small-wide {
@@ -366,17 +382,123 @@ ion-icon.block::before {
 
   transition-property: background-color;
   transition-duration: .3s;
+
+  &:hover, &:active, &:focus {
+    background-color: saturate(map-get($colors, primary), 8%);
+
+    transition-property: background-color;
+    transition-duration: .3s;
+  }
+
+  &:disabled {
+    opacity: .5;
+  }
+
+  ion-icon.rec-btn-icon {
+    font-size: 22px !important;
+    font-weight: normal !important;
+    margin-right: 5px;
+  }
 }
 
-.rec-btn-small-wide:hover, .rec-btn-small-wide:active, .rec-btn-small-wide:focus {
-  background-color: saturate(map-get($colors, primary), 8%);
+.rec-btn-small-short {
+  width: 186px;
+  height: 50px;
+  padding-top: 5px;
+  border-radius: 35px;
+  box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.15);
+  background-color: map-get($colors, primary);
+  color: map-get($font-button-small, color);
+  font-family: map-get($font-button-small, family);
+  font-size: map-get($font-button-small, size);
 
   transition-property: background-color;
   transition-duration: .3s;
+
+  &:hover, &:active, &:focus {
+    background-color: saturate(map-get($colors, primary), 8%);
+
+    transition-property: background-color;
+    transition-duration: .3s;
+  }
+
+  &:disabled {
+    opacity: .5;
+  }
+
+  ion-icon.rec-btn-icon {
+    font-size: 22px !important;
+    font-weight: normal !important;
+    margin-right: 5px;
+  }
 }
 
-.rec-btn-small-wide:disabled {
-  opacity: .5;
+.rec-btn-circle {
+  width: 40px;
+  height: 40px;
+  padding: 0px;
+  border-radius: 50%;
+  box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.15);
+  background-color: map-get($colors, primary);
+  color: map-get($font-button-small, color);
+  font-family: map-get($font-button-small, family);
+  font-size: map-get($font-button-small, size);
+
+  transition-property: background-color;
+  transition-duration: .3s;
+
+  &:hover, &:active, &:focus {
+    background-color: saturate(map-get($colors, primary), 8%);
+
+    transition-property: background-color;
+    transition-duration: .3s;
+  }
+
+  &:disabled {
+    opacity: .5;
+  }
+
+  ion-icon.rec-btn-icon {
+    font-size: 22px !important;
+    font-weight: normal !important;
+    text-align: center;
+    line-height: 40px;
+    width: 40px;
+  }
+}
+
+.rec-btn-circle-small {
+  width: 30px;
+  height: 30px;
+  padding: 0px;
+  border-radius: 50%;
+  box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.15);
+  background-color: map-get($colors, primary);
+  color: map-get($font-button-small, color);
+  font-family: map-get($font-button-small, family);
+  font-size: map-get($font-button-small, size);
+
+  transition-property: background-color;
+  transition-duration: .3s;
+
+  &:hover, &:active, &:focus {
+    background-color: saturate(map-get($colors, primary), 8%);
+
+    transition-property: background-color;
+    transition-duration: .3s;
+  }
+
+  &:disabled {
+    opacity: .5;
+  }
+
+  ion-icon.rec-btn-icon {
+    font-size: 20px !important;
+    font-weight: normal !important;
+    text-align: center;
+    line-height: 30px;
+    width: 30px;
+  }
 }
 
 .rec-btn-primary {
@@ -385,13 +507,13 @@ ion-icon.block::before {
 
   transition-property: background;
   transition-duration: .3s;
-}
 
-.rec-btn-primary:hover, .rec-btn-primary:active, .rec-btn-primary:focus {
-  background: $color-primary-gradient-bright;
+  &:hover, &:active, &:focus {
+    background: $color-primary-gradient-bright;
 
-  transition-property: background;
-  transition-duration: .3s;
+    transition-property: background;
+    transition-duration: .3s;
+  }
 }
 
 .rec-btn-secondary {
@@ -400,13 +522,13 @@ ion-icon.block::before {
 
   transition-property: background-color;
   transition-duration: .3s;
-}
 
-.rec-btn-secondary:hover, .rec-btn-secondary:active, .rec-btn-secondary:focus {
-  background: saturate(map-get($colors, secondary), 8%);
+  &:hover, &:active, &:focus {
+    background: saturate(map-get($colors, secondary), 8%);
 
-  transition-property: background-color;
-  transition-duration: .3s;
+    transition-property: background-color;
+    transition-duration: .3s;
+  }
 }
 
 .rec-btn-accent {
@@ -415,13 +537,13 @@ ion-icon.block::before {
 
   transition-property: background-color;
   transition-duration: .3s;
-}
 
-.rec-btn-accent:hover, .rec-btn-accent:active, .rec-btn-accent:focus {
-  background: saturate(map-get($colors, accent), 8%);
+  &:hover, &:active, &:focus {
+    background: saturate(map-get($colors, accent), 8%);
 
-  transition-property: background-color;
-  transition-duration: .3s;
+    transition-property: background-color;
+    transition-duration: .3s;
+  }
 }
 
 .rec-btn-grey {
@@ -430,13 +552,13 @@ ion-icon.block::before {
 
   transition-property: background-color;
   transition-duration: .3s;
-}
 
-.rec-btn-grey:hover, .rec-btn-grey:active, .rec-btn-grey:focus {
-  background: darken(map-get($colors, grey), 8%);
+  &:hover, &:active, &:focus {
+    background: darken(map-get($colors, grey), 8%);
 
-  transition-property: background-color;
-  transition-duration: .3s;
+    transition-property: background-color;
+    transition-duration: .3s;
+  }
 }
 
 .rec-btn-white {
@@ -445,13 +567,13 @@ ion-icon.block::before {
 
   transition-property: background-color;
   transition-duration: .3s;
-}
 
-.rec-btn-white:hover, .rec-btn-white:active, .rec-btn-white:focus {
-  background: darken(#FFFFFF, 4%);
+  &:hover, &:active, &:focus {
+    background: darken(#FFFFFF, 4%);
 
-  transition-property: background-color;
-  transition-duration: .3s;
+    transition-property: background-color;
+    transition-duration: .3s;
+  }
 }
 
 .rec-btn-accept {
@@ -460,13 +582,13 @@ ion-icon.block::before {
 
   transition-property: background-color;
   transition-duration: .3s;
-}
 
-.rec-btn-accept:hover, .rec-btn-accept:active, .rec-btn-accept:focus {
-  background: darken(map-get($colors, accept), 4%);
+  &:hover, &:active, &:focus {
+    background: darken(map-get($colors, accept), 4%);
 
-  transition-property: background-color;
-  transition-duration: .3s;
+    transition-property: background-color;
+    transition-duration: .3s;
+  }
 }
 
 .rec-btn-deny {
@@ -475,13 +597,40 @@ ion-icon.block::before {
 
   transition-property: background-color;
   transition-duration: .3s;
+
+  &:hover, &:active, &:focus {
+    background: darken(map-get($colors, deny), 4%);
+
+    transition-property: background-color;
+    transition-duration: .3s;
+  }
 }
 
-.rec-btn-deny:hover, .rec-btn-deny:active, .rec-btn-deny:focus {
-  background: darken(map-get($colors, deny), 4%);
+.circle-icon-btn {
+  width: 15vh;
+  height: 15vh;
+  margin: auto;
+  text-align: center;
+  line-height: 15vh;
+  border-radius: 50%;
+  background-color: map-get($colors, primary);
+  color: white;
+  border: solid 10px saturate(lighten(map-get($colors, primary), 25%), 5%);
+  box-sizing: content-box;
+  display: block;
+  font-size: 50px !important;
+  font-weight: normal !important;
+}
 
-  transition-property: background-color;
-  transition-duration: .3s;
+.circle-icon-btn ~ h3 {
+  margin: 0;
+  margin-top: 20px;
+  margin-bottom: 40px;
+  color: map-get($colors, primary);
+}
+
+.circle-icon-btn ~ h3:last-child {
+  margin-bottom: 0px;
 }
 
 
@@ -606,64 +755,131 @@ select-searchable.rec-input {
   }
 }
 
+select-searchable.rec-select-searchable-btn {
+  border-bottom: none;
+  display: block;
+  width: 186px;
+  height: 50px;
+  margin: auto;
+
+  .select-searchable-label {
+    display: none;
+  }
+
+  .select-searchable-value {
+    display: none;
+  }
+
+  .select-searchable-icon {
+    display: none;
+  }
+}
+
+select-searchable.rec-select-searchable-btn.small {
+  button {
+    width: 186px;
+    height: 50px;
+    padding-top: 5px;
+    border-radius: 35px;
+    box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.15);
+    background: $color-primary-gradient;
+    position: static;
+    
+    color: map-get($font-button-small, color);
+    font-family: map-get($font-button-small, family);
+    font-size: map-get($font-button-small, size);
+
+    transition-property: background;
+    transition-duration: .3s;
+
+    &:hover, &:active, &:focus {
+      background: $color-primary-gradient-bright;
+
+      transition-property: background;
+      transition-duration: .3s;
+    }
+
+    &:disabled {
+      opacity: .5;
+    }
+
+    &::before {
+      font-family: map-get($font-button-small, family);
+      content: "Add";
+      font-size: 24px !important;
+      font-weight: normal !important;
+      text-align: center;
+      line-height: 45px;
+      width: 45px;
+    }
+  }
+}
+
 // Searchable typeahead modal/page
 select-searchable-page {
   ion-content .scroll-content {
-    background-color: #F5F5F5;
+    background-color: map-get($colors, white);
   }
 
   ion-navbar {
     .toolbar-background {
-      background-color: #FFFFFF;
+      background-color: map-get($colors, light);
     }
 
-    button.back-button-ios .button-inner {
-      ion-icon {
-        font-size: 24px;
-        display: none;
-      }
-
-      span.back-button-text {
-        font-family: map-get($font-input-value, family);
-        content: "Cancel";
-        padding-left: 5px;
-      }
+    button {
+      display: none !important;
     }
-    button.back-button-md .button-inner {
-      ion-icon {
-        font-size: 24px;
-      }
+
+    ion-icon {
+      font-size: 48px !important;
+      padding-left: 10px;
+      color: rgba(map-get($colors, dark), .5);
+    }
+
+    ion-title div {
+      padding-top: 10px;
+      font-family: map-get($font-heading, family);
+      font-weight: normal !important;
+      font-size: 24px !important;
+      color: map-get($colors, dark) !important;
     }
   }
 
   ion-toolbar {
     .toolbar-background {
-      background-color: #FFFFFF;
+      background-color: map-get($colors, light);
     }
   }
 
   ion-toolbar.toolbar-md {
     input.searchbar-input {
-      background-color: #F5F5F5;
+      background-color: map-get($colors, light);
     }
   }
 
   ion-list {
-    padding-top: 10px;
 
     button.item {
       border-bottom: 2px solid rgba(0, 0, 0, .05) !important;
       padding-top: 6px;
       padding-bottom: 6px;
       background-color: #ffffff;
-      width: 95%;
       margin: auto;
-      margin-bottom: 5px;
-      border-radius: 4px;
+      margin-bottom: 2px;
       box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, .01);
 
       ion-icon {
-        font-size: 30px;
+        font-size: 26px;
+        padding-top: 1px;
+        font-weight: normal;
+
+        &.ion-ios-radio-button-off {
+          color: rgba(map-get($colors, grey), .5);
+        }
+
+        &.ion-md-radio-button-off {
+          color: rgba(map-get($colors, grey), .5);
+        }
       }
 
       .item-inner {
@@ -671,6 +887,10 @@ select-searchable-page {
 
         ion-label {
           padding-top: 5px;
+
+          h2 {
+            font-size: 22px;
+          }
         }
       }
     }
@@ -685,23 +905,33 @@ select-searchable-page {
   }
 
   ion-footer {
-    ion-toolbar .toolbar-background {
-      background-color: #FFFFFF;
+    ion-row {
+      padding-top: 20px;
+      padding-bottom: 20px;
+      background-color: map-get($colors, light);
+      box-shadow: 1px -1px 1px 1px rgba(0, 0, 0, .05);
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
     }
 
-    .toolbar-content button {
-      border-radius: 45px;
+    button {
+      border-radius: 45px !important;
       background: $color-primary-gradient;
       font-family: map-get($font-button, family);
-      width: 70%;
-      margin: auto;
-      font-size: 26px;
-      text-transform: lowercase;
+      width: 70% !important;
+      margin: auto !important;
+      font-size: 22px !important;
+      &::before {
+        content: "Done";
+      }
+
+      .button-inner {
+        display: none;
+      }
     }
 
-    .toolbar-content button.button-md {
+    button.button-md {
       padding-top: 5px;
-      font-size: 20px;
+      font-size: 20px !important;
     }
   }
 }
@@ -810,6 +1040,10 @@ ion-datetime.ng-dirty.ng-invalid {
   border-bottom: 2px solid map-get($colors, invalid);
 }
 
+select-searchable.rec-select-searchable-btn.ng-dirty.ng-invalid,
+select-searchable.rec-select-searchable-btn.ng-dirty.ng-valid {
+  border-bottom: none;
+}
 
 
 
@@ -912,12 +1146,12 @@ ion-toast.toast-ios {
 
   .tab-button {
     ion-icon {
-      font-size: 32px;
-      transform: translateY(-2px);
+      font-size: 28px;
+      transform: translateY(2px);
     }
 
     .tab-button-text {
-      font-size: 14px;
+      font-size: 11px;
     }
   }
 
@@ -1026,66 +1260,6 @@ ion-footer.button-footer::before {
   background: none;
 }
 
-// TODO: Remove eventually, alternate generic page style
-// ion-header.rec-header > ion-row {
-//   padding-top: 4vh;
-//   box-shadow: -1px 0px 5px 0px rgba(0, 0, 0, 0.3);
-//   background-color: map-get($colors, primary);
-//
-//   .row-back-icon {
-//     padding-top: 20px;
-//
-//     ion-icon {
-//       color: #FFFFFF;
-//       opacity: 1;
-//     }
-//
-//     .ios ion-icon {
-//       font-size: 60px;
-//     }
-//   }
-//
-//   .row-title {
-//     width: 100%;
-//
-//     h1 {
-//       color: #FFFFFF;
-//     }
-//
-//     h3 {
-//       color: #FFFFFF;
-//     }
-//   }
-//
-//   .progress-bar-wrapper {
-//     .progress-bar-label {
-//       color: #FFFFFF;
-//     }
-//
-//     .progress-bar .bar {
-//       background: map-get($colors, secondary);
-//     }
-//   }
-// }
-//
-// ion-footer.button-footer {
-//   ion-row {
-//     padding-top: 2vh;
-//     padding-bottom: 2vh;
-//     box-shadow: -1px 0px 5px 0px rgba(0, 0, 0, 0.3);
-//     background-color: map-get($colors, primary);
-//
-//     button {
-//       background: #FFFFFF;
-//       color: map-get($colors, primary);
-//     }
-//   }
-// }
-//
-// ion-footer.button-footer::before {
-//   background: none;
-// }
-
 .row-back-icon {
     padding-left: 20px;
     padding-top: 10px;
@@ -1103,10 +1277,111 @@ ion-footer.button-footer::before {
   margin-bottom: 1vh;
 }
 
+// Reorder list
+.rec-reorder-list {
+  .list-header-wrapper {
+    position: relative;
+
+    ion-list-header {
+      padding-left: 0;
+      font-size: 14px;
+      font-family: map-get($font-heading, family);
+      color: map-get($colors, primary);
+      border-bottom: 2px solid rgba(map-get($colors, dark), .3);
+      border-top: none;
+
+      &.header-no-min-height {
+        min-height: auto;
+      }
+
+      ion-label {
+        margin-bottom: 1px;
+      }
+    }
+
+    button {
+      position: absolute;
+      top: 50%;
+      right: 5px;
+      transform: translateY(-50%);
+    }
+  }
+
+  ion-item-group {
+    padding-top: 5px;
+  }
+
+  ion-item {
+    padding-left: 0;
+
+    ion-label {
+      padding-top: 8px;
+      padding-bottom: 2px;
+      padding-left: 5px;
+      margin-top: 5px;
+      margin-bottom: 7px;
+
+      h5 {
+        font-size: 16px;
+        margin: 0;
+      }
+
+      p {
+        font-size: 16px;
+        margin: 0;
+        width: 90%;
+      }
+
+      ion-icon {
+        position: absolute;
+        font-size: 36px;
+        color: map-get($colors, deny);
+        top: 50%;
+        transform: translateY(-50%);
+        right: 5px;
+      }
+    }
+
+    ion-reorder {
+      opacity: 1;
+
+      ion-icon {
+        font-size: 30px;
+        color: map-get($colors, grey);
+      }
+    }
+  }
+}
+
+.rec-sep-or {
+  margin: auto;
+  width: 100%;
+  text-align: center;
+  font-family: map-get($font-heading, family);
+  color: rgba(map-get($colors, grey), .6);
+  font-size: 18px;
+
+  span {
+    display: inline-block;
+    width: 43%;
+    height: 2px;
+    background-color: rgba(map-get($colors, grey), .6);
+    transform: translateY(-3px);
+
+    &:first-child {
+      margin-right: 10px;
+    }
+
+    &:last-child {
+      margin-left: 10px;
+    }
+  }
+}
 
 
 
-// --------------------------------------------------[ Specific Page Elements ]
+
+// ----------------------------------------------------[ Match Card Styles ]
 
 .match-list-empty {
   width: 80%;
@@ -1132,6 +1407,11 @@ ion-footer.button-footer::before {
 }
 
 // Match Cards
+.match-card-container {
+  height: 100%;
+  position: relative;
+}
+
 .match-list {
   height: 100%;
   position: relative;
@@ -1144,10 +1424,44 @@ ion-footer.button-footer::before {
   width: 100%;
   border-radius: 7px;
   background-color: #FFFFFF;
+  overflow-x: hidden;
+  opacity: 1;
+  transform-origin: 50% 100%;
+  transform: rotate(0deg) translateX(0);
+  transition: transform .4s ease-in-out, opacity .4s ease-in-out;
 }
 
+.match-card.fade-left {
+  transform-origin: 50% 100%;
+  transform: rotate(0deg) translateX(-150%);
+  opacity: 0;
+  transition: transform .4s ease-in-out, opacity .4s ease-in-out;
+}
+
+.match-card.fade-left-instant {
+  transform-origin: 50% 100%;
+  transform: rotate(0deg) translateX(-150%);
+  opacity: 0;
+  transition: transform 0s, opacity 0s;
+}
+
+.match-card.fade-right {
+  transform-origin: 50% 100%;
+  transform: rotate(0deg) translateX(150%);
+  opacity: 0;
+  transition: transform .4s ease-in-out, opacity .4s ease-in-out;
+}
+
+.match-card.fade-right-instant {
+  transform-origin: 50% 100%;
+  transform: rotate(0deg) translateX(150%);
+  opacity: 0;
+  transition: transform 0s ease-in-out, opacity 0s ease-in-out;
+}
+
+$card-header-height: 70px;
 .match-card-header {
-  height: 70px;
+  height: $card-header-height;
   border-top-left-radius: 7px;
   border-top-right-radius: 7px;
   background-color: map-get($colors, light);
@@ -1162,34 +1476,23 @@ ion-footer.button-footer::before {
   p {
     margin: 0;
   }
-}
 
-.match-card-content {
-  padding: 15px;
-
-  h3.heading {
-    margin: 0;
-    font-size: 22px;
-  }
-
-  p {
-    margin: 0;
-  }
-
-  .content-section {
-    margin-top: 10px;
-  }
-
-  .content-section:first-child {
-    margin-top: 0px;
+  .back-icon {
+    position: absolute;
+    left: 15px;
+    height: $card-header-height;
+    top: 0;
+    line-height: $card-header-height;
+    font-size: 40px;
   }
 }
 
+$card-footer-height: 70px;
 .match-card-footer {
   position: absolute;
   bottom: 0px;
   width: 100%;
-  height: 70px;
+  height: $card-footer-height;
   border-bottom-left-radius: 7px;
   border-bottom-right-radius: 7px;
   background-color: map-get($colors, light);
@@ -1224,6 +1527,98 @@ ion-footer.button-footer::before {
   }
 }
 
+.match-card-content {
+  padding: 15px;
+  width: 100%;
+  height: calc(100% - 140px);
+  position: absolute;
+  transform: translateX(0);
+  transition: transform .4s;
+  overflow-y: auto;
+
+  h3.heading {
+    margin: 0;
+    font-size: 22px;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  .content-section {
+    margin-top: 10px;
+  }
+
+  .content-section:first-child {
+    margin-top: 0px;
+  }
+}
+
+// Card content slide
+.match-card-content.slide-left {
+  transform: translateX(-100%);
+  transition: transform .4s;
+}
+
+.match-card-content.slide-right {
+  transform: translateX(100%);
+  transition: transform .4s;
+}
+
+ion-icon.card-heading-icon {
+  font-size: .8em;
+  margin-right: 6px;
+  font-weight: normal;
+}
+
+ion-icon.card-heading-icon-right {
+  font-size: .8em;
+  margin-left: 6px;
+  font-weight: normal;
+}
+
+.match-card-success {
+  width: 100%;
+  position: absolute;
+  height: 100%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 7px;
+  background-color: #6fbf5b;
+  z-index: 50;
+  border-radius: 50%;
+  width: 5px;
+  height: 5px;
+  opacity: 0;
+  transition: opacity .25s ease-in-out, width .25s cubic-bezier(.52,.37,.55,1.39), height .25s cubic-bezier(.52,.37,.55,1.39);
+
+  &.fade {
+    opacity: 1;
+  }
+
+  &.transform {
+    width: 150px;
+    height: 150px;
+  }
+
+  .content {
+    opacity: 0;
+    left: 50%;
+    top: 50%;
+    position: relative;
+    transform: translate(-50%, -50%);
+    font-size: 90px;
+    color: white;
+    font-weight: normal;
+    transition: opacity .2s ease-in-out;
+
+    &.fade {
+      opacity: 1;
+    }
+  }
+}
+
 .match-check {
   background-color: #7CC54B;
   width: 14px;
@@ -1243,29 +1638,68 @@ ion-footer.button-footer::before {
   }
 }
 
-.circle-icon-btn {
-  width: 15vh;
-  height: 15vh;
-  margin: auto;
-  text-align: center;
-  line-height: 15vh;
-  border-radius: 50%;
-  background-color: map-get($colors, primary);
-  color: white;
-  border: solid 10px saturate(lighten(map-get($colors, primary), 25%), 5%);
-  box-sizing: content-box;
-  display: block;
-  font-size: 50px !important;
-  font-weight: normal !important;
+// Card flip
+.flip-container {
+  perspective: 2000px;
 }
 
-.circle-icon-btn ~ h3 {
-  margin: 0;
-  margin-top: 20px;
-  margin-bottom: 40px;
-  color: map-get($colors, primary);
+.flip-card {
+  transition: 0.6s;
+  transform-style: preserve-3d;
 }
 
-.circle-icon-btn ~ h3:last-child {
-  margin-bottom: 0px;
+.flip-face {
+  backface-visibility: hidden;
+}
+
+.flip-1 {
+  z-index: 3;
+}
+
+.flip-2 {
+  z-index: 2;
+  transform: rotateY(180deg);
+}
+
+.flip-3 {
+  z-index: 1;
+  transform: rotateY(360deg);
+}
+
+.flipped-1 {
+  transform: rotateY(-180deg);
+}
+
+.flipped-2 {
+  transform: rotateY(-360deg);
+
+  .flip-1 {
+    z-index: 1;
+    transform: rotateY(180deg);
+  }
+
+  .flip-3 {
+    z-index: 3;
+  }
+}
+
+.flip-3-override {
+  z-index: 4;
+}
+
+.presentation-explanation {
+  margin-bottom: 20px !important;
+}
+
+.presentation-link {
+  margin-bottom: 20px;
+
+  .fake-link {
+    color: map-get($colors, primary);
+  }
+}
+
+ion-icon.presentation-link-icon {
+  font-size: 16px;
+  margin-left: 10px;
 }

@@ -10,7 +10,8 @@ export class CompanyModel {
     public companyDescription: string,
     public websiteURL: string,
     public emailSuffix: string,
-    public userId: number
+    public userId: number,
+    public presentationLinks: any
   ) {}
 
   public static createCompanyFromApiData(apiData: any): CompanyModel {
@@ -25,7 +26,8 @@ export class CompanyModel {
       apiData.companyDescription,
       apiData.websiteURL,
       apiData.emailSuffix,
-      apiData.userId
+      apiData.userId,
+      apiData.presentationLinks
     );
   }
 }

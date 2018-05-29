@@ -18,6 +18,7 @@ export class JobModel {
     public duration: number,
     public problemStatement: string,
     public video: string,
+    public presentationLinks: any,
     public company: CompanyModel,
     public recruiter: RecruiterModel
   ) {}
@@ -38,6 +39,7 @@ export class JobModel {
       apiData.duration,
       apiData.problemStatement,
       apiData.video,
+      apiData.presentationLinks,
       new CompanyModel(
         apiData.company.id,
         apiData.company.companyName,
@@ -49,7 +51,8 @@ export class JobModel {
         apiData.company.companyDescription,
         apiData.company.websiteURL,
         apiData.company.emailSuffix,
-        apiData.company.userId
+        apiData.company.userId,
+        apiData.company.presentationLinks
       ),
       new RecruiterModel(
         apiData.recruiter.id,
@@ -67,7 +70,8 @@ export class JobModel {
           apiData.recruiter.company.companyDescription,
           apiData.recruiter.company.websiteURL,
           apiData.recruiter.company.emailSuffix,
-          apiData.recruiter.company.userId
+          apiData.recruiter.company.userId,
+          apiData.recruiter.company.presentationLinks
         ),
         apiData.recruiter.phoneNumber,
         apiData.recruiter.contactEmail,

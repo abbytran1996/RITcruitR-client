@@ -6,11 +6,12 @@ import { FormsModule }   from '@angular/forms';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { MyApp } from './app.component';
 
 // Third party modules
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { SelectSearchableModule } from 'ionic-select-searchable';
+import { SelectSearchableModule } from '../modals/ionic-select-searchable';
 
 // Custom Modules
 import { LoginPage } from '../pages/login/login';
@@ -41,6 +42,8 @@ import { CompanyDetailsPage } from '../pages/company-details/company-details';
 import { RecruiterCompanySelectPage } from '../pages/recruiter-company-select/recruiter-company-select';
 import { RecruiterRegisterPage } from '../pages/recruiter-register/recruiter-register';
 import { RecruiterContactPage } from '../pages/recruiter-contact/recruiter-contact';
+
+import { PresentationLinkAddModal } from '../modals/presentation-link-add/presentation-link-add';
 
 import {
   CompanyJobCreate1Page,
@@ -99,7 +102,8 @@ import {
     RecruiterCompanySelectPage,
     RecruiterRegisterPage,
     RecruiterContactPage,
-    TabsPage
+    TabsPage,
+    PresentationLinkAddModal
   ],
   imports: [
     BrowserModule,
@@ -147,11 +151,13 @@ import {
     RecruiterCompanySelectPage,
     RecruiterRegisterPage,
     RecruiterContactPage,
-    TabsPage
+    TabsPage,
+    PresentationLinkAddModal
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    InAppBrowser,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     HttpClientModule,
     ApiService,

@@ -26,7 +26,7 @@ export class CompanyDetailsPage {
 
   // Form model
   recruiterModel: RecruiterModel;
-  companyModel = new CompanyModel(0, "", [], [], null, true, "", "", "", "", null);
+  companyModel = new CompanyModel(0, "", [], [], null, true, "", "", "", "", null, []);
 
   constructor(
     public navCtrl: NavController,
