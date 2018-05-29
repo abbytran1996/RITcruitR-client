@@ -5,6 +5,7 @@ var path = require('path');
 var tsconfig = require('../tsconfig.json');
 
 var aliases = {};
+var env = process.env.IONIC_ENV || 'dev';
 
 // Retrieve aliases from tsconfig and build array for webpack aliases
 let pathKeyArray = Object.keys(tsconfig.compilerOptions.paths);
