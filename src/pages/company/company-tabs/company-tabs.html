@@ -42,8 +42,9 @@
   </ion-content>
 </ion-menu>
 
-<ion-tabs selectedIndex="0" #content>
-  <ion-tab [root]="companyPhase1Tab" tabTitle="Job Applicants" tabIcon="md-people" [rootParams]="recruiterTabParams"></ion-tab>
+<ion-tabs selectedIndex="0" #content #companyTabs class="company-tabs" [ngClass]="{'hide-bar': hideTabBar}">
+  <ion-tab [root]="companyJobMatchesTab" tabTitle="Job Matches" tabIcon="md-people" [rootParams]="recruiterTabParams" class="tab-hidden"></ion-tab>
+  <ion-tab [root]="companyPhase1Tab" tabTitle="Job Matches" tabIcon="md-people" [rootParams]="recruiterTabParams"></ion-tab>
   <ion-tab [root]="companyPhase2Tab" tabTitle="Presentation" tabIcon="md-easel" [rootParams]="recruiterTabParams"></ion-tab>
   <ion-tab [root]="companyPhase3Tab" tabTitle="Final Candidates" tabIcon="md-checkmark-circle" [rootParams]="recruiterTabParams"></ion-tab>
 </ion-tabs>

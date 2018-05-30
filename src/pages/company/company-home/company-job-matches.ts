@@ -1,19 +1,23 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, Events } from 'ionic-angular';
 
+import {
+  CompanyPhase1Page
+} from '@app/pages/company';
+
 import { RecruiterModel } from '@app/models';
 
 //=========================================================================
-// * CompanyPhase1Page                                                   
+// * CompanyJobMatchesPage                                                   
 //=========================================================================
-// - Primary "dash" page for company. Shows all jobs with matches in
-//   phase 1. Jobs can be viewed and matches can be accepted or declined.
+// - Primary "dash" page for company. Shows all jobs.
+//   Jobs can be viewed and matches can be accepted or declined.
 //_________________________________________________________________________
 @Component({
-  selector: 'page-company-phase-1',
-  templateUrl: 'company-phase-1.html'
+  selector: 'page-company-job-matches',
+  templateUrl: 'company-job-matches.html'
 })
-export class CompanyPhase1Page {
+export class CompanyJobMatchesPage {
 
   public recruiter: RecruiterModel;
 
@@ -34,8 +38,8 @@ export class CompanyPhase1Page {
       this.recruiter = recruiter;
     });
 
-    // Show the tabs bar now that we're in the main flow
-    this.events.publish('tabs:setHidden', false, Date.now());
+    // Hide the tabs bar on this page
+    this.events.publish('tabs:setHidden', true, Date.now());
   }
 
   /*
@@ -43,5 +47,12 @@ export class CompanyPhase1Page {
   */
   ionViewDidLeave() {
    this.events.unsubscribe("tabs:recruiter");
+  }
+
+  /*
+    View matches in the main flow for the selected job.
+  */
+  viewJobMatches() {
+    this.events.publish('tabs:setActive', 1, Date.now());
   }
 }

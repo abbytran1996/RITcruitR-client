@@ -1658,7 +1658,6 @@ $card-header-height: 70px;
   border-top-left-radius: 7px;
   border-top-right-radius: 7px;
   background-color: map-get($colors, light);
-  border-bottom: solid 2px rgba(map-get($colors, grey), .3);
   padding-top: 12px;
 
   h3.title {
@@ -1689,7 +1688,6 @@ $card-footer-height: 70px;
   border-bottom-left-radius: 7px;
   border-bottom-right-radius: 7px;
   background-color: map-get($colors, light);
-  border-top: solid 2px rgba(map-get($colors, grey), .3);
 
   button.rec-btn-small {
     height: 50px;
@@ -1904,4 +1902,12 @@ ion-icon.presentation-link-icon {
 
 .phase-wrapper {
   height: 100%;
+}
+
+ion-tabs.company-tabs .tabbar a:first-child {
+  display: none;
+}
+
+ion-tabs.hide-bar .tabbar {
+  display: none;
 }

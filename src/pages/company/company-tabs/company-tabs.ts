@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
-import { NavController, ToastController, NavParams, Events } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { NavController, ToastController, NavParams, Events, Tabs } from 'ionic-angular';
 
 import {
+  CompanyJobMatchesPage,
   CompanyPhase1Page,
   CompanyPhase2Page,
   CompanyPhase3Page,
@@ -35,6 +36,7 @@ import {
 export class CompanyTabsPage {
 
   // Company tab pages
+  public companyJobMatchesTab = CompanyJobMatchesPage;
   public companyPhase1Tab = CompanyPhase1Page;
   public companyPhase2Tab = CompanyPhase2Page;
   public companyPhase3Tab = CompanyPhase3Page;
@@ -43,6 +45,9 @@ export class CompanyTabsPage {
   // User data
   public recruiter: RecruiterModel;
   public loadingRecruiter = true;
+
+  @ViewChild('companyTabs') tabRef: Tabs;
+  public hideTabBar = true;
 
   constructor(
     public navCtrl: NavController,
@@ -79,6 +84,38 @@ export class CompanyTabsPage {
     if (message) {
       this.presentToast(message);
     }
+  }
+
+  /*
+    Called when this view is entered, subscribe to events.
+  */
+  ionViewDidEnter() {
+    this.events.subscribe('tabs:setHidden', (flag) => {
+      this.setHideTabBar(flag);
+    });
+
+    this.events.subscribe('tabs:setActive', (tabIndex) => {
+      this.setActiveTab(tabIndex);
+    });
+  }
+
+  /*
+    Called when this view is left, unsubscribe to events.
+  */
+  ionViewDidLeave() {
+    this.events.unsubscribe("tabs:setHidden");
+    this.events.unsubscribe("tabs:setActive");
+  }
+
+  /*
+    Set the boolean to hide the tab bar or not.
+  */
+  setHideTabBar(flag) {
+    this.hideTabBar = flag;
+  }
+
+  setActiveTab(tabIndex) {
+    this.tabRef.select(tabIndex);
   }
 
   /*

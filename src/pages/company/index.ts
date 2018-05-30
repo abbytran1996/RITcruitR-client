@@ -1,4 +1,5 @@
 export * from './company-details/company-details';
+export * from './company-home/company-job-matches';
 export * from './company-home/company-phase-1';
 export * from './company-home/company-phase-2';
 export * from './company-home/company-phase-3';
