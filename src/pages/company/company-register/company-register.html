@@ -1,0 +1,145 @@
+<ion-header class="rec-header">
+  <ion-row>
+    <!-- Back Icon -->
+    <ion-row class="row-back-icon">
+      <ion-icon name="arrow-round-back" class="icon-link back-icon block fg-dark opacity-50" (click)="backBtn()"></ion-icon>
+    </ion-row>
+    <!-- End Back Icon -->
+
+    <!-- Title -->
+    <ion-row class="row-title">
+      <h1 class="fg-grey text-center no-padding">RecruitR</h1>
+      <h3 class="text-center no-padding">{{ formSeq.formTitles[formSeq.currentStep] }}</h3>
+    </ion-row>
+    <!-- End Title -->
+
+    <!-- Progress Bar -->
+    <ion-row class="row-progress">
+      <ion-col>
+        <div class="progress-bar-wrapper">
+          <p class="progress-bar-label no-margin">STEP {{ formSeq.currentStep + 1 }} of {{ formSeq.maxSteps + 1 }}</p>
+          <div class="progress-bar">
+            <div class="bar" [style.width.%]="formSeq.progressWidth"></div>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+    <!-- End Progress Bar -->
+  </ion-row>
+
+</ion-header>
+
+<ion-content padding class="rec-content bg-white">
+
+  <!-- Step 0 -->
+  <ion-row class="row-form" [ngClass]="formSeq.formClasses[0]">
+    <ion-col>
+      <form #form0="ngForm">
+        <div class="rec-input-group">
+          <label class="rec-label rl-primary">COMPANY NAME</label>
+          <input type="text" name="companyName" class="rec-input ri-primary" required [(ngModel)]="companyModel.companyName">
+        </div>
+        <div class="rec-input-group">
+          <label class="rec-label rl-primary">INDUSTRIES</label>
+          <select-searchable
+            name="industry"
+            class="rec-input ri-primary clearfix"
+            required
+            [(ngModel)]="companyModel.industries"
+            [items]="industryOptions"
+            [canSearch]="true"
+            [multiple]="true"
+            title="Industries">
+          </select-searchable>
+        </div>
+      </form>
+    </ion-col>
+  </ion-row>
+  <!-- End Step 0 -->
+
+  <!-- Step 1 -->
+  <ion-row class="row-form" [ngClass]="formSeq.formClasses[1]" [hidden]="formSeq.initHide">
+    <ion-col>
+      <form #form1="ngForm">
+        <div class="rec-input-group">
+          <label class="rec-label rl-primary">LOCATIONS</label>
+          <select-searchable
+            name="location"
+            class="rec-input ri-primary clearfix"
+            required
+            [(ngModel)]="companyModel.locations"
+            [items]="locationOptions"
+            [canSearch]="true"
+            [multiple]="true"
+            title="Locations">
+          </select-searchable>
+        </div>
+        <div class="rec-input-group">
+          <label class="rec-label rl-primary">COMPANY SIZE</label>
+          <ion-select name="size" class="rec-input ri-primary" required [(ngModel)]="companyModel.size">
+            <ion-option *ngFor="let option of companySizeOptions" value="{{ option.id }}">{{ option.text }}</ion-option>
+          </ion-select>
+        </div>
+        <div class="rec-input-group">
+          <label class="rec-label rl-primary">WEBSITE</label>
+          <input type="text" name="websiteURL" class="rec-input ri-primary" required [(ngModel)]="companyModel.websiteURL">
+        </div>
+      </form>
+    </ion-col>
+  </ion-row>
+  <!-- End Step 1 -->
+
+  <!-- Step 2 -->
+  <ion-row class="row-register-form" [ngClass]="formSeq.formClasses[2]" [hidden]="formSeq.initHide">
+    <ion-col>
+      <form #form2="ngForm">
+        <div class="rec-input-group-small">
+          <label class="rec-label rl-primary">EMAIL</label>
+          <input type="email" name="email" class="rec-input ri-primary" required [(ngModel)]="recruiterModel.email">
+        </div>
+        <div class="rec-input-group-small">
+          <label class="rec-label rl-primary">PASSWORD</label>
+          <input type="password" name="password" class="rec-input ri-primary" required [(ngModel)]="recruiterModel.password">
+        </div>
+        <div class="rec-input-group-small">
+          <label class="rec-label rl-primary">FIRST NAME</label>
+          <input type="text" name="firstName" class="rec-input ri-primary" required [(ngModel)]="recruiterModel.firstName">
+        </div>
+        <div class="rec-input-group-small">
+          <label class="rec-label rl-primary">LAST NAME</label>
+          <input type="text" name="lastName" class="rec-input ri-primary" required [(ngModel)]="recruiterModel.lastName">
+        </div>
+      </form>
+    </ion-col>
+  </ion-row>
+  <!-- End Step 2 -->
+
+  <!-- Step 3 -->
+  <ion-row class="row-form" [ngClass]="formSeq.formClasses[3]" [hidden]="formSeq.initHide">
+    <ion-col>
+      <form #form3="ngForm">
+        <div class="rec-input-group">
+          <label class="rec-label rl-primary">CONTACT EMAIL</label>
+          <input type="text" name="contactEmail" class="rec-input ri-primary" required [(ngModel)]="contactModel.contactEmail">
+        </div>
+        <div class="rec-input-group">
+          <label class="rec-label rl-primary">PHONE NUMBER</label>
+          <input type="text" name="phoneNumber" class="rec-input ri-primary" required [(ngModel)]="contactModel.phoneNumber">
+        </div>
+      </form>
+    </ion-col>
+  </ion-row>
+  <!-- End Step 3 -->
+
+</ion-content>
+
+<!-- Button Footer -->
+<ion-footer class="button-footer">
+  <ion-row>
+    <button class="rec-btn rec-btn-primary btn-stacked center rec-load-btn" (click)="continueClicked()" [disabled]="saving">
+      {{ (formSeq.currentStep == formSeq.maxSteps) ? ((saving) ? '' : 'Finish') : 'Continue' }}
+      <ion-spinner class="white" name="dots" [hidden]="!saving"></ion-spinner>
+    </button>
+  </ion-row>
+</ion-footer>
+<!-- End Button Footer -->

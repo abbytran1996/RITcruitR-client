@@ -41,8 +41,7 @@ import {
 // Company Module
 import {
   CompanyTabsPage,
-  CompanyRegister1Page,
-  CompanyRegister2Page,
+  CompanyRegisterPage,
   CompanyRegisterConfirmPage,
   CompanySetupPage,
   CompanyJobMatchesPage,
@@ -71,7 +70,8 @@ import {
   JobPostingService,
   RecruiterService,
   StudentService,
-  DataService
+  DataService,
+  FormSequenceService
 } from '@app/services';
 
 @NgModule({
@@ -96,8 +96,7 @@ import {
     StudentProblemStatementsPage,
 
     CompanyTabsPage,
-    CompanyRegister1Page,
-    CompanyRegister2Page,
+    CompanyRegisterPage,
     CompanyRegisterConfirmPage,
     CompanySetupPage,
     CompanyJobCreatePage,
@@ -146,8 +145,7 @@ import {
     StudentProblemStatementsPage,
 
     CompanyTabsPage,
-    CompanyRegister1Page,
-    CompanyRegister2Page,
+    CompanyRegisterPage,
     CompanyRegisterConfirmPage,
     CompanySetupPage,
     CompanyJobCreatePage,
@@ -177,7 +175,8 @@ import {
     JobPostingService,
     RecruiterService,
     StudentService,
-    DataService
+    DataService,
+    FormSequenceService
   ]
 })
 export class AppModule {}

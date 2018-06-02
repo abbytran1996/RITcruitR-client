@@ -13,6 +13,7 @@ import {
 } from '@app/models';
 
 import {
+  FormSequenceService,
   DataService,
   JobPostingService
 } from '@app/services';
@@ -28,19 +29,6 @@ import {
   templateUrl: 'company-job-create.html'
 })
 export class CompanyJobCreatePage {
-
-  // Component "global" variables
-  private startStep = 0;
-  public currentStep = 0;
-  public maxSteps = 0;
-  public progressWidth = 0;
-  public currentForm: any;
-  public stepForms = [];
-  public formClasses = [];
-  public initHide = true;
-  public saving = false;
-  public jobModel = new NewJobModel();
-  public recruiter: RecruiterModel;
 
   // Step 0 variables
   @ViewChild('form0') form0;
@@ -72,28 +60,10 @@ export class CompanyJobCreatePage {
   @ViewChild('form7') form7;
   linksList = [];
 
-  // Set manually
-  public formTitles = [
-    "Job Basic Details",
-    "Job Description",
-    "Required Skills",
-    "Nice to Have Skills",
-    "Job Filters",
-    "Job Expiration",
-    "Problem Statement",
-    "Presentation Links"
-  ];
-
-  public formErrorMessages = [
-    "Please enter the job title and any job locations",
-    "Please enter the job description",
-    "Please select at least one required skill. Having no required skills will result in no matches",
-    "There was a problem with the skills you have selected, please review them and try again",
-    "There was a problem setting your job filters, please try again",
-    "Please enter a valid job duration",
-    "Please enter a job problem statement",
-    "Please add at least one, and at most three presentation link(s) for applicants to view"
-  ];
+  // Implementation specific variables
+  public jobModel = new NewJobModel();
+  public recruiter: RecruiterModel;
+  public saving = false;
 
   constructor(
     public navCtrl: NavController,
@@ -101,14 +71,34 @@ export class CompanyJobCreatePage {
     public navParams: NavParams,
     public modalCtrl: ModalController,
     private alertCtrl: AlertController,
+    public formSeq: FormSequenceService,
     public jobPostingService: JobPostingService,
     public dataService: DataService
   ) {
     this.recruiter = navParams.get("recruiter");
-    this.startStep = navParams.get("startStep") || 0;
 
-    this.maxSteps = this.formTitles.length - 1;
-    this.calculateProgressWidth();
+    this.formSeq.reset();
+    this.formSeq.startStep = navParams.get("startStep") || 0;
+    this.formSeq.formTitles = [
+      "Job Basic Details",
+      "Job Description",
+      "Required Skills",
+      "Nice to Have Skills",
+      "Job Filters",
+      "Job Expiration",
+      "Problem Statement",
+      "Presentation Links"
+    ];
+    this.formSeq.formErrorMessages = [
+      "Please enter the job title and any job locations",
+      "Please enter the job description",
+      "Please select at least one required skill. Having no required skills will result in no matches",
+      "There was a problem with the skills you have selected, please review them and try again",
+      "There was a problem setting your job filters, please try again",
+      "Please enter a valid job duration",
+      "Please enter a job problem statement",
+      "Please add at least one, and at most three presentation link(s) for applicants to view"
+    ];
 
     // Get the skills to populate the typeahead
     this.dataService.getSkills().subscribe(
@@ -126,33 +116,18 @@ export class CompanyJobCreatePage {
     Prepare the first step upon entering the page.
   */
   ionViewDidEnter() {
-    if (this.initHide == true) {
-      this.stepForms = [
-        this.form0,
-        this.form1,
-        this.form2,
-        this.form3,
-        this.form4,
-        this.form5,
-        this.form6,
-        this.form7
-      ];
+    let formsArray = [
+      this.form0,
+      this.form1,
+      this.form2,
+      this.form3,
+      this.form4,
+      this.form5,
+      this.form6,
+      this.form7
+    ];
 
-      this.stepForms.forEach((val, index) => {
-        if (index > this.startStep) {
-          this.formClasses.push("ani-outright-init");
-        }
-        else if (index < this.startStep) {
-          this.formClasses.push("ani-outleft-init");
-        }
-        else {
-          this.formClasses.push("");
-        }
-      });
-
-      this.currentForm = this.stepForms[this.currentStep];
-      this.initHide = false;
-    }
+    this.formSeq.init(formsArray);
   }
 
   /*
@@ -162,16 +137,16 @@ export class CompanyJobCreatePage {
     let customValid = true;
 
     // Custom validation for certain steps
-    if (this.currentStep == 2 && this.reqSkills.length == 0) {
+    if (this.formSeq.currentStep == 2 && this.reqSkills.length == 0) {
       customValid = false;
     }
 
-    if (this.currentStep == 7 && (this.linksList.length < 1 || this.linksList.length > 3)) {
+    if (this.formSeq.currentStep == 7 && (this.linksList.length < 1 || this.linksList.length > 3)) {
       customValid = false;
     }
 
-    if (this.currentForm && this.currentForm.valid && customValid) {
-      if (this.currentStep == this.maxSteps) {
+    if (this.formSeq.currentForm && this.formSeq.currentForm.valid && customValid) {
+      if (this.formSeq.currentStep == this.formSeq.maxSteps) {
         this.saving = true;
         this.jobModel.requiredSkills = this.reqSkills;
         this.jobModel.niceToHaveSkills = this.nthSkills;
@@ -193,17 +168,17 @@ export class CompanyJobCreatePage {
         );
       }
       else {
-        this.nextStep();
+        this.formSeq.nextStep();
 
         // Custom init rules at certain steps
-        if (this.currentStep == 3) {
+        if (this.formSeq.currentStep == 3) {
           this.nthSkillOptions = this.reqSkillOptions;
           this.removeNthSkillOptions(this.jobModel.requiredSkills);
         }
       }
     }
     else {
-      this.presentToast(this.formErrorMessages[this.currentStep]);
+      this.presentToast(this.formSeq.formErrorMessages[this.formSeq.currentStep]);
     }
   }
 
@@ -213,57 +188,12 @@ export class CompanyJobCreatePage {
   backBtn() {
     if (this.saving) return;
     
-    if (this.currentStep == this.startStep) {
+    if (this.formSeq.currentStep == this.formSeq.startStep) {
       this.navCtrl.pop();
     }
     else {
-      this.previousStep();
+      this.formSeq.previousStep();
     }
-  }
-
-  /*
-    Increment and prepare the next step of the form sequence.
-  */
-  nextStep() {
-    this.formClasses[this.currentStep] = "ani-outleft";
-    this.currentStep++;
-    this.formClasses[this.currentStep] = "ani-hide";
-    setTimeout(() => {
-      this.formClasses[this.currentStep - 1] = this.formClasses[this.currentStep - 1] + " ani-hide";
-      this.formClasses[this.currentStep] = "ani-inright";
-    }, 300);
-    setTimeout(() => {
-      this.formClasses[this.currentStep] = "";
-    }, 1100);
-
-    this.currentForm = this.stepForms[this.currentStep];
-    this.calculateProgressWidth();
-  }
-
-  /*
-    Decrement and prepare the previous step of the form sequence.
-  */
-  previousStep() {
-    this.formClasses[this.currentStep] = "ani-outright";
-    this.currentStep--;
-    this.formClasses[this.currentStep] = "ani-hide";
-    setTimeout(() => {
-      this.formClasses[this.currentStep + 1] = this.formClasses[this.currentStep + 1] + " ani-hide";
-      this.formClasses[this.currentStep] = "ani-inleft";
-    }, 300);
-    setTimeout(() => {
-      this.formClasses[this.currentStep] = "";
-    }, 1100);
-
-    this.currentForm = this.stepForms[this.currentStep];
-    this.calculateProgressWidth();
-  }
-
-  /*
-    Calculate the width of the progress bar based on the current and max steps in the sequence.
-  */
-  calculateProgressWidth() {
-    this.progressWidth = ((this.currentStep + 1) / (this.maxSteps + 1) * 100);
   }
 
   /*
