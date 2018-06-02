@@ -7,7 +7,7 @@ import {
   CompanyPhase2Page,
   CompanyPhase3Page,
   CompanyDetailsPage,
-  CompanyJobCreate1Page,
+  CompanyJobCreatePage,
   RecruiterContactPage,
   RecruiterRegisterPage,
   CompanyPresentationLinksPage
@@ -122,7 +122,7 @@ export class CompanyTabsPage {
     Create a job as a recruiter.
   */
   createCompanyJob() {
-    this.navCtrl.push(CompanyJobCreate1Page, {recruiter: this.recruiter});
+    this.navCtrl.push(CompanyJobCreatePage, {recruiter: this.recruiter});
   }
 
   /*
