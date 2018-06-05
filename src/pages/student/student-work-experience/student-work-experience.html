@@ -37,8 +37,7 @@
 <ion-footer class="button-footer">
   <ion-row>
     <button class="rec-btn-small rec-btn-accent float-left" (click)="skipClicked()" [hidden]="!isSetup">Skip</button>
-    <button class="rec-btn-small rec-btn-primary float-right" (click)="continueClicked()" [hidden]="!isSetup">Continue</button>
-    <button class="rec-btn rec-btn-primary btn-stacked center" (click)="saveClicked()" [hidden]="isSetup">Done</button>
+    <button class="rec-btn rec-btn-primary btn-stacked center" (click)="saveChanges()" [hidden]="isSetup">Done</button>
   </ion-row>
 </ion-footer>
 <!-- End Button Footer -->

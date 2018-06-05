@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { StudentEducationPage } from '@app/pages/student';
+import { StudentSetupFormsPage } from '@app/pages/student';
 
 import { StudentModel } from '@app/models';
 
@@ -30,6 +30,6 @@ export class StudentSetupPage {
     Continue to the first setup page.
   */
   continueClicked() {
-    this.navCtrl.push(StudentEducationPage, {student: this.student, setup: true});
+    this.navCtrl.push(StudentSetupFormsPage, {student: this.student, setup: true});
   }
 }

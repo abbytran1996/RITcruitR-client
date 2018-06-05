@@ -1183,7 +1183,7 @@ select-searchable.rec-select-searchable-btn.ng-dirty.ng-valid {
 // ----------------------------------------------------[ Toast Message Styles ]
 
 ion-toast.toast-ios {
-  top: 20px;
+  top: 10px;
 }
 
 .toast-ios .toast-wrapper {
@@ -1581,6 +1581,26 @@ ion-footer.button-footer::before {
     * {
       fill: #FFFFFF;
     }
+
+    &.primary * {
+      fill: map-get($colors, primary);
+    }
+
+    &.secondary * {
+      fill: map-get($colors, secondary);
+    }
+
+    &.accent * {
+      fill: map-get($colors, accent);
+    }
+
+    &.dark * {
+      fill: map-get($colors, dark);
+    }
+
+    &.light * {
+      fill: map-get($colors, light);
+    }
   }
 }
 
@@ -1962,7 +1982,7 @@ ion-tabs.hide-bar .tabbar {
   position: relative;
   left: 0px;
   animation-name: in-left;
-  animation-duration: .5s;
+  animation-duration: .3s;
   animation-delay: 0s;
 }
 
@@ -1978,7 +1998,7 @@ ion-tabs.hide-bar .tabbar {
   position: relative;
   left: 0px;
   animation-name: in-right;
-  animation-duration: .5s;
+  animation-duration: .3s;
   animation-delay: 0s;
 }
 

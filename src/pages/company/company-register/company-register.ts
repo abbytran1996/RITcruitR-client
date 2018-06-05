@@ -9,7 +9,7 @@ import {
   UserModel
 } from '@app/models';
 
-import { CompanyRegisterConfirmPage } from '@app/pages/company';
+import { CompanyRegisterConfirmPage, CompanyTabsPage } from '@app/pages/company';
 
 import {
   FormSequenceService,
@@ -33,6 +33,7 @@ export class CompanyRegisterPage {
 
   // Step 0 variables
   @ViewChild('form0') form0;
+  public companyModel = new CompanyRegisterModel();
   industryOptions = [];
 
   // Step 1 variables
@@ -42,15 +43,18 @@ export class CompanyRegisterPage {
 
   // Step 2 variables
   @ViewChild('form2') form2;
+  public recruiterModel = new RecruiterRegisterModel();
 
   // Step 3 variables
   @ViewChild('form3') form3;
+  public contactModel = new RecruiterContactModel();
 
   // Implementation specific variables
-  public companyModel = new CompanyRegisterModel();
-  public recruiterModel = new RecruiterRegisterModel();
-  public contactModel = new RecruiterContactModel();
   public saving = false;
+  public addRecruiter = false;
+  public editContact = false;
+  public currentRecruiter: RecruiterModel;
+  public loading = true;
 
   constructor(
     public navCtrl: NavController,
@@ -62,8 +66,13 @@ export class CompanyRegisterPage {
     private recruiterService: RecruiterService,
     private authService: AuthService
   ) {
+    this.addRecruiter = navParams.get("addRecruiter") || false;
+    this.editContact = navParams.get("editContact") || false;
+    this.currentRecruiter = navParams.get("recruiter");
+
     this.formSeq.reset();
     this.formSeq.startStep = navParams.get("startStep") || 0;
+    this.formSeq.currentStep = this.formSeq.startStep;
     this.formSeq.formTitles = [
       "Company Information",
       "Company Information",
@@ -81,6 +90,11 @@ export class CompanyRegisterPage {
     this.industryOptions = this.dataService.getIndustries();
     this.locationOptions = this.dataService.getLocations();
     this.companySizeOptions = this.dataService.getCompanySizesForCompany();
+
+    if (this.editContact) {
+      this.contactModel.phoneNumber = this.currentRecruiter.phoneNumber;
+      this.contactModel.contactEmail = this.currentRecruiter.contactEmail;
+    }
   }
 
   /*
@@ -95,57 +109,103 @@ export class CompanyRegisterPage {
     ];
 
     this.formSeq.init(formsArray);
+    this.loading = false;
   }
 
   /*
     Continue to the next step of company registration.
   */
   continueClicked() {
+    if (this.formSeq.switchingStep) return;
+
     if (this.formSeq.currentForm && this.formSeq.currentForm.valid) {
       if (this.formSeq.currentStep == this.formSeq.maxSteps) {
         this.saving = true;
-        this.recruiterModel.passwordConfirm = this.recruiterModel.password;
 
-        /*
-          Create the company
-          =====================================================================
-        */
-        this.companyService.addCompany(this.companyModel).subscribe(
-          companyData => {
+        if (this.addRecruiter) {
+          this.recruiterModel.passwordConfirm = this.recruiterModel.password;
+          this.recruiterModel.phoneNumber = this.contactModel.phoneNumber;
+          this.recruiterModel.contactEmail = this.contactModel.contactEmail;
+          
+          /*
+            Create the recruiter for the company
+            =================================================================
+          */
+          this.recruiterService.addRecruiter(this.currentRecruiter.company.id, this.recruiterModel).subscribe(
+            recruiterData => {
+              this.saving = false;
+              this.navCtrl.setRoot(CompanyTabsPage, { recruiter: this.currentRecruiter, message: "New recruiter registered successfully. Logout to login using the new recruiter credentials." });
+            },
 
-            this.recruiterModel.phoneNumber = this.contactModel.phoneNumber;
-            this.recruiterModel.contactEmail = this.contactModel.contactEmail;
+            // Recruiter create error
+            error => {
+              this.presentToast("There was an error registering the recruiter for your company, please try again");
+              this.saving = false;
+            }
+          );
+        }
+        else if (this.editContact) {
+          this.currentRecruiter.phoneNumber = this.contactModel.phoneNumber;
+          this.currentRecruiter.contactEmail = this.contactModel.contactEmail;
 
-            /*
-              Create the recruiter for the company
-              =================================================================
-            */
-            this.recruiterService.addRecruiter(companyData.id, this.recruiterModel).subscribe(
-              recruiterData => {
-                let recruiter = new RecruiterModel(recruiterData);
+          /*
+            Update the recruiter contact info
+            =================================================================
+          */
+          this.recruiterService.updateRecruiter(this.currentRecruiter).subscribe(
+            data => {},
 
-                // TODO: Remove this setLocalVars call after dev. We don't want
-                // to "login" the recruiter after company creation because they
-                // need to await approval. Keeping for dev.
-                this.authService.setLocalVars(recruiterData.user);
-                this.saving = false;
-                this.navCtrl.push(CompanyRegisterConfirmPage, { recruiter: recruiter });
-              },
+            // Recruiter create error
+            res => {
+              this.saving = false;
+              this.navCtrl.setRoot(CompanyTabsPage, { recruiter: this.currentRecruiter, message: "Contact information updated successfully" });
+            }
+          );
+        }
+        else {
+          this.recruiterModel.passwordConfirm = this.recruiterModel.password;
 
-              // Recruiter create error
-              error => {
-                this.presentToast("There was an error registering the recruiter for your company, please try again");
-                this.saving = false;
-              }
-            );
-          },
+          /*
+            Create the company
+            =====================================================================
+          */
+          this.companyService.addCompany(this.companyModel).subscribe(
+            companyData => {
 
-          // Company create error
-          error => {
-            this.presentToast("A company is already registered by that name, please contact our support team to report fraudulant companies");
-            this.saving = false;
-          }
-        );
+              this.recruiterModel.phoneNumber = this.contactModel.phoneNumber;
+              this.recruiterModel.contactEmail = this.contactModel.contactEmail;
+
+              /*
+                Create the recruiter for the company
+                =================================================================
+              */
+              this.recruiterService.addRecruiter(companyData.id, this.recruiterModel).subscribe(
+                recruiterData => {
+                  let recruiter = new RecruiterModel(recruiterData);
+
+                  // TODO: Remove this setLocalVars call after dev. We don't want
+                  // to "login" the recruiter after company creation because they
+                  // need to await approval. Keeping for dev.
+                  this.authService.setLocalVars(recruiterData.user);
+                  this.saving = false;
+                  this.navCtrl.push(CompanyRegisterConfirmPage, { recruiter: recruiter });
+                },
+
+                // Recruiter create error
+                error => {
+                  this.presentToast("There was an error registering the recruiter for your company, please try again");
+                  this.saving = false;
+                }
+              );
+            },
+
+            // Company create error
+            error => {
+              this.presentToast("A company is already registered by that name, please contact our support team to report fraudulant companies");
+              this.saving = false;
+            }
+          );
+        }
       }
       else {
         this.formSeq.nextStep();
@@ -160,6 +220,7 @@ export class CompanyRegisterPage {
     Navigate back to the previous step.
   */
   backBtn() {
+    if (this.formSeq.switchingStep) return;
     if (this.saving) return;
 
     if (this.formSeq.currentStep == this.formSeq.startStep) {

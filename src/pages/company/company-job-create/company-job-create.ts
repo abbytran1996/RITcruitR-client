@@ -64,6 +64,7 @@ export class CompanyJobCreatePage {
   public jobModel = new NewJobModel();
   public recruiter: RecruiterModel;
   public saving = false;
+  public loading = false;
 
   constructor(
     public navCtrl: NavController,
@@ -79,6 +80,7 @@ export class CompanyJobCreatePage {
 
     this.formSeq.reset();
     this.formSeq.startStep = navParams.get("startStep") || 0;
+    this.formSeq.currentStep = this.formSeq.startStep;
     this.formSeq.formTitles = [
       "Job Basic Details",
       "Job Description",
@@ -134,6 +136,8 @@ export class CompanyJobCreatePage {
     Continue to the next part of job creation.
   */
   continueClicked() {
+    if (this.formSeq.switchingStep) return;
+
     let customValid = true;
 
     // Custom validation for certain steps
@@ -186,6 +190,7 @@ export class CompanyJobCreatePage {
     Navigate back to the previous screen.
   */
   backBtn() {
+    if (this.formSeq.switchingStep) return;
     if (this.saving) return;
     
     if (this.formSeq.currentStep == this.formSeq.startStep) {

@@ -71,7 +71,7 @@ export class StudentContactPage {
             }
           }
           else {
-            this.presentToast("There was an error updating your education details, please try again");
+            this.presentToast("There was an error updating your contact information, please try again");
           }
         }
       );

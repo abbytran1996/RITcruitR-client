@@ -1,0 +1,172 @@
+<ion-header class="rec-header">
+  <ion-row>
+    <!-- Back Icon -->
+    <ion-row class="row-back-icon" [hidden]="isSetup && formSeq.currentStep == formSeq.startStep">
+      <ion-icon name="arrow-round-back" class="icon-link back-icon block fg-dark opacity-50" (click)="backBtn()"></ion-icon>
+    </ion-row>
+    <!-- End Back Icon -->
+
+    <!-- Title -->
+    <ion-row class="row-title">
+      <h1 class="fg-grey text-center no-padding">RecruitR</h1>
+      <h3 class="text-center no-padding">{{ formSeq.formTitles[formSeq.currentStep] }}</h3>
+    </ion-row>
+    <!-- End Title -->
+
+    <!-- Progress Bar -->
+    <ion-row class="row-progress" [hidden]="!isSetup">
+      <ion-col>
+        <div class="progress-bar-wrapper">
+          <p class="progress-bar-label no-margin">STEP {{ formSeq.currentStep + 1 }} of {{ formSeq.maxSteps + 1 }}</p>
+          <div class="progress-bar">
+            <div class="bar" [style.width.%]="formSeq.progressWidth"></div>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+    <!-- End Progress Bar -->
+
+  </ion-row>
+</ion-header>
+
+<ion-content padding class="rec-content bg-white">
+  <div class="loader-wrapper" *ngIf="loading">
+    <ion-spinner name="bubbles" class="primary"></ion-spinner>
+  </div>
+  <div [hidden]="loading">
+    <!-- Step 0 -->
+    <ion-row class="row-form" [ngClass]="formSeq.formClasses[0]">
+      <ion-col>
+        <form #form0="ngForm">
+          <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
+            <label class="rec-label rl-primary">UNIVERSITY</label>
+            <input type="text" name="school" class="rec-input ri-primary" required [(ngModel)]="educationModel.school">
+          </div>
+          <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
+            <label class="rec-label rl-primary">MAJOR</label>
+            <input type="text" name="major" class="rec-input ri-primary" required [(ngModel)]="educationModel.major">
+          </div>
+          <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
+            <label class="rec-label rl-primary">GPA</label>
+            <input type="text" name="gpa" class="rec-input ri-primary" required [(ngModel)]="educationModel.gpa">
+          </div>
+          <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
+            <label class="rec-label rl-primary">EXPECTED GRADUATION DATE</label>
+            <ion-datetime name="graduationDate"  required class="rec-input ri-primary" displayFormat="MM/YYYY" pickerFormat="MM YYYY" max="{{ maxYear }}" [(ngModel)]="educationModel.graduationDate"></ion-datetime>
+          </div>
+        </form>
+      </ion-col>
+    </ion-row>
+    <!-- End Step 0 -->
+
+    <!-- Step 1 -->
+    <ion-row class="row-form" [ngClass]="formSeq.formClasses[1]" [hidden]="formSeq.initHide">
+      <ion-col>
+        <form #form1="ngForm">
+          <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
+            <label class="rec-label rl-primary">CONTACT EMAIL</label>
+            <input type="text" name="contactEmail" class="rec-input ri-primary" required [(ngModel)]="contactModel.contactEmail">
+          </div>
+          <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
+            <label class="rec-label rl-primary">PHONE NUMBER</label>
+            <input type="text" name="phoneNumber" class="rec-input ri-primary" required [(ngModel)]="contactModel.phoneNumber">
+          </div>
+          <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
+            <label class="rec-label rl-primary">WEBSITE</label>
+            <input type="text" name="website" class="rec-input ri-primary" [(ngModel)]="contactModel.website">
+          </div>
+        </form>
+      </ion-col>
+    </ion-row>
+    <!-- End Step 1 -->
+
+    <!-- Step 2 -->
+    <ion-row class="row-form" [ngClass]="formSeq.formClasses[2]" [hidden]="formSeq.initHide">
+      <ion-col>
+        <form #form2="ngForm">
+          <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
+            <label class="rec-label rl-primary">PREFERRED LOCATIONS</label>
+            <select-searchable
+              name="preferredLocations"
+              class="rec-input ri-primary clearfix"
+              [(ngModel)]="prefsModel.preferredLocations"
+              [items]="locationOptions"
+              [canSearch]="true"
+              [multiple]="true"
+              title="Locations">
+            </select-searchable>
+          </div>
+          <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
+            <label class="rec-label rl-primary">PREFERRED INDUSTRIES</label>
+            <select-searchable
+              name="preferredIndustries"
+              class="rec-input ri-primary clearfix"
+              [(ngModel)]="prefsModel.preferredIndustries"
+              [items]="industryOptions"
+              [canSearch]="true"
+              [multiple]="true"
+              title="Industries">
+            </select-searchable>
+          </div>
+          <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
+            <label class="rec-label rl-primary">PREFERRED COMPANY SIZES</label>
+            <ion-select name="preferredCompanySizes" class="rec-input ri-primary" required [(ngModel)]="prefsModel.preferredCompanySizes" multiple="true">
+              <ion-option *ngFor="let option of companySizeOptions" value="{{ option.id }}">{{ option.text }}</ion-option>
+            </ion-select>
+          </div>
+        </form>
+      </ion-col>
+    </ion-row>
+    <!-- End Step 2 -->
+
+    <!-- Step 3 -->
+    <ion-row class="row-form" [ngClass]="formSeq.formClasses[3]" [hidden]="formSeq.initHide">
+      <ion-col>
+        <form #form3="ngForm">
+          <select-searchable name="skills" class="rec-select-searchable-btn small clearfix" [(ngModel)]="skills" [items]="skillOptions"
+            itemTextField="name" [canSearch]="true" [multiple]="true" title="Skills">
+          </select-searchable>
+          <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
+            <ion-list class="rec-reorder-list">
+              <div class="list-header-wrapper">
+                <ion-list-header class="header-no-min-height"> </ion-list-header>
+              </div>
+              <ion-item-group reorder="true" side="start" (ionItemReorder)="$event.applyTo(skills)">
+                <ion-item *ngFor="let skill of skills; let i = index">
+                  <h5>{{ skill.name }}</h5>
+                  <ion-icon name="md-close-circle" class="fake-link" (click)="removeSkill(i)"></ion-icon>
+                </ion-item>
+              </ion-item-group>
+              <ion-item-group [hidden]="skills.length > 0">
+                <h5 class="list-empty-message">You currently have no skills saved, add some by tapping the
+                  <span class="fg-accent">Add</span> button above.</h5>
+              </ion-item-group>
+            </ion-list>
+          </div>
+        </form>
+      </ion-col>
+    </ion-row>
+    <!-- End Step 3 -->
+
+    <!-- Step 4 -->
+    <ion-row class="row-form" [ngClass]="formSeq.formClasses[4]" [hidden]="formSeq.initHide">
+      <ion-col>
+        <form #form4="ngForm">
+          <h3>NYI</h3>
+        </form>
+      </ion-col>
+    </ion-row>
+    <!-- End Step 4 -->
+  </div>
+</ion-content>
+
+<!-- Button Footer -->
+<ion-footer class="button-footer">
+  <ion-row>
+    <button class="rec-btn rec-btn-primary btn-stacked center rec-load-btn" (click)="continueClicked()" [disabled]="saving">
+      {{ ((!isSetup) ? ((saving) ? '' : 'Save') : (formSeq.currentStep == formSeq.maxSteps) ? ((saving) ? '' : 'Finish') : ((saving) ? '' : 'Continue')) }}
+      <ion-spinner class="white" name="dots" [hidden]="!saving"></ion-spinner>
+    </button>
+  </ion-row>
+</ion-footer>
+<!-- End Button Footer -->
