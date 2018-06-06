@@ -212,6 +212,10 @@
   background-size: cover;
 }
 
+.bg-full-gradient {
+  background: $color-primary-gradient-bg2;
+}
+
 
 
 
@@ -1110,10 +1114,38 @@ ngb-typeahead-window button:last-child {
 }
 
 .rec-input.ri-primary {
+  border-bottom: 2px solid map-get($colors, primary);
+  font-family: map-get($font-input-value, family);
+  font-size: map-get($font-input-value, size);
+  color: map-get($colors, primary);
+}
+
+.rec-input.ri-secondary {
+  border-bottom: 2px solid map-get($colors, secondary);
+  font-family: map-get($font-input-value, family);
+  font-size: map-get($font-input-value, size);
+  color: map-get($colors, secondary);
+}
+
+.rec-input.ri-accent {
+  border-bottom: 2px solid map-get($colors, accent);
+  font-family: map-get($font-input-value, family);
+  font-size: map-get($font-input-value, size);
+  color: map-get($colors, accent);
+}
+
+.rec-input.ri-dark {
+  border-bottom: 2px solid map-get($colors, dark);
+  font-family: map-get($font-input-value, family);
+  font-size: map-get($font-input-value, size);
+  color: map-get($colors, dark);
+}
+
+.rec-input.ri-grey {
   border-bottom: 2px solid map-get($colors, grey);
   font-family: map-get($font-input-value, family);
   font-size: map-get($font-input-value, size);
-  color: map-get($font-input-value, color);
+  color: map-get($colors, dark);
 }
 
 .rec-input.ri-white {
@@ -1132,7 +1164,31 @@ ngb-typeahead-window button:last-child {
 .rec-label.rl-primary {
   font-family: map-get($font-input-label, family);
   font-size: map-get($font-input-label, size);
-  color: map-get($font-input-label, color);
+  color: map-get($colors, primary);
+}
+
+.rec-label.rl-secondary {
+  font-family: map-get($font-input-label, family);
+  font-size: map-get($font-input-label, size);
+  color: map-get($colors, secondary);
+}
+
+.rec-label.rl-accent {
+  font-family: map-get($font-input-label, family);
+  font-size: map-get($font-input-label, size);
+  color: map-get($colors, accent);
+}
+
+.rec-label.rl-dark {
+  font-family: map-get($font-input-label, family);
+  font-size: map-get($font-input-label, size);
+  color: map-get($colors, dark);
+}
+
+.rec-label.rl-grey {
+  font-family: map-get($font-input-label, family);
+  font-size: map-get($font-input-label, size);
+  color: map-get($colors, grey);
 }
 
 .rec-label.rl-white {
@@ -1965,6 +2021,12 @@ ion-tabs.hide-bar .tabbar {
     border-bottom: none !important;
   }
 }
+
+
+
+
+// ----------------------------------------------------[ Desktop Overrides ]
+
 
 
 

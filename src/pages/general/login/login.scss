@@ -19,3 +19,50 @@ page-login {
     }
   }
 }
+
+.platform-core page-login {
+  .login-wrapper {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .login-content-wrapper {
+    background-color: #ffffff;
+    width: 30%;
+    margin: auto;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    padding-left: 50px;
+    padding-right: 50px;
+    border-radius: 5px;
+    margin-top: 2vh;
+    box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, 0.278);
+  }
+
+  .row-title {
+    margin-top: 0vh;
+
+    h1 {
+      font-size: 60px;
+      text-shadow: 2px 2px rgba(0, 0, 0, 0.25882);
+    }
+  }
+
+  .row-login-form {
+    margin-top: 0vh;
+  }
+
+  .row-login-buttons {
+    margin-top: 5vh;
+
+    button {
+      margin-bottom: 2vh;
+      width: 100%;
+    }
+
+    button:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
