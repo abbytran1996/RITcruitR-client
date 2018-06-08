@@ -39,20 +39,20 @@
       <ion-col>
         <form #form0="ngForm">
           <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
-            <label class="rec-label rl-primary">UNIVERSITY</label>
-            <input type="text" name="school" class="rec-input ri-primary" required [(ngModel)]="educationModel.school">
+            <label class="rec-label rl-secondary">UNIVERSITY</label>
+            <input type="text" name="school" class="rec-input ri-grey" required [(ngModel)]="educationModel.school">
           </div>
           <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
-            <label class="rec-label rl-primary">MAJOR</label>
-            <input type="text" name="major" class="rec-input ri-primary" required [(ngModel)]="educationModel.major">
+            <label class="rec-label rl-secondary">MAJOR</label>
+            <input type="text" name="major" class="rec-input ri-grey" required [(ngModel)]="educationModel.major">
           </div>
           <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
-            <label class="rec-label rl-primary">GPA</label>
-            <input type="text" name="gpa" class="rec-input ri-primary" required [(ngModel)]="educationModel.gpa">
+            <label class="rec-label rl-secondary">GPA</label>
+            <input type="text" name="gpa" class="rec-input ri-grey" required [(ngModel)]="educationModel.gpa">
           </div>
           <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
-            <label class="rec-label rl-primary">EXPECTED GRADUATION DATE</label>
-            <ion-datetime name="graduationDate"  required class="rec-input ri-primary" displayFormat="MM/YYYY" pickerFormat="MM YYYY" max="{{ maxYear }}" [(ngModel)]="educationModel.graduationDate"></ion-datetime>
+            <label class="rec-label rl-secondary">EXPECTED GRADUATION DATE</label>
+            <ion-datetime name="graduationDate"  required class="rec-input ri-grey" displayFormat="MM/YYYY" pickerFormat="MM YYYY" max="{{ maxYear }}" [(ngModel)]="educationModel.graduationDate"></ion-datetime>
           </div>
         </form>
       </ion-col>
@@ -64,16 +64,16 @@
       <ion-col>
         <form #form1="ngForm">
           <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
-            <label class="rec-label rl-primary">CONTACT EMAIL</label>
-            <input type="text" name="contactEmail" class="rec-input ri-primary" required [(ngModel)]="contactModel.contactEmail">
+            <label class="rec-label rl-secondary">CONTACT EMAIL</label>
+            <input type="text" name="contactEmail" class="rec-input ri-grey" required [(ngModel)]="contactModel.contactEmail">
           </div>
           <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
-            <label class="rec-label rl-primary">PHONE NUMBER</label>
-            <input type="text" name="phoneNumber" class="rec-input ri-primary" required [(ngModel)]="contactModel.phoneNumber">
+            <label class="rec-label rl-secondary">PHONE NUMBER</label>
+            <input type="text" name="phoneNumber" class="rec-input ri-grey" required [(ngModel)]="contactModel.phoneNumber">
           </div>
           <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
-            <label class="rec-label rl-primary">WEBSITE</label>
-            <input type="text" name="website" class="rec-input ri-primary" [(ngModel)]="contactModel.website">
+            <label class="rec-label rl-secondary">WEBSITE</label>
+            <input type="text" name="website" class="rec-input ri-grey" [(ngModel)]="contactModel.website">
           </div>
         </form>
       </ion-col>
@@ -85,10 +85,10 @@
       <ion-col>
         <form #form2="ngForm">
           <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
-            <label class="rec-label rl-primary">PREFERRED LOCATIONS</label>
+            <label class="rec-label rl-secondary">PREFERRED LOCATIONS</label>
             <select-searchable
               name="preferredLocations"
-              class="rec-input ri-primary clearfix"
+              class="rec-input ri-grey clearfix"
               [(ngModel)]="prefsModel.preferredLocations"
               [items]="locationOptions"
               [canSearch]="true"
@@ -97,10 +97,10 @@
             </select-searchable>
           </div>
           <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
-            <label class="rec-label rl-primary">PREFERRED INDUSTRIES</label>
+            <label class="rec-label rl-secondary">PREFERRED INDUSTRIES</label>
             <select-searchable
               name="preferredIndustries"
-              class="rec-input ri-primary clearfix"
+              class="rec-input ri-grey clearfix"
               [(ngModel)]="prefsModel.preferredIndustries"
               [items]="industryOptions"
               [canSearch]="true"
@@ -109,8 +109,8 @@
             </select-searchable>
           </div>
           <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
-            <label class="rec-label rl-primary">PREFERRED COMPANY SIZES</label>
-            <ion-select name="preferredCompanySizes" class="rec-input ri-primary" required [(ngModel)]="prefsModel.preferredCompanySizes" multiple="true">
+            <label class="rec-label rl-secondary">PREFERRED COMPANY SIZES</label>
+            <ion-select name="preferredCompanySizes" class="rec-input ri-grey" required [(ngModel)]="prefsModel.preferredCompanySizes" multiple="true">
               <ion-option *ngFor="let option of companySizeOptions" value="{{ option.id }}">{{ option.text }}</ion-option>
             </ion-select>
           </div>

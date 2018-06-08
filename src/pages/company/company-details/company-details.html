@@ -36,14 +36,14 @@
     <ion-col>
       <form #companyForm="ngForm">
         <div class="rec-input-group-small">
-          <label class="rec-label rl-primary">COMPANY NAME</label>
-          <input type="text" name="companyName" class="rec-input ri-primary" required [(ngModel)]="companyModel.companyName">
+          <label class="rec-label rl-secondary">COMPANY NAME</label>
+          <input type="text" name="companyName" class="rec-input ri-grey" required [(ngModel)]="companyModel.companyName">
         </div>
         <div class="rec-input-group-small">
-          <label class="rec-label rl-primary">INDUSTRIES</label>
+          <label class="rec-label rl-secondary">INDUSTRIES</label>
           <select-searchable
             name="industry"
-            class="rec-input ri-primary clearfix"
+            class="rec-input ri-grey clearfix"
             required
             [(ngModel)]="companyModel.industries"
             [items]="industryOptions"
@@ -53,10 +53,10 @@
           </select-searchable>
         </div>
         <div class="rec-input-group-small">
-          <label class="rec-label rl-primary">LOCATIONS</label>
+          <label class="rec-label rl-secondary">LOCATIONS</label>
           <select-searchable
             name="location"
-            class="rec-input ri-primary clearfix"
+            class="rec-input ri-grey clearfix"
             required
             [(ngModel)]="companyModel.locations"
             [items]="locationOptions"
@@ -66,14 +66,14 @@
           </select-searchable>
         </div>
         <div class="rec-input-group-small">
-          <label class="rec-label rl-primary">COMPANY SIZE</label>
-          <ion-select name="size" class="rec-input ri-primary" required [(ngModel)]="companyModel.size">
+          <label class="rec-label rl-secondary">COMPANY SIZE</label>
+          <ion-select name="size" class="rec-input ri-grey" required [(ngModel)]="companyModel.size">
             <ion-option *ngFor="let option of companySizeOptions" value="{{ option.id }}">{{ option.text }}</ion-option>
           </ion-select>
         </div>
         <div class="rec-input-group-small">
-          <label class="rec-label rl-primary">WEBSITE</label>
-          <input type="text" name="websiteURL" class="rec-input ri-primary" required [(ngModel)]="companyModel.websiteURL">
+          <label class="rec-label rl-secondary">WEBSITE</label>
+          <input type="text" name="websiteURL" class="rec-input ri-grey" required [(ngModel)]="companyModel.websiteURL">
         </div>
       </form>
     </ion-col>

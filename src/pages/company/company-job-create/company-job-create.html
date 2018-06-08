@@ -36,12 +36,12 @@
     <ion-col>
       <form #form0="ngForm">
         <div class="rec-input-group">
-          <label class="rec-label rl-primary">JOB TITLE</label>
-          <input type="text" name="positionTitle" class="rec-input ri-primary" required [(ngModel)]="jobModel.positionTitle">
+          <label class="rec-label rl-secondary">JOB TITLE</label>
+          <input type="text" name="positionTitle" class="rec-input ri-grey" required [(ngModel)]="jobModel.positionTitle">
         </div>
         <div class="rec-input-group">
-          <label class="rec-label rl-primary">JOB LOCATIONS</label>
-          <ion-select name="locations" class="rec-input ri-primary" required [(ngModel)]="jobModel.locations" multiple="true">
+          <label class="rec-label rl-secondary">JOB LOCATIONS</label>
+          <ion-select name="locations" class="rec-input ri-grey" required [(ngModel)]="jobModel.locations" multiple="true">
             <ion-option *ngFor="let option of recruiter.company.locations" value="{{ option }}">{{ option }}</ion-option>
           </ion-select>
         </div>
@@ -55,10 +55,10 @@
     <ion-col>
       <form #form1="ngForm">
         <div class="rec-input-group">
-          <label class="rec-label rl-primary">JOB DESCRIPTION
+          <label class="rec-label rl-secondary">JOB DESCRIPTION
             <ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="descriptionInfo()"></ion-icon>
           </label>
-          <textarea name="description" class="rec-input ri-primary" required [(ngModel)]="jobModel.description">
+          <textarea name="description" class="rec-input ri-grey" required [(ngModel)]="jobModel.description">
             </textarea>
         </div>
       </form>
@@ -71,7 +71,7 @@
     <ion-col>
       <form #form2="ngForm">
         <div class="rec-input-group relative">
-          <label class="rec-label full-width rl-primary">REQUIRED SKILLS<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="reqSkillsInfo()"></ion-icon></label>
+          <label class="rec-label full-width rl-secondary">REQUIRED SKILLS<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="reqSkillsInfo()"></ion-icon></label>
           <select-searchable name="reqSkills" class="rec-select-searchable-btn circle clearfix" [(ngModel)]="reqSkills" [items]="reqSkillOptions"
             itemTextField="name" [canSearch]="true" [multiple]="true" title="Required Skills">
           </select-searchable>
@@ -99,13 +99,13 @@
     <ion-col>
       <form #form3="ngForm">
         <div class="rec-input-group-small">
-          <label class="rec-label full-width rl-primary">NICE TO HAVE SKILLS WEIGHT<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="nthSkillsWeightInfo()"></ion-icon>
+          <label class="rec-label full-width rl-secondary">NICE TO HAVE SKILLS WEIGHT<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="nthSkillsWeightInfo()"></ion-icon>
             <ion-badge class="rec-badge float-right">{{ jobModel.niceToHaveSkillsWeight }} %</ion-badge>
           </label>
           <ion-range name="niceToHaveSkillsWeight" min="0" max="100" step="10" snaps="true" color="primary" [(ngModel)]="jobModel.niceToHaveSkillsWeight"></ion-range>
         </div>
         <div class="rec-input-group-small relative">
-          <label class="rec-label full-width rl-primary">NICE TO HAVE SKILLS<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="nthSkillsInfo()"></ion-icon></label>
+          <label class="rec-label full-width rl-secondary">NICE TO HAVE SKILLS<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="nthSkillsInfo()"></ion-icon></label>
           <select-searchable name="nthSkills" class="rec-select-searchable-btn circle clearfix" [(ngModel)]="nthSkills" [items]="nthSkillOptions"
             itemTextField="name" [canSearch]="true" [multiple]="true" title="NTH Skills">
           </select-searchable>
@@ -138,11 +138,11 @@
       </ion-row>
       <form #form4="ngForm">
         <div class="rec-input-group">
-          <label class="rec-label rl-primary">MINIMUM GPA<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="minGpaInfo()"></ion-icon></label>
-          <input type="number" name="minGpa" class="rec-input ri-primary" [(ngModel)]="jobModel.minGpa">
+          <label class="rec-label rl-secondary">MINIMUM GPA<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="minGpaInfo()"></ion-icon></label>
+          <input type="number" name="minGpa" class="rec-input ri-grey" [(ngModel)]="jobModel.minGpa">
         </div>
         <div class="rec-input-group">
-          <label class="rec-label rl-primary">HAS WORK EXPERIENCE<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="workExperienceInfo()"></ion-icon></label>
+          <label class="rec-label rl-secondary">HAS WORK EXPERIENCE<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="workExperienceInfo()"></ion-icon></label>
           <ion-item class="ghost-ion-item float-right">
             <ion-toggle name="hasWorkExperience" class="rec-input" checked="false" [(ngModel)]="jobModel.hasWorkExperience"></ion-toggle>
           </ion-item>
@@ -157,11 +157,11 @@
     <ion-col>
       <form #form5="ngForm">
         <div class="rec-input-group-small">
-          <label class="rec-label full-width rl-primary">JOB DURATION<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="durationInfo()"></ion-icon> <ion-badge class="rec-badge float-right">{{ jobModel.duration }} {{ (jobModel.duration == 1) ? 'day' : 'days' }}</ion-badge></label>
+          <label class="rec-label full-width rl-secondary">JOB DURATION<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="durationInfo()"></ion-icon> <ion-badge class="rec-badge float-right">{{ jobModel.duration }} {{ (jobModel.duration == 1) ? 'day' : 'days' }}</ion-badge></label>
             <ion-range name="duration" min="1" max="14" step="1" snaps="true" color="primary" [(ngModel)]="jobModel.duration"></ion-range>
         </div>
         <div class="rec-input-group-small">
-          <label class="rec-label full-width rl-primary">MATCH THRESHOLD<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="thresholdInfo()"></ion-icon> <ion-badge class="rec-badge float-right">{{ jobModel.matchThreshold }} %</ion-badge></label>
+          <label class="rec-label full-width rl-secondary">MATCH THRESHOLD<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="thresholdInfo()"></ion-icon> <ion-badge class="rec-badge float-right">{{ jobModel.matchThreshold }} %</ion-badge></label>
             <ion-range name="matchThreshold" min="30" max="100" step="10" snaps="true" color="primary" [(ngModel)]="jobModel.matchThreshold"></ion-range>
         </div>
       </form>
@@ -174,8 +174,8 @@
     <ion-col>
       <form #form6="ngForm">
         <div class="rec-input-group">
-          <label class="rec-label rl-primary">JOB PROBLEM STATEMENT<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="problemStatementInfo()"></ion-icon></label>
-          <textarea name="problemStatement" class="rec-input ri-primary" required [(ngModel)]="jobModel.problemStatement">
+          <label class="rec-label rl-secondary">JOB PROBLEM STATEMENT<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="problemStatementInfo()"></ion-icon></label>
+          <textarea name="problemStatement" class="rec-input ri-grey" required [(ngModel)]="jobModel.problemStatement">
           </textarea>
         </div>
       </form>

@@ -36,20 +36,20 @@
     <ion-col>
       <form #educationForm="ngForm">
         <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
-          <label class="rec-label rl-primary">UNIVERSITY</label>
-          <input type="text" name="school" class="rec-input ri-primary" required [(ngModel)]="model.school">
+          <label class="rec-label rl-secondary">UNIVERSITY</label>
+          <input type="text" name="school" class="rec-input ri-grey" required [(ngModel)]="model.school">
         </div>
         <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
-          <label class="rec-label rl-primary">MAJOR</label>
-          <input type="text" name="major" class="rec-input ri-primary" required [(ngModel)]="model.major">
+          <label class="rec-label rl-secondary">MAJOR</label>
+          <input type="text" name="major" class="rec-input ri-grey" required [(ngModel)]="model.major">
         </div>
         <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
-          <label class="rec-label rl-primary">GPA</label>
-          <input type="text" name="gpa" class="rec-input ri-primary" required [(ngModel)]="model.gpa">
+          <label class="rec-label rl-secondary">GPA</label>
+          <input type="text" name="gpa" class="rec-input ri-grey" required [(ngModel)]="model.gpa">
         </div>
         <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
-          <label class="rec-label rl-primary">EXPECTED GRADUATION DATE</label>
-          <ion-datetime name="graduationDate"  required class="rec-input ri-primary" displayFormat="MM/YYYY" pickerFormat="MM YYYY" max="{{ maxYear }}" [(ngModel)]="model.graduationDate"></ion-datetime>
+          <label class="rec-label rl-secondary">EXPECTED GRADUATION DATE</label>
+          <ion-datetime name="graduationDate"  required class="rec-input ri-grey" displayFormat="MM/YYYY" pickerFormat="MM YYYY" max="{{ maxYear }}" [(ngModel)]="model.graduationDate"></ion-datetime>
         </div>
       </form>
     </ion-col>
