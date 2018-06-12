@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle icon-only>
+      <ion-icon name='menu'></ion-icon>
+    </button>
+    <ion-title>Final Jobs</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="bg-full-image" padding>
+  <div class="match-list-empty" *ngIf="matchList == undefined || matchList.length == 0">
+    <ion-icon name="ios-checkmark-circle" class=""></ion-icon>
+    <div class="sep-horizontal-1"></div>
+    <h3 class="fg-white text-center">You don't have any final job matches. Jobs will show up here when you've made it through every previous phase. Start in the Matched Jobs tab and apply to a position.</h3>
+    <div class="sep-horizontal-1"></div>
+  </div>
+</ion-content>

@@ -1,0 +1,49 @@
+<ion-header class="rec-header">
+  <ion-row>
+    <!-- Back Icon -->
+    <ion-row class="row-back-icon">
+      <ion-icon name="arrow-round-back" class="icon-link back-icon block fg-dark opacity-50" (click)="backBtn()"></ion-icon>
+    </ion-row>
+    <!-- End Back Icon -->
+
+    <!-- Title -->
+    <ion-row class="row-title">
+      <h1 class="fg-grey text-center no-padding">RecruitR</h1>
+      <h3 class="text-center no-padding">Edit Profile Details</h3>
+    </ion-row>
+    <!-- End Title -->
+  </ion-row>
+</ion-header>
+
+<ion-content padding class="bg-white">
+
+  <!-- Message -->
+  <ion-row class="row-message">
+    <h3>What <span class="fg-accent">profile details</span> would<br>you like to edit?</h3>
+  </ion-row>
+  <!-- End Message -->
+
+  <!-- Button -->
+  <ion-row class="row-buttons">
+    <ion-col>
+      <ion-row class="row-one">
+        <div class="circle-icon-btn-wrapper">
+          <ion-icon name="book" class="icon-link circle-icon-btn" (click)="editEducation()"></ion-icon>
+          <h3 class="text-center fg-dark">Education<br>Details</h3>
+        </div>
+        <div class="circle-icon-btn-wrapper">
+          <ion-icon name="call" class="icon-link circle-icon-btn" (click)="editContact()"></ion-icon>
+          <h3 class="text-center fg-dark">Contact<br>Information</h3>
+        </div>
+      </ion-row>
+      <ion-row class="row-two">
+        <div class="circle-icon-btn-wrapper">
+          <ion-icon name="briefcase" class="icon-link circle-icon-btn" (click)="editWorkExperience()"></ion-icon>
+          <h3 class="text-center fg-dark">Work<br>Experience</h3>
+        </div>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+  <!-- End Button -->
+
+</ion-content>

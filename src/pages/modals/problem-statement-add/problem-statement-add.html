@@ -1,0 +1,49 @@
+<ion-header class="rec-header">
+  <ion-row>
+    <!-- Back Icon -->
+    <ion-row class="row-back-icon">
+      <ion-icon name="close" class="icon-link back-icon block fg-dark opacity-50" (click)="backClicked()"></ion-icon>
+    </ion-row>
+    <!-- End Back Icon -->
+
+    <!-- Title -->
+    <ion-row class="row-title">
+      <h1 class="fg-grey text-center no-padding">RecruitR</h1>
+      <h3 class="text-center no-padding">New Problem Statement</h3>
+    </ion-row>
+    <!-- End Title -->
+  </ion-row>
+</ion-header>
+
+<ion-content padding class="rec-content bg-white">
+
+  <!-- New Form -->
+  <ion-row class="row-new-form">
+    <ion-col>
+      <form #newForm="ngForm">
+        <div class="rec-input-group-small">
+          <label class="rec-label rl-primary">STATEMENT NAME</label>
+          <input type="text" name="name" class="rec-input ri-primary" required [(ngModel)]="newStatementModel.name">
+        </div>
+        <div class="rec-input-group-small">
+          <label class="rec-label rl-primary">STATEMENT</label>
+          <textarea name="statement" class="rec-input ri-primary" required [(ngModel)]="newStatementModel.statement"></textarea>
+        </div>
+        <div class="rec-input-group-small" [hidden]="!allowSave">
+          <label class="rec-label rl-primary">SAVE TO PROFILE</label>
+          <ion-toggle name="saveToProfile" class="rec-input float-right" checked="false" [(ngModel)]="newStatementModel.save"></ion-toggle>
+        </div>
+      </form>
+    </ion-col>
+  </ion-row>
+  <!-- End New Form -->
+
+</ion-content>
+
+<!-- Button Footer -->
+<ion-footer class="button-footer">
+  <ion-row>
+    <button class="rec-btn-small rec-btn-primary btn-stacked center" (click)="doneClicked()">Done</button>
+  </ion-row>
+</ion-footer>
+<!-- End Button Footer -->

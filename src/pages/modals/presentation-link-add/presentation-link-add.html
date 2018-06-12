@@ -1,0 +1,74 @@
+<ion-header class="rec-header">
+  <ion-row>
+    <!-- Back Icon -->
+    <ion-row class="row-back-icon">
+      <ion-icon name="close" class="icon-link back-icon block fg-dark opacity-50" (click)="backClicked()"></ion-icon>
+    </ion-row>
+    <!-- End Back Icon -->
+
+    <!-- Title -->
+    <ion-row class="row-title">
+      <h1 class="fg-grey text-center no-padding">RecruitR</h1>
+      <h3 class="text-center no-padding">Add Presentation Link</h3>
+    </ion-row>
+    <!-- End Title -->
+  </ion-row>
+</ion-header>
+
+<ion-content padding class="rec-content bg-white">
+
+  <!-- Existing Form -->
+  <ion-row class="row-existing-form" [hidden]="!allowExisting">
+    <ion-col>
+      <form #existingForm="ngForm">
+        <div class="rec-input-group-small">
+          <label class="rec-label rl-primary">SELECT EXISTING LINK</label>
+          <ion-select name="selectedLink" class="rec-input ri-primary" [(ngModel)]="existingLinkModel" multiple="false" (ionChange)="selectChanged($event)">
+            <ion-option *ngIf="existingLinkOptions && existingLinkOptions.length > 0" value="-1">None</ion-option>
+            <ion-option *ngFor="let link of existingLinkOptions" [value]="link">{{ link.title }}</ion-option>
+            <ion-option *ngIf="!existingLinkOptions || existingLinkOptions.length == 0" value="-1">No Profile Presentation Links</ion-option>
+          </ion-select>
+        </div>
+      </form>
+    </ion-col>
+  </ion-row>
+  <!-- End Existing Form -->
+
+  <!-- Seperator -->
+  <ion-row class="row-sep" [hidden]="!allowExisting">
+    <ion-col>
+      <div class="rec-sep-or"><span class="left"></span>OR<span class="right"></span></div>
+    </ion-col>
+  </ion-row>
+  <!-- End Seperator -->
+
+  <!-- New Form -->
+  <ion-row class="row-new-form">
+    <ion-col>
+      <form #newForm="ngForm">
+        <div class="rec-input-group-small">
+          <label class="rec-label rl-primary">TITLE</label>
+          <input type="text" name="title" class="rec-input ri-primary" required [(ngModel)]="newLinkModel.title">
+        </div>
+        <div class="rec-input-group-small">
+          <label class="rec-label rl-primary">LINK</label>
+          <input type="text" name="link" class="rec-input ri-primary" required [(ngModel)]="newLinkModel.link">
+        </div>
+        <div class="rec-input-group-small" [hidden]="!allowExisting">
+          <label class="rec-label rl-primary">SAVE TO PROFILE</label>
+          <ion-toggle name="saveToProfile" class="rec-input float-right" checked="false" [(ngModel)]="newLinkModel.save"></ion-toggle>
+        </div>
+      </form>
+    </ion-col>
+  </ion-row>
+  <!-- End New Form -->
+
+</ion-content>
+
+<!-- Button Footer -->
+<ion-footer class="button-footer">
+  <ion-row>
+    <button class="rec-btn-small rec-btn-primary btn-stacked center" (click)="doneClicked()">Done</button>
+  </ion-row>
+</ion-footer>
+<!-- End Button Footer -->

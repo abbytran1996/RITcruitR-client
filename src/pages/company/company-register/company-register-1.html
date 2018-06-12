@@ -1,0 +1,68 @@
+<ion-header class="rec-header">
+  <ion-row>
+    <!-- Back Icon -->
+    <ion-row class="row-back-icon">
+      <ion-icon name="arrow-round-back" class="icon-link back-icon block fg-dark opacity-50" (click)="backBtn()"></ion-icon>
+    </ion-row>
+    <!-- End Back Icon -->
+
+    <!-- Title -->
+    <ion-row class="row-title">
+      <h1 class="fg-grey text-center no-padding">RecruitR</h1>
+      <h3 class="text-center no-padding">Company Registration</h3>
+    </ion-row>
+    <!-- End Title -->
+
+    <!-- Progress Bar -->
+    <ion-row class="row-progress">
+      <ion-col>
+        <div class="progress-bar-wrapper">
+          <p class="progress-bar-label no-margin">STEP 1 of 4</p>
+          <div class="progress-bar">
+            <div class="bar" style="width: 25%;"></div>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+    <!-- End Progress Bar -->
+  </ion-row>
+
+</ion-header>
+
+<ion-content padding class="rec-content bg-white">
+
+  <!-- Form -->
+  <ion-row class="row-form">
+    <ion-col>
+      <form #companyForm="ngForm">
+        <div class="rec-input-group">
+          <label class="rec-label rl-primary">COMPANY NAME</label>
+          <input type="text" name="companyName" class="rec-input ri-primary" required [(ngModel)]="companyModel.companyName">
+        </div>
+        <div class="rec-input-group">
+          <label class="rec-label rl-primary">INDUSTRIES</label>
+          <select-searchable
+            name="industry"
+            class="rec-input ri-primary clearfix"
+            required
+            [(ngModel)]="companyModel.industries"
+            [items]="industryOptions"
+            [canSearch]="true"
+            [multiple]="true"
+            title="Industries">
+          </select-searchable>
+        </div>
+      </form>
+    </ion-col>
+  </ion-row>
+  <!-- End Form -->
+
+</ion-content>
+
+<!-- Button Footer -->
+<ion-footer class="button-footer">
+  <ion-row>
+    <button class="rec-btn rec-btn-primary btn-stacked center" (click)="continueClicked()">Continue</button>
+  </ion-row>
+</ion-footer>
+<!-- End Button Footer -->

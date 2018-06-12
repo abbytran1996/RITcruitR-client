@@ -1,0 +1,51 @@
+<ion-menu [content]="content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>RecruitR</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <button ion-item menuToggle (click)="createCompanyJob()">
+        <ion-icon name="md-add-circle" class="opacity-50"></ion-icon>
+        Create Job
+      </button>
+      <button ion-item menuToggle>
+        <ion-icon name="ios-cog" class="opacity-50"></ion-icon>
+        Manage Jobs
+      </button>
+      <button ion-item menuToggle (click)="editPresentationLinks()">
+        <ion-icon name="md-easel" class="opacity-50"></ion-icon>
+        Presentation Links
+      </button>
+      <button ion-item menuToggle (click)="editCompanyDetails()">
+        <ion-icon name="md-list" class="opacity-50"></ion-icon>
+        Company Details
+      </button>
+      <button ion-item menuToggle (click)="addRecruiter()">
+        <ion-icon name="md-contact" class="opacity-50"></ion-icon>
+        Add Recruiter
+      </button>
+      <button ion-item menuToggle (click)="editRecruiters()">
+        <ion-icon name="md-contacts" class="opacity-50"></ion-icon>
+        Manage Recruiters
+      </button>
+      <button ion-item menuToggle (click)="editContact()">
+        <ion-icon name="ios-call" class="opacity-50"></ion-icon>
+        Edit Contact Info
+      </button>
+      <button ion-item menuToggle (click)="logout()">
+        <ion-icon name="ios-exit" class="opacity-50"></ion-icon>
+        Logout
+      </button>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<ion-tabs selectedIndex="0" #content #companyTabs class="company-tabs" [ngClass]="{'hide-bar': hideTabBar}">
+  <ion-tab [root]="companyJobMatchesTab" tabTitle="Job Matches" tabIcon="md-people" [rootParams]="recruiterTabParams" class="tab-hidden"></ion-tab>
+  <ion-tab [root]="companyPhase1Tab" tabTitle="Job Matches" tabIcon="md-people" [rootParams]="recruiterTabParams"></ion-tab>
+  <ion-tab [root]="companyPhase2Tab" tabTitle="Presentation" tabIcon="md-easel" [rootParams]="recruiterTabParams"></ion-tab>
+  <ion-tab [root]="companyPhase3Tab" tabTitle="Final Candidates" tabIcon="md-checkmark-circle" [rootParams]="recruiterTabParams"></ion-tab>
+</ion-tabs>
+

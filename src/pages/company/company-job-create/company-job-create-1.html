@@ -1,0 +1,61 @@
+<ion-header class="rec-header">
+  <ion-row>
+    <!-- Back Icon -->
+    <ion-row class="row-back-icon">
+      <ion-icon name="arrow-round-back" class="icon-link back-icon block fg-dark opacity-50" (click)="backBtn()"></ion-icon>
+    </ion-row>
+    <!-- End Back Icon -->
+
+    <!-- Title -->
+    <ion-row class="row-title">
+      <h1 class="fg-grey text-center no-padding">RecruitR</h1>
+      <h3 class="text-center no-padding">Job Basic Details</h3>
+    </ion-row>
+    <!-- End Title -->
+
+    <!-- Progress Bar -->
+    <ion-row class="row-progress">
+      <ion-col>
+        <div class="progress-bar-wrapper">
+          <p class="progress-bar-label no-margin">STEP 1 of 8</p>
+          <div class="progress-bar">
+            <div class="bar" style="width: 12.5%;"></div>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+    <!-- End Progress Bar -->
+
+  </ion-row>
+</ion-header>
+
+<ion-content padding class="rec-content bg-white">
+
+  <!-- Form -->
+  <ion-row class="row-form">
+    <ion-col>
+      <form #jobForm="ngForm">
+        <div class="rec-input-group">
+          <label class="rec-label rl-primary">JOB TITLE</label>
+          <input type="text" name="positionTitle" class="rec-input ri-primary" required [(ngModel)]="jobModel.positionTitle">
+        </div>
+        <div class="rec-input-group">
+          <label class="rec-label rl-primary">JOB LOCATIONS</label>
+          <ion-select name="locations" class="rec-input ri-primary" required [(ngModel)]="jobModel.locations" multiple="true">
+            <ion-option *ngFor="let option of recruiter.company.locations" value="{{ option }}">{{ option }}</ion-option>
+          </ion-select>
+        </div>
+      </form>
+    </ion-col>
+  </ion-row>
+  <!-- End Form -->
+
+</ion-content>
+
+<!-- Button Footer -->
+<ion-footer class="button-footer">
+  <ion-row>
+    <button class="rec-btn rec-btn-primary btn-stacked center" (click)="continueClicked()">Continue</button>
+  </ion-row>
+</ion-footer>
+<!-- End Button Footer -->
