@@ -1,0 +1,45 @@
+page-company-tabs {
+  ion-menu {
+    ion-header ion-toolbar {
+      .toolbar-background {
+        background-color: map-get($colors, primary);
+      }
+
+      ion-title .toolbar-title {
+        font-family: map-get($font-title, family);
+        font-size: 22px;
+        color: map-get($colors, light);
+      }
+    }
+
+    ion-content .scroll-content {
+      background-color: map-get($colors, light);
+    }
+
+    ion-list {
+      button {
+        background-color: map-get($colors, light);
+        padding-left: 0 !important;
+
+        .item-inner {
+          background-color: map-get($colors, light);
+          padding-left: 25px;
+          padding-top: 5px;
+
+          .input-wrapper ion-label {
+            font-family: map-get($font-subheading, family);
+            font-size: map-get($font-subheading, size);
+            color: map-get($colors, dark);
+
+            ion-icon {
+              font-weight: normal !important;
+              font-size: 26px;
+              transform: translateY(3px);
+              margin-right: 20px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

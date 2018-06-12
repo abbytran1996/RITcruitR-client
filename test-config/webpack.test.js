@@ -2,6 +2,20 @@ var chalk = require('chalk');
 var fs = require('fs');
 var webpack = require('webpack');
 var path = require('path');
+var tsconfig = require('../tsconfig.json');
+
+var aliases = {};
+var env = process.env.IONIC_ENV || 'dev';
+
+// Retrieve aliases from tsconfig and build array for webpack aliases
+let pathKeyArray = Object.keys(tsconfig.compilerOptions.paths);
+pathKeyArray.forEach(currentPath => {
+  let correctPath = currentPath.replace("/*", "");
+  let currentPathValue = tsconfig.compilerOptions.paths[currentPath][0].replace('*', '');
+  aliases[correctPath] = path.resolve(tsconfig.compilerOptions.baseUrl + '/' + currentPathValue);
+})
+
+aliases['@app/env'] = path.resolve(environmentPath(env));
 
 function environmentPath(env) {
   var filePath = './src/environments/environment' + (env === 'prod' ? '' : '.' + env) + '.ts';
@@ -16,10 +30,12 @@ module.exports = {
   devtool: 'inline-source-map',
 
   resolve: {
-    extensions: ['.ts', '.js'],
-    alias: {
-      '@app/env': path.resolve(environmentPath('dev'))
-    }
+    extensions: ['.ts', '.js', '.json'],
+    modules: [
+      path.resolve('node_modules'),
+      path.resolve(tsconfig.compilerOptions.baseUrl)
+    ],
+    alias: aliases
   },
 
   module: {

@@ -1,0 +1,76 @@
+<ion-header class="rec-header">
+  <ion-row>
+    <!-- Back Icon -->
+    <ion-row class="row-back-icon">
+      <ion-icon name="arrow-round-back" class="icon-link back-icon block fg-dark opacity-50" (click)="backBtn()"></ion-icon>
+    </ion-row>
+    <!-- End Back Icon -->
+
+    <!-- Title -->
+    <ion-row class="row-title">
+      <h1 class="fg-grey text-center no-padding">RecruitR</h1>
+      <h3 class="text-center no-padding">Job Nice to Have Skills</h3>
+    </ion-row>
+    <!-- End Title -->
+
+    <!-- Progress Bar -->
+    <ion-row class="row-progress">
+      <ion-col>
+        <div class="progress-bar-wrapper">
+          <p class="progress-bar-label no-margin">STEP 4 of 8</p>
+          <div class="progress-bar">
+            <div class="bar" style="width: 50%;"></div>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+    <!-- End Progress Bar -->
+
+  </ion-row>
+</ion-header>
+
+<ion-content padding class="rec-content bg-white">
+
+  <!-- Form -->
+  <ion-row class="row-form">
+    <ion-col>
+      <form #jobForm="ngForm">
+        <div class="rec-input-group-small">
+          <label class="rec-label full-width rl-primary">NICE TO HAVE SKILLS WEIGHT<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="nthSkillsWeightInfo()"></ion-icon>
+            <ion-badge class="rec-badge float-right">{{ jobModel.niceToHaveSkillsWeight }} %</ion-badge>
+          </label>
+          <ion-range name="niceToHaveSkillsWeight" min="0" max="100" step="10" snaps="true" color="primary" [(ngModel)]="jobModel.niceToHaveSkillsWeight"></ion-range>
+        </div>
+        <div class="rec-input-group-small relative">
+          <label class="rec-label full-width rl-primary">NICE TO HAVE SKILLS<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="nthSkillsInfo()"></ion-icon></label>
+          <select-searchable name="skills" class="rec-select-searchable-btn circle clearfix" [(ngModel)]="skills" [items]="skillOptions"
+            itemTextField="name" [canSearch]="true" [multiple]="true" title="NTH Skills">
+          </select-searchable>
+          <div class="rec-input-group">
+            <ion-list class="rec-reorder-list">
+              <div class="list-header-wrapper">
+                <ion-list-header class="header-no-min-height"> </ion-list-header>
+              </div>
+              <ion-item-group reorder="true" side="start" (ionItemReorder)="$event.applyTo(skills)">
+                <ion-item *ngFor="let skill of skills; let i = index">
+                  <h5>{{ skill.name }}</h5>
+                  <ion-icon name="md-close-circle" class="fake-link" (click)="removeSkill(i)"></ion-icon>
+                </ion-item>
+              </ion-item-group>
+            </ion-list>
+          </div>
+        </div>
+      </form>
+    </ion-col>
+  </ion-row>
+  <!-- End Form -->
+
+</ion-content>
+
+<!-- Button Footer -->
+<ion-footer class="button-footer">
+  <ion-row>
+    <button class="rec-btn rec-btn-primary btn-stacked center" (click)="continueClicked()">Continue</button>
+  </ion-row>
+</ion-footer>
+<!-- End Button Footer -->

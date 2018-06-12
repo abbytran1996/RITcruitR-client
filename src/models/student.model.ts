@@ -1,57 +1,50 @@
 import { UserModel } from './user.model';
-import { EducationDetailsModel } from './education-details.model';
+import { StudentEducationModel } from './student-education.model';
 import { StudentContactModel } from './student-contact.model';
 import { StudentJobPreferencesModel } from './student-job-preferences.model';
 
 export class StudentModel {
+  public id: number = null;
+  public firstName: string = "";
+  public lastName: string = "";
+  public skills: any = [];
+  public email: string = "";
+  public graduationDate: string = "";
+  public school: string = "";
+  public major: string = "";
+  public gpa: number = null;
+  public user: UserModel = new UserModel();
+  public phoneNumber: string = "";
+  public contactEmail: string = "";
+  public website: string = "";
+  public preferredLocations: any = [];
+  public preferredIndustries: any = [];
+  public preferredCompanySizes: any = [];
+  public presentationLinks: any = [];
 
-  constructor(
-    public id: number,
-    public firstName: string,
-    public lastName: string,
-    public skills: any,
-    public email: string,
-    public graduationDate: string,
-    public school: string,
-    public major: string,
-    public gpa: number,
-    public user: UserModel,
-    public phoneNumber: string,
-    public contactEmail: string,
-    public website: string,
-    public preferredLocations: any,
-    public preferredIndustries: any,
-    public preferredCompanySizes: any,
-    public presentationLinks: any
-  ) {}
-
-  public static createStudentFromApiData(apiData: any): StudentModel {
-    return new StudentModel(
-      apiData.id,
-      apiData.firstName,
-      apiData.lastName,
-      apiData.skills,
-      apiData.email,
-      apiData.graduationDate,
-      apiData.school,
-      apiData.major,
-      apiData.gpa,
-      new UserModel(
-        apiData.user.id,
-        apiData.user.username,
-        apiData.user.roles
-      ),
-      apiData.phoneNumber,
-      apiData.contactEmail,
-      apiData.website,
-      apiData.preferredLocations,
-      apiData.preferredIndustries,
-      apiData.preferredCompanySizes,
-      apiData.presentationLinks
-    );
+  constructor(init?: any) {
+    if (init) {
+      this.id = init.id || null;
+      this.firstName = init.firstName || "";
+      this.lastName = init.lastName || "";
+      this.skills = init.skills || [];
+      this.email = init.email || "";
+      this.graduationDate = init.graduationDate || "";
+      this.school = init.school || "";
+      this.major = init.major || "";
+      this.gpa = init.gpa || null;
+      this.user = new UserModel(init.user) || new UserModel();
+      this.phoneNumber = init.phoneNumber || "";
+      this.contactEmail = init.contactEmail || "";
+      this.website = init.website || "";
+      this.preferredLocations = init.preferredLocations || [];
+      this.preferredIndustries = init.preferredIndustries || [];
+      this.preferredCompanySizes = init.preferredCompanySizes || [];
+      this.presentationLinks = init.presentationLinks || [];
+    }
   }
 
-  public updateEducation(educationDetails: EducationDetailsModel): void {
+  public updateEducation(educationDetails: StudentEducationModel): void {
     this.graduationDate = educationDetails.graduationDate + "-02";
     this.school = educationDetails.school;
     this.major = educationDetails.major;
