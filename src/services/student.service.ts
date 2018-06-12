@@ -126,14 +126,6 @@ export class StudentService {
     // - Expects a StudentModel id number
     // - Returns an array of MatchModels
     getFinalMatches(studentId) {
-        let matches = [];
-
-        matches.sort((a, b) => {
-            if (a.matchStrength < b.matchStrength) return 1;
-            else if (a.matchStrength > b.matchStrength) return -1;
-            else return 0;
-        });
-
-        return matches;
+        return this.apiService.get("/matches/studentMatches/" + studentId + "?phase=final");
     }
 }

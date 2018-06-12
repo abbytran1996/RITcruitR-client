@@ -14,7 +14,8 @@ import {
 import {
   AuthService,
   StudentService,
-  RecruiterService
+  RecruiterService,
+  DataService
 } from '@app/services';
 
 //=========================================================================
@@ -31,6 +32,7 @@ import {
 })
 export class LoginPage {
 
+  public isApp = true;
   public model = new LoginModel();
   public loadingLogin = false;
   private loginMode = 0; // TODO: Remove, only used in dev
@@ -43,8 +45,11 @@ export class LoginPage {
     private toastCtrl: ToastController,
     private authService: AuthService,
     private studentService: StudentService,
-    private recruiterService: RecruiterService
+    private recruiterService: RecruiterService,
+    private dataService: DataService
   ) {
+    this.isApp = dataService.isApp;
+    console.log(this.isApp);
   }
 
   /*

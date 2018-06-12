@@ -25,6 +25,7 @@ import {
   StudentTabsPage,
   StudentRegisterPage,
   StudentSetupPage,
+  StudentSetupFormsPage,
   StudentEducationPage,
   StudentContactPage,
   StudentJobPreferencesPage,
@@ -41,8 +42,7 @@ import {
 // Company Module
 import {
   CompanyTabsPage,
-  CompanyRegister1Page,
-  CompanyRegister2Page,
+  CompanyRegisterPage,
   CompanyRegisterConfirmPage,
   CompanySetupPage,
   CompanyJobMatchesPage,
@@ -53,14 +53,7 @@ import {
   RecruiterCompanySelectPage,
   RecruiterRegisterPage,
   RecruiterContactPage,
-  CompanyJobCreate1Page,
-  CompanyJobCreate2Page,
-  CompanyJobCreate3Page,
-  CompanyJobCreate4Page,
-  CompanyJobCreate5Page,
-  CompanyJobCreate6Page,
-  CompanyJobCreate7Page,
-  CompanyJobCreate8Page,
+  CompanyJobCreatePage,
   CompanyPresentationLinksPage
 } from '@app/pages/company';
 
@@ -78,7 +71,8 @@ import {
   JobPostingService,
   RecruiterService,
   StudentService,
-  DataService
+  DataService,
+  FormSequenceService
 } from '@app/services';
 
 @NgModule({
@@ -90,6 +84,7 @@ import {
     StudentTabsPage,
     StudentRegisterPage,
     StudentSetupPage,
+    StudentSetupFormsPage,
     StudentEducationPage,
     StudentContactPage,
     StudentJobPreferencesPage,
@@ -103,19 +98,10 @@ import {
     StudentProblemStatementsPage,
 
     CompanyTabsPage,
-    CompanyRegister1Page,
-    CompanyRegister2Page,
+    CompanyRegisterPage,
     CompanyRegisterConfirmPage,
     CompanySetupPage,
-    CompanyJobCreate1Page,
-    CompanyJobCreate2Page,
-    CompanyJobCreate3Page,
-    CompanyJobCreate4Page,
-    CompanyJobCreate5Page,
-    CompanyJobCreate5Page,
-    CompanyJobCreate6Page,
-    CompanyJobCreate7Page,
-    CompanyJobCreate8Page,
+    CompanyJobCreatePage,
     CompanyJobMatchesPage,
     CompanyPhase1Page,
     CompanyPhase2Page,
@@ -148,6 +134,7 @@ import {
     StudentTabsPage,
     StudentRegisterPage,
     StudentSetupPage,
+    StudentSetupFormsPage,
     StudentEducationPage,
     StudentContactPage,
     StudentJobPreferencesPage,
@@ -161,19 +148,10 @@ import {
     StudentProblemStatementsPage,
 
     CompanyTabsPage,
-    CompanyRegister1Page,
-    CompanyRegister2Page,
+    CompanyRegisterPage,
     CompanyRegisterConfirmPage,
     CompanySetupPage,
-    CompanyJobCreate1Page,
-    CompanyJobCreate2Page,
-    CompanyJobCreate3Page,
-    CompanyJobCreate4Page,
-    CompanyJobCreate5Page,
-    CompanyJobCreate5Page,
-    CompanyJobCreate6Page,
-    CompanyJobCreate7Page,
-    CompanyJobCreate8Page,
+    CompanyJobCreatePage,
     CompanyJobMatchesPage,
     CompanyPhase1Page,
     CompanyPhase2Page,
@@ -200,7 +178,8 @@ import {
     JobPostingService,
     RecruiterService,
     StudentService,
-    DataService
+    DataService,
+    FormSequenceService
   ]
 })
 export class AppModule {}

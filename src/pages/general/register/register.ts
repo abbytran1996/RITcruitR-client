@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
 import { StudentRegisterPage } from '@app/pages/student';
-import { CompanyRegister1Page } from '@app/pages/company';
+import { CompanyRegisterPage } from '@app/pages/company';
 
 @Component({
   selector: 'page-register',
@@ -23,6 +23,6 @@ export class RegisterPage {
   }
 
   companyBtn() {
-    this.navCtrl.push(CompanyRegister1Page);
+    this.navCtrl.push(CompanyRegisterPage);
   }
 }

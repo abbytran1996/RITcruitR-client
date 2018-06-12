@@ -3,7 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 
 import {
   CompanyTabsPage,
-  CompanyJobCreate1Page
+  CompanyJobCreatePage
 } from '@app/pages/company';
 
 //=========================================================================
@@ -31,7 +31,7 @@ export class CompanySetupPage {
     Navigates to company job creation page.
   */
   createJobClicked() {
-    this.navCtrl.push(CompanyJobCreate1Page, {companyId: this.companyId});
+    this.navCtrl.push(CompanyJobCreatePage, {companyId: this.companyId});
   }
 
   /*

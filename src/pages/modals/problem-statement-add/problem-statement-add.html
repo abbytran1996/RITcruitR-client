@@ -22,15 +22,15 @@
     <ion-col>
       <form #newForm="ngForm">
         <div class="rec-input-group-small">
-          <label class="rec-label rl-primary">STATEMENT NAME</label>
-          <input type="text" name="name" class="rec-input ri-primary" required [(ngModel)]="newStatementModel.name">
+          <label class="rec-label rl-secondary">STATEMENT NAME</label>
+          <input type="text" name="name" class="rec-input ri-grey" required [(ngModel)]="newStatementModel.name">
         </div>
         <div class="rec-input-group-small">
-          <label class="rec-label rl-primary">STATEMENT</label>
-          <textarea name="statement" class="rec-input ri-primary" required [(ngModel)]="newStatementModel.statement"></textarea>
+          <label class="rec-label rl-secondary">STATEMENT</label>
+          <textarea name="statement" class="rec-input ri-grey" required [(ngModel)]="newStatementModel.statement"></textarea>
         </div>
         <div class="rec-input-group-small" [hidden]="!allowSave">
-          <label class="rec-label rl-primary">SAVE TO PROFILE</label>
+          <label class="rec-label rl-secondary">SAVE TO PROFILE</label>
           <ion-toggle name="saveToProfile" class="rec-input float-right" checked="false" [(ngModel)]="newStatementModel.save"></ion-toggle>
         </div>
       </form>

@@ -9,6 +9,8 @@ export class DataService {
         private apiService: ApiService
     ) {}
 
+    public isApp = true;
+
     // TODO: Update this to pull real structured data from the API
     getLocations() {
       return [

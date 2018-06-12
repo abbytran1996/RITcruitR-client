@@ -9,7 +9,7 @@ export class NewJobModel {
   public minGpa: number = null;
   public hasWorkExperience: boolean = false;
   public matchThreshold: number = 50;
-  public duration: number = null;
+  public duration: number = 7;
   public problemStatement: string = "";
   public video: string = "";
   public presentationLinks: any = [];
@@ -28,7 +28,7 @@ export class NewJobModel {
       this.minGpa = init.minGpa || null;
       this.hasWorkExperience = init.hasWorkExperience || false;
       this.matchThreshold = init.matchThreshold || 50;
-      this.duration = init.duration || null;
+      this.duration = init.duration || 7;
       this.problemStatement = init.problemStatement || "";
       this.video = init.video || "";
       this.presentationLinks = init.presentationLinks || [];

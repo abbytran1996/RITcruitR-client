@@ -7,6 +7,7 @@ export * from './student-job-preferences/student-job-preferences';
 export * from './student-profile-details/student-profile-details';
 export * from './student-register/student-register';
 export * from './student-setup/student-setup';
+export * from './student-setup-forms/student-setup-forms';
 export * from './student-skills/student-skills';
 export * from './student-tabs/student-tabs';
 export * from './student-work-experience/student-work-experience';

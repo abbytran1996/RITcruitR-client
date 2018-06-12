@@ -36,10 +36,10 @@
     <ion-col>
       <form #jobPreferencesForm="ngForm">
         <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
-          <label class="rec-label rl-primary">PREFERRED LOCATIONS</label>
+          <label class="rec-label rl-secondary">PREFERRED LOCATIONS</label>
           <select-searchable
             name="preferredLocations"
-            class="rec-input ri-primary clearfix"
+            class="rec-input ri-grey clearfix"
             [(ngModel)]="model.preferredLocations"
             [items]="locationOptions"
             [canSearch]="true"
@@ -48,10 +48,10 @@
           </select-searchable>
         </div>
         <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
-          <label class="rec-label rl-primary">PREFERRED INDUSTRIES</label>
+          <label class="rec-label rl-secondary">PREFERRED INDUSTRIES</label>
           <select-searchable
             name="preferredIndustries"
-            class="rec-input ri-primary clearfix"
+            class="rec-input ri-grey clearfix"
             [(ngModel)]="model.preferredIndustries"
             [items]="industryOptions"
             [canSearch]="true"
@@ -60,8 +60,8 @@
           </select-searchable>
         </div>
         <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
-          <label class="rec-label rl-primary">PREFERRED COMPANY SIZES</label>
-          <ion-select name="preferredCompanySizes" class="rec-input ri-primary" required [(ngModel)]="model.preferredCompanySizes" multiple="true">
+          <label class="rec-label rl-secondary">PREFERRED COMPANY SIZES</label>
+          <ion-select name="preferredCompanySizes" class="rec-input ri-grey" required [(ngModel)]="model.preferredCompanySizes" multiple="true">
             <ion-option *ngFor="let option of companySizeOptions" value="{{ option.id }}">{{ option.text }}</ion-option>
           </ion-select>
         </div>

@@ -36,16 +36,16 @@
     <ion-col>
       <form #contactForm="ngForm">
         <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
-          <label class="rec-label rl-primary">CONTACT EMAIL</label>
-          <input type="text" name="contactEmail" class="rec-input ri-primary" required [(ngModel)]="model.contactEmail">
+          <label class="rec-label rl-secondary">CONTACT EMAIL</label>
+          <input type="text" name="contactEmail" class="rec-input ri-grey" required [(ngModel)]="model.contactEmail">
         </div>
         <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
-          <label class="rec-label rl-primary">PHONE NUMBER</label>
-          <input type="text" name="phoneNumber" class="rec-input ri-primary" required [(ngModel)]="model.phoneNumber">
+          <label class="rec-label rl-secondary">PHONE NUMBER</label>
+          <input type="text" name="phoneNumber" class="rec-input ri-grey" required [(ngModel)]="model.phoneNumber">
         </div>
         <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
-          <label class="rec-label rl-primary">WEBSITE</label>
-          <input type="text" name="website" class="rec-input ri-primary" [(ngModel)]="model.website">
+          <label class="rec-label rl-secondary">WEBSITE</label>
+          <input type="text" name="website" class="rec-input ri-grey" [(ngModel)]="model.website">
         </div>
       </form>
     </ion-col>

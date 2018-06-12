@@ -77,8 +77,8 @@
 
               <form #problemStatementForm="ngForm" [hidden]="!existingStatementOptions || existingStatementOptions.length == 0">
                 <div class="rec-input-group-small">
-                  <label class="rec-label rl-primary">SELECT EXISTING STATEMENT</label>
-                  <ion-select name="selectedLink" class="rec-input ri-primary" [(ngModel)]="existingStatementModel" multiple="false" (ionChange)="selectChanged($event)">
+                  <label class="rec-label rl-secondary">SELECT EXISTING STATEMENT</label>
+                  <ion-select name="selectedLink" class="rec-input ri-grey" [(ngModel)]="existingStatementModel" multiple="false" (ionChange)="selectChanged($event)">
                     <ion-option *ngIf="existingStatementOptions && existingStatementOptions.length > 0" value="-1">None</ion-option>
                     <ion-option *ngFor="let link of existingStatementOptions" [value]="link">{{ link.title }}</ion-option>
                     <ion-option *ngIf="!existingStatementOptions || existingStatementOptions.length == 0" value="-1">No Profile Statements Found</ion-option>
@@ -101,7 +101,7 @@
                     <button class="rec-btn-small rec-btn-primary float-left" (click)="editStatement()"><ion-icon name="md-create" class="rec-btn-icon to-left"></ion-icon>Edit</button>
                     <button class="rec-btn-small rec-btn-deny float-right" (click)="clearStatement()"><ion-icon name="md-close-circle" class="rec-btn-icon to-left"></ion-icon>Clear</button>
                   </div>
-                  <label class="rec-label rl-primary">STATEMENT</label>
+                  <label class="rec-label rl-secondary">STATEMENT</label>
                   <p class="fg-dark">{{ problemStatement.statement }}</p>
                 </div>
               </div>

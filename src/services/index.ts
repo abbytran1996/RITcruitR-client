@@ -5,3 +5,4 @@ export * from './job-posting.service';
 export * from './recruiter.service';
 export * from './student.service';
 export * from './data.service';
+export * from './form-sequence.service';

@@ -160,6 +160,14 @@
   background-color: map-get($colors, invalid);
 }
 
+.bg-accept {
+  background-color: map-get($colors, accept);
+}
+
+.bg-deny {
+  background-color: map-get($colors, deny);
+}
+
 .bg-white {
   background-color: #FFFFFF;
 }
@@ -200,6 +208,14 @@
   color: map-get($colors, invalid);
 }
 
+.fg-accept {
+  color: map-get($colors, accept);
+}
+
+.fg-deny {
+  color: map-get($colors, deny);
+}
+
 .fg-white {
   color: #FFFFFF;
 }
@@ -210,6 +226,10 @@
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+}
+
+.bg-full-gradient {
+  background: $color-primary-gradient-bg2;
 }
 
 
@@ -260,6 +280,12 @@ p {
   color: map-get($font-body, color);
   display: block;
   width: 100%;
+}
+
+p.bold {
+  font-family: map-get($font-bodybold, family);
+  font-size: map-get($font-body, size);
+  font-weight: map-get($font-bodybold, weight);
 }
 
 a, li {
@@ -1110,10 +1136,38 @@ ngb-typeahead-window button:last-child {
 }
 
 .rec-input.ri-primary {
+  border-bottom: 2px solid map-get($colors, primary);
+  font-family: map-get($font-input-value, family);
+  font-size: map-get($font-input-value, size);
+  color: map-get($colors, primary);
+}
+
+.rec-input.ri-secondary {
+  border-bottom: 2px solid map-get($colors, secondary);
+  font-family: map-get($font-input-value, family);
+  font-size: map-get($font-input-value, size);
+  color: map-get($colors, secondary);
+}
+
+.rec-input.ri-accent {
+  border-bottom: 2px solid map-get($colors, accent);
+  font-family: map-get($font-input-value, family);
+  font-size: map-get($font-input-value, size);
+  color: map-get($colors, accent);
+}
+
+.rec-input.ri-dark {
+  border-bottom: 2px solid map-get($colors, dark);
+  font-family: map-get($font-input-value, family);
+  font-size: map-get($font-input-value, size);
+  color: map-get($colors, dark);
+}
+
+.rec-input.ri-grey {
   border-bottom: 2px solid map-get($colors, grey);
   font-family: map-get($font-input-value, family);
   font-size: map-get($font-input-value, size);
-  color: map-get($font-input-value, color);
+  color: map-get($colors, dark);
 }
 
 .rec-input.ri-white {
@@ -1132,7 +1186,31 @@ ngb-typeahead-window button:last-child {
 .rec-label.rl-primary {
   font-family: map-get($font-input-label, family);
   font-size: map-get($font-input-label, size);
-  color: map-get($font-input-label, color);
+  color: map-get($colors, primary);
+}
+
+.rec-label.rl-secondary {
+  font-family: map-get($font-input-label, family);
+  font-size: map-get($font-input-label, size);
+  color: map-get($colors, secondary);
+}
+
+.rec-label.rl-accent {
+  font-family: map-get($font-input-label, family);
+  font-size: map-get($font-input-label, size);
+  color: map-get($colors, accent);
+}
+
+.rec-label.rl-dark {
+  font-family: map-get($font-input-label, family);
+  font-size: map-get($font-input-label, size);
+  color: map-get($colors, dark);
+}
+
+.rec-label.rl-grey {
+  font-family: map-get($font-input-label, family);
+  font-size: map-get($font-input-label, size);
+  color: map-get($colors, grey);
 }
 
 .rec-label.rl-white {
@@ -1183,7 +1261,7 @@ select-searchable.rec-select-searchable-btn.ng-dirty.ng-valid {
 // ----------------------------------------------------[ Toast Message Styles ]
 
 ion-toast.toast-ios {
-  top: 20px;
+  top: 10px;
 }
 
 .toast-ios .toast-wrapper {
@@ -1320,19 +1398,22 @@ ion-toast.toast-ios {
   font-size: 12px;
   padding-left: 5px;
   margin-bottom: 2px;
+
+  display: none; // TEMP
 }
 
 .progress-bar {
-  height: 22px;
+  height: 18px;
   background-color: #FFFFFF;
   border-radius: 20px;
   box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, .08);
 }
 
 .progress-bar .bar {
-  height: 22px;
+  height: 100%;
   background: linear-gradient(to bottom, rgba(map-get($colors, secondary), .85), rgba(map-get($colors, primary), .85));
   border-radius: 22px;
+  transition: width .65s;
 }
 
 .sep-horizontal-1 {
@@ -1351,7 +1432,8 @@ ion-toast.toast-ios {
 
 // Structure - Header and Footer
 ion-header.rec-header > ion-row {
-  padding-top: 4vh;
+  padding-top: 3vh;
+  padding-bottom: 10px;
   box-shadow: -1px 0px 5px 0px rgba(0, 0, 0, 0.3);
   background-color: map-get($colors, light);
 
@@ -1365,6 +1447,15 @@ ion-header.rec-header > ion-row {
 
   .row-title {
     width: 100%;
+
+    h1 {
+      font-size: 24px;
+    }
+
+    h3 {
+      font-size: 22px;
+      margin-bottom: 0;
+    }
   }
 }
 
@@ -1567,6 +1658,136 @@ ion-footer.button-footer::before {
 
     * {
       fill: #FFFFFF;
+    }
+
+    &.primary * {
+      fill: map-get($colors, primary);
+    }
+
+    &.secondary * {
+      fill: map-get($colors, secondary);
+    }
+
+    &.accent * {
+      fill: map-get($colors, accent);
+    }
+
+    &.dark * {
+      fill: map-get($colors, dark);
+    }
+
+    &.light * {
+      fill: map-get($colors, light);
+    }
+  }
+}
+
+.presentation-link {
+  margin-bottom: 20px;
+
+  .fake-link {
+    color: map-get($colors, primary);
+  }
+}
+
+ion-icon.presentation-link-icon {
+  font-size: 16px;
+  margin-left: 10px;
+}
+
+.phase-wrapper {
+  height: 100%;
+}
+
+// Tabs bar hiding
+ion-tabs.company-tabs .tabbar a:first-child {
+  display: none;
+}
+
+ion-tabs.hide-bar .tabbar {
+  display: none;
+}
+
+// Text pill
+.text-pill {
+  width: max-content;
+  padding-bottom: 5px;
+  padding-top: 9px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 30px;
+}
+
+.ghost-ion-item {
+  padding-left: 0;
+  padding-right: 0;
+  position: static;
+  display: inline;
+  width: min-content;
+
+  .item-inner {
+    padding-right: 0 !important;
+    border-bottom: none !important;
+  }
+}
+
+.list-item-card {
+  position: relative;
+  background-color: #FFFFFF;
+  border-radius: 5px;
+  box-shadow: 0px 1px 5px 1px rgba(0, 0, 0, .16);
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+
+  ion-icon.item-card-icon {
+    font-size: 36px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .item-card-content {
+    &.with-icon {
+      margin-left: 50px;
+    }
+
+    h5 {
+      margin: 0;
+      margin-bottom: 2px;
+      font-size: 16px;
+    }
+
+    p {
+      margin: 0;
+      line-height: 18px;
+      font-size: 14px;
+    }
+  }
+}
+
+.rec-toolbar {
+  display: flex;
+  padding: 10px !important;
+
+  .rec-toolbar-btn {
+    flex-grow: 1;
+    margin-top: 4px;
+    min-width: 33%;
+
+    ion-icon {
+      width: 100%;
+      text-align: center;
+      line-height: 20px;
+      font-size: 28px;
+      font-weight: normal;
+    }
+
+    p {
+      text-align: center;
+      margin: 0;
+      font-size: 12px;
     }
   }
 }
@@ -1887,27 +2108,110 @@ ion-icon.card-heading-icon-right {
   margin-bottom: 20px !important;
 }
 
-.presentation-link {
-  margin-bottom: 20px;
+.final-matches-list {
+  margin-top: 30px;
+}
 
-  .fake-link {
-    color: map-get($colors, primary);
+.final-match {
+  margin-bottom: 15px;
+}
+
+
+
+
+// ----------------------------------------------------[ Desktop Overrides ]
+
+
+
+
+
+// ----------------------------------------------------[ Animations ]
+.ani-outleft {
+  position: relative;
+  left: -200%;
+  animation-name: out-left;
+  animation-duration: .5s;
+  animation-delay: 0s;
+}
+
+.ani-inleft {
+  position: relative;
+  left: 0px;
+  animation-name: in-left;
+  animation-duration: .3s;
+  animation-delay: 0s;
+}
+
+.ani-outright {
+  position: relative;
+  left: 200%;
+  animation-name: out-right;
+  animation-duration: .5s;
+  animation-delay: 0s;
+}
+
+.ani-inright {
+  position: relative;
+  left: 0px;
+  animation-name: in-right;
+  animation-duration: .3s;
+  animation-delay: 0s;
+}
+
+.ani-outleft-init {
+  position: absolute;
+  left: -200%;
+}
+
+.ani-outright-init {
+  position: absolute;
+  left: 200%;
+}
+
+.ani-hide {
+  display: none;
+}
+
+@keyframes out-left {
+  0% {
+    left: 0px;
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    left: -200%;
   }
 }
 
-ion-icon.presentation-link-icon {
-  font-size: 16px;
-  margin-left: 10px;
+@keyframes in-left {
+  0% {
+    left: -200%;
+  }
+  100% {
+    left: 0px;
+  }
 }
 
-.phase-wrapper {
-  height: 100%;
+@keyframes out-right {
+  0% {
+    left: 0px;
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    left: 200%;
+  }
 }
 
-ion-tabs.company-tabs .tabbar a:first-child {
-  display: none;
-}
-
-ion-tabs.hide-bar .tabbar {
-  display: none;
+@keyframes in-right {
+  0% {
+    left: 200%;
+  }
+  100% {
+    left: 0px;
+  }
 }
