@@ -8,5 +8,11 @@ import { MyApp } from "./app.component";
 import { PlatformMock, StatusBarMock, SplashScreenMock } from "../../test-config/mocks-ionic";
 
 describe("MyApp Component", () => {
+    var a;
 
+    it("misc test", function () {
+        a = true;
+
+        expect(a).toBe(true);
+    });
 });
