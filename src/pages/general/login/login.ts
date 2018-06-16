@@ -19,7 +19,7 @@ import {
 } from '@app/services';
 
 //=========================================================================
-// * LoginPage                                                   
+// * LoginPage
 //=========================================================================
 // - Initial app login page. Users will login here with username and
 //   password, when authenticated, the correct model (Student or Company)
@@ -69,7 +69,7 @@ export class LoginPage {
         this.model.password = "Recruiter1!";
         this.loginMode = 2;
         break;
-    
+
       default:
         this.model.username = "";
         this.model.password = "";
@@ -108,7 +108,7 @@ export class LoginPage {
               }
             );
           }
-          else {
+          else { //TODO change to if (userRole == 1), change 'else' default to error
             this.recruiterService.getRecruiterByEmail(userEmail).subscribe(
               data => {
                 let recruiter = new RecruiterModel(data);
@@ -120,7 +120,7 @@ export class LoginPage {
                 this.loadingLogin = false;
               }
             );
-          }
+          } //TODO add condition for ADMIN login
         },
         error => {
           this.presentToast("No user found with that email and password combination");

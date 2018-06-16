@@ -21,7 +21,7 @@ import {
 } from '@app/pages/general';
 
 // Student Module
-import { 
+import {
   StudentTabsPage,
   StudentRegisterPage,
   StudentSetupPage,
@@ -61,7 +61,7 @@ import {
 import {
   PresentationLinkAddModal,
   ProblemStatementAddModal
-} from '../pages/modals';
+} from '@app/pages/modals';
 
 // Services
 import {
