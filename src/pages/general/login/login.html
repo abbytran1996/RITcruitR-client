@@ -1,0 +1,42 @@
+<ion-content padding [ngClass]="{'bg-full-image': isApp, 'bg-full-gradient': !isApp}">
+  <div class="login-wrapper">
+    <!-- Title -->
+    <ion-row class="row-title">
+      <h1 class="fg-white text-center no-padding" (click)="devLogin()">RecruitR</h1>
+    </ion-row>
+    <!-- End Title -->
+
+    <div class="login-content-wrapper">
+      <!-- Login Form -->
+      <ion-row class="row-login-form">
+        <ion-col>
+          <form #loginForm="ngForm">
+            <div class="rec-input-group">
+              <label class="rec-label" [ngClass]="{'rl-white': isApp, 'rl-grey': !isApp}">EMAIL</label>
+              <input type="email" name="username" class="rec-input" [ngClass]="{'ri-white': isApp, 'ri-grey': !isApp}" required [(ngModel)]="model.username">
+            </div>
+            <div class="rec-input-group">
+              <label class="rec-label" [ngClass]="{'rl-white': isApp, 'rl-grey': !isApp}">PASSWORD</label>
+              <input type="password" name="password" class="rec-input" [ngClass]="{'ri-white': isApp, 'ri-grey': !isApp}" required [(ngModel)]="model.password">
+            </div>
+          </form>
+        </ion-col>
+      </ion-row>
+      <!-- End Login Form -->
+
+      <!-- Login Buttons -->
+      <ion-row class="row-login-buttons">
+        <ion-col>
+          <div>
+            <button class="rec-btn-small-wide btn-stacked center rec-load-btn" [ngClass]="{'rec-btn-white': isApp, 'rec-btn-primary': !isApp}" (click)="login()" [disabled]="loadingLogin">
+              {{ (loadingLogin) ? '' : 'Login' }}
+              <ion-spinner class="" [ngClass]="{'primary': isApp, 'white': !isApp}" name="dots" [hidden]="!loadingLogin"></ion-spinner>
+            </button>
+            <button class="rec-btn-small-wide rec-btn-accent btn-stacked center" (click)="register()" [disabled]="loadingLogin">Register</button>
+          </div>
+        </ion-col>
+      </ion-row>
+      <!-- End Login Buttons -->
+    </div>
+  </div>
+</ion-content>

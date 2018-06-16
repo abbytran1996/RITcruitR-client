@@ -1,3 +1,4 @@
+// Base angular and ionic imports
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
@@ -6,53 +7,63 @@ import { FormsModule }   from '@angular/forms';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { MyApp } from './app.component';
 
 // Third party modules
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { SelectSearchableModule } from 'ionic-select-searchable';
+import { SelectSearchableModule } from 'pages/modals/ionic-select-searchable';
 
-// Custom Modules
-import { LoginPage } from '../pages/login/login';
-import { RegisterPage } from '../pages/register/register';
-import { TabsPage } from '../pages/tabs/tabs';
-
-import { StudentRegisterPage } from '../pages/student-register/student-register';
-import { StudentSetupPage } from '../pages/student-setup/student-setup';
-import { StudentEducationPage } from '../pages/student-education/student-education';
-import { StudentContactPage } from '../pages/student-contact/student-contact';
-import { StudentJobPreferencesPage } from '../pages/student-job-preferences/student-job-preferences';
-import { StudentSkillsPage } from '../pages/student-skills/student-skills';
-import { StudentWorkExperiencePage } from '../pages/student-work-experience/student-work-experience';
-import { StudentPhase1Page } from '../pages/student-home/student-phase-1';
-import { StudentPhase2Page } from '../pages/student-home/student-phase-2';
-import { StudentPhase3Page } from '../pages/student-home/student-phase-3';
-import { StudentProfileDetailsPage } from '../pages/student-profile-details/student-profile-details';
-
-import { CompanyRegister1Page } from '../pages/company-register/company-register-1';
-import { CompanyRegister2Page } from '../pages/company-register/company-register-2';
-import { CompanyRegisterConfirmPage } from '../pages/company-register-confirm/company-register-confirm';
-import { CompanySetupPage } from '../pages/company-setup/company-setup';
-import { CompanyPhase1Page } from '../pages/company-home/company-phase-1';
-import { CompanyPhase2Page } from '../pages/company-home/company-phase-2';
-import { CompanyPhase3Page } from '../pages/company-home/company-phase-3';
-import { CompanyDetailsPage } from '../pages/company-details/company-details';
-
-import { RecruiterCompanySelectPage } from '../pages/recruiter-company-select/recruiter-company-select';
-import { RecruiterRegisterPage } from '../pages/recruiter-register/recruiter-register';
-import { RecruiterContactPage } from '../pages/recruiter-contact/recruiter-contact';
-
+// General Module
 import {
-  CompanyJobCreate1Page,
-  CompanyJobCreate2Page,
-  CompanyJobCreate3Page,
-  CompanyJobCreate4Page,
-  CompanyJobCreate5Page,
-  CompanyJobCreate6Page,
-  CompanyJobCreate7Page,
-  CompanyJobCreate8Page,
-} from '../pages/company-job-create';
+  LoginPage,
+  RegisterPage
+} from '@app/pages/general';
 
+// Student Module
+import {
+  StudentTabsPage,
+  StudentRegisterPage,
+  StudentSetupPage,
+  StudentSetupFormsPage,
+  StudentEducationPage,
+  StudentContactPage,
+  StudentJobPreferencesPage,
+  StudentSkillsPage,
+  StudentWorkExperiencePage,
+  StudentPhase1Page,
+  StudentPhase2Page,
+  StudentPhase3Page,
+  StudentProfileDetailsPage,
+  StudentPresentationLinksPage,
+  StudentProblemStatementsPage
+} from '@app/pages/student';
+
+// Company Module
+import {
+  CompanyTabsPage,
+  CompanyRegisterPage,
+  CompanyRegisterConfirmPage,
+  CompanySetupPage,
+  CompanyJobMatchesPage,
+  CompanyPhase1Page,
+  CompanyPhase2Page,
+  CompanyPhase3Page,
+  CompanyDetailsPage,
+  RecruiterCompanySelectPage,
+  RecruiterRegisterPage,
+  RecruiterContactPage,
+  CompanyJobCreatePage,
+  CompanyPresentationLinksPage
+} from '@app/pages/company';
+
+// Modals
+import {
+  PresentationLinkAddModal,
+  ProblemStatementAddModal
+} from '@app/pages/modals';
+
+// Services
 import {
   ApiService,
   AuthService,
@@ -60,16 +71,20 @@ import {
   JobPostingService,
   RecruiterService,
   StudentService,
-  DataService
-} from './services';
+  DataService,
+  FormSequenceService
+} from '@app/services';
 
 @NgModule({
   declarations: [
     MyApp,
     LoginPage,
     RegisterPage,
+
+    StudentTabsPage,
     StudentRegisterPage,
     StudentSetupPage,
+    StudentSetupFormsPage,
     StudentEducationPage,
     StudentContactPage,
     StudentJobPreferencesPage,
@@ -79,19 +94,15 @@ import {
     StudentPhase2Page,
     StudentPhase3Page,
     StudentProfileDetailsPage,
-    CompanyRegister1Page,
-    CompanyRegister2Page,
+    StudentPresentationLinksPage,
+    StudentProblemStatementsPage,
+
+    CompanyTabsPage,
+    CompanyRegisterPage,
     CompanyRegisterConfirmPage,
     CompanySetupPage,
-    CompanyJobCreate1Page,
-    CompanyJobCreate2Page,
-    CompanyJobCreate3Page,
-    CompanyJobCreate4Page,
-    CompanyJobCreate5Page,
-    CompanyJobCreate5Page,
-    CompanyJobCreate6Page,
-    CompanyJobCreate7Page,
-    CompanyJobCreate8Page,
+    CompanyJobCreatePage,
+    CompanyJobMatchesPage,
     CompanyPhase1Page,
     CompanyPhase2Page,
     CompanyPhase3Page,
@@ -99,7 +110,10 @@ import {
     RecruiterCompanySelectPage,
     RecruiterRegisterPage,
     RecruiterContactPage,
-    TabsPage
+    CompanyPresentationLinksPage,
+
+    PresentationLinkAddModal,
+    ProblemStatementAddModal
   ],
   imports: [
     BrowserModule,
@@ -116,8 +130,11 @@ import {
     MyApp,
     LoginPage,
     RegisterPage,
+
+    StudentTabsPage,
     StudentRegisterPage,
     StudentSetupPage,
+    StudentSetupFormsPage,
     StudentEducationPage,
     StudentContactPage,
     StudentJobPreferencesPage,
@@ -127,19 +144,15 @@ import {
     StudentPhase2Page,
     StudentPhase3Page,
     StudentProfileDetailsPage,
-    CompanyRegister1Page,
-    CompanyRegister2Page,
+    StudentPresentationLinksPage,
+    StudentProblemStatementsPage,
+
+    CompanyTabsPage,
+    CompanyRegisterPage,
     CompanyRegisterConfirmPage,
     CompanySetupPage,
-    CompanyJobCreate1Page,
-    CompanyJobCreate2Page,
-    CompanyJobCreate3Page,
-    CompanyJobCreate4Page,
-    CompanyJobCreate5Page,
-    CompanyJobCreate5Page,
-    CompanyJobCreate6Page,
-    CompanyJobCreate7Page,
-    CompanyJobCreate8Page,
+    CompanyJobCreatePage,
+    CompanyJobMatchesPage,
     CompanyPhase1Page,
     CompanyPhase2Page,
     CompanyPhase3Page,
@@ -147,20 +160,26 @@ import {
     RecruiterCompanySelectPage,
     RecruiterRegisterPage,
     RecruiterContactPage,
-    TabsPage
+    CompanyPresentationLinksPage,
+
+    PresentationLinkAddModal,
+    ProblemStatementAddModal
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    InAppBrowser,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     HttpClientModule,
+
     ApiService,
     AuthService,
     CompanyService,
     JobPostingService,
     RecruiterService,
     StudentService,
-    DataService
+    DataService,
+    FormSequenceService
   ]
 })
 export class AppModule {}

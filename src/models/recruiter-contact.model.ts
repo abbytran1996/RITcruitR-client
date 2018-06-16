@@ -1,6 +1,11 @@
 export class RecruiterContactModel {
-  constructor(
-    public contactEmail: string,
-    public phoneNumber: string
-  ) {}
+  public contactEmail: string = "";
+  public phoneNumber: string = "";
+
+  constructor(init?: any) {
+    if (init) {
+      this.contactEmail = init.contactEmail || "";
+      this.phoneNumber = init.phoneNumber || "";
+    }
+  }
 }

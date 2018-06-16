@@ -2,9 +2,9 @@
 // http://ionicframework.com/docs/theming/
 
 // Asset Paths
-$asset-path: "/assets";
-$image-path: "/assets/imgs";
-$font-path: "/assets/fonts";
+$asset-path: "../assets";
+$image-path: "../assets/imgs";
+$font-path: "../assets/fonts";
 
 
 // The app direction is used to include
@@ -29,20 +29,44 @@ $app-direction: ltr;
 // Named Color Variables
 // --------------------------------------------------
 
+// TODO: Eventually remove one of these color options depending on what we go with
+// Original Colors
+// $colors: (
+//   primary:      #475BA3,
+//   secondary:    #8A5EA1,
+//   accent:       #D66890,
+//   light:        #F5F5F5,
+//   dark:         #424242,
+//   grey:         #8F9090,
+//   valid:        #32DB64,
+//   invalid:      #F53D3D,
+//   white:        #FFFFFF,
+//   black:        #000000,
+//   accept:       #6FBF5B,
+//   deny:         #DC5B5B
+// );
+
+// More Vibrant Colors
 $colors: (
-  primary:      #475BA3,
-  secondary:    #8A5EA1,
-  accent:       #D66890,
+  primary:      #4b5eb2,
+  secondary:    #8c61b2,
+  accent:       #d65b88,
   light:        #F5F5F5,
+  superlight:   #f8f8f8,
   dark:         #424242,
   grey:         #8F9090,
-  valid:        #32db64,
-  invalid:      #f53d3d
+  valid:        #32DB64,
+  invalid:      #F53D3D,
+  white:        #FFFFFF,
+  black:        #000000,
+  accept:       #5dbe61,
+  deny:         #ed5e68
 );
 
 $color-primary-gradient: linear-gradient(to right, map-get($colors, primary), map-get($colors, secondary));
 $color-primary-gradient-bright: linear-gradient(to right, saturate(map-get($colors, primary), 10%), saturate(map-get($colors, secondary), 10%));
 $color-primary-gradient-bg: linear-gradient(to bottom, rgba(map-get($colors, primary), .9), rgba(map-get($colors, secondary), .9));
+$color-primary-gradient-bg2: linear-gradient(to bottom, rgba(map-get($colors, primary), 1), rgba(map-get($colors, secondary), 1));
 
 
 
@@ -67,6 +91,16 @@ $color-primary-gradient-bg: linear-gradient(to bottom, rgba(map-get($colors, pri
 @font-face {
   font-family: 'OverpassBold';
   src: url('#{$font-path}/Overpass-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Catamaran';
+  src: url('#{$font-path}/Catamaran-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'CatamaranBold';
+  src: url('#{$font-path}/Catamaran-Bold.ttf') format('truetype');
 }
 
 $font-title: (
@@ -134,7 +168,7 @@ $font-input-label: (
 );
 
 $font-input-value: (
-    family: Overpass,
+    family: Catamaran,
     size: 22px,
     size-ios: 24px,
     weight: normal,
