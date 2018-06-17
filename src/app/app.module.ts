@@ -16,6 +16,7 @@ import { SelectSearchableModule } from 'pages/modals/ionic-select-searchable';
 
 // General Module
 import {
+  LoginPageModule,
   LoginPage,
   RegisterPage
 } from '@app/pages/general';
@@ -57,6 +58,13 @@ import {
   CompanyPresentationLinksPage
 } from '@app/pages/company';
 
+// Admin Module
+import {
+  AdminDashboardPageModule,
+  AdminDashboardPage,
+  AdminCompanyValidationPage
+} from '@app/pages/admin';
+
 // Modals
 import {
   PresentationLinkAddModal,
@@ -78,7 +86,6 @@ import {
 @NgModule({
   declarations: [
     MyApp,
-    LoginPage,
     RegisterPage,
 
     StudentTabsPage,
@@ -112,6 +119,8 @@ import {
     RecruiterContactPage,
     CompanyPresentationLinksPage,
 
+    AdminCompanyValidationPage,
+
     PresentationLinkAddModal,
     ProblemStatementAddModal
   ],
@@ -120,7 +129,11 @@ import {
     FormsModule,
     NgbModule.forRoot(),
     SelectSearchableModule,
-    IonicModule.forRoot(MyApp),
+    LoginPageModule,
+    AdminDashboardPageModule,
+    IonicModule.forRoot(MyApp, {
+      locationStrategy: "path"
+    }),
     HttpClientModule,
     HttpModule,
     FormsModule
@@ -161,6 +174,9 @@ import {
     RecruiterRegisterPage,
     RecruiterContactPage,
     CompanyPresentationLinksPage,
+
+    AdminDashboardPage,
+    AdminCompanyValidationPage,
 
     PresentationLinkAddModal,
     ProblemStatementAddModal

@@ -59,12 +59,17 @@ export class AuthService {
         }
       });
 
-      // TODO: Update these role IDs so they can't be changed through local storage
       if (isStudent) {
         role = 0;
       }
       else if (isRecruiter) {
         role = 1;
+      }
+      else if (isAdmin) {
+        role = 2;
+      }
+      else {
+        role = -1;
       }
 
       return role;

@@ -1,0 +1,32 @@
+<ion-menu [content]="content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>RecruitR</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <button ion-item menuToggle (click)="companyValidation()">
+        <ion-icon name="md-checkmark-circle" class="opacity-50"></ion-icon>
+        Company Validation
+      </button>
+      <button ion-item menuToggle (click)="logout()">
+        <ion-icon name="ios-exit" class="opacity-50"></ion-icon>
+        Logout
+      </button>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle icon-only>
+      <ion-icon name='menu'></ion-icon>
+    </button>
+    <ion-title>RecruitR Administration</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-tabs selectedIndex="0" #content #adminTabs class="hide-bar">
+  <ion-tab [root]="rootPage" tabTitle="Company Validation" tabIcon="md-checkmark-circle" [rootParams]="tabParams"></ion-tab>
+</ion-tabs>

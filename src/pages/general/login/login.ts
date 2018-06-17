@@ -1,9 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, ToastController } from 'ionic-angular';
+import { NavController, ToastController, IonicPage } from 'ionic-angular';
 
 import { StudentTabsPage } from '@app/pages/student';
 import { CompanyTabsPage } from '@app/pages/company';
 import { RegisterPage } from '@app/pages/general';
+import { AdminDashboardPage } from '@app/pages/admin';
 
 import {
   LoginModel,
@@ -26,6 +27,10 @@ import {
 //   will be retrieved based on the user's role. Then the corresponding
 //   tabs page will be loaded.
 //_________________________________________________________________________
+@IonicPage({
+  name: 'login',
+  segment: 'login'
+})
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html'
@@ -49,7 +54,6 @@ export class LoginPage {
     private dataService: DataService
   ) {
     this.isApp = dataService.isApp;
-    console.log(this.isApp);
   }
 
   /*
@@ -61,13 +65,19 @@ export class LoginPage {
       case 0:
         this.model.username = "student@rit.edu";
         this.model.password = "Student1!";
-        this.loginMode = 1;
+        this.loginMode++;
         break;
 
       case 1:
         this.model.username = "recruiter@facebook.com";
         this.model.password = "Recruiter1!";
-        this.loginMode = 2;
+        this.loginMode++;
+        break;
+
+      case 2:
+        this.model.username = "admin@rit.edu";
+        this.model.password = "AdminPassword1!";
+        this.loginMode++;
         break;
 
       default:
@@ -95,6 +105,7 @@ export class LoginPage {
           let userRole = this.authService.getUserRole(data);
           let userEmail = data.username;
 
+          // Student
           if (userRole == 0) {
             this.studentService.getStudentByEmail(userEmail).subscribe(
               data => {
@@ -108,7 +119,9 @@ export class LoginPage {
               }
             );
           }
-          else { //TODO change to if (userRole == 1), change 'else' default to error
+
+          // Recruiter
+          else if (userRole == 1) {
             this.recruiterService.getRecruiterByEmail(userEmail).subscribe(
               data => {
                 let recruiter = new RecruiterModel(data);
@@ -120,7 +133,13 @@ export class LoginPage {
                 this.loadingLogin = false;
               }
             );
-          } //TODO add condition for ADMIN login
+          }
+
+          // Admin
+          else if (userRole == 2) {
+            this.loadingLogin = false;
+            this.navCtrl.setRoot('admin-dashboard', { user: data }, { animation: "md-transition" });
+          }
         },
         error => {
           this.presentToast("No user found with that email and password combination");
