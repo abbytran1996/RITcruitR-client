@@ -25,7 +25,7 @@ export class CompanyService {
     // - Expects a company name string
     // - Returns a CompanyModel
     getCompanyByName(name) {
-        return this.apiService.get('/company/company_name/' + name);
+        return this.apiService.get('/company/byName/' + name);
     }
 
     //==========================================================================
