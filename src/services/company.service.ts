@@ -28,6 +28,17 @@ export class CompanyService {
         return this.apiService.get('/company/company_name/' + name);
     }
 
+    //==========================================================================
+    // * GET COMPANY BY STATUS                                                 *
+    //==========================================================================
+    // - Given a status (for whether the company is approved or not),
+    //   returns the associated companies
+    // - Expects a company boolean
+    // - Returns a list of CompanyModels
+    getCompanyByStatus(status) {
+      return this.apiService.get('/company/byStatus/' + status);
+    }
+
     //=========================================================================
     // * ADD COMPANY                                                          *
     //=========================================================================
