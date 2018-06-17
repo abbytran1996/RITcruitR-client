@@ -56,7 +56,7 @@ export class CompanyService {
     // - Expects a CompanyModel
     // - Returns 200 (OK) response
     approveCompany(company) {
-      return this.apiService.patch('/company/' + company.id + "/approve");
+      return this.apiService.patch('/company/' + company.id + '/approve');
     }
 
     //=========================================================================
