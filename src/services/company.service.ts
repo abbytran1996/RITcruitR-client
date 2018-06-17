@@ -50,6 +50,16 @@ export class CompanyService {
     }
 
     //=========================================================================
+    // * APPROVE COMPANY                                                          *
+    //=========================================================================
+    // - Approves an existing company
+    // - Expects a CompanyModel
+    // - Returns 200 (OK) response
+    approveCompany(company) {
+      return this.apiService.patch('/company/' + company.id + "/approve");
+    }
+
+    //=========================================================================
     // * UPDATE COMPANY                                                       *
     //=========================================================================
     // - Updates a company
