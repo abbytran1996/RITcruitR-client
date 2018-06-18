@@ -8,6 +8,7 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { CallNumber } from '@ionic-native/call-number';
 import { MyApp } from './app.component';
 
 // Third party modules
@@ -169,6 +170,7 @@ import {
     StatusBar,
     SplashScreen,
     InAppBrowser,
+    CallNumber,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     HttpClientModule,
 

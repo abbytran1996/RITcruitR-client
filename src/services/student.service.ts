@@ -120,12 +120,22 @@ export class StudentService {
     }
 
     //=========================================================================
-    // * GET Final MATCHES                                                    *
+    // * GET FINAL MATCHES                                                    *
     //=========================================================================
     // - Get all final matches (last phase)
     // - Expects a StudentModel id number
     // - Returns an array of MatchModels
     getFinalMatches(studentId) {
         return this.apiService.get("/matches/studentMatches/" + studentId + "?phase=final");
+    }
+
+    //=========================================================================
+    // * ARCHIVE MATCH                                                        *
+    //=========================================================================
+    // - Archive a match with the given id
+    // - Expects a MatchModel id number
+    // - Returns 200 (OK) response
+    archiveMatch(matchId) {
+        return this.apiService.patch("/matches/" + matchId + "/archive");
     }
 }

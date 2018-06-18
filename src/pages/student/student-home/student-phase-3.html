@@ -20,13 +20,33 @@
         <p class="fg-white text-center bold">The jobs listed below have made it to the final stage. Tap a job to view its details.</p>
       </div>
       <div class="final-matches-list">
-        <div class="list-item-card final-match fake-link" *ngFor="let match of matchList" (click)="matchDetails(match)">
-          <ion-icon name='md-checkmark-circle' class="item-card-icon fg-accept"></ion-icon>
-          <div class="item-card-content with-icon">
-            <h5 class="fg-dark">{{ match.job.positionTitle }}</h5>
-            <p class="fg-grey">{{ match.job.company.companyName }} - {{ getMatchedIndustry(match) }}<br>{{ getMatchedLocation(match) }}</p>
-          </div>
-        </div>
+        <ion-list>
+          <ion-item-sliding *ngFor="let match of matchList" class="list-item-card outer final-match fake-link">
+            <ion-item class="list-item-card inner" (click)="matchDetails(match)">
+              <ion-icon name='md-checkmark-circle' class="item-card-icon fg-accept"></ion-icon>
+              <div class="item-card-content with-icon">
+                <h5 class="fg-dark">{{ match.job.positionTitle }}</h5>
+                <p class="fg-grey">{{ match.job.company.companyName }} - {{ getMatchedIndustry(match) }}<br>{{ getMatchedLocation(match) }}</p>
+              </div>
+            </ion-item>
+            <ion-item-options side="left">
+              <button ion-button color="secondary" (click)="callRecruiter(match)">
+                <ion-icon name="md-call"></ion-icon>
+                Call
+              </button>
+              <button ion-button color="accent" (click)="emailRecruiter(match)">
+                <ion-icon name="ios-mail"></ion-icon>
+                Email
+              </button>
+            </ion-item-options>
+            <ion-item-options side="right">
+              <button ion-button color="deny" (click)="archiveMatch(match)">
+                <ion-icon name="ios-archive"></ion-icon>
+                Archive
+              </button>
+            </ion-item-options>
+          </ion-item-sliding>
+        </ion-list>
       </div>
     </div>
     <!-- End Final Match List -->
@@ -41,12 +61,157 @@
     <!-- End Empty List Message -->
 
     <!-- Match Details -->
-    <div *ngIf="detailMode">
+    <div class="match-card-container" *ngIf="detailMode">
+
+      <!-- Toolbar -->
       <div class="list-item-card rec-toolbar">
         <div class="rec-toolbar-btn fake-link" (click)="backToList()"><ion-icon name='md-arrow-round-back' class="fg-dark"></ion-icon><p class="fg-dark">Back To List</p></div>
-        <div class="rec-toolbar-btn fake-link" (click)="reviewMatch()"><ion-icon name='md-clipboard' class="fg-primary"></ion-icon><p class="fg-primary">Review Match</p></div>
-        <div class="rec-toolbar-btn fake-link" (click)="archiveMatch()"><ion-icon name='md-trash' class="fg-deny"></ion-icon><p class="fg-deny">Archive</p></div>
+        <div class="rec-toolbar-btn fake-link" (click)="reviewMatch()" [hidden]="reviewMode"><ion-icon name='md-clipboard' class="fg-primary"></ion-icon><p class="fg-primary">Review Match</p></div>
+        <div class="rec-toolbar-btn fake-link" (click)="showContact()" [hidden]="!reviewMode"><ion-icon name='md-contact' class="fg-primary"></ion-icon><p class="fg-primary">Contact Details</p></div>
+        <div class="rec-toolbar-btn fake-link" (click)="archiveMatch(currentMatch)"><ion-icon name='ios-archive' class="fg-deny"></ion-icon><p class="fg-deny">Archive</p></div>
       </div>
+      <!-- End Toolbar -->
+
+      <!-- Contact Card -->
+      <div class="match-card match-review-card contact" [hidden]="reviewMode">
+        <div class="match-card-header">
+          <h3 class="title fg-primary text-center">Overview & Contact</h3>
+        </div>
+        <div class="match-card-content">
+          <div class="overview content-section">
+            <h3 class="heading fg-dark">Job Overview</h3>
+            <ul class="rec-ul no-bullets">
+              <li class="fg-dark">
+                <ion-icon name="md-briefcase" class="card-heading-icon fg-primary"></ion-icon> {{ currentMatch.job.company.companyName }} <span class="fg-grey">- {{ getMatchedIndustry(currentMatch) }}</span>
+              </li>
+              <li class="fg-dark">
+                <ion-icon name="ios-pin" class="card-heading-icon fg-primary"></ion-icon> 
+                <span *ngFor="let location of currentMatch.job.locations | slice:0:2; let i = index" class="fg-dark">
+                {{ location }}<br>
+                </span>
+              </li>
+            </ul>
+          </div>
+          <div class="contact content-section margin-top-20">
+            <h3 class="heading fg-dark">Recruiter Contact</h3>
+            <ul class="rec-ul no-bullets">
+              <li class="fg-dark">
+                <ion-icon name="md-contact" class="card-heading-icon fg-primary"></ion-icon> {{ currentMatch.job.recruiter.firstName }} {{ currentMatch.job.recruiter.lastName }}
+              </li>
+              <li class="fg-dark">
+                <ion-icon name="md-call" class="card-heading-icon fg-primary"></ion-icon> {{ currentMatch.job.recruiter.phoneNumber }}
+              </li>
+              <li class="fg-dark">
+                <ion-icon name="ios-mail" class="card-heading-icon fg-primary"></ion-icon> {{ currentMatch.job.recruiter.contactEmail }}
+              </li>
+              <li class="fg-dark margin-top-10">
+                <ion-icon name="md-chatboxes" class="card-heading-icon fg-primary"></ion-icon> <span class="bold">Contact Preferences</span>
+                <br>
+                <p class="fg=dark">Give me a call sometime M-F, 8am to 5pm to set up an official interview.</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- End Contact Card -->
+
+      <!-- Review Card -->
+      <div class="match-card match-review-card review" [hidden]="!reviewMode">
+        <div class="match-card-header">
+          <h3 class="title fg-primary text-center">{{ currentMatch.job.positionTitle }}</h3>
+          <p class="fg-grey text-center">
+            {{ currentMatch.job.company.companyName }} - {{ (matchPoints.industry) ? currentMatch.matchedIndustry : currentMatch.job.company.industries[0] }}
+            <span class="match-check" [hidden]="!matchPoints.industry"><ion-icon name="checkmark" class=""></ion-icon></span>
+          </p>
+        </div>
+
+        <!-- Step 0 -->
+        <div class="match-card-content" [ngClass]="{'slide-left': reviewStep > 0}">
+          <div class="locations content-section">
+            <h3 class="heading fg-dark"><ion-icon name="ios-pin" class="card-heading-icon"></ion-icon>Locations</h3>
+            <ul class="rec-ul">
+              <li *ngFor="let location of currentMatch.job.locations | slice:0:2; let i = index" class="fg-dark">
+                {{ location }}
+                <span class="match-check" [hidden]="!matchPoints.locations[i]"><ion-icon name="checkmark" class=""></ion-icon></span>
+              </li>
+            </ul>
+          </div>
+          <div class="skills content-section">
+            <h3 class="heading fg-dark"><ion-icon name="md-construct" class="card-heading-icon"></ion-icon>Top Skills</h3>
+            <ul class="rec-ul">
+              <li *ngFor="let skill of currentMatch.skillsToShow; let i = index">
+                {{ skill.name }}
+                <span class="match-check" [hidden]="!matchPoints.skills[i]"><ion-icon name="checkmark" class=""></ion-icon></span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- End Step 0 -->
+
+        <!-- Step 1 -->
+        <div class="match-card-content" [ngClass]="{'slide-left': reviewStep > 1, 'slide-right': reviewStep < 1} ">
+          <div class="skills content-section">
+            <h3 class="heading fg-dark"><ion-icon name="ios-paper" class="card-heading-icon"></ion-icon>Job Summary</h3>
+            <p class="fg-dark">{{ currentMatch.job.description }}</p>
+          </div>
+        </div>
+        <!-- End Step 1 -->
+
+        <!-- Step 2 -->
+        <div class="match-card-content" [ngClass]="{'slide-left': reviewStep > 2, 'slide-right': reviewStep < 2} ">
+          <div class="company-work-statement content-section">
+            <h3 class="heading fg-dark heading-spacer">
+              <ion-icon name="md-chatboxes" class="card-heading-icon"></ion-icon>Job Problem Statement<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="companyProbStatementInfo()"></ion-icon></h3>
+            <p class="fg-dark">{{ currentMatch.job.problemStatement }}</p>
+          </div>
+        </div>
+        <!-- End Step 2 -->
+
+        <!-- Step 3 -->
+        <div class="match-card-content" [ngClass]="{'slide-left': reviewStep > 3, 'slide-right': reviewStep < 3} ">
+          <div class="student-work-statement content-section">
+            <h3 class="heading fg-dark heading-spacer">
+              <ion-icon name="md-chatboxes" class="card-heading-icon"></ion-icon>Your Problem Statement<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="yourProbStatementInfo()"></ion-icon></h3>
+            <p class="fg-dark">{{ currentMatch.studentProblemResponse }}</p>
+          </div>
+        </div>
+        <!-- End Step 3 -->
+
+        <!-- Step 4 -->
+        <div class="match-card-content" [ngClass]="{'slide-left': reviewStep > 4, 'slide-right': reviewStep < 4} ">
+          <div class="content-section presentation-explanation">
+            <h3 class="heading heading-spacer fg-dark"><ion-icon name="md-easel" class="card-heading-icon"></ion-icon>Company Presentation<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="companyPresentationInfo()"></ion-icon></h3>
+          </div>
+          <div class="content-section">
+            <div *ngFor="let link of currentMatch.job.presentationLinks" class="presentation-link">
+              <h3 class="heading fg-dark">{{ link.title }}:</h3>
+              <p class="fg-dark fake-link" (click)="openLink(link.link)">{{ link.link }}<ion-icon name="md-open" class="presentation-link-icon"></ion-icon></p>
+            </div>
+          </div>
+        </div>
+        <!-- End Step 4 -->
+
+        <!-- Step 5 -->
+        <div class="match-card-content" [ngClass]="{'slide-right': reviewStep < 5} ">
+          <div class="content-section presentation-explanation">
+            <h3 class="heading heading-spacer fg-dark"><ion-icon name="md-easel" class="card-heading-icon"></ion-icon>Your Presentation<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="yourPresentationInfo()"></ion-icon></h3>
+          </div>
+          <div class="content-section">
+            <div *ngFor="let link of currentMatch.studentPresentationLinks" class="presentation-link">
+              <h3 class="heading fg-dark">{{ link.title }}:</h3>
+              <p class="fg-dark fake-link" (click)="openLink(link.link)">{{ link.link }}<ion-icon name="md-open" class="presentation-link-icon"></ion-icon></p>
+            </div>
+          </div>
+        </div>
+        <!-- End Step 5 -->
+
+        <div class="match-card-footer">
+            <button class="rec-btn-small float-left" (click)="cardPrev()" [disabled]="reviewStep == 0"><ion-icon name="ios-arrow-back" class="card-heading-icon"></ion-icon>Back</button>
+            <button class="rec-btn-small float-right" (click)="cardNext()" [disabled]="reviewStep == reviewStepMax">Next<ion-icon name="ios-arrow-forward" class="card-heading-icon-right"></ion-icon></button>
+          </div>
+      </div>
+      <!-- End Review Card -->
+
     </div>
     <!-- End Match Details -->
 

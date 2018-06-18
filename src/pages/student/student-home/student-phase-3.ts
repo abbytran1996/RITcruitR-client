@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
+import { CallNumber } from '@ionic-native/call-number';
 
 import {
   StudentModel,
@@ -25,12 +26,19 @@ export class StudentPhase3Page {
   public matchList: any;
   public pageLoading = true;
   public detailMode = false;
+  public reviewMode = false;
   public currentMatch: MatchModel;
+  public matchPoints = { industry: false, locations: [false, false], skills: [] };
+  public reviewStep = 0;
+  public reviewStepMax = 5;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private studentService: StudentService
+    private alertCtrl: AlertController,
+    private toastCtrl: ToastController,
+    private studentService: StudentService,
+    private callNumber: CallNumber
   ) {
     this.student= navParams.get("student");
   }
@@ -48,7 +56,10 @@ export class StudentPhase3Page {
     Called when the page is "left". Revert out of review mode if needed.
   */
   ionViewDidLeave() {
-   this.detailMode = false;
+    this.detailMode = false;
+    this.reviewMode = false;
+    this.currentMatch = undefined;
+    this.reviewStep = 0;
   }
 
   /*
@@ -56,7 +67,9 @@ export class StudentPhase3Page {
   */
   matchDetails(match) {
     this.currentMatch = new MatchModel(match);
+    this.prepMatch();
     this.detailMode = true;
+    this.reviewStep = 0;
   }
 
   /*
@@ -65,26 +78,310 @@ export class StudentPhase3Page {
   backToList() {
     this.currentMatch = undefined;
     this.detailMode = false;
+    this.reviewMode = false;
+    this.reviewStep = 0;
   }
 
   /*
     Show the review screens for the current match.
   */
   reviewMatch() {
+    this.reviewMode = true;
+    this.reviewStep = 0;
+  }
 
+  /*
+    Show the contact information for this match.
+  */
+  showContact() {
+    this.reviewMode = false;
   }
 
   /*
     Archive the current match.
   */
-  archiveMatch() {
+  archiveMatch(match) {
+    let alert = this.alertCtrl.create({
+      title: 'Confirm Archive',
+      message: 'Are you sure you want to archive this match?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            
+          }
+        },
+        {
+          text: 'Archive',
+          handler: () => {
+            this.studentService.archiveMatch(match.id).subscribe(
+              data => {
+                this.postArchive();
+              },
+              res => {
+                this.postArchive();
+              }
+            );
+          }
+        }
+      ]
+    });
 
+    alert.present();
+  }
+
+  /*
+    Actions to perform after archiving.
+  */
+  postArchive() {
+    this.backToList();
+    this.getFinalMatches();
+  }
+
+  /*
+    Start a call with thew recruiter for the given match.
+  */
+  callRecruiter(match) {
+    this.callNumber.callNumber(match.job.recruiter.phoneNumber, true)
+      .then(res => console.log('Launched dialer!', res))
+      .catch(err => console.log('Error launching dialer', err));
+  }
+
+  /*
+    Start an email with thew recruiter for the given match.
+  */
+  emailRecruiter(match) {
+    window.open(`mailto:${match.job.recruiter.contactEmail}`, '_system');
+  }
+
+  /*
+    Show the previous match review step.
+  */
+  cardPrev() {
+    if (this.reviewStep > 0) {
+      this.reviewStep--;
+    }
+  }
+
+  /*
+    Show the next match review step.
+  */
+  cardNext() {
+    if (this.reviewStep < this.reviewStepMax) {
+      this.reviewStep++;
+    }
+  }
+
+  /*
+    Show an alert dialog explaining what a company's problem statement is.
+  */
+  companyProbStatementInfo() {
+    this.showAlert(
+      "Job Problem Statement",
+      "This statement is intended to give you a better idea of what the job is like day-to-day and provide what tasks and technologies are typically encountered."
+    );
+  }
+
+  /*
+    Show an alert dialog explaining what a student problem statement is.
+  */
+  yourProbStatementInfo() {
+    this.showAlert(
+      "Your Problem Statement",
+      "Your problem statement is a short paragraph describing a project or problem you've worked on. Give recruiters an idea of the work you've done and what you like to do."
+    );
+  }
+
+  /*
+    Show an alert dialog explaining what a company presentation phase is.
+  */
+  companyPresentationInfo() {
+    this.showAlert(
+      "Company Presentation",
+      "Take a look at these links to see what the company offering the job is all about. A link could be to a company video, website, project repository, or anything they'd like you to see. Tap a link to open it."
+    );
+  }
+
+  /*
+    Show an alert dialog explaining what a student presentation phase is.
+  */
+  yourPresentationInfo() {
+    this.showAlert(
+      "Your Presentation",
+      "This is your chance to show the recruiter anything of yours that you would like to share. This could be a link to a video of yourself, a project link, a personal website, or anything else."
+    );
+  }
+
+  /*
+    Open the given URL(link) in the browser.
+  */
+  openLink(link) {
+    // Open browser app separately
+    window.open(link, '_system', 'location=yes');
+  }
+
+  // TODO: Remove comment
+  // I know this function is dusgusting, but I have it in for now for sake of
+  // things working. It isn't really bad performance-wise because I'm capping
+  // the loops at low numbers, but still. Maybe some of this makes more sense
+  // server-side, but that will take a lot of effort to setup so I imagine
+  // that will be more of a summer time patch. TODO: Remove this comment...
+  /*
+    Prepare the current match for the view. Gathers data and sets flags based on matched
+    skills and preferences to show match indicators on the match card.
+  */
+  prepMatch() {
+    this.matchPoints = {industry: false, locations: [false, false], skills: []};
+
+    // Check if any preferred industries match
+    this.student.preferredIndustries.forEach(industry => {
+      if (this.currentMatch.job.company.industries.some(ind => ind === industry)) {
+        if (!this.matchPoints.industry) {
+          this.currentMatch["matchedIndustry"] = industry;
+          this.matchPoints.industry = true;
+        }
+      }
+    });
+
+    // Check if any preferred locations match
+    let numLocationsToShow = 2;
+    let locIndex = 0;
+    for (locIndex; locIndex < numLocationsToShow; locIndex++) {
+      if (this.currentMatch.job.locations[locIndex] != undefined &&
+        this.student.preferredLocations.some(loc => loc === this.currentMatch.job.locations[locIndex])) {
+        this.matchPoints.locations[locIndex] = true;
+      }
+    }
+
+    // Build the list of matched skills. Searches through the job's skills and the
+    // student's skills to show which ones were matched on.
+    let reqSkills = this.currentMatch.job.requiredSkills.map(x => Object.assign({}, x));
+    let reqSkillsMatched = [];
+    let nthSkills = this.currentMatch.job.niceToHaveSkills.map(x => Object.assign({}, x));
+    let nthSkillsMatched = [];
+    this.student.skills.forEach(studentSkill => {
+      if (reqSkills.some(skill => skill.id === studentSkill.id)) {
+        reqSkillsMatched.push(studentSkill);
+        removeSkillFromArray(reqSkills, studentSkill);
+      }
+
+      if (nthSkills.some(skill => skill.id === studentSkill.id)) {
+        nthSkillsMatched.push(studentSkill);
+        removeSkillFromArray(nthSkills, studentSkill);
+      }
+    });
+
+    // Build the list of skills to show
+    let prefNumReqSkillsToShow = 3;
+    let prefNumNthSkillsToShow = 1;
+    let prefTotalSkillsToShow = prefNumReqSkillsToShow + prefNumNthSkillsToShow;
+    let skillsToShow = [];
+    let reqSkillsToShow = [];
+    let nthSkillsToShow = [];
+    let toRemove = [];
+
+    // Add up to the preferred number of matched required skills
+    for (let i = 0; i < prefNumReqSkillsToShow; i++) {
+      if (reqSkillsMatched[i] != undefined) {
+        reqSkillsToShow.push(reqSkillsMatched[i]);
+        toRemove.push(reqSkillsMatched[i]);
+        this.matchPoints.skills.push(true);
+      }
+    }
+    toRemove.forEach(el => {removeSkillFromArray(reqSkillsMatched, el);});
+    toRemove = [];
+
+    // If additional required skills should be shown
+    if (reqSkillsToShow.length < prefNumReqSkillsToShow &&
+        reqSkills.length >= (prefNumReqSkillsToShow - reqSkillsMatched.length)) {
+      for (let i = 0; i < prefNumReqSkillsToShow - reqSkillsMatched.length; i++) {
+        if (reqSkills[i] != undefined) {
+          reqSkillsToShow.push(reqSkills[i]);
+          toRemove.push(reqSkills[i]);
+          this.matchPoints.skills.push(false);
+        }
+      }
+    }
+    toRemove.forEach(el => {removeSkillFromArray(reqSkills, el);});
+    toRemove = [];
+
+    // Add up to the preferred number of matched nice to have skills
+    for (let i = 0; i < prefNumNthSkillsToShow; i++) {
+      if (nthSkillsMatched[i] != undefined) {
+        nthSkillsToShow.push(nthSkillsMatched[i]);
+        toRemove.push(nthSkillsMatched[i]);
+        this.matchPoints.skills.push(true);
+      }
+    }
+    toRemove.forEach(el => {removeSkillFromArray(nthSkillsMatched, el);});
+    toRemove = [];
+
+    // If additional nice to have skills should eb shown
+    if (nthSkillsToShow.length < prefNumNthSkillsToShow &&
+        nthSkills.length >= (prefNumNthSkillsToShow - nthSkillsMatched.length)) {
+      for (let i = 0; i < prefNumNthSkillsToShow - nthSkillsMatched.length; i++) {
+        if (nthSkills[i] != undefined) {
+          nthSkillsToShow.push(nthSkills[i]);
+          toRemove.push(nthSkills[i]);
+          this.matchPoints.skills.push(false);
+        }
+      }
+    }
+    toRemove.forEach(el => {removeSkillFromArray(nthSkills, el);});
+    toRemove = [];
+
+    let numInArrays = reqSkillsToShow.length + nthSkillsToShow.length;
+    let keepRunning = true;
+    while (keepRunning && numInArrays < prefTotalSkillsToShow) {
+      if (reqSkillsMatched.length > 0) {
+        for (let i = 0; i < prefTotalSkillsToShow - numInArrays; i++) {
+          if (reqSkillsMatched[i] != undefined) {
+            reqSkillsToShow.push(reqSkillsMatched[i]);
+            this.matchPoints.skills.push(true);
+          }
+        }
+      }
+      else if (reqSkills.length > 0) {
+        for (let i = 0; i < prefTotalSkillsToShow - numInArrays; i++) {
+          if (reqSkills[i] != undefined) {
+            reqSkillsToShow.push(reqSkills[i]);
+            this.matchPoints.skills.push(false);
+          }
+        }
+      }
+      else if (nthSkillsMatched.length > 0) {
+        for (let i = 0; i < prefTotalSkillsToShow - numInArrays; i++) {
+          if (nthSkillsMatched[i] != undefined) {
+            nthSkillsToShow.push(nthSkillsMatched[i]);
+            this.matchPoints.skills.push(true);
+          }
+        }
+      }
+      else if (nthSkills.length > 0) {
+        for (let i = 0; i < prefTotalSkillsToShow - numInArrays; i++) {
+          if (nthSkills[i] != undefined) {
+            nthSkillsToShow.push(reqSkills[i]);
+            this.matchPoints.skills.push(false);
+          }
+        }
+      }
+      else {
+        keepRunning = false;
+      }
+
+      numInArrays = reqSkillsToShow.length + nthSkillsToShow.length;
+    }
+
+    skillsToShow = reqSkillsToShow.concat(nthSkillsToShow);
+    this.currentMatch["skillsToShow"] = skillsToShow;
   }
 
   /*
     Get the list of "final" phase 3 matches for the current student.
   */
   getFinalMatches() {
+    this.pageLoading = true;
     this.matchList = this.studentService.getFinalMatches(this.student.id).subscribe(
       res => {
         this.matchList = res;
@@ -149,5 +446,57 @@ export class StudentPhase3Page {
     });
 
     return locationMatch;
+  }
+
+  /*
+    Present a toast message to the user.
+  */
+  presentToast(message) {
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 4000,
+      position: 'top',
+      showCloseButton: true,
+      closeButtonText: ''
+    });
+
+    toast.onDidDismiss(() => {
+
+    });
+
+    toast.present();
+  }
+
+  /*
+    Show an alert dialog with the given title and message.
+  */
+  showAlert(title, message) {
+    let alert = this.alertCtrl.create({
+      title: title,
+      message: message,
+      buttons: ['Dismiss']
+    });
+    alert.present();
+  }
+}
+
+/*
+  Remove the given skill from the given array.
+  This is needed because a simple index splice inline
+  is causing ordering issues.
+*/
+function removeSkillFromArray(array, skill) {
+  let index = 0;
+  let indexToRemove = -1;
+  array.forEach(skillInArr => {
+    if (skillInArr.id == skill.id) {
+      indexToRemove = index;
+    }
+
+    index++;
+  });
+
+  if (indexToRemove > -1) {
+    array.splice(indexToRemove, 1);
   }
 }
