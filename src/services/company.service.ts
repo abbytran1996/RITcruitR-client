@@ -50,7 +50,7 @@ export class CompanyService {
     }
 
     //=========================================================================
-    // * APPROVE COMPANY                                                          *
+    // * APPROVE COMPANY                                                      *
     //=========================================================================
     // - Approves an existing company
     // - Expects a CompanyModel
