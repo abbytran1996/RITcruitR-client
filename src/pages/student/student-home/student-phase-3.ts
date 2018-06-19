@@ -149,7 +149,7 @@ export class StudentPhase3Page {
   }
 
   /*
-    Start an email with thew recruiter for the given match.
+    Start an email with the recruiter for the given match.
   */
   emailRecruiter(match) {
     window.open(`mailto:${match.job.recruiter.contactEmail}`, '_system');
