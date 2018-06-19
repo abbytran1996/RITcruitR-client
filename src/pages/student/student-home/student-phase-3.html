@@ -161,7 +161,10 @@
         <div class="match-card-content" [ngClass]="{'slide-left': reviewStep > 2, 'slide-right': reviewStep < 2} ">
           <div class="company-work-statement content-section">
             <h3 class="heading fg-dark heading-spacer">
-              <ion-icon name="md-chatboxes" class="card-heading-icon"></ion-icon>Job Problem Statement<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="companyProbStatementInfo()"></ion-icon></h3>
+              <ion-icon name="md-chatboxes" class="card-heading-icon"></ion-icon>
+              Job Problem Statement
+              <ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="companyProbStatementInfo()"></ion-icon>
+            </h3>
             <p class="fg-dark">{{ currentMatch.job.problemStatement }}</p>
           </div>
         </div>
@@ -171,7 +174,10 @@
         <div class="match-card-content" [ngClass]="{'slide-left': reviewStep > 3, 'slide-right': reviewStep < 3} ">
           <div class="student-work-statement content-section">
             <h3 class="heading fg-dark heading-spacer">
-              <ion-icon name="md-chatboxes" class="card-heading-icon"></ion-icon>Your Problem Statement<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="yourProbStatementInfo()"></ion-icon></h3>
+              <ion-icon name="md-chatboxes" class="card-heading-icon"></ion-icon>
+              Your Problem Statement
+              <ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="yourProbStatementInfo()"></ion-icon>
+            </h3>
             <p class="fg-dark">{{ currentMatch.studentProblemResponse }}</p>
           </div>
         </div>
@@ -180,7 +186,11 @@
         <!-- Step 4 -->
         <div class="match-card-content" [ngClass]="{'slide-left': reviewStep > 4, 'slide-right': reviewStep < 4} ">
           <div class="content-section presentation-explanation">
-            <h3 class="heading heading-spacer fg-dark"><ion-icon name="md-easel" class="card-heading-icon"></ion-icon>Company Presentation<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="companyPresentationInfo()"></ion-icon></h3>
+            <h3 class="heading heading-spacer fg-dark">
+              <ion-icon name="md-easel" class="card-heading-icon"></ion-icon>
+              Company Presentation
+              <ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="companyPresentationInfo()"></ion-icon>
+            </h3>
           </div>
           <div class="content-section">
             <div *ngFor="let link of currentMatch.job.presentationLinks" class="presentation-link">
@@ -194,7 +204,11 @@
         <!-- Step 5 -->
         <div class="match-card-content" [ngClass]="{'slide-right': reviewStep < 5} ">
           <div class="content-section presentation-explanation">
-            <h3 class="heading heading-spacer fg-dark"><ion-icon name="md-easel" class="card-heading-icon"></ion-icon>Your Presentation<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="yourPresentationInfo()"></ion-icon></h3>
+            <h3 class="heading heading-spacer fg-dark">
+              <ion-icon name="md-easel" class="card-heading-icon"></ion-icon>
+              Your Presentation
+              <ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="yourPresentationInfo()"></ion-icon>
+            </h3>
           </div>
           <div class="content-section">
             <div *ngFor="let link of currentMatch.studentPresentationLinks" class="presentation-link">
