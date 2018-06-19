@@ -35,7 +35,7 @@
   </div>
   <div [hidden]="loading">
     <!-- Step 0 -->
-    <ion-row class="row-form" [ngClass]="formSeq.formClasses[0]">
+    <ion-row class="row-form" [ngClass]="formSeq.formClasses[0]" *ngIf="isSetup || formSeq.startStep == 0">
       <ion-col>
         <form #form0="ngForm">
           <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
@@ -60,7 +60,7 @@
     <!-- End Step 0 -->
 
     <!-- Step 1 -->
-    <ion-row class="row-form" [ngClass]="formSeq.formClasses[1]" [hidden]="formSeq.initHide">
+    <ion-row class="row-form" [ngClass]="formSeq.formClasses[1]" [hidden]="formSeq.initHide" *ngIf="isSetup || formSeq.startStep == 1">
       <ion-col>
         <form #form1="ngForm">
           <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
@@ -81,7 +81,7 @@
     <!-- End Step 1 -->
 
     <!-- Step 2 -->
-    <ion-row class="row-form" [ngClass]="formSeq.formClasses[2]" [hidden]="formSeq.initHide">
+    <ion-row class="row-form" [ngClass]="formSeq.formClasses[2]" [hidden]="formSeq.initHide" *ngIf="isSetup || formSeq.startStep == 2">
       <ion-col>
         <form #form2="ngForm">
           <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
@@ -120,7 +120,7 @@
     <!-- End Step 2 -->
 
     <!-- Step 3 -->
-    <ion-row class="row-form" [ngClass]="formSeq.formClasses[3]" [hidden]="formSeq.initHide">
+    <ion-row class="row-form" [ngClass]="formSeq.formClasses[3]" [hidden]="formSeq.initHide" *ngIf="isSetup || formSeq.startStep == 3">
       <ion-col>
         <form #form3="ngForm">
           <select-searchable name="skills" class="rec-select-searchable-btn small clearfix" [(ngModel)]="skills" [items]="skillOptions"
@@ -149,7 +149,7 @@
     <!-- End Step 3 -->
 
     <!-- Step 4 -->
-    <ion-row class="row-form" [ngClass]="formSeq.formClasses[4]" [hidden]="formSeq.initHide">
+    <ion-row class="row-form" [ngClass]="formSeq.formClasses[4]" [hidden]="formSeq.initHide" *ngIf="isSetup || formSeq.startStep == 4">
       <ion-col>
         <form #form4="ngForm">
           <h3>NYI</h3>

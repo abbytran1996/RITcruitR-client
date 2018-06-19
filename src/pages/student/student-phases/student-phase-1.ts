@@ -48,6 +48,7 @@ export class StudentPhase1Page {
   public matchSuccessTransform = false;
   public matchSuccessContentFade = false;
   public hideCard = false;
+  public disableDecline = false;
 
   // Problem statement fields
   @ViewChild('problemStatementForm') problemStatementForm;
@@ -121,6 +122,23 @@ export class StudentPhase1Page {
   }
 
   /*
+    Called when the match card is swiped in any direction. Determine threshold and call proper function.
+    backDecline or interested.
+  */
+  swipe(event) {
+    if (event.direction == 4) { // swipe right
+      if (this.stage > 0) {
+        this.backDecline();
+      }
+    }
+    if (event.direction == 2) { // swipe left
+      if (this.stage < this.maxStage) {
+        this.interested();
+      }
+    }
+  }
+
+  /*
     Called when the value of the existing problem statement select box changes.
     Used to reset the field when "None" is selected. This is because Ionic
     for some reason doesn't allow deselecting of options in a select.
@@ -168,13 +186,6 @@ export class StudentPhase1Page {
   }
 
   /*
-    Go back one stage for the current match card.
-  */
-  previousStage() {
-    this.stage--;
-  }
-
-  /*
     Called when the "Interested" button is tapped on a match card.
     Proceed to the next stage. If the last stage, submit the problem statement to the DB,
     then show the next match.
@@ -214,31 +225,44 @@ export class StudentPhase1Page {
 
   /*
     Called when the "Decline" button is tapped on a match card.
-    Decline the current match, notify the DB and show the next match.
+    If current stage is greater than 0, go to previous stage.
+    If first stage, decline the current match, notify the DB and show the next match.
   */
-  decline() {
-    this.studentService.declineMatch(this.match.id).subscribe(
-      data => { },
-      error => {
-        if (!error || error.status != 200) {
-          console.log("Error declining match");
-          console.log(error);
+  backDecline() {
+    if (this.stage == 0) {
+      this.studentService.declineMatch(this.match.id).subscribe(
+        data => { },
+        error => {
+          if (!error || error.status != 200) {
+            console.log("Error declining match");
+            console.log(error);
+          }
         }
-      }
-    );
+      );
 
-    this.fadeLeft = true;
-
-    setTimeout(() => {
-      removeMatchFromArray(this.matchList, this.match);
-      this.nextMatch();
-      this.fadeLeft = false;
-      this.fadeRightInstant = true;
+      this.fadeLeft = true;
 
       setTimeout(() => {
-        this.fadeRightInstant = false;
-      }, 100);
-    }, fadeTime);
+        removeMatchFromArray(this.matchList, this.match);
+        this.nextMatch();
+        this.fadeLeft = false;
+        this.fadeRightInstant = true;
+
+        setTimeout(() => {
+          this.fadeRightInstant = false;
+        }, 100);
+      }, fadeTime);
+    }
+    else {
+      this.stage--;
+
+      if (this.stage == 0) {
+        this.disableDecline = true;
+        setTimeout(() => {
+          this.disableDecline = false;
+        }, 800);
+      }
+    }
   }
 
   /*

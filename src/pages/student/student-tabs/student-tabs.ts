@@ -11,9 +11,7 @@ import {
   StudentPhase1Page,
   StudentPhase2Page,
   StudentPhase3Page,
-  StudentSetupFormsPage,
-  StudentSkillsPage,
-  StudentJobPreferencesPage,
+  StudentDetailFormsPage,
   StudentPresentationLinksPage,
   StudentProblemStatementsPage,
   StudentProfileDetailsPage
@@ -120,14 +118,14 @@ export class StudentTabsPage {
     Show the student skills page.
   */
   editSkills() {
-    this.navCtrl.push(StudentSetupFormsPage, {student: this.student, startStep: 3});
+    this.navCtrl.push(StudentDetailFormsPage, {student: this.student, startStep: 3});
   }
 
   /*
     Show the student job preferences page.
   */
   editStudentJobPreferences() {
-    this.navCtrl.push(StudentJobPreferencesPage, {student: this.student});
+    this.navCtrl.push(StudentDetailFormsPage, {student: this.student, startStep: 2});
   }
 
   /*

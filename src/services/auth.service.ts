@@ -8,6 +8,11 @@ export class AuthService {
       private apiService: ApiService
     ) { }
 
+    public static STUDENT = 0;
+    public static RECRUITER = 1;
+    public static PRIMARY_RECRUITER = 2;
+    public static ADMIN = 3;
+
     //=========================================================================
     // * LOGIN                                                                *
     //=========================================================================
@@ -45,6 +50,7 @@ export class AuthService {
       let isStudent = false;
       let isRecruiter = false;
       let isAdmin = false;
+      let isPrimaryRecruiter = false;
       let role = 0;
 
       user.roles.forEach(role => {
@@ -54,19 +60,25 @@ export class AuthService {
         else if (role.name == "recruiter") {
           isRecruiter = true;
         }
+        else if (role.name == "primaryrecruiter") {
+          isPrimaryRecruiter = true;
+        }
         else if (role.name == "admin") {
           isAdmin = true;
         }
       });
 
       if (isStudent) {
-        role = 0;
-      }
-      else if (isRecruiter) {
-        role = 1;
+        role = AuthService.STUDENT;
       }
       else if (isAdmin) {
-        role = 2;
+        role = AuthService.ADMIN;
+      }
+      else if (isPrimaryRecruiter) {
+        role = AuthService.PRIMARY_RECRUITER;
+      }
+      else if (isRecruiter) {
+        role = AuthService.RECRUITER;
       }
       else {
         role = -1;

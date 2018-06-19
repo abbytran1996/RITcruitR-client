@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Platform, NavParams, ViewController, ToastController } from 'ionic-angular';
+import { Platform, NavParams, ViewController, ToastController, AlertController } from 'ionic-angular';
 import { StudentModel } from '@app/models';
 
 //=========================================================================
@@ -22,7 +22,8 @@ export class ProblemStatementAddModal {
     public platform: Platform,
     public navParams: NavParams,
     public viewCtrl: ViewController,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private alertCtrl: AlertController
   ) {
     this.student = navParams.get("student");
     this.allowSave = navParams.get("allowSave");
@@ -33,6 +34,16 @@ export class ProblemStatementAddModal {
     if (navParams.get("statement")) {
       this.newStatementModel = navParams.get("statement");
     }
+  }
+
+  /*
+    Show an alert dialog explaining what a student problem statement is.
+  */
+  yourProbStatementInfo() {
+    this.showAlert(
+      "Your Problem Statement",
+      "Your problem statement should be a short paragraph describing a project or problem you've worked on. Give recruiters an idea of the work you've done and what you like to do."
+    );
   }
 
   /*
@@ -79,5 +90,17 @@ export class ProblemStatementAddModal {
     });
 
     toast.present();
+  }
+
+  /*
+    Show an alert dialog with the given title and message.
+  */
+  showAlert(title, message) {
+    let alert = this.alertCtrl.create({
+      title: title,
+      message: message,
+      buttons: ['Dismiss']
+    });
+    alert.present();
   }
 }

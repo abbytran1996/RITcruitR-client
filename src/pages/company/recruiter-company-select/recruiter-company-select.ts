@@ -10,8 +10,6 @@ import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 
-import { RecruiterRegisterPage } from '@app/pages/company';
-
 const companies = ["Intuit", "Microsoft", "Apple"];
 
 // TODO: This page isn't used at all anymore, leaving here for now because
@@ -49,7 +47,6 @@ export class RecruiterCompanySelectPage {
   // Attempt to register the recruiter
   continueBtn() {
     if (this.companyForm && this.companyForm.valid) {
-      this.navCtrl.push(RecruiterRegisterPage, {company: this.model});
     }
     else {
       this.presentToast("Please select a company in the list of registered companies. If your company cannot be found in the list, register your company by tapping the button at the bottom of the screen", 5000);

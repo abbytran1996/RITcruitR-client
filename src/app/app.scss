@@ -237,11 +237,6 @@
 
 // -------------------------------------------------------[ Typography Styles ]
 
-* {
-  font-family: map-get($font-body, family);
-  font-weight: map-get($font-body, weight);
-}
-
 h1 {
   font-family: map-get($font-title, family);
   font-size: map-get($font-title, size);
@@ -293,16 +288,6 @@ p.bold {
   font-weight: map-get($font-bodybold, weight);
 }
 
-span {
-  font-family: map-get($font-body, family);
-  font-weight: map-get($font-body, weight);
-}
-
-span.bold {
-  font-family: map-get($font-bodybold, family);
-  font-weight: map-get($font-bodybold, weight);
-}
-
 a, li {
   font-family: map-get($font-body, family);
   font-size: map-get($font-body, size);
@@ -334,6 +319,16 @@ ul.rec-ul {
     line-height: 1em;
     transform: translateY(4px);
   }
+}
+
+.font-body {
+  font-family: map-get($font-body, family);
+  font-weight: map-get($font-body, weight);
+}
+
+.font-body-bold {
+  font-family: map-get($font-bodybold, family);
+  font-weight: map-get($font-bodybold, weight);
 }
 
 
@@ -1843,6 +1838,15 @@ ion-item-options ion-icon {
   font-size: 30px !important;
   margin-bottom: 0px !important;
   padding-bottom: 0 !important;
+}
+
+ion-navbar {
+  ion-title .toolbar-title {
+    font-family: map-get($font-subheading, family);
+    font-weight: normal;
+    font-size: 20px;
+    color: map-get($colors, primary);
+  }
 }
 
 

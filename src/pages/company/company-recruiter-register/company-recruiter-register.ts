@@ -20,16 +20,18 @@ import {
 } from '@app/services';
 
 //=========================================================================
-// * CompanyRegisterPage
+// * CompanyRecruiterRegisterPage
 //=========================================================================
-// - Page to registe a new company.
-// - Multistep form sequence.
+// - Page to register a new company and a new recruiter.
+// - Multistep form sequence, contains steps for company registration
+//   and recruiter registratiopn, can be initiated at any point to
+//   access one step.
 //_________________________________________________________________________
 @Component({
-  selector: 'page-company-register',
-  templateUrl: 'company-register.html'
+  selector: 'page-company-recruiter-register',
+  templateUrl: 'company-recruiter-register.html'
 })
-export class CompanyRegisterPage {
+export class CompanyRecruiterRegisterPage {
 
   // Step 0 variables
   @ViewChild('form0') form0;

@@ -25,6 +25,7 @@ import {
 export class StudentProblemStatementsPage {
 
   public student: StudentModel;
+  public loading = false;
 
   // ngForm object for validation control
   @ViewChild('statementForm') statementForm;
@@ -79,14 +80,17 @@ export class StudentProblemStatementsPage {
     Save the changes to the student problem statements in the model and the DB.
   */
   saveChanges() {
+    this.loading = true;
     if (this.statementForm && this.statementForm.valid) {
       // TODO: Set student problem statements to the local statements list (Student doesn't currently have list of problem statements)
       
+      this.loading = false;
       // TODO: Make API call to save problem statements (endpoint for mass update needs to be made)
       this.navCtrl.setRoot(StudentTabsPage, { message: "Problem Statements updated successfully" });
     }
     else {
       this.presentToast("There was an error saving your problem statements");
+      this.loading = false;
     }
   }
 

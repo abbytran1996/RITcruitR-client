@@ -27,12 +27,7 @@ import {
   StudentTabsPage,
   StudentRegisterPage,
   StudentSetupPage,
-  StudentSetupFormsPage,
-  StudentEducationPage,
-  StudentContactPage,
-  StudentJobPreferencesPage,
-  StudentSkillsPage,
-  StudentWorkExperiencePage,
+  StudentDetailFormsPage,
   StudentPhase1Page,
   StudentPhase2Page,
   StudentPhase3Page,
@@ -44,7 +39,7 @@ import {
 // Company Module
 import {
   CompanyTabsPage,
-  CompanyRegisterPage,
+  CompanyRecruiterRegisterPage,
   CompanyRegisterConfirmPage,
   CompanySetupPage,
   CompanyJobMatchesPage,
@@ -53,8 +48,6 @@ import {
   CompanyPhase3Page,
   CompanyDetailsPage,
   RecruiterCompanySelectPage,
-  RecruiterRegisterPage,
-  RecruiterContactPage,
   CompanyJobCreatePage,
   CompanyPresentationLinksPage
 } from '@app/pages/company';
@@ -85,6 +78,10 @@ import {
 } from '@app/services';
 
 @NgModule({
+
+  /*
+    =========================================== DECLARATIONS
+  */
   declarations: [
     MyApp,
     RegisterPage,
@@ -92,12 +89,7 @@ import {
     StudentTabsPage,
     StudentRegisterPage,
     StudentSetupPage,
-    StudentSetupFormsPage,
-    StudentEducationPage,
-    StudentContactPage,
-    StudentJobPreferencesPage,
-    StudentSkillsPage,
-    StudentWorkExperiencePage,
+    StudentDetailFormsPage,
     StudentPhase1Page,
     StudentPhase2Page,
     StudentPhase3Page,
@@ -106,7 +98,7 @@ import {
     StudentProblemStatementsPage,
 
     CompanyTabsPage,
-    CompanyRegisterPage,
+    CompanyRecruiterRegisterPage,
     CompanyRegisterConfirmPage,
     CompanySetupPage,
     CompanyJobCreatePage,
@@ -116,8 +108,6 @@ import {
     CompanyPhase3Page,
     CompanyDetailsPage,
     RecruiterCompanySelectPage,
-    RecruiterRegisterPage,
-    RecruiterContactPage,
     CompanyPresentationLinksPage,
 
     AdminCompanyValidationPage,
@@ -125,6 +115,10 @@ import {
     PresentationLinkAddModal,
     ProblemStatementAddModal
   ],
+
+  /*
+    =========================================== IMPORTS
+  */
   imports: [
     BrowserModule,
     FormsModule,
@@ -139,7 +133,15 @@ import {
     HttpModule,
     FormsModule
   ],
+
+  /*
+    =========================================== BOOTSTRAP
+  */
   bootstrap: [IonicApp],
+
+  /*
+    =========================================== ENTRY COMPONENTS
+  */
   entryComponents: [
     MyApp,
     LoginPage,
@@ -148,12 +150,7 @@ import {
     StudentTabsPage,
     StudentRegisterPage,
     StudentSetupPage,
-    StudentSetupFormsPage,
-    StudentEducationPage,
-    StudentContactPage,
-    StudentJobPreferencesPage,
-    StudentSkillsPage,
-    StudentWorkExperiencePage,
+    StudentDetailFormsPage,
     StudentPhase1Page,
     StudentPhase2Page,
     StudentPhase3Page,
@@ -162,7 +159,7 @@ import {
     StudentProblemStatementsPage,
 
     CompanyTabsPage,
-    CompanyRegisterPage,
+    CompanyRecruiterRegisterPage,
     CompanyRegisterConfirmPage,
     CompanySetupPage,
     CompanyJobCreatePage,
@@ -172,8 +169,6 @@ import {
     CompanyPhase3Page,
     CompanyDetailsPage,
     RecruiterCompanySelectPage,
-    RecruiterRegisterPage,
-    RecruiterContactPage,
     CompanyPresentationLinksPage,
 
     AdminDashboardPage,
@@ -182,6 +177,10 @@ import {
     PresentationLinkAddModal,
     ProblemStatementAddModal
   ],
+
+  /*
+    =========================================== PROVIDERS
+  */
   providers: [
     StatusBar,
     SplashScreen,

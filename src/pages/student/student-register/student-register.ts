@@ -25,6 +25,7 @@ import {
 export class StudentRegisterPage {
 
   public model = new StudentRegisterModel();
+  public loading = false;
 
   // ngForm object for validation control
   @ViewChild('registerForm') registerForm;
@@ -41,21 +42,25 @@ export class StudentRegisterPage {
     If successful, proceed to the student setup pages.
   */
   register() {
+    this.loading = true;
     if (this.registerForm && this.registerForm.valid) {
       this.model.passwordConfirm = this.model.password;
       this.studentService.addStudent(this.model).subscribe(
         data => {
           let student = new StudentModel(data);
           this.authService.setLocalVars(data.user);
+          this.loading = false;
           this.navCtrl.push(StudentSetupPage, {student: student});
         },
         error => {
           this.presentToast("A user with that email already exists, please choose another");
+          this.loading = false;
         }
       );
     }
     else {
       this.presentToast("Please enter a valid email, password, first name, and last name");
+      this.loading = false;
     }
   }
 

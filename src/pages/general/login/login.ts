@@ -106,7 +106,7 @@ export class LoginPage {
           let userEmail = data.username;
 
           // Student
-          if (userRole == 0) {
+          if (userRole == AuthService.STUDENT) {
             this.studentService.getStudentByEmail(userEmail).subscribe(
               data => {
                 let student = new StudentModel(data);
@@ -120,11 +120,15 @@ export class LoginPage {
             );
           }
 
-          // Recruiter
-          else if (userRole == 1) {
+          // Recruiter and Primary Recruiter
+          else if (userRole == AuthService.RECRUITER || userRole == AuthService.PRIMARY_RECRUITER) {
             this.recruiterService.getRecruiterByEmail(userEmail).subscribe(
               data => {
                 let recruiter = new RecruiterModel(data);
+
+                if (userRole == AuthService.PRIMARY_RECRUITER) recruiter.primary = true;
+                else recruiter.primary = false;
+
                 this.loadingLogin = false;
                 this.navCtrl.push(CompanyTabsPage, {recruiter: recruiter}, { animation: "md-transition" });
               },
@@ -136,7 +140,7 @@ export class LoginPage {
           }
 
           // Admin
-          else if (userRole == 2) {
+          else if (userRole == AuthService.ADMIN) {
             this.loadingLogin = false;
             this.navCtrl.setRoot('admin-dashboard', { user: data }, { animation: "md-transition" });
           }

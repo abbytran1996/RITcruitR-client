@@ -10,6 +10,7 @@ export class RecruiterModel {
   public phoneNumber: string = "";
   public contactEmail: string = "";
   public user: UserModel = new UserModel();
+  public primary: boolean = false;
 
   constructor(init?: any) {
     if (init) {
@@ -21,6 +22,7 @@ export class RecruiterModel {
       this.phoneNumber = init.phoneNumber || "";
       this.contactEmail = init.contactEmail || "";
       this.user = new UserModel(init.user) || new UserModel();
+      this.primary = init.primary || false;
     }
   }
 }

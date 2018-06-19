@@ -85,7 +85,10 @@
 <!-- Button Footer -->
 <ion-footer class="button-footer">
   <ion-row>
-    <button class="rec-btn rec-btn-primary btn-stacked center" (click)="saveChanges()">Save</button>
+    <button class="rec-btn rec-btn-primary btn-stacked center" (click)="saveChanges()" [disabled]="loading">
+      {{ (loading) ? '' : 'Save' }}
+      <ion-spinner class="white" name="dots" [hidden]="!loading"></ion-spinner>
+    </button>
   </ion-row>
 </ion-footer>
 <!-- End Button Footer -->
