@@ -36,7 +36,7 @@
             <div class="locations content-section">
               <h3 class="heading fg-dark"><ion-icon name="ios-pin" class="card-heading-icon"></ion-icon>Locations:</h3>
               <ul class="rec-ul">
-                <li *ngFor="let location of match.job.locations; let i = index" class="fg-dark">
+                <li *ngFor="let location of match.job.locations | slice:0:2; let i = index" class="fg-dark">
                   {{ location }}
                   <span class="match-check" [hidden]="!matchPoints.locations[i]"><ion-icon name="checkmark" class=""></ion-icon></span>
                 </li>
@@ -51,7 +51,7 @@
                 </li>
               </ul>
             </div>
-            <div class="skills content-section">
+            <div class="summary content-section">
               <h3 class="heading fg-dark"><ion-icon name="ios-paper" class="card-heading-icon"></ion-icon>Summary:</h3>
               <p class="fg-dark">{{ (match.job.description.length > 4000) ? (match.job.description | slice:0:201) + '...' : (match.job.description) }}</p>
             </div>
@@ -62,7 +62,7 @@
           <div class="match-card-content" [ngClass]="{'slide-left': stage > 1, 'slide-right': stage < 1}">
             <div class="company-work-statement content-section">
               <h3 class="heading fg-dark heading-spacer">
-                <ion-icon name="md-chatboxes" class="card-heading-icon"></ion-icon>Company Problem Statement<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="companyProbStatementInfo()"></ion-icon></h3>
+                <ion-icon name="md-chatboxes" class="card-heading-icon"></ion-icon>Job Problem Statement<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="companyProbStatementInfo()"></ion-icon></h3>
               <p class="fg-dark">{{ match.job.problemStatement }}</p>
             </div>
           </div>

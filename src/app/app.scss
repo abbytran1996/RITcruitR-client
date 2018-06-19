@@ -72,43 +72,43 @@
 }
 
 .float-right {
-  float: right;
+  float: right !important;
 }
 
 .float-left {
-  float: left;
+  float: left !important;
 }
 
 .margin-top-5 {
-  margin-top: 5px;
+  margin-top: 5px !important;
 }
 
 .margin-top-10 {
-  margin-top: 10px;
+  margin-top: 10px !important;
 }
 
 .margin-top-15 {
-  margin-top: 15px;
+  margin-top: 15px !important;
 }
 
 .margin-top-20 {
-  margin-top: 20px;
+  margin-top: 20px !important;
 }
 
 .margin-bottom-5 {
-  margin-bottom: 5px;
+  margin-bottom: 5px !important;
 }
 
 .margin-bottom-10 {
-  margin-bottom: 10px;
+  margin-bottom: 10px !important;
 }
 
 .margin-bottom-15 {
-  margin-bottom: 15px;
+  margin-bottom: 15px !important;
 }
 
 .margin-bottom-20 {
-  margin-bottom: 20px;
+  margin-bottom: 20px !important;
 }
 
 .fake-link {
@@ -237,6 +237,11 @@
 
 // -------------------------------------------------------[ Typography Styles ]
 
+* {
+  font-family: map-get($font-body, family);
+  font-weight: map-get($font-body, weight);
+}
+
 h1 {
   font-family: map-get($font-title, family);
   font-size: map-get($font-title, size);
@@ -288,6 +293,16 @@ p.bold {
   font-weight: map-get($font-bodybold, weight);
 }
 
+span {
+  font-family: map-get($font-body, family);
+  font-weight: map-get($font-body, weight);
+}
+
+span.bold {
+  font-family: map-get($font-bodybold, family);
+  font-weight: map-get($font-bodybold, weight);
+}
+
 a, li {
   font-family: map-get($font-body, family);
   font-size: map-get($font-body, size);
@@ -295,11 +310,21 @@ a, li {
   color: map-get($font-body, color);
 }
 
+a.bold, li.bold {
+  font-family: map-get($font-bodybold, family);
+  font-weight: map-get($font-bodybold, weight);
+}
+
 ul.rec-ul {
   margin: 0;
   list-style: none;
+  margin-top: -7px;
 
-  li::before {
+  &.no-bullets {
+    padding-left: 0px;
+  }
+
+  &:not(.no-bullets) li::before {
     content: "\2022";
     font-size: 28px;
     color: map-get($colors, primary);
@@ -1741,6 +1766,22 @@ ion-tabs.hide-bar .tabbar {
   padding-top: 15px;
   padding-bottom: 15px;
 
+  &.outer {
+    padding: 0;
+  }
+
+  &.inner {
+    box-shadow: none;
+
+    .item-inner {
+      border-bottom: none;
+
+      ion-label {
+        margin: 0;
+      }
+    }
+  }
+
   ion-icon.item-card-icon {
     font-size: 36px;
     position: absolute;
@@ -1767,6 +1808,11 @@ ion-tabs.hide-bar .tabbar {
   }
 }
 
+.list-item-card ion-item-options {
+  border-radius: 5px;
+  border-bottom: none;
+}
+
 .rec-toolbar {
   display: flex;
   padding: 10px !important;
@@ -1790,6 +1836,13 @@ ion-tabs.hide-bar .tabbar {
       font-size: 12px;
     }
   }
+}
+
+ion-item-options ion-icon {
+  font-weight: normal !important;
+  font-size: 30px !important;
+  margin-bottom: 0px !important;
+  padding-bottom: 0 !important;
 }
 
 
@@ -1963,7 +2016,7 @@ $card-footer-height: 70px;
   }
 
   .content-section {
-    margin-top: 10px;
+    margin-top: 20px;
   }
 
   .content-section:first-child {
@@ -2114,6 +2167,25 @@ ion-icon.card-heading-icon-right {
 
 .final-match {
   margin-bottom: 15px;
+}
+
+.match-review-card {
+  margin-top: 24%;
+
+  .match-card-header {
+    height: auto;
+    padding-bottom: 10px;
+  }
+
+  .card-heading-icon {
+    font-size: 1em;
+  }
+
+  &.contact {
+    .match-card-content {
+      height: auto;
+    }
+  }
 }
 
 

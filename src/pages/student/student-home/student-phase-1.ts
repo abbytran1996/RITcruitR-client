@@ -105,7 +105,7 @@ export class StudentPhase1Page {
   */
   companyProbStatementInfo() {
     this.showAlert(
-      "Company Problem Statement",
+      "Job Problem Statement",
       "This statement is intended to give you a better idea of what the job is like day-to-day and provide what tasks and technologies are typically encountered."
     );
   }
