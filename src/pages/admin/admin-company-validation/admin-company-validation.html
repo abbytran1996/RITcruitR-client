@@ -1,12 +1,100 @@
 <ion-header>
   <ion-navbar>
     <button ion-button menuToggle icon-only>
-      <ion-icon name='menu'></ion-icon>
+      <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>RecruitR Administration</ion-title>
+    <ion-title>RecruitR Administration Dashboard</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding [ngClass]="{'bg-full-image': isApp, 'bg-full-gradient': !isApp}">
-  <h1 class="fg-white">Admin Company Validation</h1>
+<ion-content padding class="bg-white">
+  <div class="validation-wrapper">
+
+    <!-- Heading -->
+    <ion-row class="heading" align-items-end>
+      <ion-col>
+        <h2 class="fg-dark"><ion-icon name="md-checkmark-circle" class="fg-grey icon"></ion-icon>Approve Companies</h2>
+      </ion-col>
+      
+      <ion-col text-right>
+        <ng-template [ngIf]="companies.length > 0" [ngIfElse]="noCompanies">
+          <h3 class="fg-grey">({{ companies.length }} companies awaiting approval)</h3>
+        </ng-template>
+
+        <ng-template #noCompanies>
+          <h3 class="fg-grey">(No companies awaiting approval)</h3>
+        </ng-template>
+      </ion-col>
+    </ion-row>
+    <!-- End Heading -->
+
+    <!-- List of Companies Awaiting Approval -->
+    <ion-row class="companies-content">
+      <ion-col class="companies-list">
+        <ion-row class="fg-grey headers">
+          <ion-col col-4>Company Name</ion-col>
+          <ion-col>Time Registered</ion-col>
+        </ion-row>
+
+        <ion-row *ngFor="let company of companies" (click)="updateCompany(company)" class="company-container" [ngClass]="{ 'active': currentCompany == company }" align-items-center>
+          <ion-col col-4><h2>{{ company.companyName }}</h2></ion-col>
+          <ion-col class="fg-grey">01/23/2018 8:00 pm</ion-col>
+        </ion-row>
+      </ion-col>
+
+      <ion-col class="separator"></ion-col>
+
+      <ion-col class="approval-form">
+        <ng-template [ngIf]="currentCompany.hasOwnProperty('companyName')">
+          <span class="company-name">{{ currentCompany.companyName }}</span><span class="fg-grey">01/23/2018 8:00 pm</span>
+
+          <hr />
+
+          <div class="company-container">
+            <ion-row class="fg-dark">
+              <ion-col>
+                <h3><ion-icon name="md-build" class="card-heading-icon fg-primary"></ion-icon>Industries</h3>
+                <div class="company-container-info">
+                  <ul>
+                    <li *ngFor="let industry of currentCompany.industries">{{ industry }}</li>
+                  </ul>
+                </div>
+              </ion-col>
+              <ion-col>
+                <h3><ion-icon name="ios-pin" class="card-heading-icon fg-primary"></ion-icon>Locations</h3>
+                <div class="company-container-info">
+                  <ul>
+                    <li *ngFor="let location of currentCompany.locations">{{ location }}</li>
+                  </ul>
+                </div>
+              </ion-col>
+            </ion-row>
+
+            <ion-row class="fg-dark" padding-top>
+                <ion-col>
+                  <h3><ion-icon name="md-link" class="card-heading-icon fg-primary"></ion-icon>Website</h3>
+                  <div class="company-container-info">
+                    {{ currentCompany.websiteURL }}
+                  </div>
+                </ion-col>
+                <ion-col>
+                  <h3><ion-icon name="md-person" class="card-heading-icon fg-primary"></ion-icon>Primary Recruiter Contact</h3>
+                  <div class="company-container-info">
+                      <ion-icon name="md-contact" class="card-heading-icon fg-primary"></ion-icon>{{ currentCompany.userId }}<br />
+                      <ion-icon name="md-mail" class="card-heading-icon fg-primary"></ion-icon>{{ currentCompany.userId }}<br />
+                      <ion-icon name="md-call" class="card-heading-icon fg-primary"></ion-icon>{{ currentCompany.userId }}
+                  </div>
+                </ion-col>
+              </ion-row>
+          </div>
+
+          <div class="company-container" text-right>
+            <button class="rec-btn-small rec-btn-deny rec-btn-admin" (click)="denyCompany(currentCompany)"><ion-icon name="md-thumbs-down" class="card-heading-icon"></ion-icon>Deny</button>
+            <button class="rec-btn-small rec-btn-accept rec-btn-admin" (click)="approveCompany(currentCompany)">Approve<ion-icon name="md-thumbs-up" class="card-heading-icon-right"></ion-icon></button>
+          </div>
+        </ng-template>
+      </ion-col>
+    </ion-row>
+    <!-- End List of Companies Awaiting Approval -->
+  </div>
 </ion-content>

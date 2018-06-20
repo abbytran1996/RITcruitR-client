@@ -6,7 +6,8 @@ import {
 } from '@app/models';
 
 import {
-  DataService
+  DataService,
+  CompanyService
 } from '@app/services';
 
 //=========================================================================
@@ -21,6 +22,9 @@ import {
 })
 export class AdminCompanyValidationPage {
 
+  companies = [];
+  currentCompany = {};
+
   public isApp = true;
   public user: UserModel;
 
@@ -28,10 +32,51 @@ export class AdminCompanyValidationPage {
     public navCtrl: NavController,
     private toastCtrl: ToastController,
     private navParams: NavParams,
-    private dataService: DataService
+    private dataService: DataService,
+    private companyService: CompanyService
   ) {
     this.isApp = dataService.isApp;
     this.user = navParams.get("user");
+
+    // Get the list of companies awaiting approval
+    this.companyService.getCompanyByStatus(false).subscribe(
+      data => {
+        this.companies = data;
+        console.log(data);
+      },
+      error => {
+        this.presentToast("This was an error retrieving the list of companies awaiting approval, please refresh")
+      }
+    );
+  }
+
+  /*
+    Updates the current company upon clicking on a company on the list.
+  */
+  updateCompany(company) {
+    this.currentCompany = company;
+  }
+
+  /*
+    Approves the company
+  */
+  approveCompany(company) {
+    /*this.companyService.approveCompany(company.id).subscribe(
+      data => {
+
+      },
+      error => {
+
+      }
+    );*/
+    this.presentToast(company.companyName + " has been approved.");
+  }
+
+  /*
+    Denies the company
+  */
+  denyCompany(company) {
+    this.presentToast(company.companyName + " has been denied.");
   }
 
   /*

@@ -1,9 +1,13 @@
 page-admin-dashboard {
   ion-navbar {
+    .toolbar-background {
+      background-color: map-get($colors, primary);
+    }
+
     ion-title .toolbar-title {
       font-family: map-get($font-subheading, family);
       font-size: 20px;
-      color: map-get($colors, primary);
+      color: map-get($colors, light);
     }
   }
   
