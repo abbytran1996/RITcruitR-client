@@ -68,9 +68,7 @@ export class CompanyTabsPage {
       this.recruiterService.getRecruiterByEmail(userEmail).subscribe(
         data => {
           this.recruiter = new RecruiterModel(data);
-
-          if (authService.getUserRole(this.recruiter.user) == AuthService.PRIMARY_RECRUITER) this.recruiter.primary = true;
-          else this.recruiter.primary = false;
+          this.recruiter.primary = (AuthService.PRIMARY_RECRUITER == authService.getUserRole(this.recruiter.user));
 
           this.recruiterTabParams = {recruiter: this.recruiter};
           this.events.publish('tabs:recruiter', this.recruiter, Date.now());

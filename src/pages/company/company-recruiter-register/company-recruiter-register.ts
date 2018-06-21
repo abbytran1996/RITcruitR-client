@@ -23,8 +23,8 @@ import {
 // * CompanyRecruiterRegisterPage
 //=========================================================================
 // - Page to register a new company and a new recruiter.
-// - Multistep form sequence, contains steps for company registration
-//   and recruiter registratiopn, can be initiated at any point to
+// - Multi-step form sequence, contains steps for company registration
+//   and recruiter registration, can be initiated at any point to
 //   access one step.
 //_________________________________________________________________________
 @Component({
@@ -128,7 +128,7 @@ export class CompanyRecruiterRegisterPage {
           this.recruiterModel.passwordConfirm = this.recruiterModel.password;
           this.recruiterModel.phoneNumber = this.contactModel.phoneNumber;
           this.recruiterModel.contactEmail = this.contactModel.contactEmail;
-          
+
           /*
             Create the recruiter for the company
             =================================================================

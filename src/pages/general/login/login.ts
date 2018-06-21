@@ -125,9 +125,7 @@ export class LoginPage {
             this.recruiterService.getRecruiterByEmail(userEmail).subscribe(
               data => {
                 let recruiter = new RecruiterModel(data);
-
-                if (userRole == AuthService.PRIMARY_RECRUITER) recruiter.primary = true;
-                else recruiter.primary = false;
+                recruiter.primary = (userRole == AuthService.PRIMARY_RECRUITER);
 
                 this.loadingLogin = false;
                 this.navCtrl.push(CompanyTabsPage, {recruiter: recruiter}, { animation: "md-transition" });
