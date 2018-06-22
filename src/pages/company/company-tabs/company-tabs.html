@@ -18,21 +18,21 @@
         <ion-icon name="md-easel" class="opacity-50"></ion-icon>
         Presentation Links
       </button>
-      <button ion-item menuToggle (click)="editCompanyDetails()">
-        <ion-icon name="md-list" class="opacity-50"></ion-icon>
-        Company Details
-      </button>
-      <button ion-item menuToggle (click)="addRecruiter()">
-        <ion-icon name="md-contact" class="opacity-50"></ion-icon>
-        Add Recruiter
-      </button>
-      <button ion-item menuToggle (click)="editRecruiters()">
-        <ion-icon name="md-contacts" class="opacity-50"></ion-icon>
-        Manage Recruiters
-      </button>
       <button ion-item menuToggle (click)="editContact()">
         <ion-icon name="ios-call" class="opacity-50"></ion-icon>
         Edit Contact Info
+      </button>
+      <button ion-item menuToggle (click)="addRecruiter()" *ngIf="recruiter && recruiter.primary">
+        <ion-icon name="md-contact" class="opacity-50"></ion-icon>
+        Add Recruiter
+      </button>
+      <button ion-item menuToggle (click)="editRecruiters()" *ngIf="recruiter && recruiter.primary">
+        <ion-icon name="md-contacts" class="opacity-50"></ion-icon>
+        Manage Recruiters
+      </button>
+      <button ion-item menuToggle (click)="editCompanyDetails()" *ngIf="recruiter && recruiter.primary">
+        <ion-icon name="md-list" class="opacity-50"></ion-icon>
+        Company Details
       </button>
       <button ion-item menuToggle (click)="logout()">
         <ion-icon name="ios-exit" class="opacity-50"></ion-icon>

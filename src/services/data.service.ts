@@ -10,6 +10,14 @@ export class DataService {
     ) {}
 
     public isApp = true;
+    private companySizes = [
+      { text: "No Preference", id: 0 },
+      { text: "Startup (< 100)", id: 1 },
+      { text: "Small (100-300)", id: 2 },
+      { text: "Medium (301-500)", id: 3 },
+      { text: "Large (501-1000)", id: 4 },
+      { text: "Huge (> 1000)", id: 5 }
+    ];
 
     // TODO: Update this to pull real structured data from the API
     getLocations() {
@@ -37,25 +45,12 @@ export class DataService {
 
     // TODO: Update this to pull real structured data from the API
     getCompanySizesForStudent() {
-      return [
-        {text: "No Preference",  id: 0},
-        {text: "Startup (1-10)", id: 1},
-        {text: "Small (11-20)",  id: 2},
-        {text: "Medium (21-40)", id: 3},
-        {text: "Large (41-100)", id: 4},
-        {text: "Huge (101-500)", id: 5}
-      ];
+      return this.companySizes;
     }
 
     // TODO: Update this to pull real structured data from the API
     getCompanySizesForCompany() {
-      return [
-        {text: "Startup (1-10)", id: 1},
-        {text: "Small (11-20)",  id: 2},
-        {text: "Medium (21-40)", id: 3},
-        {text: "Large (41-100)", id: 4},
-        {text: "Huge (101-500)", id: 5}
-      ];
+      return this.companySizes.splice(1);
     }
 
     //=========================================================================

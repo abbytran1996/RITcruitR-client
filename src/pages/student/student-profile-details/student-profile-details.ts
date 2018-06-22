@@ -2,9 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, ToastController, NavParams } from 'ionic-angular';
 
 import {
-  StudentEducationPage,
-  StudentContactPage,
-  StudentWorkExperiencePage
+  StudentDetailFormsPage
 } from '@app/pages/student';
 
 import { StudentModel } from '@app/models';
@@ -35,21 +33,21 @@ export class StudentProfileDetailsPage {
     Show the student education page to edit education details.
   */
   editEducation() {
-    this.navCtrl.push(StudentEducationPage, {student: this.student});
+    this.navCtrl.push(StudentDetailFormsPage, {student: this.student, startStep: 0});
   }
 
   /*
     Show the student contact page to edit contact details.
   */
   editContact() {
-    this.navCtrl.push(StudentContactPage, {student: this.student});
+    this.navCtrl.push(StudentDetailFormsPage, {student: this.student, startStep: 1});
   }
 
   /*
     Show the student work experience page to edit work experience.
   */
   editWorkExperience() {
-    this.navCtrl.push(StudentWorkExperiencePage, {student: this.student});
+    this.navCtrl.push(StudentDetailFormsPage, {student: this.student, startStep: 4});
   }
 
   /*

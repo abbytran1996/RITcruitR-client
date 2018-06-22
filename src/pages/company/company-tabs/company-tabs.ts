@@ -8,7 +8,7 @@ import {
   CompanyPhase3Page,
   CompanyDetailsPage,
   CompanyJobCreatePage,
-  CompanyRegisterPage,
+  CompanyRecruiterRegisterPage,
   CompanyPresentationLinksPage
 } from '@app/pages/company';
 
@@ -68,6 +68,8 @@ export class CompanyTabsPage {
       this.recruiterService.getRecruiterByEmail(userEmail).subscribe(
         data => {
           this.recruiter = new RecruiterModel(data);
+          this.recruiter.primary = (AuthService.PRIMARY_RECRUITER == authService.getUserRole(this.recruiter.user));
+
           this.recruiterTabParams = {recruiter: this.recruiter};
           this.events.publish('tabs:recruiter', this.recruiter, Date.now());
           this.loadingRecruiter = false;
@@ -142,7 +144,7 @@ export class CompanyTabsPage {
     Add a new recruiter to the company.
   */
   addRecruiter() {
-    this.navCtrl.push(CompanyRegisterPage, {recruiter: this.recruiter, startStep: 2, addRecruiter: true});
+    this.navCtrl.push(CompanyRecruiterRegisterPage, {recruiter: this.recruiter, startStep: 2, addRecruiter: true});
   }
 
   /*
@@ -156,7 +158,7 @@ export class CompanyTabsPage {
     Edit the recruiters contact info.
   */
   editContact() {
-    this.navCtrl.push(CompanyRegisterPage, { recruiter: this.recruiter, startStep: 3, editContact: true });
+    this.navCtrl.push(CompanyRecruiterRegisterPage, { recruiter: this.recruiter, startStep: 3, editContact: true });
   }
 
   /*

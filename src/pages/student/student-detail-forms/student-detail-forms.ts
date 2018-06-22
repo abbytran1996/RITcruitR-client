@@ -19,15 +19,17 @@ import {
 } from '@app/services';
 
 //=========================================================================
-// * StudentSetupForms                                                   
+// * StudentDetailForms                                                   
 //=========================================================================
-// - Page containing the form sequence for student setup.
+// - Page containing the form sequence for all student profile details.
+// - This includes: education, contact, job preferences, skills,
+//   work experience.
 //_________________________________________________________________________
 @Component({
-  selector: 'page-student-setup-forms',
-  templateUrl: 'student-setup-forms.html'
+  selector: 'page-student-detail-forms',
+  templateUrl: 'student-detail-forms.html'
 })
-export class StudentSetupFormsPage {
+export class StudentDetailFormsPage {
 
   // Step 0 variables
   @ViewChild('form0') form0;

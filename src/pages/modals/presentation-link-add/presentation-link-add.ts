@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Platform, NavParams, ViewController, ToastController } from 'ionic-angular';
+import { Platform, NavParams, ViewController, ToastController, AlertController } from 'ionic-angular';
 
 //=========================================================================
 // * PresentationLinkAddModal                                                   
@@ -27,12 +27,23 @@ export class PresentationLinkAddModal {
     public platform: Platform,
     public navParams: NavParams,
     public viewCtrl: ViewController,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private alertCtrl: AlertController
   ) {
     this.model = navParams.get("model");
     this.allowExisting = navParams.get("allowExisting");
     if (this.allowExisting == undefined) this.allowExisting = true;
     this.existingLinkOptions = this.model.presentationLinks;
+  }
+
+  /*
+    Show an alert dialog explaining what a student presentation phase is.
+  */
+  yourPresentationInfo() {
+    this.showAlert(
+      "Your Presentation",
+      "This is your chance to show the recruiter anything of yours that you would like to share. This could be a link to a video of yourself, a project link, a personal website, or anything else."
+    );
   }
 
   /*
@@ -121,5 +132,17 @@ export class PresentationLinkAddModal {
     });
 
     toast.present();
+  }
+
+  /*
+    Show an alert dialog with the given title and message.
+  */
+  showAlert(title, message) {
+    let alert = this.alertCtrl.create({
+      title: title,
+      message: message,
+      buttons: ['Dismiss']
+    });
+    alert.present();
   }
 }

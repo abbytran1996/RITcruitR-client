@@ -7,7 +7,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content class="bg-full-image" padding>
+<ion-content class="bg-full-image" padding no-bounce>
   <div class="match-card-success" [ngClass]="{'fade': matchSuccessFade, 'transform': matchSuccessTransform}" [hidden]="!matchSuccess">
     <ion-icon name="checkmark-circle" class="content" [ngClass]="{'fade': matchSuccessContentFade}"></ion-icon>
   </div>
@@ -19,10 +19,13 @@
       <div class="match-list">
 
         <!-- Match Card -->
-        <div class="match-card" [ngClass]="{'fade-left': fadeLeft, 'fade-right': fadeRight, 'fade-left-instant': fadeLeftInstant, 'fade-right-instant': fadeRightInstant}" [hidden]="hideCard">
+        <div class="match-card"
+        [ngClass]="{'fade-left': fadeLeft, 'fade-right': fadeRight, 'fade-left-instant': fadeLeftInstant, 'fade-right-instant': fadeRightInstant}"
+        [hidden]="hideCard"
+        (swipe)="swipe($event)" id="swipe-card">
+
           <!-- Card Header -->
           <div class="match-card-header">
-            <ion-icon name="arrow-round-back" class="icon-link back-icon block fg-dark opacity-50" (click)="previousStage()" [hidden]="stage == 0"></ion-icon>
             <h3 class="title fg-primary text-center">{{ match.job.positionTitle }}</h3>
             <p class="fg-grey text-center">
               {{ (matchPoints.industry) ? match.matchedIndustry : match.job.company.industries[0] }}
@@ -111,8 +114,16 @@
 
           <!-- Card Footer -->
           <div class="match-card-footer">
-            <button class="rec-btn-small rec-btn-deny float-left" (click)="decline()"><ion-icon name="md-thumbs-down" class="card-heading-icon"></ion-icon>Decline</button>
-            <button class="rec-btn-small rec-btn-accept float-right" (click)="interested()">{{ (stage == maxStage) ? "Submit" : "Interested"}}<ion-icon name="md-thumbs-up" class="card-heading-icon-right"></ion-icon></button>
+            <button class="rec-btn-small float-left" [ngClass]="{'rec-btn-deny': stage == 0}" (click)="backDecline()" [disabled]="disableDecline">
+              <ion-icon name="ios-arrow-back" class="card-heading-icon" [hidden]="stage == 0"></ion-icon>
+              <ion-icon name="md-thumbs-down" class="card-heading-icon" [hidden]="stage > 0"></ion-icon>
+              {{ (stage == 0) ? "Decline" : "Back"}}
+            </button>
+            <button class="rec-btn-small float-right" [ngClass]="{'rec-btn-accept': stage == maxStage}" (click)="interested()">
+              {{ (stage == maxStage) ? "Submit" : "More"}}
+              <ion-icon name="ios-arrow-forward" class="card-heading-icon-right" [hidden]="stage == maxStage"></ion-icon>
+              <ion-icon name="md-thumbs-up" class="card-heading-icon-right" [hidden]="stage < maxStage "></ion-icon>
+            </button>
           </div>
           <!-- End Card Footer -->
         </div>

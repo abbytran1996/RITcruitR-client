@@ -26,6 +26,7 @@ export class CompanyDetailsPage {
 
   public recruiterModel: RecruiterModel = new RecruiterModel();
   public companyModel: CompanyModel = new CompanyModel();
+  public loading = false;
 
   industryOptions = [];
   locationOptions = [];
@@ -54,21 +55,25 @@ export class CompanyDetailsPage {
     Save changes to the company details in the model and the DB. Return to company tabs page.
   */
   saveChanges() {
+    this.loading = true;
     if (this.companyForm && this.companyForm.valid) {
       this.companyService.updateCompany(this.companyModel).subscribe(
         data => {},
         res => {
           if (res.status == 200) {
-              this.navCtrl.setRoot(CompanyTabsPage, {message: "Company details updated successfully"});
+            this.loading = false;
+            this.navCtrl.setRoot(CompanyTabsPage, {message: "Company details updated successfully"});
           }
           else {
             this.presentToast("There was an error updating your education details, please try again");
+            this.loading = false;
           }
         }
       );
     }
     else {
       this.presentToast("Please enter all company details");
+      this.loading = false;
     }
   }
 

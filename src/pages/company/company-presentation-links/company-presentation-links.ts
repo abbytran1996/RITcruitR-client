@@ -24,6 +24,7 @@ import {
 export class CompanyPresentationLinksPage {
 
   public recruiter: RecruiterModel;
+  public loading = false;
 
   // ngForm object for validation control
   @ViewChild('linksForm') linksForm;
@@ -77,14 +78,17 @@ export class CompanyPresentationLinksPage {
     Save the changes to the student presentation links in the model and the DB.
   */
   saveChanges() {
+    this.loading = true;
     if (this.linksForm && this.linksForm.valid) {
       this.recruiter.company.presentationLinks = this.links;
       
+      this.loading = false;
       // TODO: Make API call to save presentation links (endpoint for mass update needs to be made)
       this.navCtrl.setRoot(CompanyTabsPage, { message: "Presentation Links updated successfully" });
     }
     else {
       this.presentToast("There was an error saving your presentation links");
+      this.loading = false;
     }
   }
 
