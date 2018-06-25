@@ -1,6 +1,18 @@
 import { Component, ViewChild } from '@angular/core';
 import { Platform, NavParams, ViewController, ToastController, AlertController } from 'ionic-angular';
 
+import {
+  PresentationLinkModel,
+  StudentModel,
+  CompanyModel
+} from '@app/models';
+
+import {
+  HelperService,
+  StudentService,
+  CompanyService
+} from '@app/services';
+
 //=========================================================================
 // * PresentationLinkAddModal                                                   
 //=========================================================================
@@ -17,10 +29,11 @@ export class PresentationLinkAddModal {
   @ViewChild('existingForm') existingForm;
   @ViewChild('newForm') newForm;
 
-  public newLinkModel = {title: "", link: "", save: false};
+  public newLinkModel = new PresentationLinkModel();
+  public saveLink: boolean = false;
   public existingLinkModel = undefined;
   public existingLinkOptions = [];
-  public model = { presentationLinks: [] };
+  public model;
   public allowExisting = true;
 
   constructor(
@@ -28,12 +41,15 @@ export class PresentationLinkAddModal {
     public navParams: NavParams,
     public viewCtrl: ViewController,
     private toastCtrl: ToastController,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private helperService: HelperService,
+    private studentService: StudentService,
+    private companyService: CompanyService
   ) {
-    this.model = navParams.get("model");
+    this.model = navParams.get("model") || { presentationLinks: [] };
     this.allowExisting = navParams.get("allowExisting");
     if (this.allowExisting == undefined) this.allowExisting = true;
-    this.existingLinkOptions = this.model.presentationLinks;
+    this.existingLinkOptions = this.helperService.sortById(this.model.presentationLinks, true);
   }
 
   /*
@@ -97,11 +113,29 @@ export class PresentationLinkAddModal {
     Dismiss the modal and send back the newly created presentation link.
   */
   dismissNew() {
-    if (this.allowExisting) {
-      // TODO: Add service call to save new link to profile
+    if (this.saveLink) {
+      if (this.model instanceof StudentModel) {
+        this.studentService.addStudentPresentationLink(this.model.id, this.newLinkModel).subscribe(
+          resData => {
+            this.model.presentationLinks.push(resData);
+            this.viewCtrl.dismiss(resData);
+          },
+          res => { }
+        );
+      }
+      else if (this.model instanceof CompanyModel) {
+        this.companyService.addCompanyPresentationLink(this.model.id, this.newLinkModel).subscribe(
+          resData => {
+            this.model.presentationLinks.push(resData);
+            this.viewCtrl.dismiss(resData);
+          },
+          res => { }
+        );
+      }
     }
-    
-    this.viewCtrl.dismiss(this.newLinkModel);
+    else {
+      this.viewCtrl.dismiss(this.newLinkModel);
+    }
   }
 
   /*

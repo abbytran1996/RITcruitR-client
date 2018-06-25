@@ -14,3 +14,5 @@ export * from './student-register.model';
 export * from './student-work-experience.model';
 export * from './student.model';
 export * from './user.model';
+export * from './problem-statement.model';
+export * from './presentation-link.model';

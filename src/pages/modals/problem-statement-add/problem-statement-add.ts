@@ -1,6 +1,14 @@
 import { Component, ViewChild } from '@angular/core';
 import { Platform, NavParams, ViewController, ToastController, AlertController } from 'ionic-angular';
-import { StudentModel } from '@app/models';
+
+import {
+  StudentModel,
+  ProblemStatementModel
+} from '@app/models';
+
+import {
+  StudentService
+} from '@app/services';
 
 //=========================================================================
 // * ProblemStatementAddModal                                                   
@@ -14,7 +22,8 @@ import { StudentModel } from '@app/models';
 export class ProblemStatementAddModal {
 
   @ViewChild('newForm') newForm;
-  public newStatementModel = {name: "", statement: "", save: false};
+  public newStatementModel = new ProblemStatementModel();
+  public saveStatement: boolean = false;
   public student: StudentModel;
   public allowSave = true;
 
@@ -23,7 +32,8 @@ export class ProblemStatementAddModal {
     public navParams: NavParams,
     public viewCtrl: ViewController,
     private toastCtrl: ToastController,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private studentService: StudentService
   ) {
     this.student = navParams.get("student");
     this.allowSave = navParams.get("allowSave");
@@ -58,7 +68,12 @@ export class ProblemStatementAddModal {
   */
   doneClicked() {
     if (this.newForm && this.newForm.valid) {
-      this.dismissSave();
+      if (this.saveStatement) {
+        this.dismissSave();
+      }
+      else {
+        this.viewCtrl.dismiss(this.newStatementModel);
+      }
     }
     else {
       this.presentToast("Please enter a name and statement for your new problem statement");
@@ -69,8 +84,13 @@ export class ProblemStatementAddModal {
     Dismiss the modal and send back the newly created problem statement.
   */
   dismissSave() {
-    // TODO: Add service call to save new link to profile if save to profile is selected
-    this.viewCtrl.dismiss(this.newStatementModel);
+    this.studentService.addStudentProblemStatement(this.student.id, this.newStatementModel).subscribe(
+      resData => {
+        this.student.problemStatements.push(new ProblemStatementModel(resData));
+        this.viewCtrl.dismiss(resData);
+      },
+      res => { }
+    );
   }
 
   /*

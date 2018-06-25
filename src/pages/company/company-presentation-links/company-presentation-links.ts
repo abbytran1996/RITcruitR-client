@@ -5,11 +5,15 @@ import { CompanyTabsPage } from '@app/pages/company';
 
 import { PresentationLinkAddModal } from '@app/pages/modals';
 
-import { RecruiterModel } from '@app/models';
+import {
+  RecruiterModel,
+  PresentationLinkModel
+} from '@app/models';
 
 import {
   DataService,
-  CompanyService
+  CompanyService,
+  HelperService
 } from '@app/services';
 
 //=========================================================================
@@ -37,10 +41,11 @@ export class CompanyPresentationLinksPage {
     private alertCtrl: AlertController,
     public modalCtrl: ModalController,
     public dataService: DataService,
-    private companyService: CompanyService
+    private companyService: CompanyService,
+    private helperService: HelperService
   ) {
     this.recruiter = navParams.get("recruiter");
-    this.links = this.recruiter.company.presentationLinks.slice(0);
+    this.links = this.helperService.sortById(this.recruiter.company.presentationLinks.slice(0), true);
   }
 
   /*
@@ -55,10 +60,24 @@ export class CompanyPresentationLinksPage {
 
   /*
     Remove the presentation link at the given index from the list.
-    Doesn't update in the DB at this point, just makes the "unsaved" change locally.
   */
   removeLink(index) {
-    this.links.splice(index, 1);
+    this.loading = true;
+    let link = new PresentationLinkModel(this.links[index]);
+
+    if (link.id != null) {
+      this.companyService.deleteCompanyPresentationLink(this.recruiter.company.id, link.id).subscribe(
+        resData => { },
+        res => {
+          this.links.splice(index, 1);
+          this.loading = false;
+        }
+      );
+    }
+    else {
+      this.links.splice(index, 1);
+      this.loading = false;
+    }
   }
 
   /*
@@ -68,7 +87,14 @@ export class CompanyPresentationLinksPage {
     let modal = this.modalCtrl.create(PresentationLinkAddModal, { model: this.recruiter.company, allowExisting: false });
     modal.onDidDismiss(data => {
       if (data) {
-        this.links.push(data);
+        this.loading = true;
+        this.companyService.addCompanyPresentationLink(this.recruiter.company.id, data).subscribe(
+          resData => {
+            this.links.push(resData);
+            this.loading = false;
+          },
+          res => { }
+        );
       }
     });
     modal.present();
@@ -80,11 +106,9 @@ export class CompanyPresentationLinksPage {
   saveChanges() {
     this.loading = true;
     if (this.linksForm && this.linksForm.valid) {
-      this.recruiter.company.presentationLinks = this.links;
-      
+      this.recruiter.company.presentationLinks = this.links; 
       this.loading = false;
-      // TODO: Make API call to save presentation links (endpoint for mass update needs to be made)
-      this.navCtrl.setRoot(CompanyTabsPage, { message: "Presentation Links updated successfully" });
+      this.navCtrl.setRoot(CompanyTabsPage);
     }
     else {
       this.presentToast("There was an error saving your presentation links");

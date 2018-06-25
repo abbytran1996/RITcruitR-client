@@ -9,7 +9,10 @@ import {
   MatchModel
 } from '@app/models';
 
-import { StudentService } from '@app/services';
+import {
+  StudentService,
+  HelperService
+} from '@app/services';
 
 const fadeTime = 400;
 
@@ -63,9 +66,10 @@ export class StudentPhase2Page {
     private toastCtrl: ToastController,
     private alertCtrl: AlertController,
     private studentService: StudentService,
+    private helperService: HelperService,
     private iab: InAppBrowser
   ) {
-    this.student= navParams.get("student");
+    this.student = navParams.get("student");
   }
 
   /*

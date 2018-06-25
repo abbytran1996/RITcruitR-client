@@ -60,6 +60,46 @@ export class StudentService {
     }
 
     //=========================================================================
+    // * ADD STUDENT PROBLEM STATEMENT                                        *
+    //=========================================================================
+    // - Adds a new profile problem statement
+    // - Expects a StudentModel id number and a ProblemStatementModel
+    // - Returns 201 (CREATED) response and a ProblemStatementModel
+    addStudentProblemStatement(studentId, problemStatement) {
+        return this.apiService.post('/students/' + studentId + "/problemstatement", problemStatement);
+    }
+
+    //=========================================================================
+    // * DELETE STUDENT PROBLEM STATEMENT                                     *
+    //=========================================================================
+    // - Deletes a profile problem statement with the given id
+    // - Expects a StudentModel id number and a ProblemStatementModel id number
+    // - Returns 200 (OK) response
+    deleteStudentProblemStatement(studentId, problemStatementId) {
+        return this.apiService.delete('/students/' + studentId + "/problemstatement/" + problemStatementId);
+    }
+
+    //=========================================================================
+    // * ADD STUDENT PRESENTATION LINK                                        *
+    //=========================================================================
+    // - Adds a new profile presentation link
+    // - Expects a StudentModel id number and a PresentationLinkModel
+    // - Returns 201 (CREATED) response and a PresentationLinkModel
+    addStudentPresentationLink(studentId, presentationLink) {
+        return this.apiService.post('/students/' + studentId + "/link", presentationLink);
+    }
+
+    //=========================================================================
+    // * DELETE STUDENT PRESENTATION LINK                                     *
+    //=========================================================================
+    // - Deletes a profile presentation link with the given id
+    // - Expects a StudentModel id number and a PresentationLinkModel id number
+    // - Returns 200 (OK) response
+    deleteStudentPresentationLink(studentId, presentationLinkId) {
+        return this.apiService.delete('/students/' + studentId + "/link/" + presentationLinkId);
+    }
+
+    //=========================================================================
     // * SUBMIT MATCH PROBLEM STATEMENT                                       *
     //=========================================================================
     // - Submits a match problem statement and moves it to the next phase

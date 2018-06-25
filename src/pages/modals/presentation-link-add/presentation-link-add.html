@@ -56,7 +56,7 @@
         </div>
         <div class="rec-input-group-small" [hidden]="!allowExisting">
           <label class="rec-label rl-secondary">SAVE TO PROFILE</label>
-          <ion-toggle name="saveToProfile" class="rec-input float-right" checked="false" [(ngModel)]="newLinkModel.save"></ion-toggle>
+          <ion-toggle name="saveToProfile" class="rec-input float-right" checked="false" [(ngModel)]="saveLink"></ion-toggle>
         </div>
       </form>
     </ion-col>
@@ -68,7 +68,7 @@
 <!-- Button Footer -->
 <ion-footer class="button-footer">
   <ion-row>
-    <button class="rec-btn-small rec-btn-primary btn-stacked center" (click)="doneClicked()">Done</button>
+    <button class="rec-btn-small rec-btn-primary btn-stacked center" (click)="doneClicked()">Add</button>
   </ion-row>
 </ion-footer>
 <!-- End Button Footer -->
