@@ -5,11 +5,15 @@ import { StudentTabsPage } from '@app/pages/student';
 
 import { ProblemStatementAddModal } from '@app/pages/modals';
 
-import { StudentModel } from '@app/models';
+import {
+  StudentModel,
+  ProblemStatementModel
+} from '@app/models';
 
 import {
   DataService,
-  StudentService
+  StudentService,
+  HelperService
 } from '@app/services';
 
 //=========================================================================
@@ -38,11 +42,11 @@ export class StudentProblemStatementsPage {
     private alertCtrl: AlertController,
     public modalCtrl: ModalController,
     public dataService: DataService,
-    private studentService: StudentService
+    private studentService: StudentService,
+    private helperService: HelperService
   ) {
     this.student = navParams.get("student");
-
-    // TODO: Set this.statements = this.student.problemStatements.slice(0) when student model is updated in DB
+    this.statements = this.helperService.sortById(this.student.problemStatements.slice(0), true);
   }
 
   /*
@@ -57,10 +61,24 @@ export class StudentProblemStatementsPage {
 
   /*
     Remove the problem statement at the given index from the list.
-    Doesn't update in the DB at this point, just makes the "unsaved" change locally.
   */
   removeStatement(index) {
-    this.statements.splice(index, 1);
+    this.loading = true;
+    let statement = new ProblemStatementModel(this.statements[index]);
+
+    if (statement.id != null) {
+      this.studentService.deleteStudentProblemStatement(this.student.id, statement.id).subscribe(
+        resData => { },
+        res => {
+          this.statements.splice(index, 1);
+          this.loading = false;
+        }
+      );
+    }
+    else {
+      this.statements.splice(index, 1);
+      this.loading = false;
+    }
   }
 
   /*
@@ -70,7 +88,14 @@ export class StudentProblemStatementsPage {
     let modal = this.modalCtrl.create(ProblemStatementAddModal, { model: this.student, allowSave: false });
     modal.onDidDismiss(data => {
       if (data) {
-        this.statements.push(data);
+        this.loading = true;
+        this.studentService.addStudentProblemStatement(this.student.id, data).subscribe(
+          resData => {
+            this.statements.push(resData);
+            this.loading = false;
+          },
+          res => {}
+        );
       }
     });
     modal.present();
@@ -82,11 +107,9 @@ export class StudentProblemStatementsPage {
   saveChanges() {
     this.loading = true;
     if (this.statementForm && this.statementForm.valid) {
-      // TODO: Set student problem statements to the local statements list (Student doesn't currently have list of problem statements)
-      
+      this.student.problemStatements = this.statements;
       this.loading = false;
-      // TODO: Make API call to save problem statements (endpoint for mass update needs to be made)
-      this.navCtrl.setRoot(StudentTabsPage, { message: "Problem Statements updated successfully" });
+      this.navCtrl.setRoot(StudentTabsPage);
     }
     else {
       this.presentToast("There was an error saving your problem statements");
@@ -98,6 +121,7 @@ export class StudentProblemStatementsPage {
     Navigate back to the previous screen.
   */
   backBtn() {
+    this.student.problemStatements = this.statements;
     this.navCtrl.pop();
   }
 

@@ -22,16 +22,16 @@
     <ion-col>
       <form #newForm="ngForm">
         <div class="rec-input-group-small">
-          <label class="rec-label rl-secondary">STATEMENT NAME</label>
-          <input type="text" name="name" class="rec-input ri-grey" required [(ngModel)]="newStatementModel.name">
+          <label class="rec-label rl-secondary">STATEMENT TITLE</label>
+          <input type="text" name="name" class="rec-input ri-grey" required [(ngModel)]="newStatementModel.title">
         </div>
         <div class="rec-input-group-small">
           <label class="rec-label rl-secondary">STATEMENT</label>
-          <textarea name="statement" class="rec-input ri-grey" required [(ngModel)]="newStatementModel.statement"></textarea>
+          <textarea name="statement" class="rec-input ri-grey" required [(ngModel)]="newStatementModel.text"></textarea>
         </div>
         <div class="rec-input-group-small" [hidden]="!allowSave">
           <label class="rec-label rl-secondary">SAVE TO PROFILE</label>
-          <ion-toggle name="saveToProfile" class="rec-input float-right" checked="false" [(ngModel)]="newStatementModel.save"></ion-toggle>
+          <ion-toggle name="saveToProfile" class="rec-input float-right" checked="false" [(ngModel)]="saveStatement"></ion-toggle>
         </div>
       </form>
     </ion-col>
@@ -43,7 +43,7 @@
 <!-- Button Footer -->
 <ion-footer class="button-footer">
   <ion-row>
-    <button class="rec-btn-small rec-btn-primary btn-stacked center" (click)="doneClicked()">Done</button>
+    <button class="rec-btn-small rec-btn-primary btn-stacked center" (click)="doneClicked()">Add</button>
   </ion-row>
 </ion-footer>
 <!-- End Button Footer -->

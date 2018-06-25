@@ -235,6 +235,7 @@ export class StudentDetailFormsPage {
         );
       }
 
+      // Save student skills after step 3
       else if (this.formSeq.currentStep == 3) {
         this.saving = true;
         this.student.skills = this.skills;

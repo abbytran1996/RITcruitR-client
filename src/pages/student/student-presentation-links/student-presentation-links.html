@@ -16,9 +16,12 @@
 </ion-header>
 
 <ion-content padding class="rec-content bg-white">
+  <div class="loader-wrapper" *ngIf="loading">
+    <ion-spinner name="bubbles" class="primary"></ion-spinner>
+  </div>
 
   <!-- Form -->
-  <ion-row class="row-form">
+  <ion-row class="row-form" [hidden]="loading">
     <ion-col>
       <form #linksForm="ngForm">
 
@@ -52,8 +55,8 @@
 <!-- Button Footer -->
 <ion-footer class="button-footer">
   <ion-row>
-    <button class="rec-btn rec-btn-primary btn-stacked center" (click)="saveChanges()" [disabled]="loading">
-      {{ (loading) ? '' : 'Save' }}
+    <button class="rec-btn rec-btn-primary btn-stacked center rec-load-btn" (click)="saveChanges()" [disabled]="loading">
+      {{ (loading) ? '' : 'Done' }}
       <ion-spinner class="white" name="dots" [hidden]="!loading"></ion-spinner>
     </button>
   </ion-row>

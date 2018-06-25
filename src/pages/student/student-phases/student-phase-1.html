@@ -78,18 +78,17 @@
                 <ion-icon name="md-chatboxes" class="card-heading-icon"></ion-icon>Your Problem Statement<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="yourProbStatementInfo()"></ion-icon>
               </h3>
 
-              <form #problemStatementForm="ngForm" [hidden]="!existingStatementOptions || existingStatementOptions.length == 0">
+              <form #problemStatementForm="ngForm" [hidden]="!existingStatementOptions || existingStatementOptions.length == 0 || problemStatement != undefined">
                 <div class="rec-input-group-small">
                   <label class="rec-label rl-secondary">SELECT EXISTING STATEMENT</label>
-                  <ion-select name="selectedLink" class="rec-input ri-grey" [(ngModel)]="existingStatementModel" multiple="false" (ionChange)="selectChanged($event)">
-                    <ion-option *ngIf="existingStatementOptions && existingStatementOptions.length > 0" value="-1">None</ion-option>
-                    <ion-option *ngFor="let link of existingStatementOptions" [value]="link">{{ link.title }}</ion-option>
+                  <ion-select name="selectedStatement" class="rec-input ri-grey" [(ngModel)]="existingStatementModel" multiple="false" (ionChange)="selectChanged($event)">
+                    <ion-option *ngFor="let statement of existingStatementOptions" [value]="statement">{{ statement.title }}</ion-option>
                     <ion-option *ngIf="!existingStatementOptions || existingStatementOptions.length == 0" value="-1">No Profile Statements Found</ion-option>
                   </ion-select>
                 </div>
               </form>
 
-              <ion-row class="row-sep" [hidden]="!existingStatementOptions || existingStatementOptions.length == 0">
+              <ion-row class="row-sep" [hidden]="!existingStatementOptions || existingStatementOptions.length == 0 || problemStatement != undefined">
                 <div class="rec-sep-or">
                   <span class="left"></span>OR<span class="right"></span>
                 </div>
@@ -101,11 +100,11 @@
                 </div>
                 <div class="custom-statement" *ngIf="problemStatement != undefined">
                   <div class="clearfix custom-statement-buttons">
-                    <button class="rec-btn-small rec-btn-primary float-left" (click)="editStatement()"><ion-icon name="md-create" class="rec-btn-icon to-left"></ion-icon>Edit</button>
-                    <button class="rec-btn-small rec-btn-deny float-right" (click)="clearStatement()"><ion-icon name="md-close-circle" class="rec-btn-icon to-left"></ion-icon>Clear</button>
+                    <button class="rec-btn-small rec-btn-primary float-left" (click)="editStatement()" [hidden]="hideEditBtn"><ion-icon name="md-create" class="rec-btn-icon to-left"></ion-icon>Edit</button>
+                    <button class="rec-btn-small rec-btn-deny" (click)="clearStatement()" [ngClass]="{'float-right': !hideEditBtn, 'btn-stacked center': hideEditBtn}"><ion-icon name="md-close-circle" class="rec-btn-icon to-left"></ion-icon>Clear</button>
                   </div>
                   <label class="rec-label rl-secondary">STATEMENT</label>
-                  <p class="fg-dark">{{ problemStatement.statement }}</p>
+                  <p class="fg-dark">{{ problemStatement.text }}</p>
                 </div>
               </div>
             </div>

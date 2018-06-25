@@ -21,6 +21,7 @@ export class StudentModel {
   public preferredIndustries: any = [];
   public preferredCompanySizes: any = [];
   public presentationLinks: any = [];
+  public problemStatements: any = [];
 
   constructor(init?: any) {
     if (init) {
@@ -41,6 +42,7 @@ export class StudentModel {
       this.preferredIndustries = init.preferredIndustries || [];
       this.preferredCompanySizes = init.preferredCompanySizes || [];
       this.presentationLinks = init.presentationLinks || [];
+      this.problemStatements = init.problemStatements || [];
     }
   }
 

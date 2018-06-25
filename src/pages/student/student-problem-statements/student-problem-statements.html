@@ -16,9 +16,12 @@
 </ion-header>
 
 <ion-content padding class="rec-content bg-white">
+  <div class="loader-wrapper" *ngIf="loading">
+    <ion-spinner name="bubbles" class="primary"></ion-spinner>
+  </div>
 
   <!-- Form -->
-  <ion-row class="row-form">
+  <ion-row class="row-form" [hidden]="loading">
     <ion-col>
       <form #statementForm="ngForm">
 
@@ -26,14 +29,14 @@
           <ion-list class="rec-reorder-list">
             <div class="list-header-wrapper">
             <ion-list-header>PROBLEM STATEMENTS<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="problemStatementInfo()"></ion-icon></ion-list-header>
-            <button class="rec-btn-circle-small rec-btn-primary" (click)="addStatement()">
+            <button class="rec-btn-circle-small rec-btn-primary" (click)="addStatement()" [disabled]="loading">
               <ion-icon name="md-add" class="rec-btn-icon"></ion-icon>
             </button>
           </div>
             <ion-item-group reorder="false" side="start" (ionItemReorder)="$event.applyTo(statements)">
               <ion-item *ngFor="let statement of statements; let i = index" class="boxed bg-superlight">
-                <h5>{{ statement.name }}</h5>
-                <p>{{ statement.statement }}</p>
+                <h5>{{ statement.title }}</h5>
+                <p>{{ statement.text }}</p>
                 <ion-icon name="md-close-circle" class="fake-link" (click)="removeStatement(i)"></ion-icon>
               </ion-item>
             </ion-item-group>
@@ -52,8 +55,8 @@
 <!-- Button Footer -->
 <ion-footer class="button-footer">
   <ion-row>
-    <button class="rec-btn rec-btn-primary btn-stacked center" (click)="saveChanges()" [disabled]="loading">
-      {{ (loading) ? '' : 'Save' }}
+    <button class="rec-btn rec-btn-primary btn-stacked center rec-load-btn" (click)="saveChanges()" [disabled]="loading">
+      {{ (loading) ? '' : 'Done' }}
       <ion-spinner class="white" name="dots" [hidden]="!loading"></ion-spinner>
     </button>
   </ion-row>

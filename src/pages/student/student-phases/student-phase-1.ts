@@ -5,10 +5,14 @@ import { ProblemStatementAddModal } from '@app/pages/modals';
 
 import {
   StudentModel,
-  MatchModel
+  MatchModel,
+  ProblemStatementModel
 } from '@app/models';
 
-import { StudentService } from '@app/services';
+import {
+  StudentService,
+  HelperService
+} from '@app/services';
 
 const fadeTime = 400;
 
@@ -54,7 +58,8 @@ export class StudentPhase1Page {
   @ViewChild('problemStatementForm') problemStatementForm;
   public existingStatementModel;
   public existingStatementOptions = [];
-  public problemStatement = undefined;
+  public problemStatement: ProblemStatementModel = undefined;
+  public hideEditBtn = false;
 
   constructor(
     public navCtrl: NavController,
@@ -63,14 +68,10 @@ export class StudentPhase1Page {
     private alertCtrl: AlertController,
     public modalCtrl: ModalController,
     public events: Events,
-    private studentService: StudentService
+    private studentService: StudentService,
+    private helperService: HelperService
   ) {
     this.student= navParams.get("student");
-
-    // TODO: Uncomment this so DB problem statements show in dropdown
-    // if (this.student.problemStatements) {
-    //   this.existingStatementOptions = this.student.problemStatements;
-    // }
   }
 
   /*
@@ -83,10 +84,12 @@ export class StudentPhase1Page {
 
       if (this.student != undefined) {
         this.getNewMatches();
+        this.existingStatementOptions = this.helperService.sortById(this.student.problemStatements, true);
       }
       else {
         this.events.subscribe('tabs:student', (student) => {
           this.student = student;
+          this.existingStatementOptions = this.helperService.sortById(this.student.problemStatements, true);
           this.getNewMatches();
         });
       }
@@ -147,6 +150,11 @@ export class StudentPhase1Page {
     if (this.existingStatementModel == -1) {
       this.existingStatementModel = undefined;
       this.problemStatementForm.reset();
+      this.problemStatement = undefined;
+    }
+    else {
+      this.problemStatement = new ProblemStatementModel(this.existingStatementModel);
+      this.hideEditBtn = true;
     }
   }
 
@@ -155,10 +163,10 @@ export class StudentPhase1Page {
     Show the new problem statement modal.
   */
   newStatement() {
-    let modal = this.modalCtrl.create(ProblemStatementAddModal, {});
+    let modal = this.modalCtrl.create(ProblemStatementAddModal, {student: this.student});
     modal.onDidDismiss(data => {
       if (data) {
-        this.problemStatement = data;
+        this.problemStatement = new ProblemStatementModel(data);
       }
     });
     modal.present();
@@ -182,6 +190,9 @@ export class StudentPhase1Page {
     Clears the currently set "new" problem statement.
   */
   clearStatement() {
+    this.existingStatementModel = undefined;
+    this.problemStatementForm.reset();
+    this.hideEditBtn = false;
     this.problemStatement = undefined;
   }
 
@@ -195,11 +206,10 @@ export class StudentPhase1Page {
       this.stage++;
     }
     else {
-      if ((this.existingStatementOptions && this.existingStatementOptions.length > 0 && this.problemStatementForm && this.problemStatementForm.valid)
-          || this.problemStatement != undefined) {
+      if (this.problemStatement != undefined) {
 
         if (this.problemStatement) {
-          this.match.studentProblemResponse = this.problemStatement.statement;
+          this.match.studentProblemResponse = this.problemStatement.text;
         }
         else {
           this.match.studentProblemResponse = this.existingStatementModel.statement;

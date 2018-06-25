@@ -68,4 +68,24 @@ export class CompanyService {
     updateCompany(company) {
         return this.apiService.put('/company/' + company.id, company);
     }
+
+    //=========================================================================
+    // * ADD COMPANY PRESENTATION LINK                                        *
+    //=========================================================================
+    // - Adds a new profile presentation link
+    // - Expects a CompanyModel id number and a PresentationLinkModel
+    // - Returns 201 (CREATED) response and a PresentationLinkModel
+    addCompanyPresentationLink(companyId, presentationLink) {
+        return this.apiService.post('/company/' + companyId + "/link", presentationLink);
+    }
+
+    //=========================================================================
+    // * DELETE COMPANY PRESENTATION LINK                                     *
+    //=========================================================================
+    // - Deletes a profile presentation link with the given id
+    // - Expects a CompanyModel id number and a PresentationLinkModel id number
+    // - Returns 200 (OK) response
+    deleteCompanyPresentationLink(companyId, presentationLinkId) {
+        return this.apiService.delete('/company/' + companyId + "/link/" + presentationLinkId);
+    }
 }

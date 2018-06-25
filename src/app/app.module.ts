@@ -74,7 +74,8 @@ import {
   RecruiterService,
   StudentService,
   DataService,
-  FormSequenceService
+  FormSequenceService,
+  HelperService
 } from '@app/services';
 
 @NgModule({
@@ -196,7 +197,8 @@ import {
     RecruiterService,
     StudentService,
     DataService,
-    FormSequenceService
+    FormSequenceService,
+    HelperService
   ]
 })
 export class AppModule {}

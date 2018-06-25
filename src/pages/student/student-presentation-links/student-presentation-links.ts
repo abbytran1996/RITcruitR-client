@@ -5,11 +5,15 @@ import { StudentTabsPage } from '@app/pages/student';
 
 import { PresentationLinkAddModal } from '@app/pages/modals';
 
-import { StudentModel } from '@app/models';
+import {
+  StudentModel,
+  PresentationLinkModel
+} from '@app/models';
 
 import {
   DataService,
-  StudentService
+  StudentService,
+  HelperService
 } from '@app/services';
 
 //=========================================================================
@@ -37,10 +41,11 @@ export class StudentPresentationLinksPage {
     private alertCtrl: AlertController,
     public modalCtrl: ModalController,
     public dataService: DataService,
-    private studentService: StudentService
+    private studentService: StudentService,
+    private helperService: HelperService
   ) {
     this.student = navParams.get("student");
-    this.links = this.student.presentationLinks.slice(0);
+    this.links = this.helperService.sortById(this.student.presentationLinks.slice(0), true);
   }
 
   /*
@@ -55,10 +60,24 @@ export class StudentPresentationLinksPage {
 
   /*
     Remove the presentation link at the given index from the list.
-    Doesn't update in the DB at this point, just makes the "unsaved" change locally.
   */
   removeLink(index) {
-    this.links.splice(index, 1);
+    this.loading = true;
+    let link = new PresentationLinkModel(this.links[index]);
+
+    if (link.id != null) {
+      this.studentService.deleteStudentPresentationLink(this.student.id, link.id).subscribe(
+        resData => { },
+        res => {
+          this.links.splice(index, 1);
+          this.loading = false;
+        }
+      );
+    }
+    else {
+      this.links.splice(index, 1);
+      this.loading = false;
+    }
   }
 
   /*
@@ -68,7 +87,14 @@ export class StudentPresentationLinksPage {
     let modal = this.modalCtrl.create(PresentationLinkAddModal, { model: this.student, allowExisting: false });
     modal.onDidDismiss(data => {
       if (data) {
-        this.links.push(data);
+        this.loading = true;
+        this.studentService.addStudentPresentationLink(this.student.id, data).subscribe(
+          resData => {
+            this.links.push(resData);
+            this.loading = false;
+          },
+          res => { }
+        );
       }
     });
     modal.present();
@@ -81,10 +107,8 @@ export class StudentPresentationLinksPage {
     this.loading = true;
     if (this.linksForm && this.linksForm.valid) {
       this.student.presentationLinks = this.links;
-      
       this.loading = false;
-      // TODO: Make API call to save presentation links (endpoint for mass update needs to be made)
-      this.navCtrl.setRoot(StudentTabsPage, { message: "Presentation Links updated successfully" });
+      this.navCtrl.setRoot(StudentTabsPage);
     }
     else {
       this.presentToast("There was an error saving your presentation links");
@@ -96,6 +120,7 @@ export class StudentPresentationLinksPage {
     Navigate back to the previous screen.
   */
   backBtn() {
+    this.student.presentationLinks = this.links;
     this.navCtrl.pop();
   }
 
