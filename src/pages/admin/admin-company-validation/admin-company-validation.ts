@@ -42,7 +42,6 @@ export class AdminCompanyValidationPage {
     this.companyService.getCompanyByStatus(false).subscribe(
       data => {
         this.companies = data;
-        console.log(data);
       },
       error => {
         this.presentToast("This was an error retrieving the list of companies awaiting approval, please refresh")
