@@ -1,3 +1,118 @@
 page-admin-company-validation {
- 
+    .validation-wrapper {
+        background-color: #ffffff;
+        padding: 50px;
+        height: 100%;
+
+        .heading {
+            border-bottom: 2px solid #cfd0d0;
+
+            .icon {
+                margin-right: 10px;
+                font-size: 22px;
+            }
+        }
+
+        .companies-content {
+            padding-top: 20px;
+            padding-bottom: 20px;
+            height: 100%;
+
+            .companies-list {
+                padding-right: 75px;
+
+                .headers ion-col {
+                    font-weight: bold;
+
+                    &:first-of-type {
+                        padding-left: 20px;
+                    }
+
+                    &:last-of-type {
+                        padding-left: 10px;
+                    }
+                }
+
+                .company-container {
+                    border-bottom: 4px solid transparent;
+                }
+
+                .company-container:hover:not(.active) {
+                    border-bottom: 4px solid rgba(0, 0, 0, 0.15);
+                    cursor: pointer;
+                }
+
+                .active {
+                    border-bottom: 4px solid #b894ce;
+                }
+            }
+
+            .separator {
+                max-width: 10px;
+                background-color: map-get($colors, light);
+                border-radius: 10px;
+            }
+
+            .approval-form {
+                padding-left: 75px;
+
+                .company-name {
+                    font-family: map-get($font-title, family);
+                    font-size: map-get($font-heading, size);
+                    font-weight: map-get($font-heading, weight);
+                    color: map-get($colors, primary);
+                    margin-right: 20px;
+                }
+
+                .rec-btn-deny {
+                    margin-right: 10px;
+                }
+
+                .rec-btn-admin {
+                    border-radius: 5px;
+                    font-size: 16px;
+                    width: 120px;
+                    height: 40px;
+                    box-shadow: none;
+                }
+
+                hr {
+                    background-color: map-get($colors, light);
+                    border: 0;
+                    height: 3px;
+                    margin-bottom: 15px;
+                }
+            }
+
+            .company-container {
+                background-color: map-get($colors, light);
+                box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.15);
+                padding: 15px;
+                border-radius: 8px;
+                margin-bottom: 20px;
+
+                h1, h2, h3, h4, h5, h6 {
+                    margin: 0;
+                }
+
+                .company-container-info {
+                    padding-left: 20px;
+                    
+                    ul {
+                        margin: 0;
+                        padding-left: 10px;
+                        list-style: none
+                    }
+
+                    li::before {
+                        content: "\2022";
+                        color: map-get($colors, primary);
+                        display: inline-block;
+                        width: 1em;
+                        margin-left: -1em
+                    }
+                }
+            }
+        }
+    }
 }
