@@ -39,7 +39,7 @@ export class AdminCompanyValidationPage {
     this.user = navParams.get("user");
 
     // Get the list of companies awaiting approval
-    this.companyService.getCompanyByStatus(false).subscribe(
+    this.companyService.getCompanyByStatus("awaiting").subscribe(
       data => {
         this.companies = data;
       },
