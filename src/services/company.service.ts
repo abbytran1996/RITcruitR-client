@@ -56,7 +56,27 @@ export class CompanyService {
     // - Expects a CompanyModel
     // - Returns 200 (OK) response
     approveCompany(company) {
-      return this.apiService.patch('/company/' + company.id + '/approve');
+      return this.apiService.patch('/company/' + company.id + '/status/approved');
+    }
+
+    //=========================================================================
+    // * DENY COMPANY                                                         *
+    //=========================================================================
+    // - Denies an existing company
+    // - Expects a CompanyModel
+    // - Returns 200 (OK) response
+    denyCompany(company) {
+      return this.apiService.patch('/company/' + company.id + '/status/denied');
+    }
+
+    //=========================================================================
+    // * ARCHIVE COMPANY                                                      *
+    //=========================================================================
+    // - Archives an existing company
+    // - Expects a CompanyModel
+    // - Returns 200 (OK) response
+    archiveCompany(company) {
+      return this.apiService.patch('/company/' + company.id + '/status/archived');
     }
 
     //=========================================================================

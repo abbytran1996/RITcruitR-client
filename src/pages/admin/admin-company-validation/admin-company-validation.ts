@@ -61,7 +61,7 @@ export class AdminCompanyValidationPage {
   */
   approveCompany(company) {
     let message = "";
-    this.companyService.approveCompany(company.id).subscribe(
+    this.companyService.approveCompany(company).subscribe(
       data => {
         message = company.companyName + " has been approved."
       },
@@ -77,7 +77,7 @@ export class AdminCompanyValidationPage {
   */
   denyCompany(company) {
     let message = "";
-    this.companyService.approveCompany(company.id).subscribe(
+    this.companyService.denyCompany(company).subscribe(
       data => {
         message = company.companyName + " has been denied."
       },
