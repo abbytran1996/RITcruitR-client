@@ -19,7 +19,7 @@ import {
 } from '@app/services';
 
 //=========================================================================
-// * CompanyJobCreatePage                                                   
+// * CompanyJobCreatePage
 //=========================================================================
 // - Page for the job creation process. This contains all steps in one
 //   components.
@@ -166,7 +166,7 @@ export class CompanyJobCreatePage {
             this.navCtrl.setRoot(CompanyTabsPage, { message: "New job successfully created" });
           },
           error => {
-            this.presentToast("There was an error creating the job, please try again later");
+            this.presentToast("There was an error creating the job. Please check on company's approval status and try again later");
             this.saving = false;
           }
         );
@@ -192,7 +192,7 @@ export class CompanyJobCreatePage {
   backBtn() {
     if (this.formSeq.switchingStep) return;
     if (this.saving) return;
-    
+
     if (this.formSeq.currentStep == this.formSeq.startStep) {
       this.navCtrl.pop();
     }
@@ -272,7 +272,7 @@ export class CompanyJobCreatePage {
     );
   }
 
-  /* 
+  /*
     Show an alert dialog explaining nice to have skills weight.
   */
   nthSkillsWeightInfo() {
@@ -282,7 +282,7 @@ export class CompanyJobCreatePage {
     );
   }
 
-  /* 
+  /*
     Show an alert dialog explaining nice to have skills.
   */
   nthSkillsInfo() {
