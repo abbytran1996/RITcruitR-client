@@ -60,22 +60,32 @@ export class AdminCompanyValidationPage {
     Approves the company
   */
   approveCompany(company) {
-    /*this.companyService.approveCompany(company.id).subscribe(
+    let message = "";
+    this.companyService.approveCompany(company.id).subscribe(
       data => {
-
+        message = company.companyName + " has been approved."
       },
       error => {
-
+        message = "There was an error approving company '" + company.companyName + "'. Please try again later."
       }
-    );*/
-    this.presentToast(company.companyName + " has been approved.");
+    );
+    this.presentToast(message);
   }
 
   /*
     Denies the company
   */
   denyCompany(company) {
-    this.presentToast(company.companyName + " has been denied.");
+    let message = "";
+    this.companyService.approveCompany(company.id).subscribe(
+      data => {
+        message = company.companyName + " has been denied."
+      },
+      error => {
+        message = "There was an error denying company '" + company.companyName + "'. Please try again later."
+      }
+    );
+    this.presentToast(message);
   }
 
   /*
