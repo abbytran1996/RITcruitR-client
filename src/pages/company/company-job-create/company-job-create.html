@@ -58,8 +58,7 @@
           <label class="rec-label rl-secondary">JOB DESCRIPTION
             <ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="descriptionInfo()"></ion-icon>
           </label>
-          <textarea name="description" class="rec-input ri-grey" required [(ngModel)]="jobModel.description">
-            </textarea>
+          <textarea [froalaEditor]="helperService.getTextEditorSettings()" name="description" required [(ngModel)]="jobModel.description"></textarea>
         </div>
       </form>
     </ion-col>
@@ -175,8 +174,7 @@
       <form #form6="ngForm">
         <div class="rec-input-group">
           <label class="rec-label rl-secondary">JOB PROBLEM STATEMENT<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="problemStatementInfo()"></ion-icon></label>
-          <textarea name="problemStatement" class="rec-input ri-grey" required [(ngModel)]="jobModel.problemStatement">
-          </textarea>
+          <textarea [froalaEditor]="helperService.getTextEditorSettings()" name="problemStatement" required [(ngModel)]="jobModel.problemStatement"></textarea>
         </div>
       </form>
     </ion-col>

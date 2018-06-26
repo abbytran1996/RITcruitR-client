@@ -27,7 +27,7 @@
         </div>
         <div class="rec-input-group-small">
           <label class="rec-label rl-secondary">STATEMENT</label>
-          <textarea name="statement" class="rec-input ri-grey" required [(ngModel)]="newStatementModel.text"></textarea>
+          <textarea [froalaEditor]="helperService.getTextEditorSettings()" name="statement" required [(ngModel)]="newStatementModel.text"></textarea>
         </div>
         <div class="rec-input-group-small" [hidden]="!allowSave">
           <label class="rec-label rl-secondary">SAVE TO PROFILE</label>

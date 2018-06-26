@@ -7,7 +7,8 @@ import {
 } from '@app/models';
 
 import {
-  StudentService
+  StudentService,
+  HelperService
 } from '@app/services';
 
 //=========================================================================
@@ -33,12 +34,13 @@ export class ProblemStatementAddModal {
     public viewCtrl: ViewController,
     private toastCtrl: ToastController,
     private alertCtrl: AlertController,
-    private studentService: StudentService
+    private studentService: StudentService,
+    public helperService: HelperService
   ) {
     this.student = navParams.get("student");
     this.allowSave = navParams.get("allowSave");
     if (this.allowSave == undefined) this.allowSave = true;
-
+    
     // If receiving a statement from the invoker, set the field values
     // to its values.
     if (navParams.get("statement")) {

@@ -15,7 +15,8 @@ import {
 import {
   FormSequenceService,
   DataService,
-  JobPostingService
+  JobPostingService,
+  HelperService
 } from '@app/services';
 
 //=========================================================================
@@ -74,7 +75,8 @@ export class CompanyJobCreatePage {
     private alertCtrl: AlertController,
     public formSeq: FormSequenceService,
     public jobPostingService: JobPostingService,
-    public dataService: DataService
+    public dataService: DataService,
+    public helperService: HelperService
   ) {
     this.recruiter = navParams.get("recruiter");
 

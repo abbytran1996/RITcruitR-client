@@ -27,21 +27,7 @@ var SelectSearchablePage = (function () {
             }
         }
     }
-    /**
-     * @return {?}
-     */
-    SelectSearchablePage.prototype.ngAfterViewInit = /**
-     * @return {?}
-     */
-    function () {
-        var _this = this;
-        if (this.searchbarComponent) {
-            // Focus after a delay because focus doesn't work without it.
-            setTimeout(function () {
-                _this.searchbarComponent.setFocus();
-            }, 1000);
-        }
-    };
+
     /**
      * @param {?} item
      * @return {?}

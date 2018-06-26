@@ -14,6 +14,8 @@ import { MyApp } from './app.component';
 // Third party modules
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SelectSearchableModule } from 'pages/modals/ionic-select-searchable';
+import "froala-editor/js/froala_editor.pkgd.min.js";
+import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 
 // General Module
 import {
@@ -124,6 +126,8 @@ import {
     BrowserModule,
     FormsModule,
     NgbModule.forRoot(),
+    FroalaEditorModule.forRoot(),
+    FroalaViewModule.forRoot(),
     SelectSearchableModule,
     LoginPageModule,
     AdminDashboardPageModule,

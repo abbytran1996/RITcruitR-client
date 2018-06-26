@@ -20,4 +20,17 @@ export class HelperService {
       return 0;
     });
   }
+
+  //=========================================================================
+  // * GET TEXT EDITOR SETTINGS                                                 
+  //=========================================================================
+  // - Returns the config used for all of the WYSIWYG editors
+  getTextEditorSettings() {
+    return {
+      toolbarButtons: ['bold', 'italic', '|', 'undo', 'redo'],
+      quickInsertButtons: [],
+      quickInsertTags: [],
+      charCounterCount: false
+    };
+  }
 }
