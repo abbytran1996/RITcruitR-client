@@ -166,7 +166,7 @@ export class CompanyJobCreatePage {
             this.navCtrl.setRoot(CompanyTabsPage, { message: "New job successfully created" });
           },
           error => {
-            this.presentToast("There was an error creating the job. Please check on job approval status and try again later");
+            this.presentToast("There was an error creating the job. Please check on company's approval status and try again later");
             this.saving = false;
           }
         );
