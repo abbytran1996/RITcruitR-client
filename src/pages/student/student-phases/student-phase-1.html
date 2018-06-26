@@ -56,7 +56,7 @@
             </div>
             <div class="summary content-section">
               <h3 class="heading fg-dark"><ion-icon name="ios-paper" class="card-heading-icon"></ion-icon>Summary:</h3>
-              <p class="fg-dark">{{ (match.job.description.length > 4000) ? (match.job.description | slice:0:201) + '...' : (match.job.description) }}</p>
+              <p class="fg-dark" [innerHTML]="(match.job.description.length > 4000) ? (match.job.description | slice:0:201) + '...' : (match.job.description)"></p>
             </div>
           </div>
           <!-- End Match Summary Card Content -->
@@ -66,7 +66,7 @@
             <div class="company-work-statement content-section">
               <h3 class="heading fg-dark heading-spacer">
                 <ion-icon name="md-chatboxes" class="card-heading-icon"></ion-icon>Job Problem Statement<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="companyProbStatementInfo()"></ion-icon></h3>
-              <p class="fg-dark">{{ match.job.problemStatement }}</p>
+              <p class="fg-dark" [innerHTML]="match.job.problemStatement"></p>
             </div>
           </div>
           <!-- End Company Problem Statement Card Content -->
@@ -104,7 +104,7 @@
                     <button class="rec-btn-small rec-btn-deny" (click)="clearStatement()" [ngClass]="{'float-right': !hideEditBtn, 'btn-stacked center': hideEditBtn}"><ion-icon name="md-close-circle" class="rec-btn-icon to-left"></ion-icon>Clear</button>
                   </div>
                   <label class="rec-label rl-secondary">STATEMENT</label>
-                  <p class="fg-dark">{{ problemStatement.text }}</p>
+                  <p class="fg-dark" [innerHTML]="problemStatement.text"></p>
                 </div>
               </div>
             </div>
