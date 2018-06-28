@@ -38,7 +38,7 @@
 
         <ion-row *ngFor="let company of companies" (click)="updateCompany(company)" class="company-container" [ngClass]="{ 'active': currentCompany == company }" align-items-center>
           <ion-col col-4><h2>{{ company.companyName }}</h2></ion-col>
-          <ion-col class="fg-grey">01/23/2018 8:00 pm</ion-col>
+          <ion-col class="fg-grey">{{ company.timeRegistered | date: 'MMMM d, yyyy, h:mm a' }}</ion-col>
         </ion-row>
       </ion-col>
 
@@ -46,7 +46,7 @@
 
       <ion-col class="approval-form">
         <ng-template [ngIf]="currentCompany.hasOwnProperty('companyName')">
-          <span class="company-name">{{ currentCompany.companyName }}</span><span class="fg-grey">01/23/2018 8:00 pm</span>
+          <span class="company-name">{{ currentCompany.companyName }}</span><span class="fg-grey">{{ currentCompany.timeRegistered | date: 'MMMM d, yyyy, h:mm a' }}</span>
 
           <hr />
 
