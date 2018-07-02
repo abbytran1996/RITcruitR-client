@@ -10,6 +10,7 @@ export class CompanyModel {
   public websiteURL: string = "";
   public emailSuffix: string = "";
   public userId: number = null;
+  public timeRegistered: number = null;
   public presentationLinks: any = [];
 
   constructor(init?: any) {
@@ -25,6 +26,7 @@ export class CompanyModel {
       this.websiteURL = init.websiteURL || "";
       this.emailSuffix = init.emailSuffix || "";
       this.userId = init.userId || null;
+      this.timeRegistered = init.timeRegistered || null;
       this.presentationLinks = init.presentationLinks || [];
     }
   }
