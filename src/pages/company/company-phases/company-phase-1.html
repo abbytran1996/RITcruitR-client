@@ -8,5 +8,10 @@
 </ion-header>
 
 <ion-content class="bg-full-image" padding>
-  <pre class="fg-white">{{ recruiter | json }}</pre>
+  <div class="loader-wrapper" *ngIf="pageLoading">
+    <ion-spinner name="bubbles"></ion-spinner>
+  </div>
+  <div class="phase-wrapper" *ngIf="!pageLoading">
+    <pre class="fg-white">{{ currentJob | json }}</pre>
+  </div>
 </ion-content>

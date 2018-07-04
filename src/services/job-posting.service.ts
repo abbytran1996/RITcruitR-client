@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
 
+import {
+  JobModel
+} from '@app/models';
+
 import { ApiService } from './api.service';
 
 @Injectable()
@@ -7,6 +11,30 @@ export class JobPostingService {
     constructor(
         private apiService: ApiService
     ) { }
+
+    public currentJob: JobModel;
+
+    //=========================================================================
+    // * GET CURRENT JOB                                                      *
+    //=========================================================================
+    // - Gets the job that is currently being "viewed" (seeing matches).
+    //   This is used by the company phases screens to have a global
+    //   reference to the job to avoid passing it back and forth.
+    // - Returns a JobModel
+    getCurrentJob() {
+      return this.currentJob;
+    }
+
+    //=========================================================================
+    // * SET CURRENT JOB                                                      *
+    //=========================================================================
+    // - Sets the job that is currently being "viewed" (seeing matches).
+    //   This is used by the company phases screens to have a global
+    //   reference to the job to avoid passing it back and forth.
+    // - Expects a JobModel
+    setCurrentJob(job: JobModel) {
+      this.currentJob = job;
+    }
 
     //=========================================================================
     // * GET JOB BY ID                                                        *

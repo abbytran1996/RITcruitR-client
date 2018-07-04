@@ -98,6 +98,14 @@ export class CompanyTabsPage {
     this.events.subscribe('tabs:setActive', (tabIndex) => {
       this.setActiveTab(tabIndex);
     });
+
+    this.events.subscribe('tabs:createJob', (recruiter) => {
+      this.createCompanyJob();
+    });
+
+    this.events.subscribe('tabs:importJob', (recruiter) => {
+
+    });
   }
 
   /*

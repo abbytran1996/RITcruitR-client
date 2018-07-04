@@ -8,11 +8,37 @@
 </ion-header>
 
 <ion-content class="bg-full-image" padding>
-  <div class="job-matches-header">
-    <h3 class="text-pill bg-white fg-accent text-center center" (click)="viewJobMatches()">Matches Found!</h3>
-    <p class="fg-white text-center bold">The jobs listed below have submissions by matched students. Tap one to review the matches.</p>
+  <div class="loader-wrapper" *ngIf="pageLoading">
+    <ion-spinner name="bubbles"></ion-spinner>
   </div>
-  <div class="job-matches-content">
-    
+  <div class="job-matches-wrapper" *ngIf="!pageLoading && jobList != undefined && jobList.length > 0">
+    <div class="job-matches-header">
+      <h3 class="text-pill bg-white fg-accent text-center center" (click)="viewJobMatches()">Matches Found!</h3>
+      <p class="fg-white text-center bold">The jobs listed below have submissions by matched students. Tap one to review the matches.</p>
+    </div>
+    <div class="job-matches-list">
+      <ion-list>
+        <ion-item-sliding *ngFor="let job of jobList" class="list-item-card outer final-match fake-link">
+          <ion-item class="list-item-card inner" (click)="viewJobMatches(job)">
+            <ion-icon name='md-alert' class="item-card-icon fg-primary"></ion-icon>
+            <div class="item-card-content with-icon">
+              <h5 class="fg-dark">{{ job.positionTitle }}</h5>
+              <p class="fg-grey">{{ job.locations[0] }}</p>
+            </div>
+          </ion-item>
+        </ion-item-sliding>
+      </ion-list>
+    </div>
   </div>
+
+  <!-- Empty List Message -->
+  <div class="match-list-empty" *ngIf="!pageLoading && (jobList == undefined || jobList.length == 0)">
+    <ion-icon name="md-alert" class=""></ion-icon>
+    <div class="sep-horizontal-1"></div>
+    <h3 class="fg-white text-center">You don't have any jobs created on RecruitR. Create or import one using the buttons below.</h3>
+    <div class="sep-horizontal-1"></div>
+    <button class="rec-btn rec-btn-white btn-stacked center" (click)="createJobLink()">Create Job</button>
+    <button class="rec-btn rec-btn-white btn-stacked center" (click)="importJobLink()">Import Job</button>
+  </div>
+  <!-- End Empty List Message -->
 </ion-content>
