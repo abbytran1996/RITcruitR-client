@@ -9,6 +9,7 @@ import { PresentationLinkAddModal } from '@app/pages/modals';
 
 import {
   NewJobModel,
+  JobModel,
   RecruiterModel
 } from '@app/models';
 
@@ -62,10 +63,12 @@ export class CompanyJobCreatePage {
   linksList = [];
 
   // Implementation specific variables
-  public jobModel = new NewJobModel();
+  public jobModel: any = new NewJobModel();
+  public editMode = false;
   public recruiter: RecruiterModel;
   public saving = false;
   public loading = false;
+  public showErrorDots = false;
 
   constructor(
     public navCtrl: NavController,
@@ -79,6 +82,14 @@ export class CompanyJobCreatePage {
     public helperService: HelperService
   ) {
     this.recruiter = navParams.get("recruiter");
+    if (navParams.get("job")) {
+      this.jobModel = new JobModel(navParams.get("job"));
+      this.jobModel.niceToHaveSkillsWeight = this.jobModel.niceToHaveSkillsWeight * 100;
+      this.jobModel.matchThreshold = this.jobModel.matchThreshold * 100;
+      this.linksList = this.jobModel.presentationLinks.slice(0);
+      this.editMode = true;
+      this.showErrorDots = true;
+    }
 
     this.formSeq.reset();
     this.formSeq.startStep = navParams.get("startStep") || 0;
@@ -109,6 +120,25 @@ export class CompanyJobCreatePage {
       data => {
         this.reqSkillOptions = data;
         this.nthSkillOptions = data;
+
+        // Set the local skills lists to reflect the edit model if edit mode
+        if (this.editMode) {
+          this.reqSkills = [];
+          this.jobModel.requiredSkills.forEach(skill => {
+            let skillIndex = this.reqSkillOptions.findIndex(skillOption => skillOption.id == skill.id);
+            if (skillIndex && skillIndex > -1) {
+              this.reqSkills.push(this.reqSkillOptions[skillIndex]);
+            }
+          });
+
+          this.nthSkills = [];
+          this.jobModel.niceToHaveSkills.forEach(skill => {
+            let skillIndex = this.nthSkillOptions.findIndex(skillOption => skillOption.id == skill.id);
+            if (skillIndex && skillIndex > -1) {
+              this.nthSkills.push(this.nthSkillOptions[skillIndex]);
+            }
+          });
+        }
       },
       error => {
         this.presentToast("There was an error retrieving the list of skills, please try again");
@@ -153,25 +183,36 @@ export class CompanyJobCreatePage {
 
     if (this.formSeq.currentForm && this.formSeq.currentForm.valid && customValid) {
       if (this.formSeq.currentStep == this.formSeq.maxSteps) {
-        this.saving = true;
-        this.jobModel.requiredSkills = this.reqSkills;
-        this.jobModel.niceToHaveSkills = this.nthSkills;
-        this.jobModel.presentationLinks = this.linksList;
-        this.jobModel.recruiterId = this.recruiter.id;
-        this.jobModel.niceToHaveSkillsWeight = this.jobModel.niceToHaveSkillsWeight / 100;
-        this.jobModel.matchThreshold = this.jobModel.matchThreshold / 100;
+        this.showErrorDots = true;
+        
+        // On last step check again that all steps are valid since step jumping is allowed
+        if (this.allFormsValid()) {
 
-        // Create the job using the API
-        this.jobPostingService.addJob(this.recruiter.company.id, this.jobModel).subscribe(
-          data => {
-            this.saving = false;
-            this.navCtrl.setRoot(CompanyTabsPage, { message: "New job successfully created" });
-          },
-          error => {
-            this.presentToast("There was an error creating the job. Please check on company's approval status and try again later");
-            this.saving = false;
+          // Create or update the job depending on the mode
+          if (!this.editMode) {
+            this.saving = true;
+            this.prepJobForSave();
+
+            // Create the job using the API
+            this.jobPostingService.addJob(this.recruiter.company.id, this.jobModel).subscribe(
+              data => {
+                this.saving = false;
+                this.navCtrl.setRoot(CompanyTabsPage, { message: this.jobModel.positionTitle + " job created successfully" });
+              },
+              error => {
+                this.presentToast("There was an error creating the job. Please check on company's approval status and try again later");
+                this.saving = false;
+              }
+            );
           }
-        );
+          else {
+            this.updateJob();
+          }
+        }
+        else {
+          this.presentToast("The job cannot be saved. Check that each input is valid.");
+          this.saving = false;
+        }
       }
       else {
         this.formSeq.nextStep();
@@ -186,6 +227,69 @@ export class CompanyJobCreatePage {
     else {
       this.presentToast(this.formSeq.formErrorMessages[this.formSeq.currentStep]);
     }
+  }
+
+  /*
+    Set various job fields to be prepared to save/update the job in the DB.
+  */
+  prepJobForSave() {
+    this.jobModel.requiredSkills = this.reqSkills;
+    this.jobModel.niceToHaveSkills = this.nthSkills;
+    this.jobModel.presentationLinks = this.linksList.slice(0);
+    this.jobModel.recruiterId = this.recruiter.id;
+    this.jobModel.niceToHaveSkillsWeight = this.jobModel.niceToHaveSkillsWeight / 100;
+    this.jobModel.matchThreshold = this.jobModel.matchThreshold / 100;
+  }
+
+  /*
+    Save the job via an update rather than a new creation.
+  */
+  updateJob() {
+    this.saving = true;
+
+    if (this.allFormsValid()) {
+      this.prepJobForSave();
+
+      // Update the job using the API
+      this.jobPostingService.updateJob(this.jobModel).subscribe(
+        data => { },
+        res => {
+          this.saving = false;
+          this.navCtrl.setRoot(CompanyTabsPage, { message: this.jobModel.positionTitle + " job updated successfully" });
+        }
+      );
+    }
+    else {
+      this.presentToast("The job cannot be updated. Check that each input is valid.");
+      this.saving = false;
+    }
+  }
+
+  /*
+    Checks that every form at each step is valid. Returns boolean.
+  */
+  allFormsValid() {
+    let customValid = true;
+
+    // Custom validation for certain steps
+    if (this.reqSkills.length == 0) {
+      customValid = false;
+    }
+
+    if (this.linksList.length < 1 || this.linksList.length > 3) {
+      customValid = false;
+    }
+
+    return this.form0.valid && this.form1.valid && this.form2.valid && this.form3.valid
+      && this.form4.valid && this.form5.valid && this.form6.valid && this.form7.valid
+      && customValid;
+  }
+
+  /*
+    Set the form to the given step index.
+  */
+  setStep(step) {
+    this.formSeq.setStep(step);
   }
 
   /*
@@ -301,16 +405,6 @@ export class CompanyJobCreatePage {
     this.showAlert(
       "Minimum GPA",
       "Students with a GPA below this number will not be matched."
-    );
-  }
-
-  /*
-    Show an alert dialog explaining has work experience.
-  */
-  workExperienceInfo() {
-    this.showAlert(
-      "Has Work Experience",
-      "If toggled on, students with no work experience on their profile will not be matched."
     );
   }
 

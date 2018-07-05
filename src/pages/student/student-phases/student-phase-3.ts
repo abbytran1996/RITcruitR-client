@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, ToastController, Events } from 'ionic-angular';
 import { CallNumber } from '@ionic-native/call-number';
 
 import {
@@ -38,7 +38,8 @@ export class StudentPhase3Page {
     private alertCtrl: AlertController,
     private toastCtrl: ToastController,
     private studentService: StudentService,
-    private callNumber: CallNumber
+    private callNumber: CallNumber,
+    public events: Events
   ) {
     this.student= navParams.get("student");
   }
@@ -63,6 +64,32 @@ export class StudentPhase3Page {
   }
 
   /*
+    Called upon pulldown refresh, refresh the matches.
+  */
+  doRefresh(refresher) {
+    this.getFinalMatches(() => {
+      refresher.complete();
+    });
+  }
+
+  /*
+    Called when the match card is swiped in any direction. Determine threshold and call proper function.
+    backDecline or interested.
+  */
+  swipe(event) {
+    if (event.direction == 4) { // swipe right
+      if (this.reviewStep > 0) {
+        this.cardPrev();
+      }
+    }
+    if (event.direction == 2) { // swipe left
+      if (this.reviewStep < this.reviewStepMax) {
+        this.cardNext();
+      }
+    }
+  }
+
+  /*
     Show the match detail screen for the match that was clicked.
   */
   matchDetails(match) {
@@ -80,6 +107,7 @@ export class StudentPhase3Page {
     this.detailMode = false;
     this.reviewMode = false;
     this.reviewStep = 0;
+    this.getFinalMatches();
   }
 
   /*
@@ -137,10 +165,11 @@ export class StudentPhase3Page {
   postArchive() {
     this.backToList();
     this.getFinalMatches();
+    this.events.publish('tab:numMatches', this.student);
   }
 
   /*
-    Start a call with thew recruiter for the given match.
+    Start a call with the recruiter for the given match.
   */
   callRecruiter(match) {
     this.callNumber.callNumber(match.job.recruiter.phoneNumber, true)
@@ -380,9 +409,8 @@ export class StudentPhase3Page {
   /*
     Get the list of "final" phase 3 matches for the current student.
   */
-  getFinalMatches() {
-    this.pageLoading = true;
-    this.matchList = this.studentService.getFinalMatches(this.student.id).subscribe(
+  getFinalMatches(callback?) {
+    this.studentService.getFinalMatches(this.student.id).subscribe(
       res => {
         this.matchList = res;
 
@@ -393,11 +421,15 @@ export class StudentPhase3Page {
             else return 0;
           });
 
+          this.events.publish('tab:numMatches', this.student);
+
           this.pageLoading = false;
         }
         else {
           this.pageLoading = false;
         }
+
+        if (callback != undefined) callback();
       },
       error => {
         console.log("Error getting final matches");

@@ -102,6 +102,44 @@ export class FormSequenceService {
   }
 
   /*
+    Set the form sequence step to the given step.
+  */
+  setStep(step) {
+    this.switchingStep = true;
+    let lastStep = this.currentStep;
+
+    if (step > this.currentStep) {
+      this.formClasses[this.currentStep] = "ani-outleft";
+      this.currentStep = step;
+      this.formClasses[this.currentStep] = "ani-hide";
+      setTimeout(() => {
+        this.formClasses[lastStep] = this.formClasses[lastStep] + " ani-hide";
+        this.formClasses[this.currentStep] = "ani-inright";
+      }, 600);
+      setTimeout(() => {
+        this.formClasses[this.currentStep] = "";
+        this.switchingStep = false;
+      }, 900);
+    }
+    else if (step < this.currentStep) {
+      this.formClasses[this.currentStep] = "ani-outright";
+      this.currentStep = step;
+      this.formClasses[this.currentStep] = "ani-hide";
+      setTimeout(() => {
+        this.formClasses[lastStep] = this.formClasses[lastStep] + " ani-hide";
+        this.formClasses[this.currentStep] = "ani-inleft";
+      }, 600);
+      setTimeout(() => {
+        this.formClasses[this.currentStep] = "";
+        this.switchingStep = false;
+      }, 900);
+    }
+
+    this.currentForm = this.stepForms[this.currentStep];
+    this.calculateProgressWidth();
+  }
+
+  /*
     Calculate the width of the progress bar based on the current and max steps in the sequence.
   */
   calculateProgressWidth() {

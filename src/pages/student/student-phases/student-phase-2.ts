@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController, ToastController, AlertController } from 'ionic-angular';
+import { NavController, NavParams, ModalController, ToastController, AlertController, Events } from 'ionic-angular';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { PresentationLinkAddModal } from '@app/pages/modals';
@@ -13,8 +13,6 @@ import {
   StudentService,
   HelperService
 } from '@app/services';
-
-const fadeTime = 400;
 
 //=========================================================================
 // * StudentPhase2Page                                                   
@@ -67,7 +65,8 @@ export class StudentPhase2Page {
     private alertCtrl: AlertController,
     private studentService: StudentService,
     private helperService: HelperService,
-    private iab: InAppBrowser
+    private iab: InAppBrowser,
+    public events: Events
   ) {
     this.student = navParams.get("student");
   }
@@ -81,6 +80,15 @@ export class StudentPhase2Page {
       this.pageLoading = true;
       this.getPhase2Matches();
     }
+  }
+
+  /*
+    Called upon pulldown refresh, refresh the matches.
+  */
+  doRefresh(refresher) {
+    this.getPhase2Matches(() => {
+      refresher.complete();
+    });
   }
 
   /*
@@ -136,10 +144,13 @@ export class StudentPhase2Page {
         // API call to submit match with presentation links
         this.studentService.submitMatchPresentationPhase(this.match.id, this.match.studentPresentationLinks).subscribe(
           res => { },
-          error => {
-            if (!error || error.status != 200) {
+          res => {
+            this.linksList = [];
+            this.events.publish('tab:numMatches', this.student);
+
+            if (!res || res.status != 200) {
               console.log("Error submitting presentation links");
-              console.log(error);
+              console.log(res);
             }
           }
         );
@@ -160,10 +171,13 @@ export class StudentPhase2Page {
     if (this.stage == 0) {
       this.studentService.declineMatch(this.match.id).subscribe(
         data => { },
-        error => {
-          if (!error || error.status != 200) {
+        res => {
+          this.linksList = [];
+          this.events.publish('tab:numMatches', this.student);
+
+          if (!res || res.status != 200) {
             console.log("Error declining match");
-            console.log(error);
+            console.log(res);
           }
         }
       );
@@ -171,7 +185,7 @@ export class StudentPhase2Page {
       this.fadeLeft = true;
 
       setTimeout(() => {
-        removeMatchFromArray(this.matchList, this.match);
+        this.matchList = this.helperService.removeFromArrayById(this.matchList, this.match);
         this.nextMatch();
         this.fadeLeft = false;
         this.fadeRightInstant = true;
@@ -179,7 +193,7 @@ export class StudentPhase2Page {
         setTimeout(() => {
           this.fadeRightInstant = false;
         }, 100);
-      }, fadeTime);
+      }, this.helperService.getCardFadeTime());
     }
     else {
       this.stage--;
@@ -258,10 +272,10 @@ export class StudentPhase2Page {
 
         setTimeout(() => {
           this.stage = 0;
-        }, fadeTime / 2);
+        }, this.helperService.getCardFadeTime() / 2);
 
         setTimeout(() => {
-          removeMatchFromArray(this.matchList, this.match);
+          this.matchList = this.helperService.removeFromArrayById(this.matchList, this.match);
           this.nextMatch();
           this.fadeLeft = false;
           this.fadeRightInstant = true;
@@ -269,7 +283,7 @@ export class StudentPhase2Page {
           setTimeout(() => {
             this.fadeRightInstant = false;
           }, 100);
-        }, fadeTime);
+        }, this.helperService.getCardFadeTime());
 
         setTimeout(() => {
           this.matchSuccessFade = false;
@@ -287,8 +301,8 @@ export class StudentPhase2Page {
   /*
     Get the list of phase 2 matches for the student.
   */
-  getPhase2Matches() {
-    this.matchList = this.studentService.getPhase2Matches(this.student.id).subscribe(
+  getPhase2Matches(callback?) {
+    this.studentService.getPhase2Matches(this.student.id).subscribe(
       res => {
         this.matchList = res;
 
@@ -299,12 +313,17 @@ export class StudentPhase2Page {
             else return 0;
           });
 
+          this.events.publish('tab:numMatches', this.student);
+
           this.matchIndex = 0;
           this.prepMatch();
+          this.pageLoading = false;
         }
         else {
           this.pageLoading = false;
         }
+
+        if (callback != undefined) callback();
       },
       error => {
         console.log("Error getting presentation phase matches");
@@ -370,26 +389,5 @@ export class StudentPhase2Page {
       buttons: ['Dismiss']
     });
     alert.present();
-  }
-}
-
-/*
-  Remove the given match from the given array.
-  This is needed because a simple index splice inline
-  is causing ordering issues.
-*/
-function removeMatchFromArray(array, match) {
-  let index = 0;
-  let indexToRemove = -1;
-  array.forEach(matchInArr => {
-    if (matchInArr.id == match.id) {
-      indexToRemove = index;
-    }
-
-    index++;
-  });
-
-  if (indexToRemove > -1) {
-    array.splice(indexToRemove, 1);
   }
 }

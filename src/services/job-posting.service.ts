@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
 
+import {
+  JobModel
+} from '@app/models';
+
 import { ApiService } from './api.service';
 
 @Injectable()
@@ -7,6 +11,30 @@ export class JobPostingService {
     constructor(
         private apiService: ApiService
     ) { }
+
+    public currentJob: JobModel;
+
+    //=========================================================================
+    // * GET CURRENT JOB                                                      *
+    //=========================================================================
+    // - Gets the job that is currently being "viewed" (seeing matches).
+    //   This is used by the company phases screens to have a global
+    //   reference to the job to avoid passing it back and forth.
+    // - Returns a JobModel
+    getCurrentJob() {
+      return this.currentJob;
+    }
+
+    //=========================================================================
+    // * SET CURRENT JOB                                                      *
+    //=========================================================================
+    // - Sets the job that is currently being "viewed" (seeing matches).
+    //   This is used by the company phases screens to have a global
+    //   reference to the job to avoid passing it back and forth.
+    // - Expects a JobModel
+    setCurrentJob(job: JobModel) {
+      this.currentJob = job;
+    }
 
     //=========================================================================
     // * GET JOB BY ID                                                        *
@@ -111,5 +139,101 @@ export class JobPostingService {
     // - Returns 200 (OK) response
     fulfillJob(jobId) {
         return this.apiService.post('/jobposting/' + jobId + 'fulfill');
+    }
+
+    //=========================================================================
+    // * GET PROBLEM PHASE MATCHES BY JOB                                     *
+    //=========================================================================
+    // - Returns a list of matches in the recruiter problem phase by the
+    //   given job id.
+    // - Expects a job id number
+    // - Returns a list of MatchModels
+    getProblemPhaseMatchesByJob(jobId) {
+      return this.apiService.get('/matches/posting/' + jobId + '?phase=problem');
+    }
+
+    //=========================================================================
+    // * GET PRESENTATION PHASE MATCHES BY JOB                                *
+    //=========================================================================
+    // - Returns a list of matches in the recruiter presentation phase by the
+    //   given job id.
+    // - Expects a job id number
+    // - Returns a list of MatchModels
+    getPresentationPhaseMatchesByJob(jobId) {
+      return this.apiService.get('/matches/posting/' + jobId + '?phase=presentation');
+    }
+
+    //=========================================================================
+    // * GET FINAL PHASE MATCHES BY JOB                                       *
+    //=========================================================================
+    // - Returns a list of matches in the final phase by the
+    //   given job id.
+    // - Expects a job id number
+    // - Returns a list of MatchModels
+    getFinalPhaseMatchesByJob(jobId) {
+      return this.apiService.get('/matches/posting/' + jobId + '?phase=interview');
+    }
+
+    //=========================================================================
+    // * ACCEPT MATCH                                                         *
+    //=========================================================================
+    // - Accepts a given match
+    // - Expects a Match id number
+    // - Returns 200 (OK) response
+    acceptMatch(matchId) {
+        return this.apiService.patch('/matches/' + matchId + "/approve");
+    }
+
+    //=========================================================================
+    // * DECLINE MATCH                                                        *
+    //=========================================================================
+    // - Declines a given match
+    // - Expects a Match id number
+    // - Returns 200 (OK) response
+    declineMatch(matchId) {
+        return this.apiService.patch('/matches/' + matchId + "/decline");
+    }
+
+    //=========================================================================
+    // * ARCHIVE MATCH                                                        *
+    //=========================================================================
+    // - Archive a match with the given id
+    // - Expects a MatchModel id number
+    // - Returns 200 (OK) response
+    archiveMatch(matchId) {
+        return this.apiService.patch("/matches/" + matchId + "/archive");
+    }
+
+    //=========================================================================
+    // * GET NUM PHASE 1 MATCHES                                              *
+    //=========================================================================
+    // - Gets the number matches the job with the given id has in the
+    //   problem phase
+    // - Expects a JobModel id number
+    // - Returns the number of matches in that phase
+    getNumPhase1Matches(jobId) {
+        return this.apiService.get("/matches/posting/" + jobId + "/count?phase=problem");
+    }
+
+    //=========================================================================
+    // * GET NUM PHASE 2 MATCHES                                              *
+    //=========================================================================
+    // - Gets the number matches the job with the given id has in the
+    //   presentation phase
+    // - Expects a JobModel id number
+    // - Returns the number of matches in that phase
+    getNumPhase2Matches(jobId) {
+        return this.apiService.get("/matches/posting/" + jobId + "/count?phase=presentation");
+    }
+
+    //=========================================================================
+    // * GET NUM FINAL MATCHES                                                *
+    //=========================================================================
+    // - Gets the number matches the job with the given id has in the
+    //   final phase
+    // - Expects a JobModel id number
+    // - Returns the number of matches in that phase
+    getNumFinalMatches(jobId) {
+        return this.apiService.get("/matches/posting/" + jobId + "/count?phase=interview");
     }
 }

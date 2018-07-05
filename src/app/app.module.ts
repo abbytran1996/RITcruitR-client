@@ -16,6 +16,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SelectSearchableModule } from 'pages/modals/ionic-select-searchable';
 import "froala-editor/js/froala_editor.pkgd.min.js";
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
+import { MomentModule } from 'ngx-moment';
 
 // General Module
 import {
@@ -128,6 +129,7 @@ import {
     NgbModule.forRoot(),
     FroalaEditorModule.forRoot(),
     FroalaViewModule.forRoot(),
+    MomentModule,
     SelectSearchableModule,
     LoginPageModule,
     AdminDashboardPageModule,

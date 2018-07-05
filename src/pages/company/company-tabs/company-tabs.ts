@@ -18,7 +18,8 @@ import { RecruiterModel } from '@app/models';
 
 import {
   AuthService,
-  RecruiterService
+  RecruiterService,
+  JobPostingService
 } from '@app/services';
 
 //=========================================================================
@@ -41,6 +42,10 @@ export class CompanyTabsPage {
   public companyPhase3Tab = CompanyPhase3Page;
   public recruiterTabParams: any;
 
+  public numPhase1Matches;
+  public numPhase2Matches;
+  public numFinalMatches;
+
   // User data
   public recruiter: RecruiterModel;
   public loadingRecruiter = true;
@@ -54,6 +59,7 @@ export class CompanyTabsPage {
     public navParams: NavParams,
     private authService: AuthService,
     private recruiterService: RecruiterService,
+    private jobPostingService: JobPostingService,
     public events: Events
   ) {
     this.recruiter = navParams.get("recruiter");
@@ -98,6 +104,22 @@ export class CompanyTabsPage {
     this.events.subscribe('tabs:setActive', (tabIndex) => {
       this.setActiveTab(tabIndex);
     });
+
+    this.events.subscribe('tabs:createJob', (recruiter) => {
+      this.createCompanyJob();
+    });
+
+    this.events.subscribe('tabs:editJob', (job) => {
+      this.editCompanyJob(job);
+    });
+
+    this.events.subscribe('tabs:importJob', (recruiter) => {
+      // TODO: Call job import
+    });
+
+    this.events.subscribe('tabs:numMatches', (job) => {
+      this.getNumMatches(job);
+    });
   }
 
   /*
@@ -106,6 +128,36 @@ export class CompanyTabsPage {
   ionViewDidLeave() {
     this.events.unsubscribe("tabs:setHidden");
     this.events.unsubscribe("tabs:setActive");
+    this.events.unsubscribe("tabs:createJob");
+    this.events.unsubscribe("tabs:importJob");
+    this.events.unsubscribe("tabs:editJob");
+    this.events.unsubscribe("tabs:numMatches");
+  }
+
+  /*
+    Get the number of macthes in each phase.
+  */
+  getNumMatches(job) {
+    // Get phase 1 num
+    this.jobPostingService.getNumPhase1Matches(job.id).subscribe(
+      data1 => {
+        this.numPhase1Matches = data1;
+
+        // Get phase 2 num
+        this.jobPostingService.getNumPhase2Matches(job.id).subscribe(
+          data2 => {
+            this.numPhase2Matches = data2;
+
+            // Get final phase num
+            this.jobPostingService.getNumFinalMatches(job.id).subscribe(
+              data3 => {
+                this.numFinalMatches = data3;
+              }, res => { }
+            );
+          }, res => { }
+        );
+      }, res => { }
+    );
   }
 
   /*
@@ -117,6 +169,12 @@ export class CompanyTabsPage {
 
   setActiveTab(tabIndex) {
     this.tabRef.select(tabIndex);
+
+    if (tabIndex == 0) {
+      this.numPhase1Matches = undefined;
+      this.numPhase2Matches = undefined;
+      this.numFinalMatches = undefined;
+    }
   }
 
   /*
@@ -124,6 +182,13 @@ export class CompanyTabsPage {
   */
   createCompanyJob() {
     this.navCtrl.push(CompanyJobCreatePage, {recruiter: this.recruiter});
+  }
+
+  /*
+    Edit a job as a recruiter.
+  */
+  editCompanyJob(job) {
+    this.navCtrl.push(CompanyJobCreatePage, { recruiter: this.recruiter, job: job });
   }
 
   /*

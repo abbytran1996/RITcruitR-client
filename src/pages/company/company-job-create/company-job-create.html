@@ -21,6 +21,32 @@
           <div class="progress-bar">
             <div class="bar" [style.width.%]="formSeq.progressWidth"></div>
           </div>
+          <div class="progress-dots">
+            <div class="progress-dot fake-link"
+                [ngClass]="{'active': formSeq.currentStep == 0, 'error': form0.invalid && showErrorDots}" 
+                (click)="setStep(0)">1</div>
+            <div class="progress-dot fake-link"
+                [ngClass]="{'active': formSeq.currentStep == 1, 'error': form1.invalid && showErrorDots}"
+                (click)="setStep(1)">2</div>
+            <div class="progress-dot fake-link"
+                [ngClass]="{'active': formSeq.currentStep == 2, 'error': reqSkills.length == 0 && showErrorDots}"
+                (click)="setStep(2)">3</div>
+            <div class="progress-dot fake-link"
+                [ngClass]="{'active': formSeq.currentStep == 3, 'error': form3.invalid && showErrorDots}"
+                (click)="setStep(3)">4</div>
+            <div class="progress-dot fake-link"
+                [ngClass]="{'active': formSeq.currentStep == 4, 'error': form4.invalid && showErrorDots}"
+                (click)="setStep(4)">5</div>
+            <div class="progress-dot fake-link"
+                [ngClass]="{'active': formSeq.currentStep == 5, 'error': form5.invalid && showErrorDots}"
+                (click)="setStep(5)">6</div>
+            <div class="progress-dot fake-link"
+                [ngClass]="{'active': formSeq.currentStep == 6, 'error': form6.invalid && showErrorDots}"
+                (click)="setStep(6)">7</div>
+            <div class="progress-dot fake-link"
+                [ngClass]="{'active': formSeq.currentStep == 7, 'error': (linksList.length == 0 || linksList.length > 3) && showErrorDots}"
+                (click)="setStep(7)">8</div>
+          </div>
         </div>
       </ion-col>
     </ion-row>
@@ -140,12 +166,6 @@
           <label class="rec-label rl-secondary">MINIMUM GPA<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="minGpaInfo()"></ion-icon></label>
           <input type="number" name="minGpa" class="rec-input ri-grey" [(ngModel)]="jobModel.minGpa">
         </div>
-        <div class="rec-input-group">
-          <label class="rec-label rl-secondary">HAS WORK EXPERIENCE<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="workExperienceInfo()"></ion-icon></label>
-          <ion-item class="ghost-ion-item float-right">
-            <ion-toggle name="hasWorkExperience" class="rec-input" checked="false" [(ngModel)]="jobModel.hasWorkExperience"></ion-toggle>
-          </ion-item>
-        </div>
       </form>
     </ion-col>
   </ion-row>
@@ -210,8 +230,12 @@
 <!-- Button Footer -->
 <ion-footer class="button-footer">
   <ion-row>
-    <button class="rec-btn rec-btn-primary btn-stacked center rec-load-btn" (click)="continueClicked()" [disabled]="saving">
-      {{ (formSeq.currentStep == formSeq.maxSteps) ? ((saving) ? '' : 'Finish') : 'Continue' }}
+     <button class="rec-btn-circle-large rec-btn-accent rec-load-btn save-btn" (click)="updateJob()" [disabled]="saving" [hidden]="!editMode || formSeq.currentStep == formSeq.maxSteps">
+      <ion-icon><i class="fa fa-floppy-o" [hidden]="saving"></i></ion-icon>
+      <ion-spinner class="white" name="dots" [hidden]="!saving"></ion-spinner>
+    </button>
+    <button class="rec-btn-primary rec-load-btn" (click)="continueClicked()" [ngClass]="{'rec-btn btn-stacked center': !editMode || formSeq.currentStep == formSeq.maxSteps, 'rec-btn-small continue-btn': editMode && formSeq.currentStep != formSeq.maxSteps}" [disabled]="saving">
+      {{ (formSeq.currentStep == formSeq.maxSteps) ? ((saving) ? '' : ((editMode) ? 'Save' : 'Finish')) : ((saving) ? '' : 'Continue') }}
       <ion-spinner class="white" name="dots" [hidden]="!saving"></ion-spinner>
     </button>
   </ion-row>

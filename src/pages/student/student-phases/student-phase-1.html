@@ -8,6 +8,10 @@
 </ion-header>
 
 <ion-content class="bg-full-image" padding no-bounce>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  
   <div class="match-card-success" [ngClass]="{'fade': matchSuccessFade, 'transform': matchSuccessTransform}" [hidden]="!matchSuccess">
     <ion-icon name="checkmark-circle" class="content" [ngClass]="{'fade': matchSuccessContentFade}"></ion-icon>
   </div>
@@ -31,6 +35,10 @@
               {{ (matchPoints.industry) ? match.matchedIndustry : match.job.company.industries[0] }}
               <span class="match-check" [hidden]="!matchPoints.industry"><ion-icon name="checkmark" class=""></ion-icon></span>
             </p>
+            <div class="duration-wrapper" [ngClass]="{'duration-notice': match.job.duration < 4, 'duration-urgent': match.job.duration == 1}">
+              <ion-icon class="duration-icon" name="md-time"></ion-icon>
+              <span>{{ match.job.duration }}</span>
+            </div>
           </div>
           <!-- End Card Header -->
 
@@ -135,8 +143,8 @@
       <div class="sep-horizontal-1"></div>
       <h3 class="fg-white text-center">You don't have any matched job positions. Perhaps update your skills and job preferences to increase your number of matches.</h3>
       <div class="sep-horizontal-1"></div>
-      <button class="rec-btn rec-btn-white btn-stacked center" (click)="editSkills()">Edit Skills</button>
-      <button class="rec-btn rec-btn-white btn-stacked center" (click)="editPrefs()">Edit Job Preferences</button>
+      <button class="rec-btn-small-wide rec-btn-white btn-stacked center" (click)="editSkills()">Edit Skills</button>
+      <button class="rec-btn-small-wide rec-btn-white btn-stacked center" (click)="editPrefs()">Edit Preferences</button>
     </div>
   </div>
 </ion-content>

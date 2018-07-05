@@ -8,6 +8,10 @@
 </ion-header>
 
 <ion-content class="bg-full-image" padding>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  
   <div class="loader-wrapper" *ngIf="pageLoading">
     <ion-spinner name="bubbles"></ion-spinner>
   </div>
@@ -116,7 +120,7 @@
       <!-- End Contact Card -->
 
       <!-- Review Card -->
-      <div class="match-card match-review-card review" [hidden]="!reviewMode">
+      <div class="match-card match-review-card review" [hidden]="!reviewMode" (swipe)="swipe($event)" id="swipe-card">
         <div class="match-card-header">
           <h3 class="title fg-primary text-center">{{ currentMatch.job.positionTitle }}</h3>
           <p class="fg-grey text-center">
@@ -152,7 +156,7 @@
         <div class="match-card-content" [ngClass]="{'slide-left': reviewStep > 1, 'slide-right': reviewStep < 1} ">
           <div class="skills content-section">
             <h3 class="heading fg-dark"><ion-icon name="ios-paper" class="card-heading-icon"></ion-icon>Job Summary</h3>
-            <p class="fg-dark">{{ currentMatch.job.description }}</p>
+            <p class="fg-dark" [innerHTML]="currentMatch.job.description"></p>
           </div>
         </div>
         <!-- End Step 1 -->
@@ -165,7 +169,7 @@
               Job Problem Statement
               <ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="companyProbStatementInfo()"></ion-icon>
             </h3>
-            <p class="fg-dark">{{ currentMatch.job.problemStatement }}</p>
+            <p class="fg-dark" [innerHTML]="currentMatch.job.problemStatement"></p>
           </div>
         </div>
         <!-- End Step 2 -->
@@ -178,7 +182,7 @@
               Your Problem Statement
               <ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="yourProbStatementInfo()"></ion-icon>
             </h3>
-            <p class="fg-dark">{{ currentMatch.studentProblemResponse }}</p>
+            <p class="fg-dark" [innerHTML]="currentMatch.studentProblemResponse"></p>
           </div>
         </div>
         <!-- End Step 3 -->
@@ -220,9 +224,9 @@
         <!-- End Step 5 -->
 
         <div class="match-card-footer">
-            <button class="rec-btn-small float-left" (click)="cardPrev()" [disabled]="reviewStep == 0"><ion-icon name="ios-arrow-back" class="card-heading-icon"></ion-icon>Back</button>
-            <button class="rec-btn-small float-right" (click)="cardNext()" [disabled]="reviewStep == reviewStepMax">Next<ion-icon name="ios-arrow-forward" class="card-heading-icon-right"></ion-icon></button>
-          </div>
+          <button class="rec-btn-small float-left" (click)="cardPrev()" [disabled]="reviewStep == 0"><ion-icon name="ios-arrow-back" class="card-heading-icon"></ion-icon>Back</button>
+          <button class="rec-btn-small float-right" (click)="cardNext()" [disabled]="reviewStep == reviewStepMax">Next<ion-icon name="ios-arrow-forward" class="card-heading-icon-right"></ion-icon></button>
+        </div>
       </div>
       <!-- End Review Card -->
 
