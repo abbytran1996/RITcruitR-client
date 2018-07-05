@@ -63,6 +63,15 @@ export class StudentPhase3Page {
   }
 
   /*
+    Called upon pulldown refresh, refresh the matches.
+  */
+  doRefresh(refresher) {
+    this.getFinalMatches(() => {
+      refresher.complete();
+    });
+  }
+
+  /*
     Called when the match card is swiped in any direction. Determine threshold and call proper function.
     backDecline or interested.
   */
@@ -157,7 +166,7 @@ export class StudentPhase3Page {
   }
 
   /*
-    Start a call with thew recruiter for the given match.
+    Start a call with the recruiter for the given match.
   */
   callRecruiter(match) {
     this.callNumber.callNumber(match.job.recruiter.phoneNumber, true)
@@ -397,9 +406,8 @@ export class StudentPhase3Page {
   /*
     Get the list of "final" phase 3 matches for the current student.
   */
-  getFinalMatches() {
-    this.pageLoading = true;
-    this.matchList = this.studentService.getFinalMatches(this.student.id).subscribe(
+  getFinalMatches(callback?) {
+    this.studentService.getFinalMatches(this.student.id).subscribe(
       res => {
         this.matchList = res;
 
@@ -415,6 +423,8 @@ export class StudentPhase3Page {
         else {
           this.pageLoading = false;
         }
+
+        if (callback != undefined) callback();
       },
       error => {
         console.log("Error getting final matches");

@@ -52,9 +52,6 @@ export class StudentDetailFormsPage {
   public skills = [];
   public skillOptions = [];
 
-  // Step 4 variables
-  @ViewChild('form4') form4;
-
   // Implementation specific variables
   public student: StudentModel;
   public isSetup = false;
@@ -76,15 +73,13 @@ export class StudentDetailFormsPage {
       "Education Details",
       "Contact Information",
       "Job Preferences",
-      "Skills",
-      "Work Experience"
+      "Skills"
     ];
     this.formSeq.formErrorMessages = [
       "Please enter your university name, major, GPA, and expected graduation date",
       "Please enter a contact email and a phone number",
       "Please select at least one option for preferred company sizes",
-      "There was an error saving your skills",
-      "There was an error saving your work experience"
+      "There was an error saving your skills"
     ];
 
     this.student = navParams.get("student") || new StudentModel();
@@ -145,8 +140,7 @@ export class StudentDetailFormsPage {
       this.form0,
       this.form1,
       this.form2,
-      this.form3,
-      this.form4
+      this.form3
     ];
 
     this.formSeq.init(formsArray);
@@ -236,6 +230,7 @@ export class StudentDetailFormsPage {
       }
 
       // Save student skills after step 3
+      // Last step
       else if (this.formSeq.currentStep == 3) {
         this.saving = true;
         this.student.skills = this.skills;
@@ -243,7 +238,7 @@ export class StudentDetailFormsPage {
           data => {
             if (this.isSetup) {
               this.saving = false;
-              this.formSeq.nextStep();
+              this.navCtrl.push(StudentTabsPage, { student: this.student });
             }
             else {
               this.saving = false;
@@ -255,14 +250,6 @@ export class StudentDetailFormsPage {
             this.saving = false;
           }
         );
-      }
-
-      // Save work experience after step 4
-      // Last step
-      else if (this.formSeq.currentStep == 4) {
-        this.saving = true;
-        this.saving = false;
-        this.navCtrl.push(StudentTabsPage, { student: this.student });
       }
 
       // Generic step with no saving, go to next step

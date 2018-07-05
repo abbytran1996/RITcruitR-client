@@ -8,6 +8,10 @@
 </ion-header>
 
 <ion-content class="bg-full-image" padding>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  
   <div class="loader-wrapper" *ngIf="pageLoading">
     <ion-spinner name="bubbles"></ion-spinner>
   </div>

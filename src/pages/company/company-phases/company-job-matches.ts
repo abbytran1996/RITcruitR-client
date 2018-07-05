@@ -65,6 +65,15 @@ export class CompanyJobMatchesPage {
   }
 
   /*
+    Called upon pulldown refresh, refresh the matches.
+  */
+  doRefresh(refresher) {
+    this.getOpenJobs(() => {
+      refresher.complete();
+    });
+  }
+
+  /*
     Open up the given job in the job editor.
   */
   editJob(job) {
@@ -102,11 +111,13 @@ export class CompanyJobMatchesPage {
   /*
     Get all company jobs that have a status of open.
   */
-  getOpenJobs() {
+  getOpenJobs(callback?) {
     this.jobPostingService.getOpenJobsByCompany(this.recruiter.company.id).subscribe(
       data => {
         this.jobList = data;
         this.pageLoading = false;
+
+        if (callback != undefined) callback();
       },
       err => {
         console.log(err);

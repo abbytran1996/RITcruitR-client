@@ -8,6 +8,10 @@
 </ion-header>
 
 <ion-content class="bg-full-image" padding>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  
   <div class="match-card-success" [ngClass]="{'fade': matchSuccessFade, 'transform': matchSuccessTransform}" [hidden]="!matchSuccess">
     <ion-icon name="checkmark-circle" class="content" [ngClass]="{'fade': matchSuccessContentFade}"></ion-icon>
   </div>

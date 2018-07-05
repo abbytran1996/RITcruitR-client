@@ -8,6 +8,10 @@
 </ion-header>
 
 <ion-content class="bg-full-image" padding>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  
   <div class="match-card-success" [ngClass]="{'fade': matchSuccessFade, 'transform': matchSuccessTransform}" [hidden]="!matchSuccess">
     <ion-icon name="checkmark-circle" class="content" [ngClass]="{'fade': matchSuccessContentFade}"></ion-icon>
   </div>
@@ -73,10 +77,10 @@
         <!-- Student Problem Statement -->
         <div class="match-card-content" [ngClass]="{'slide-right': stage < 1} ">
           <div class="content-section problem-statement">
-              <h3 class="heading fg-dark heading-spacer">
-                <ion-icon name="md-chatboxes" class="card-heading-icon"></ion-icon>{{ match.student.firstName }}'s Problem Statement<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="probStatementInfo()"></ion-icon></h3>
-              <p class="fg-dark" [innerHTML]="match.studentProblemResponse"></p>
-            </div>
+            <h3 class="heading fg-dark heading-spacer">
+              <ion-icon name="md-chatboxes" class="card-heading-icon"></ion-icon>{{ match.student.firstName }}'s Problem Statement<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="probStatementInfo()"></ion-icon></h3>
+            <p class="fg-dark" [innerHTML]="match.studentProblemResponse"></p>
+          </div>
         </div>
         <!-- End Student Problem Statement -->
 

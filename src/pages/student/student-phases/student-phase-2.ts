@@ -82,6 +82,15 @@ export class StudentPhase2Page {
   }
 
   /*
+    Called upon pulldown refresh, refresh the matches.
+  */
+  doRefresh(refresher) {
+    this.getPhase2Matches(() => {
+      refresher.complete();
+    });
+  }
+
+  /*
     Show an alert dialog explaining what a company presentation phase is.
   */
   companyPresentationInfo() {
@@ -289,8 +298,8 @@ export class StudentPhase2Page {
   /*
     Get the list of phase 2 matches for the student.
   */
-  getPhase2Matches() {
-    this.matchList = this.studentService.getPhase2Matches(this.student.id).subscribe(
+  getPhase2Matches(callback?) {
+    this.studentService.getPhase2Matches(this.student.id).subscribe(
       res => {
         this.matchList = res;
 
@@ -303,10 +312,13 @@ export class StudentPhase2Page {
 
           this.matchIndex = 0;
           this.prepMatch();
+          this.pageLoading = false;
         }
         else {
           this.pageLoading = false;
         }
+
+        if (callback != undefined) callback();
       },
       error => {
         console.log("Error getting presentation phase matches");

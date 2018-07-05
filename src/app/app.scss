@@ -1924,6 +1924,7 @@ ion-navbar {
   border-top: 2px solid #8f9090 !important;
 }
 
+// Progress dots (under progress bar)
 .progress-dots {
   width: 100%;
   display: flex;
@@ -1962,6 +1963,7 @@ ion-navbar {
   }
 }
 
+// Match duration/expiration
 .duration-wrapper {
   position: absolute;
   top: 5px;
@@ -1982,6 +1984,25 @@ ion-navbar {
 
   span {
     font-family: map-get($font-body, family);
+  }
+}
+
+// Refresher styles
+.has-refresher > .scroll-content {
+  border-top: none;
+}
+
+ion-refresher-content {
+  padding-top: 20px;
+
+  .refresher-pulling ion-icon {
+    color: white;
+    font-weight: normal;
+    font-size: 40px;
+  }
+
+  ion-spinner svg line {
+    stroke: white !important;
   }
 }
 

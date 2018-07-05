@@ -193,4 +193,14 @@ export class JobPostingService {
     declineMatch(matchId) {
         return this.apiService.patch('/matches/' + matchId + "/decline");
     }
+
+    //=========================================================================
+    // * ARCHIVE MATCH                                                        *
+    //=========================================================================
+    // - Archive a match with the given id
+    // - Expects a MatchModel id number
+    // - Returns 200 (OK) response
+    archiveMatch(matchId) {
+        return this.apiService.patch("/matches/" + matchId + "/archive");
+    }
 }

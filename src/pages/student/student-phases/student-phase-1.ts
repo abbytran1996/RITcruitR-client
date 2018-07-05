@@ -103,6 +103,15 @@ export class StudentPhase1Page {
   }
 
   /*
+    Called upon pulldown refresh, refresh the matches.
+  */
+  doRefresh(refresher) {
+    this.getNewMatches(() => {
+      refresher.complete();
+    });
+  }
+
+  /*
     Show an alert dialog explaining what a company's problem statement is.
   */
   companyProbStatementInfo() {
@@ -341,7 +350,7 @@ export class StudentPhase1Page {
   /*
     Get the list of "new" unseen matches for the student.
   */
-  getNewMatches() {
+  getNewMatches(callback?) {
     this.studentService.getNewMatches(this.student.id).subscribe(
       data => {
         this.matchList = data;
@@ -359,6 +368,8 @@ export class StudentPhase1Page {
         else {
           this.pageLoading = false;
         }
+
+        if (callback != undefined) callback();
       },
       error => {
         console.log("Error getting problem phase matches");

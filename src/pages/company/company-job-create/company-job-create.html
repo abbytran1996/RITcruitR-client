@@ -166,12 +166,6 @@
           <label class="rec-label rl-secondary">MINIMUM GPA<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="minGpaInfo()"></ion-icon></label>
           <input type="number" name="minGpa" class="rec-input ri-grey" [(ngModel)]="jobModel.minGpa">
         </div>
-        <div class="rec-input-group">
-          <label class="rec-label rl-secondary">HAS WORK EXPERIENCE<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="workExperienceInfo()"></ion-icon></label>
-          <ion-item class="ghost-ion-item float-right">
-            <ion-toggle name="hasWorkExperience" class="rec-input" checked="false" [(ngModel)]="jobModel.hasWorkExperience"></ion-toggle>
-          </ion-item>
-        </div>
       </form>
     </ion-col>
   </ion-row>

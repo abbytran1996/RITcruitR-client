@@ -404,16 +404,6 @@ export class CompanyJobCreatePage {
   }
 
   /*
-    Show an alert dialog explaining has work experience.
-  */
-  workExperienceInfo() {
-    this.showAlert(
-      "Has Work Experience",
-      "If toggled on, students with no work experience on their profile will not be matched."
-    );
-  }
-
-  /*
     Show an alert dialog explaining the job duration.
   */
   durationInfo() {

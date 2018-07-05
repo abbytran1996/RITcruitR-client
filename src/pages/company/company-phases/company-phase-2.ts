@@ -70,12 +70,21 @@ export class CompanyPhase2Page {
   }
 
   /*
+    Called upon pulldown refresh, refresh the matches.
+  */
+  doRefresh(refresher) {
+    this.getMatches(() => {
+      refresher.complete();
+    });
+  }
+
+  /*
     Show an alert dialog explaining what a student presentation phase is.
   */
   presentationInfo() {
     this.showAlert(
-      "Your Presentation",
-      "This is your chance to show the recruiter anything of yours that you would like to share. This could be a link to a video of yourself, a project link, a personal website, or anything else."
+      "Student Presentation",
+      "This is the student's chance to provide anything interesting to share. This could be a link to a video of the student, a project link, a personal website, or anything else. Tap a link to open it."
     );
   }
 
@@ -249,7 +258,7 @@ export class CompanyPhase2Page {
   /*
     Get the presentation phase matches for this job.
   */
-  getMatches() {
+  getMatches(callback?) {
     this.jobPostingService.getPresentationPhaseMatchesByJob(this.currentJob.id).subscribe(
       data => {
         this.matchList = data;
@@ -269,6 +278,8 @@ export class CompanyPhase2Page {
         else {
           this.pageLoading = false;
         }
+
+        if (callback != undefined) callback();
       },
       err => {
         console.log(err);

@@ -89,6 +89,15 @@ export class CompanyPhase1Page {
   }
 
   /*
+    Called upon pulldown refresh, refresh the matches.
+  */
+  doRefresh(refresher) {
+    this.getMatches(() => {
+      refresher.complete();
+    });
+  }
+
+  /*
     Show an alert dialog explaining what a student problem statement is.
   */
   probStatementInfo() {
@@ -267,7 +276,7 @@ export class CompanyPhase1Page {
   /*
     Get the problem phase matches for this job.
   */
-  getMatches() {
+  getMatches(callback?) {
     this.jobPostingService.getProblemPhaseMatchesByJob(this.currentJob.id).subscribe(
       data => {
         this.matchList = data;
@@ -287,6 +296,8 @@ export class CompanyPhase1Page {
         else {
           this.pageLoading = false;
         }
+
+        if (callback != undefined) callback();
       },
       err => {
         console.log(err);
