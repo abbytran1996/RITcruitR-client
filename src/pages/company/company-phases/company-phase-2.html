@@ -8,5 +8,80 @@
 </ion-header>
 
 <ion-content class="bg-full-image" padding>
-  <pre>{{ user | json }}</pre>
+  <div class="match-card-success" [ngClass]="{'fade': matchSuccessFade, 'transform': matchSuccessTransform}" [hidden]="!matchSuccess">
+    <ion-icon name="checkmark-circle" class="content" [ngClass]="{'fade': matchSuccessContentFade}"></ion-icon>
+  </div>
+  <div class="loader-wrapper" *ngIf="pageLoading">
+    <ion-spinner name="bubbles"></ion-spinner>
+  </div>
+  <div class="phase-wrapper" *ngIf="!pageLoading">
+
+    <!-- Match Details -->
+    <div class="match-card-container">
+    
+      <!-- Toolbar -->
+      <div class="list-item-card rec-toolbar">
+        <div class="rec-toolbar-btn fake-link" (click)="backToJobs()">
+          <ion-icon name='md-arrow-round-back' class="fg-dark"></ion-icon>
+          <p class="fg-dark">Back To Jobs</p>
+        </div>
+        <div class="rec-toolbar-text sep-left">
+          <h5 class="fg-dark text-center">{{ currentJob.positionTitle }}</h5>
+          <p class="fg-grey text-center">{{ currentJob.company.companyName }}</p>
+        </div>
+      </div>
+      <!-- End Toolbar -->
+    
+      <!-- Match Card -->
+      <div class="match-card match-review-card" *ngIf="matchList != undefined && matchList.length > 0" [ngClass]="{'fade-left': fadeLeft, 'fade-right': fadeRight, 'fade-left-instant': fadeLeftInstant, 'fade-right-instant': fadeRightInstant}"
+        [hidden]="hideCard" (swipe)="swipe($event)" id="swipe-card">
+    
+        <div class="match-card-header">
+          <h3 class="title fg-primary text-center">{{ match.student.firstName }} {{ match.student.lastName }}</h3>
+          <p class="fg-grey text-center">{{ match.student.major }}</p>
+          <div class="duration-wrapper" [ngClass]="{'duration-notice': match.job.duration < 4, 'duration-urgent': match.job.duration == 1}">
+            <ion-icon class="duration-icon" name="md-time"></ion-icon>
+            <span>{{ match.job.duration }}</span>
+          </div>
+        </div>
+    
+        <!-- Student Presentation -->
+        <div class="match-card-content" [ngClass]="{'slide-left': stage > 0} ">
+          <div class="content-section presentation">
+            <h3 class="heading fg-dark heading-spacer">
+              <ion-icon name="md-chatboxes" class="card-heading-icon"></ion-icon>{{ match.student.firstName }}'s Presentation Links
+              <ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark"
+                (click)="presentationInfo()"></ion-icon>
+            </h3>
+            <div *ngFor="let link of match.studentPresentationLinks" class="presentation-link">
+              <h3 class="heading fg-dark">{{ link.title }}:</h3>
+              <p class="fg-dark fake-link" (click)="openLink(link.link)">{{ link.link }}<ion-icon name="md-open" class="presentation-link-icon"></ion-icon></p>
+            </div>
+          </div>
+        </div>
+        <!-- End Student Presentation -->
+    
+        <div class="match-card-footer">
+          <button class="rec-btn-small float-left" [ngClass]="{'rec-btn-deny': stage == 0}" (click)="backDecline()" [disabled]="disableDecline">
+            <ion-icon name="ios-arrow-back" class="card-heading-icon" [hidden]="stage == 0"></ion-icon>
+            <ion-icon name="md-thumbs-down" class="card-heading-icon" [hidden]="stage > 0"></ion-icon>
+            {{ (stage == 0) ? "Decline" : "Back"}}
+          </button>
+          <button class="rec-btn-small float-right" [ngClass]="{'rec-btn-accept': stage == maxStage}" (click)="interested()">
+            {{ (stage == maxStage) ? "Approve" : "More"}}
+            <ion-icon name="ios-arrow-forward" class="card-heading-icon-right" [hidden]="stage == maxStage"></ion-icon>
+            <ion-icon name="md-thumbs-up" class="card-heading-icon-right" [hidden]="stage < maxStage "></ion-icon>
+          </button>
+        </div>
+      </div>
+      <!-- End Match Card -->
+    
+      <div class="match-list-empty" *ngIf="matchList == undefined || matchList.length == 0">
+        <ion-icon name="md-easel" class=""></ion-icon>
+        <div class="sep-horizontal-1"></div>
+        <h3 class="fg-white text-center">This job doesn't have any matches in the presentation phase. Approve students in the first "Job Matches" tab to progress the application. After that, once a student submits presentation links, the application will show up here.</h3>
+        <div class="sep-horizontal-1"></div>
+      </div>
+    </div>
+  </div>
 </ion-content>

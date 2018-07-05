@@ -103,6 +103,10 @@ export class CompanyTabsPage {
       this.createCompanyJob();
     });
 
+    this.events.subscribe('tabs:editJob', (job) => {
+      this.editCompanyJob(job);
+    });
+
     this.events.subscribe('tabs:importJob', (recruiter) => {
 
     });
@@ -114,6 +118,9 @@ export class CompanyTabsPage {
   ionViewDidLeave() {
     this.events.unsubscribe("tabs:setHidden");
     this.events.unsubscribe("tabs:setActive");
+    this.events.unsubscribe("tabs:createJob");
+    this.events.unsubscribe("tabs:importJob");
+    this.events.unsubscribe("tabs:editJob");
   }
 
   /*
@@ -132,6 +139,13 @@ export class CompanyTabsPage {
   */
   createCompanyJob() {
     this.navCtrl.push(CompanyJobCreatePage, {recruiter: this.recruiter});
+  }
+
+  /*
+    Edit a job as a recruiter.
+  */
+  editCompanyJob(job) {
+    this.navCtrl.push(CompanyJobCreatePage, { recruiter: this.recruiter, job: job });
   }
 
   /*

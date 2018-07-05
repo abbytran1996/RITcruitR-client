@@ -140,4 +140,57 @@ export class JobPostingService {
     fulfillJob(jobId) {
         return this.apiService.post('/jobposting/' + jobId + 'fulfill');
     }
+
+    //=========================================================================
+    // * GET PROBLEM PHASE MATCHES BY JOB                                     *
+    //=========================================================================
+    // - Returns a list of matches in the recruiter problem phase by the
+    //   given job id.
+    // - Expects a job id number
+    // - Returns a list of MatchModels
+    getProblemPhaseMatchesByJob(jobId) {
+      return this.apiService.get('/matches/posting/' + jobId + '?phase=problem');
+    }
+
+    //=========================================================================
+    // * GET PRESENTATION PHASE MATCHES BY JOB                                *
+    //=========================================================================
+    // - Returns a list of matches in the recruiter presentation phase by the
+    //   given job id.
+    // - Expects a job id number
+    // - Returns a list of MatchModels
+    getPresentationPhaseMatchesByJob(jobId) {
+      return this.apiService.get('/matches/posting/' + jobId + '?phase=presentation');
+    }
+
+    //=========================================================================
+    // * GET FINAL PHASE MATCHES BY JOB                                       *
+    //=========================================================================
+    // - Returns a list of matches in the final phase by the
+    //   given job id.
+    // - Expects a job id number
+    // - Returns a list of MatchModels
+    getFinalPhaseMatchesByJob(jobId) {
+      return this.apiService.get('/matches/posting/' + jobId + '?phase=interview');
+    }
+
+    //=========================================================================
+    // * ACCEPT MATCH                                                         *
+    //=========================================================================
+    // - Accepts a given match
+    // - Expects a Match id number
+    // - Returns 200 (OK) response
+    acceptMatch(matchId) {
+        return this.apiService.patch('/matches/' + matchId + "/approve");
+    }
+
+    //=========================================================================
+    // * DECLINE MATCH                                                        *
+    //=========================================================================
+    // - Declines a given match
+    // - Expects a Match id number
+    // - Returns 200 (OK) response
+    declineMatch(matchId) {
+        return this.apiService.patch('/matches/' + matchId + "/decline");
+    }
 }

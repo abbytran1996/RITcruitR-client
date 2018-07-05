@@ -166,7 +166,7 @@ export class StudentService {
     // - Expects a StudentModel id number
     // - Returns an array of MatchModels
     getFinalMatches(studentId) {
-        return this.apiService.get("/matches/studentMatches/" + studentId + "?phase=final");
+        return this.apiService.get("/matches/studentMatches/" + studentId + "?phase=interview");
     }
 
     //=========================================================================

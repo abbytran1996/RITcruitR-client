@@ -60,7 +60,8 @@ $colors: (
   white:        #FFFFFF,
   black:        #000000,
   accept:       #5dbe61,
-  deny:         #ed5e68
+  deny:         #ed5e68,
+  warning:      #e9ac28
 );
 
 $color-primary-gradient: linear-gradient(to right, map-get($colors, primary), map-get($colors, secondary));

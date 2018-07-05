@@ -106,7 +106,7 @@ export class StudentPresentationLinksPage {
   saveChanges() {
     this.loading = true;
     if (this.linksForm && this.linksForm.valid) {
-      this.student.presentationLinks = this.links;
+      this.student.presentationLinks = this.links.slice(0);
       this.loading = false;
       this.navCtrl.setRoot(StudentTabsPage);
     }

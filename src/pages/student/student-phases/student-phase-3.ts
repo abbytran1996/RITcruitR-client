@@ -63,6 +63,23 @@ export class StudentPhase3Page {
   }
 
   /*
+    Called when the match card is swiped in any direction. Determine threshold and call proper function.
+    backDecline or interested.
+  */
+  swipe(event) {
+    if (event.direction == 4) { // swipe right
+      if (this.reviewStep > 0) {
+        this.cardPrev();
+      }
+    }
+    if (event.direction == 2) { // swipe left
+      if (this.reviewStep < this.reviewStepMax) {
+        this.cardNext();
+      }
+    }
+  }
+
+  /*
     Show the match detail screen for the match that was clicked.
   */
   matchDetails(match) {

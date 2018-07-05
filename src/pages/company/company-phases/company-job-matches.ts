@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Events } from 'ionic-angular';
+import { NavController, NavParams, Events, AlertController } from 'ionic-angular';
 
 import {
   CompanyPhase1Page
@@ -8,7 +8,8 @@ import {
 import { RecruiterModel } from '@app/models';
 
 import {
-  JobPostingService
+  JobPostingService,
+  HelperService
 } from '@app/services';
 
 //=========================================================================
@@ -31,10 +32,15 @@ export class CompanyJobMatchesPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public events: Events,
-    private jobPostingService: JobPostingService
+    private alertCtrl: AlertController,
+    private jobPostingService: JobPostingService,
+    public helperService: HelperService
   ) {
     this.recruiter = navParams.get("recruiter");
-    this.getOpenJobs();
+
+    if (this.recruiter != undefined) {
+      this.getOpenJobs();
+    }
   }
 
   /*
@@ -56,6 +62,41 @@ export class CompanyJobMatchesPage {
   */
   ionViewDidLeave() {
    this.events.unsubscribe("tabs:recruiter");
+  }
+
+  /*
+    Open up the given job in the job editor.
+  */
+  editJob(job) {
+    this.events.publish('tabs:editJob', job, Date.now());
+  }
+
+  /*
+    Deactivate the given job.
+  */
+  deactivateJob(job) {
+    let alert = this.alertCtrl.create({
+      title: 'Confirm Job Deactivation',
+      message: 'Are you sure you want to deactivate this job? It can be reactivated later.',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            
+          }
+        },
+        {
+          text: 'Deactivate',
+          handler: () => {
+            // TODO: Deactivate job when the server is updated to do so
+            this.jobList = this.helperService.removeFromArrayById(this.jobList, job);
+          }
+        }
+      ]
+    });
+
+    alert.present();
   }
 
   /*

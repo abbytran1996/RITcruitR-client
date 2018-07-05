@@ -107,7 +107,7 @@ export class StudentProblemStatementsPage {
   saveChanges() {
     this.loading = true;
     if (this.statementForm && this.statementForm.valid) {
-      this.student.problemStatements = this.statements;
+      this.student.problemStatements = this.statements.slice(0);
       this.loading = false;
       this.navCtrl.setRoot(StudentTabsPage);
     }

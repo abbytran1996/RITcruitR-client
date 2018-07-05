@@ -27,6 +27,10 @@
           <div class="match-card-header">
             <h3 class="title fg-primary text-center">{{ match.job.company.companyName }}</h3>
             <p class="fg-grey text-center">{{ (match.matchedIndustry) ? match.matchedIndustry : match.job.company.industries[0] }}</p>
+            <div class="duration-wrapper" [ngClass]="{'duration-notice': match.job.duration < 4, 'duration-urgent': match.job.duration == 1}">
+              <ion-icon class="duration-icon" name="md-time"></ion-icon>
+              <span>{{ match.job.duration }}</span>
+            </div>
           </div>
           <!-- End Card Header -->
     

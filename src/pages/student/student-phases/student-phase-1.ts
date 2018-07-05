@@ -14,8 +14,6 @@ import {
   HelperService
 } from '@app/services';
 
-const fadeTime = 400;
-
 //=========================================================================
 // * StudentPhase1Page                                                   
 //=========================================================================
@@ -217,11 +215,13 @@ export class StudentPhase1Page {
 
         // API call to submit match with problem statement
         this.studentService.submitMatchProblemStatement(this.match.id, this.match.studentProblemResponse).subscribe(
-          res => { },
-          error => {
-            if (!error || error.status != 200) {
+          data => { },
+          res => {
+            this.clearStatement();
+
+            if (!res || res.status != 200) {
               console.log("Error submitting problem statement");
-              console.log(error);
+              console.log(res);
             }
           }
         );
@@ -242,10 +242,12 @@ export class StudentPhase1Page {
     if (this.stage == 0) {
       this.studentService.declineMatch(this.match.id).subscribe(
         data => { },
-        error => {
-          if (!error || error.status != 200) {
+        res => {
+          this.clearStatement();
+
+          if (!res || res.status != 200) {
             console.log("Error declining match");
-            console.log(error);
+            console.log(res);
           }
         }
       );
@@ -253,7 +255,7 @@ export class StudentPhase1Page {
       this.fadeLeft = true;
 
       setTimeout(() => {
-        removeMatchFromArray(this.matchList, this.match);
+        this.matchList = this.helperService.removeFromArrayById(this.matchList, this.match);
         this.nextMatch();
         this.fadeLeft = false;
         this.fadeRightInstant = true;
@@ -261,7 +263,7 @@ export class StudentPhase1Page {
         setTimeout(() => {
           this.fadeRightInstant = false;
         }, 100);
-      }, fadeTime);
+      }, this.helperService.getCardFadeTime());
     }
     else {
       this.stage--;
@@ -310,10 +312,10 @@ export class StudentPhase1Page {
 
         setTimeout(() => {
           this.stage = 0;
-        }, fadeTime / 2);
+        }, this.helperService.getCardFadeTime() / 2);
 
         setTimeout(() => {
-          removeMatchFromArray(this.matchList, this.match);
+          this.matchList = this.helperService.removeFromArrayById(this.matchList, this.match);
           this.nextMatch();
           this.fadeLeft = false;
           this.fadeRightInstant = true;
@@ -321,7 +323,7 @@ export class StudentPhase1Page {
           setTimeout(() => {
             this.fadeRightInstant = false;
           }, 100);
-        }, fadeTime);
+        }, this.helperService.getCardFadeTime());
 
         setTimeout(() => {
           this.matchSuccessFade = false;
@@ -428,12 +430,12 @@ export class StudentPhase1Page {
     this.student.skills.forEach(studentSkill => {
       if (reqSkills.some(skill => skill.id === studentSkill.id)) {
         reqSkillsMatched.push(studentSkill);
-        removeSkillFromArray(reqSkills, studentSkill);
+        reqSkills = this.helperService.removeFromArrayById(reqSkills, studentSkill);
       }
 
       if (nthSkills.some(skill => skill.id === studentSkill.id)) {
         nthSkillsMatched.push(studentSkill);
-        removeSkillFromArray(nthSkills, studentSkill);
+        nthSkills = this.helperService.removeFromArrayById(nthSkills, studentSkill);
       }
     });
 
@@ -454,7 +456,7 @@ export class StudentPhase1Page {
         this.matchPoints.skills.push(true);
       }
     }
-    toRemove.forEach(el => {removeSkillFromArray(reqSkillsMatched, el);});
+    toRemove.forEach(el => { reqSkillsMatched = this.helperService.removeFromArrayById(reqSkillsMatched, el);});
     toRemove = [];
 
     // If additional required skills should be shown
@@ -468,7 +470,7 @@ export class StudentPhase1Page {
         }
       }
     }
-    toRemove.forEach(el => {removeSkillFromArray(reqSkills, el);});
+    toRemove.forEach(el => { reqSkills = this.helperService.removeFromArrayById(reqSkills, el);});
     toRemove = [];
 
     // Add up to the preferred number of matched nice to have skills
@@ -479,7 +481,7 @@ export class StudentPhase1Page {
         this.matchPoints.skills.push(true);
       }
     }
-    toRemove.forEach(el => {removeSkillFromArray(nthSkillsMatched, el);});
+    toRemove.forEach(el => { nthSkillsMatched = this.helperService.removeFromArrayById(nthSkillsMatched, el);});
     toRemove = [];
 
     // If additional nice to have skills should eb shown
@@ -493,7 +495,7 @@ export class StudentPhase1Page {
         }
       }
     }
-    toRemove.forEach(el => {removeSkillFromArray(nthSkills, el);});
+    toRemove.forEach(el => { nthSkills = this.helperService.removeFromArrayById(nthSkills, el);});
     toRemove = [];
 
     let numInArrays = reqSkillsToShow.length + nthSkillsToShow.length;
@@ -573,47 +575,5 @@ export class StudentPhase1Page {
       buttons: ['Dismiss']
     });
     alert.present();
-  }
-}
-
-/*
-  Remove the given skill from the given array.
-  This is needed because a simple index splice inline
-  is causing ordering issues.
-*/
-function removeSkillFromArray(array, skill) {
-  let index = 0;
-  let indexToRemove = -1;
-  array.forEach(skillInArr => {
-    if (skillInArr.id == skill.id) {
-      indexToRemove = index;
-    }
-
-    index++;
-  });
-
-  if (indexToRemove > -1) {
-    array.splice(indexToRemove, 1);
-  }
-}
-
-/*
-  Remove the given match from the given array.
-  This is needed because a simple index splice inline
-  is causing ordering issues.
-*/
-function removeMatchFromArray(array, match) {
-  let index = 0;
-  let indexToRemove = -1;
-  array.forEach(matchInArr => {
-    if (matchInArr.id == match.id) {
-      indexToRemove = index;
-    }
-
-    index++;
-  });
-
-  if (indexToRemove > -1) {
-    array.splice(indexToRemove, 1);
   }
 }

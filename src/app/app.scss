@@ -618,6 +618,36 @@ ion-icon.rec-btn-icon {
   }
 }
 
+.rec-btn-circle-large {
+  width: 60px;
+  height: 60px;
+  padding: 0px;
+  border-radius: 50%;
+  box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.15);
+  background-color: map-get($colors, primary);
+  color: map-get($font-button-small, color);
+  font-family: map-get($font-button-small, family);
+  font-size: 16px;
+
+  transition-property: background-color;
+  transition-duration: .3s;
+
+  &:hover, &:active, &:focus {
+    background-color: saturate(map-get($colors, primary), 8%);
+
+    transition-property: background-color;
+    transition-duration: .3s;
+  }
+
+  ion-icon.rec-btn-icon {
+    font-size: 22px !important;
+    font-weight: normal !important;
+    text-align: center;
+    line-height: 60px;
+    width: 60px;
+  }
+}
+
 .rec-btn-primary {
   background: $color-primary-gradient;
   color: map-get($font-button, color);
@@ -1841,6 +1871,38 @@ ion-tabs.hide-bar .tabbar {
   }
 }
 
+.rec-toolbar-sep {
+  height: 90%;
+  width: 2px;
+  margin-left: 3px;
+  margin-right: 3px;
+  flex-grow: .5;
+  background-color: map-get($colors, gray);
+}
+
+.rec-toolbar-text {
+  flex-grow: 2;
+  margin-top: 4px;
+
+  h1, h2, h3, h4, h5 {
+    margin: 0;
+    font-size: 18px;
+  }
+
+  p {
+    margin: 0;
+    font-size: 14px;
+  }
+
+  &.sep-left {
+    border-left: 2px solid rgba(map-get($colors, gray), .4);
+  }
+
+  &.sep-right {
+    border-right: 2px solid rgba(map-get($colors, gray), .4);
+  }
+}
+
 ion-item-options ion-icon {
   font-weight: normal !important;
   font-size: 30px !important;
@@ -1860,6 +1922,67 @@ ion-navbar {
 // Froala Editor
 .fr-toolbar {
   border-top: 2px solid #8f9090 !important;
+}
+
+.progress-dots {
+  width: 100%;
+  display: flex;
+  margin-top: 8px;
+
+  .progress-dot {
+    max-width: 25px;
+    min-width: 25px;
+    flex-grow: 1;
+    margin-left: 8px;
+    margin-right: 8px;
+    height: 25px;
+    background-color: white;
+    color: map-get($colors, primary);
+    font-family: map-get($font-heading, family);
+    font-size: 14px;
+    text-align: center;
+    border-radius: 50%;
+
+    &.error {
+      background-color: map-get($colors, deny);
+      color: white;
+    }
+
+    &.active {
+      background-color: map-get($colors, primary);
+      color: white;
+    }
+
+    &.active.error {
+      background-color: map-get($colors, primary);
+      color: white;
+      border: 2px solid map-get($colors, deny);
+      line-height: 25px;
+    }
+  }
+}
+
+.duration-wrapper {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  color: rgba(map-get($colors, dark), .7);
+
+  &.duration-notice {
+    color: rgba(map-get($colors, warning), .8);
+  }
+
+  &.duration-urgent {
+    color: rgba(map-get($colors, deny), .8);
+  }
+
+  .duration-icon {
+    font-size: 14px !important;
+  }
+
+  span {
+    font-family: map-get($font-body, family);
+  }
 }
 
 
@@ -2021,7 +2144,7 @@ $card-footer-height: 70px;
   h3.heading {
     margin: 0;
     margin-bottom: 2px;
-    font-size: 20px;
+    font-size: 19px;
 
     &.heading-spacer {
       margin-bottom: 2vh !important;
@@ -2030,6 +2153,11 @@ $card-footer-height: 70px;
 
   p {
     margin: 0;
+    font-size: 15px;
+
+    &.compact {
+      line-height: 12px;
+    }
   }
 
   .content-section {
@@ -2195,7 +2323,7 @@ ion-icon.card-heading-icon-right {
   }
 
   .card-heading-icon {
-    font-size: 1em;
+    font-size: .9em;
   }
 
   &.contact {
