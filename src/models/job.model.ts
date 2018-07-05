@@ -14,6 +14,7 @@ export class JobModel {
   public hasWorkExperience: boolean = false;
   public matchThreshold: number = 50;
   public duration: number = null;
+  public numDaysRemaining: number = null;
   public problemStatement: string = "";
   public video: string = "";
   public presentationLinks: any = [];
@@ -34,6 +35,7 @@ export class JobModel {
       this.hasWorkExperience = init.hasWorkExperience || false;
       this.matchThreshold = init.matchThreshold || 50;
       this.duration = init.duration || null;
+      this.numDaysRemaining = init.numDaysRemaining || null;
       this.problemStatement = init.problemStatement || "";
       this.video = init.video || "";
       this.presentationLinks = init.presentationLinks || [];

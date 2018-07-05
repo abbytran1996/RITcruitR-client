@@ -10,10 +10,10 @@
         <ion-icon name="md-add-circle" class="opacity-50"></ion-icon>
         Create Job
       </button>
-      <button ion-item menuToggle>
+      <!-- <button ion-item menuToggle>
         <ion-icon name="ios-cog" class="opacity-50"></ion-icon>
         Manage Jobs
-      </button>
+      </button> -->
       <button ion-item menuToggle (click)="editPresentationLinks()">
         <ion-icon name="md-easel" class="opacity-50"></ion-icon>
         Presentation Links
@@ -44,8 +44,8 @@
 
 <ion-tabs selectedIndex="0" #content #companyTabs class="company-tabs" [ngClass]="{'hide-bar': hideTabBar}">
   <ion-tab [root]="companyJobMatchesTab" tabTitle="Job Matches" tabIcon="md-people" [rootParams]="recruiterTabParams" class="tab-hidden"></ion-tab>
-  <ion-tab [root]="companyPhase1Tab" tabTitle="Job Matches" tabIcon="md-people" [rootParams]="recruiterTabParams"></ion-tab>
-  <ion-tab [root]="companyPhase2Tab" tabTitle="Presentation" tabIcon="md-easel" [rootParams]="recruiterTabParams"></ion-tab>
-  <ion-tab [root]="companyPhase3Tab" tabTitle="Final Candidates" tabIcon="md-checkmark-circle" [rootParams]="recruiterTabParams"></ion-tab>
+  <ion-tab [root]="companyPhase1Tab" tabTitle="Job Matches" tabIcon="md-people" [rootParams]="recruiterTabParams" tabBadge="{{ numPhase1Matches }}"></ion-tab>
+  <ion-tab [root]="companyPhase2Tab" tabTitle="Presentation" tabIcon="md-easel" [rootParams]="recruiterTabParams" tabBadge="{{ numPhase2Matches }}"></ion-tab>
+  <ion-tab [root]="companyPhase3Tab" tabTitle="Final Candidates" tabIcon="md-checkmark-circle" [rootParams]="recruiterTabParams" tabBadge="{{ numFinalMatches }}"></ion-tab>
 </ion-tabs>
 

@@ -48,6 +48,10 @@ export class StudentTabsPage {
   public studentPhase3Tab = StudentPhase3Page;
   public studentTabParams: any;
 
+  public numPhase1Matches;
+  public numPhase2Matches;
+  public numFinalMatches;
+
   // User data
   public student: StudentModel;
   public loadingStudent = true;
@@ -66,6 +70,7 @@ export class StudentTabsPage {
     // If a student model is sent to this page, use it, otherwise get it from the DB.
     if (this.student != undefined) {
       this.studentTabParams = {student: this.student};
+      this.getNumMatches();
       this.loadingStudent = false;
     }
     else {
@@ -75,6 +80,7 @@ export class StudentTabsPage {
           this.student = new StudentModel(data);
           this.studentTabParams = {student: this.student};
           this.events.publish('tabs:student', this.student, Date.now());
+          this.getNumMatches();
           this.loadingStudent = false;
         },
         error => {
@@ -103,6 +109,10 @@ export class StudentTabsPage {
     this.events.subscribe('tab:editPrefs', (student) => {
       this.editStudentJobPreferences();
     });
+
+    this.events.subscribe('tab:numMatches', (student) => {
+      this.getNumMatches();
+    });
   }
 
   /*
@@ -112,6 +122,33 @@ export class StudentTabsPage {
   ionViewDidLeave() {
     this.events.unsubscribe("tab:editSkills");
     this.events.unsubscribe("tab:editPrefs");
+    this.events.unsubscribe("tab:numMatches");
+  }
+
+  /*
+    Get the number of macthes in each phase.
+  */
+  getNumMatches() {
+    // Get phase 1 num
+    this.studentService.getNumPhase1Matches(this.student.id).subscribe(
+      data1 => {
+        this.numPhase1Matches = data1;
+
+        // Get phase 2 num
+        this.studentService.getNumPhase2Matches(this.student.id).subscribe(
+          data2 => {
+            this.numPhase2Matches = data2;
+
+            // Get final phase num
+            this.studentService.getNumFinalMatches(this.student.id).subscribe(
+              data3 => {
+                this.numFinalMatches = data3;
+              }, res => { }
+            );
+          }, res => { }
+        );
+      }, res => { }
+    );
   }
 
   /*

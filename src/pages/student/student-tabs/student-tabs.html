@@ -35,8 +35,8 @@
 </ion-menu>
 
 <ion-tabs selectedIndex="0" #content>
-  <ion-tab [root]="studentPhase1Tab" tabTitle="Matched Jobs" tabIcon="md-list" [rootParams]="studentTabParams"></ion-tab>
-  <ion-tab [root]="studentPhase2Tab" tabTitle="Presentation" tabIcon="md-easel" [rootParams]="studentTabParams"></ion-tab>
-  <ion-tab [root]="studentPhase3Tab" tabTitle="Final Jobs" tabIcon="md-checkmark-circle" [rootParams]="studentTabParams"></ion-tab>
+  <ion-tab [root]="studentPhase1Tab" tabTitle="Matched Jobs" tabIcon="md-list" [rootParams]="studentTabParams" tabBadge="{{ numPhase1Matches }}"></ion-tab>
+  <ion-tab [root]="studentPhase2Tab" tabTitle="Presentation" tabIcon="md-easel" [rootParams]="studentTabParams" tabBadge="{{ numPhase2Matches }}"></ion-tab>
+  <ion-tab [root]="studentPhase3Tab" tabTitle="Final Jobs" tabIcon="md-checkmark-circle" [rootParams]="studentTabParams" tabBadge="{{ numFinalMatches }}"></ion-tab>
 </ion-tabs>
 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, ToastController, Events } from 'ionic-angular';
 import { CallNumber } from '@ionic-native/call-number';
 
 import {
@@ -38,7 +38,8 @@ export class StudentPhase3Page {
     private alertCtrl: AlertController,
     private toastCtrl: ToastController,
     private studentService: StudentService,
-    private callNumber: CallNumber
+    private callNumber: CallNumber,
+    public events: Events
   ) {
     this.student= navParams.get("student");
   }
@@ -106,6 +107,7 @@ export class StudentPhase3Page {
     this.detailMode = false;
     this.reviewMode = false;
     this.reviewStep = 0;
+    this.getFinalMatches();
   }
 
   /*
@@ -163,6 +165,7 @@ export class StudentPhase3Page {
   postArchive() {
     this.backToList();
     this.getFinalMatches();
+    this.events.publish('tab:numMatches', this.student);
   }
 
   /*
@@ -417,6 +420,8 @@ export class StudentPhase3Page {
             else if (a.matchStrength > b.matchStrength) return -1;
             else return 0;
           });
+
+          this.events.publish('tab:numMatches', this.student);
 
           this.pageLoading = false;
         }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController, ToastController, AlertController } from 'ionic-angular';
+import { NavController, NavParams, ModalController, ToastController, AlertController, Events } from 'ionic-angular';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { PresentationLinkAddModal } from '@app/pages/modals';
@@ -65,7 +65,8 @@ export class StudentPhase2Page {
     private alertCtrl: AlertController,
     private studentService: StudentService,
     private helperService: HelperService,
-    private iab: InAppBrowser
+    private iab: InAppBrowser,
+    public events: Events
   ) {
     this.student = navParams.get("student");
   }
@@ -145,6 +146,7 @@ export class StudentPhase2Page {
           res => { },
           res => {
             this.linksList = [];
+            this.events.publish('tab:numMatches', this.student);
 
             if (!res || res.status != 200) {
               console.log("Error submitting presentation links");
@@ -171,6 +173,7 @@ export class StudentPhase2Page {
         data => { },
         res => {
           this.linksList = [];
+          this.events.publish('tab:numMatches', this.student);
 
           if (!res || res.status != 200) {
             console.log("Error declining match");
@@ -309,6 +312,8 @@ export class StudentPhase2Page {
             else if (a.matchStrength > b.matchStrength) return -1;
             else return 0;
           });
+
+          this.events.publish('tab:numMatches', this.student);
 
           this.matchIndex = 0;
           this.prepMatch();

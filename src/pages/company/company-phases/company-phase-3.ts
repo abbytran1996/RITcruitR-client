@@ -124,6 +124,7 @@ export class CompanyPhase3Page {
     this.detailMode = false;
     this.reviewMode = false;
     this.reviewStep = 0;
+    this.getMatches();
   }
 
   /*
@@ -181,6 +182,7 @@ export class CompanyPhase3Page {
   postArchive() {
     this.backToList();
     this.getMatches();
+    this.events.publish('tabs:numMatches', this.currentJob);
   }
 
   /*
@@ -279,6 +281,8 @@ export class CompanyPhase3Page {
             else if (a.matchStrength > b.matchStrength) return -1;
             else return 0;
           });
+
+          this.events.publish('tabs:numMatches', this.currentJob);
 
           this.pageLoading = false;
         }

@@ -178,4 +178,37 @@ export class StudentService {
     archiveMatch(matchId) {
         return this.apiService.patch("/matches/" + matchId + "/archive");
     }
+
+    //=========================================================================
+    // * GET NUM PHASE 1 MATCHES                                              *
+    //=========================================================================
+    // - Gets the number matches the student with the given id has in the
+    //   problem phase
+    // - Expects a StudentModel id number
+    // - Returns the number of matches in that phase
+    getNumPhase1Matches(studentId) {
+        return this.apiService.get("/matches/studentMatches/" + studentId + "/count?phase=problem");
+    }
+
+    //=========================================================================
+    // * GET NUM PHASE 2 MATCHES                                              *
+    //=========================================================================
+    // - Gets the number matches the student with the given id has in the
+    //   presentation phase
+    // - Expects a StudentModel id number
+    // - Returns the number of matches in that phase
+    getNumPhase2Matches(studentId) {
+        return this.apiService.get("/matches/studentMatches/" + studentId + "/count?phase=presentation");
+    }
+
+    //=========================================================================
+    // * GET NUM FINAL MATCHES                                                *
+    //=========================================================================
+    // - Gets the number matches the student with the given id has in the
+    //   final phase
+    // - Expects a StudentModel id number
+    // - Returns the number of matches in that phase
+    getNumFinalMatches(studentId) {
+        return this.apiService.get("/matches/studentMatches/" + studentId + "/count?phase=interview");
+    }
 }

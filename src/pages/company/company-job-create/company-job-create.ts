@@ -186,9 +186,7 @@ export class CompanyJobCreatePage {
         this.showErrorDots = true;
         
         // On last step check again that all steps are valid since step jumping is allowed
-        if (this.form0.valid && this.form1.valid && this.form2.valid && this.form3.valid
-            && this.form4.valid && this.form5.valid && this.form6.valid && this.form7.valid
-            && customValid) {
+        if (this.allFormsValid()) {
 
           // Create or update the job depending on the mode
           if (!this.editMode) {
@@ -249,20 +247,7 @@ export class CompanyJobCreatePage {
   updateJob() {
     this.saving = true;
 
-    let customValid = true;
-
-    // Custom validation for certain steps
-    if (this.reqSkills.length == 0) {
-      customValid = false;
-    }
-
-    if (this.linksList.length < 1 || this.linksList.length > 3) {
-      customValid = false;
-    }
-
-    if (this.form0.valid && this.form1.valid && this.form2.valid && this.form3.valid
-        && this.form4.valid && this.form5.valid && this.form6.valid && this.form7.valid
-        && customValid) {
+    if (this.allFormsValid()) {
       this.prepJobForSave();
 
       // Update the job using the API
@@ -278,6 +263,26 @@ export class CompanyJobCreatePage {
       this.presentToast("The job cannot be updated. Check that each input is valid.");
       this.saving = false;
     }
+  }
+
+  /*
+    Checks that every form at each step is valid. Returns boolean.
+  */
+  allFormsValid() {
+    let customValid = true;
+
+    // Custom validation for certain steps
+    if (this.reqSkills.length == 0) {
+      customValid = false;
+    }
+
+    if (this.linksList.length < 1 || this.linksList.length > 3) {
+      customValid = false;
+    }
+
+    return this.form0.valid && this.form1.valid && this.form2.valid && this.form3.valid
+      && this.form4.valid && this.form5.valid && this.form6.valid && this.form7.valid
+      && customValid;
   }
 
   /*

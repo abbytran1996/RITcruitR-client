@@ -140,11 +140,13 @@ export class CompanyPhase2Page {
     else {
       // API call to submit match to the next phase
       this.jobPostingService.acceptMatch(this.match.id).subscribe(
-        res => { },
-        error => {
-          if (!error || error.status != 200) {
+        data => { },
+        res => {
+          this.events.publish('tabs:numMatches', this.currentJob);
+
+          if (!res || res.status != 200) {
             console.log("Error approving presentation phase");
-            console.log(error);
+            console.log(res);
           }
         }
       );
@@ -161,10 +163,12 @@ export class CompanyPhase2Page {
     if (this.stage == 0) {
       this.jobPostingService.declineMatch(this.match.id).subscribe(
         data => { },
-        error => {
-          if (!error || error.status != 200) {
+        res => {
+          this.events.publish('tabs:numMatches', this.currentJob);
+
+          if (!res || res.status != 200) {
             console.log("Error declining match");
-            console.log(error);
+            console.log(res);
           }
         }
       );
@@ -269,6 +273,8 @@ export class CompanyPhase2Page {
             else if (a.matchStrength > b.matchStrength) return -1;
             else return 0;
           });
+
+          this.events.publish('tabs:numMatches', this.currentJob);
 
           this.matchIndex = 0;
           this.stage = 0;

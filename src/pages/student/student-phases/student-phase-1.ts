@@ -198,7 +198,9 @@ export class StudentPhase1Page {
   */
   clearStatement() {
     this.existingStatementModel = undefined;
-    this.problemStatementForm.reset();
+    if (this.problemStatementForm != undefined) {
+      this.problemStatementForm.reset();
+    }
     this.hideEditBtn = false;
     this.problemStatement = undefined;
   }
@@ -227,6 +229,7 @@ export class StudentPhase1Page {
           data => { },
           res => {
             this.clearStatement();
+            this.events.publish('tab:numMatches', this.student);
 
             if (!res || res.status != 200) {
               console.log("Error submitting problem statement");
@@ -253,6 +256,7 @@ export class StudentPhase1Page {
         data => { },
         res => {
           this.clearStatement();
+          this.events.publish('tab:numMatches', this.student);
 
           if (!res || res.status != 200) {
             console.log("Error declining match");
@@ -361,6 +365,8 @@ export class StudentPhase1Page {
             else if (a.matchStrength > b.matchStrength) return -1;
             else return 0;
           });
+
+          this.events.publish('tab:numMatches', this.student);
   
           this.matchIndex = 0;
           this.prepMatch();
