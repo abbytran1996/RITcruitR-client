@@ -69,6 +69,9 @@ export class CompanyJobCreatePage {
   public saving = false;
   public loading = false;
   public showErrorDots = false;
+  private initialReqSkills;
+  private initialNthSkills;
+  private changed = false;
 
   constructor(
     public navCtrl: NavController,
@@ -100,7 +103,7 @@ export class CompanyJobCreatePage {
       "Required Skills",
       "Nice to Have Skills",
       "Job Filters",
-      "Job Expiration",
+      "Job Duration",
       "Problem Statement",
       "Presentation Links"
     ];
@@ -130,6 +133,7 @@ export class CompanyJobCreatePage {
               this.reqSkills.push(this.reqSkillOptions[skillIndex]);
             }
           });
+          this.initialReqSkills = this.reqSkills.length;
 
           this.nthSkills = [];
           this.jobModel.niceToHaveSkills.forEach(skill => {
@@ -138,6 +142,7 @@ export class CompanyJobCreatePage {
               this.nthSkills.push(this.nthSkillOptions[skillIndex]);
             }
           });
+          this.initialNthSkills = this.nthSkills.length;
         }
       },
       error => {
@@ -286,9 +291,37 @@ export class CompanyJobCreatePage {
   }
 
   /*
+    Check if any of the forms have changed value since the screen was entered.
+    Returns boolean.
+  */
+  haveFormsChanged() {
+    if (this.changed) return true;
+    if (this.form0.dirty) return true;
+    if (this.form1.dirty) return true;
+
+    if (this.form2.dirty
+        || this.reqSkills.length > this.initialReqSkills
+        || this.reqSkills.length < this.initialReqSkills
+    ) return true;
+
+    if (this.form3.dirty
+      || this.nthSkills.length > this.initialNthSkills
+      || this.nthSkills.length < this.initialNthSkills
+    ) return true;
+
+    if (this.form4.dirty) return true;
+    if (this.form5.dirty) return true;
+    if (this.form6.dirty) return true;
+
+    return false;
+  }
+
+  /*
     Set the form to the given step index.
   */
   setStep(step) {
+    if (this.formSeq.switchingStep) return;
+
     this.formSeq.setStep(step);
   }
 
@@ -296,15 +329,42 @@ export class CompanyJobCreatePage {
     Navigate back to the previous screen.
   */
   backBtn() {
+    if (this.haveFormsChanged()) {
+      let alert = this.alertCtrl.create({
+        title: 'Discard Changes?',
+        message: 'Are you sure you would like to discard your changes?',
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: () => {
+
+            }
+          },
+          {
+            text: 'Discard',
+            handler: () => {
+              this.navCtrl.pop();
+            }
+          }
+        ]
+      });
+
+      alert.present();
+    }
+    else {
+      this.navCtrl.pop();
+    }
+  }
+
+  /*
+    Go to the previous form step.
+  */
+  prevBtn() {
     if (this.formSeq.switchingStep) return;
     if (this.saving) return;
 
-    if (this.formSeq.currentStep == this.formSeq.startStep) {
-      this.navCtrl.pop();
-    }
-    else {
-      this.formSeq.previousStep();
-    }
+    this.formSeq.previousStep();
   }
 
   /*
@@ -312,6 +372,7 @@ export class CompanyJobCreatePage {
   */
   removeReqSkill(index) {
     this.reqSkills.splice(index, 1);
+    this.changed = true;
   }
 
   /*
@@ -319,6 +380,7 @@ export class CompanyJobCreatePage {
   */
   removeNthSkill(index) {
     this.nthSkills.splice(index, 1);
+    this.changed = true;
   }
 
   /*
@@ -342,6 +404,7 @@ export class CompanyJobCreatePage {
   */
   removeLink(index) {
     this.linksList.splice(index, 1);
+    this.changed = true;
   }
 
   /*
@@ -353,6 +416,7 @@ export class CompanyJobCreatePage {
     modal.onDidDismiss(data => {
       if (data) {
         this.linksList.push(data);
+        this.changed = true;
       }
     });
     modal.present();

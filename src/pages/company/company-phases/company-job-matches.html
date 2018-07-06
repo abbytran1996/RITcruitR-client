@@ -3,7 +3,7 @@
     <button ion-button menuToggle icon-only>
       <ion-icon name='menu'></ion-icon>
     </button>
-    <ion-title>Active Jobs</ion-title>
+    <ion-title>Job List</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -17,17 +17,27 @@
   </div>
   <div class="job-matches-wrapper" *ngIf="!pageLoading && jobList != undefined && jobList.length > 0">
     <div class="job-matches-header">
-      <h3 class="text-pill bg-white fg-accent text-center center" (click)="viewJobMatches()">Active Jobs</h3>
-      <p class="fg-white text-center bold">The jobs listed below are active and can be applied to. Tap one to review any matches.</p>
+      <h3 class="text-pill bg-white fg-accent text-center center fake-link" (click)="showActionSheet()" (swipe)="swipe($event)">{{ (activeJobs) ? 'Active Jobs' : 'Inactive Jobs' }} <ion-icon name="ios-more" class="more-icon fg-dark"></ion-icon></h3>
+      <p class="fg-white text-center bold" [hidden]="!activeJobs">The jobs listed below are active and can be applied to. Tap one to review any matches.</p>
+      <p class="fg-white text-center bold" [hidden]="activeJobs">The jobs listed below are inactive and can't be matched. Swipe left on a job to reactivate it.</p>
     </div>
     <div class="job-matches-list">
       <ion-list>
         <ion-item-sliding *ngFor="let job of jobList" class="list-item-card outer final-match fake-link">
           <ion-item class="list-item-card inner" (click)="viewJobMatches(job)">
-            <ion-icon name='md-alert' class="item-card-icon fg-primary"></ion-icon>
+            <ion-icon name='md-alert' class="item-card-icon fg-primary" *ngIf="!activeJobs"></ion-icon>
+            <div class="item-card-icon-div bg-primary fg-white" *ngIf="activeJobs">
+              {{ job.numMatches }}
+            </div>
             <div class="item-card-content with-icon">
               <h5 class="fg-dark">{{ job.positionTitle }}</h5>
               <p class="fg-grey">{{ job.locations[0] }}</p>
+            </div>
+            <div class="duration-wrapper item-card"
+                [ngClass]="{'duration-notice': job.numDaysRemaining < 4, 'duration-urgent': job.numDaysRemaining <= 1}"
+                *ngIf="activeJobs">
+              <ion-icon class="duration-icon" name="md-time"></ion-icon>
+              <span>{{ job.numDaysRemaining }}</span>
             </div>
           </ion-item>
           <ion-item-options side="left">
@@ -37,9 +47,13 @@
             </button>
           </ion-item-options>
           <ion-item-options side="right">
-            <button ion-button color="deny" (click)="deactivateJob(job)" class="font-body">
+            <button ion-button color="deny" (click)="deactivateJob(job)" class="font-body" *ngIf="activeJobs">
               <ion-icon name="ios-archive"></ion-icon>
               Deactivate
+            </button>
+            <button ion-button color="accept" (click)="reactivateJob(job)" class="font-body" *ngIf="!activeJobs">
+              <ion-icon name="ios-checkmark-circle"></ion-icon>
+              Reactivate
             </button>
           </ion-item-options>
         </ion-item-sliding>

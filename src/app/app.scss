@@ -1769,7 +1769,7 @@ ion-tabs.hide-bar .tabbar {
 // Text pill
 .text-pill {
   width: max-content;
-  padding-bottom: 5px;
+  padding-bottom: 8px;
   padding-top: 9px;
   padding-left: 20px;
   padding-right: 20px;
@@ -1820,6 +1820,19 @@ ion-tabs.hide-bar .tabbar {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
+  }
+
+  .item-card-icon-div {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    top: 50%;
+    position: absolute;
+    transform: translateY(-50%);
+    line-height: 30px;
+    text-align: center;
+    font-family: map-get($font-bodybold, family);
+    font-size: 14px;
   }
 
   .item-card-content {
@@ -1970,20 +1983,32 @@ ion-navbar {
   right: 10px;
   color: rgba(map-get($colors, dark), .7);
 
-  &.duration-notice {
-    color: rgba(map-get($colors, warning), .8);
-  }
-
-  &.duration-urgent {
-    color: rgba(map-get($colors, deny), .8);
-  }
-
   .duration-icon {
     font-size: 14px !important;
   }
 
   span {
     font-family: map-get($font-body, family);
+  }
+
+  &.item-card {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(map-get($colors, dark), .6);
+
+    span {
+      font-size: 14px;
+    }
+  }
+
+  &.duration-notice {
+    color: rgba(map-get($colors, warning), .8);
+  }
+
+  &.duration-urgent {
+    color: rgba(map-get($colors, deny), .8);
   }
 }
 
@@ -2003,6 +2028,48 @@ ion-refresher-content {
 
   ion-spinner svg line {
     stroke: white !important;
+  }
+}
+
+.more-icon {
+  font-size: 24px !important;
+  margin-left: 5px;
+  transform: translateY(3px);
+}
+
+.action-sheet-button {
+  color: map-get($colors, dark) !important;
+  font-family: map-get($font-body, family);
+
+  ion-icon {
+    font-size: 26px;
+    font-weight: normal;
+  }
+}
+
+.action-sheet-button.selected {
+  background: map-get($colors, primary) !important;
+  color: white !important;
+}
+
+.action-sheet-button.action-sheet-cancel {
+  color: map-get($colors, deny) !important;
+}
+
+.score-wrapper {
+  text-align: center;
+  color: rgba(map-get($colors, dark), .7);
+
+  .score-icon {
+    font-size: 14px !important;
+  }
+
+  span {
+    font-family: map-get($font-bodybold, family);
+  }
+
+  &.score-high {
+    color: rgba(map-get($colors, accept), .8);
   }
 }
 

@@ -42,10 +42,10 @@ export class FormSequenceService {
 
       this.stepForms.forEach((val, index) => {
         if (index > this.startStep) {
-          this.formClasses.push("ani-outright-init");
+          this.formClasses.push("ani-outright-init ani-hide");
         }
         else if (index < this.startStep) {
-          this.formClasses.push("ani-outleft-init");
+          this.formClasses.push("ani-outleft-init ani-hide");
         }
         else {
           this.formClasses.push("");

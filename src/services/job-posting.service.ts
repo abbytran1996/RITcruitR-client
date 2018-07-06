@@ -57,6 +57,28 @@ export class JobPostingService {
     }
 
     //=========================================================================
+    // * GET ACTIVE JOBS BY COMPANY                                           *
+    //=========================================================================
+    // - Given a company id, returns all active jobs associated with that
+    //   company.
+    // - Expects a company id number
+    // - Returns a list of JobModels
+    getActiveJobsByCompany(companyId) {
+      return this.apiService.get('/jobposting/company/' + companyId + '/status/active');
+    }
+
+    //=========================================================================
+    // * GET INACTIVE JOBS BY COMPANY                                         *
+    //=========================================================================
+    // - Given a company id, returns all inactive jobs associated with that
+    //   company.
+    // - Expects a company id number
+    // - Returns a list of JobModels
+    getInactiveJobsByCompany(companyId) {
+      return this.apiService.get('/jobposting/company/' + companyId + '/status/inactive');
+    }
+
+    //=========================================================================
     // * GET OPEN JOBS BY COMPANY                                             *
     //=========================================================================
     // - Given a company id, returns all open jobs associated with that
@@ -139,6 +161,26 @@ export class JobPostingService {
     // - Returns 200 (OK) response
     fulfillJob(jobId) {
         return this.apiService.post('/jobposting/' + jobId + 'fulfill');
+    }
+
+    //=========================================================================
+    // * DEACTIVATE JOB                                                       *
+    //=========================================================================
+    // - Given a job id, deactivates the job associated with that id
+    // - Expects a job id number
+    // - Returns 200 (OK) response
+    deactivateJob(jobId) {
+      return this.apiService.patch('/jobposting/' + jobId + '/status/inactive');
+    }
+
+    //=========================================================================
+    // * REACTIVATE JOB                                                       *
+    //=========================================================================
+    // - Given a job id, reactivates the job associated with that id
+    // - Expects a job id number
+    // - Returns 200 (OK) response
+    reactivateJob(jobId) {
+      return this.apiService.patch('/jobposting/' + jobId + '/status/active');
     }
 
     //=========================================================================

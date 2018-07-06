@@ -13,6 +13,12 @@
     </ion-row>
     <!-- End Title -->
 
+    <!-- Save Button -->
+    <button class="rec-btn-circle rec-btn-accent rec-load-btn save-btn" (click)="updateJob()" [disabled]="saving" [hidden]="!editMode">
+      <ion-icon><i class="fa fa-floppy-o"></i></ion-icon>
+    </button>
+    <!-- End Save Button -->
+
     <!-- Progress Bar -->
     <ion-row class="row-progress">
       <ion-col>
@@ -156,12 +162,16 @@
   <!-- Step 4 -->
   <ion-row class="row-form" [ngClass]="formSeq.formClasses[4]" [hidden]="formSeq.initHide">
     <ion-col>
-      <ion-row class="row-message">
+      <ion-row class="step-4-message">
         <ion-col>
-          <h3 class="text-center no-padding">Leave these fields blank if you wish to ignore these filters.</h3>
+          <h3 class="text-center no-padding">Some of the following fields are optional. Leave them blank to ignore the filter.</h3>
         </ion-col>
       </ion-row>
       <form #form4="ngForm">
+        <div class="rec-input-group-small">
+          <label class="rec-label full-width rl-secondary">MATCH THRESHOLD<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="thresholdInfo()"></ion-icon> <ion-badge class="rec-badge float-right">{{ jobModel.matchThreshold }} %</ion-badge></label>
+            <ion-range name="matchThreshold" min="30" max="100" step="10" snaps="true" color="primary" [(ngModel)]="jobModel.matchThreshold"></ion-range>
+        </div>
         <div class="rec-input-group">
           <label class="rec-label rl-secondary">MINIMUM GPA<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="minGpaInfo()"></ion-icon></label>
           <input type="number" name="minGpa" class="rec-input ri-grey" [(ngModel)]="jobModel.minGpa">
@@ -178,10 +188,6 @@
         <div class="rec-input-group-small">
           <label class="rec-label full-width rl-secondary">JOB DURATION<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="durationInfo()"></ion-icon> <ion-badge class="rec-badge float-right">{{ jobModel.duration }} {{ (jobModel.duration == 1) ? 'day' : 'days' }}</ion-badge></label>
             <ion-range name="duration" min="1" max="14" step="1" snaps="true" color="primary" [(ngModel)]="jobModel.duration"></ion-range>
-        </div>
-        <div class="rec-input-group-small">
-          <label class="rec-label full-width rl-secondary">MATCH THRESHOLD<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="thresholdInfo()"></ion-icon> <ion-badge class="rec-badge float-right">{{ jobModel.matchThreshold }} %</ion-badge></label>
-            <ion-range name="matchThreshold" min="30" max="100" step="10" snaps="true" color="primary" [(ngModel)]="jobModel.matchThreshold"></ion-range>
         </div>
       </form>
     </ion-col>
@@ -230,11 +236,10 @@
 <!-- Button Footer -->
 <ion-footer class="button-footer">
   <ion-row>
-     <button class="rec-btn-circle-large rec-btn-accent rec-load-btn save-btn" (click)="updateJob()" [disabled]="saving" [hidden]="!editMode || formSeq.currentStep == formSeq.maxSteps">
-      <ion-icon><i class="fa fa-floppy-o" [hidden]="saving"></i></ion-icon>
-      <ion-spinner class="white" name="dots" [hidden]="!saving"></ion-spinner>
+     <button class="rec-btn-circle-large rec-btn-primary rec-load-btn prev-btn" (click)="prevBtn()" [disabled]="saving || formSeq.currentStep == 0">
+      <ion-icon name="ios-arrow-back" (click)="prevBtn()"></ion-icon>
     </button>
-    <button class="rec-btn-primary rec-load-btn" (click)="continueClicked()" [ngClass]="{'rec-btn btn-stacked center': !editMode || formSeq.currentStep == formSeq.maxSteps, 'rec-btn-small continue-btn': editMode && formSeq.currentStep != formSeq.maxSteps}" [disabled]="saving">
+    <button class="rec-btn-primary rec-load-btn" (click)="continueClicked()" [ngClass]="{'rec-btn btn-stacked center': !editMode, 'rec-btn-small continue-btn': editMode}" [disabled]="saving">
       {{ (formSeq.currentStep == formSeq.maxSteps) ? ((saving) ? '' : ((editMode) ? 'Save' : 'Finish')) : ((saving) ? '' : 'Continue') }}
       <ion-spinner class="white" name="dots" [hidden]="!saving"></ion-spinner>
     </button>

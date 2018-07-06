@@ -1,9 +1,20 @@
 page-company-job-create {
   .save-btn {
+    position: absolute;
+    right: 20px;
+    margin-top: 24px;
+
+    ion-icon {
+      font-size: 18px !important;
+      padding-top: 4px;
+    }
+  }
+
+  .prev-btn {
     margin-left: 20px;
 
     ion-icon {
-      font-size: 24px !important;
+      font-size: 26px !important;
     }
   }
 
@@ -11,5 +22,13 @@ page-company-job-create {
     flex-grow: 1;
     margin-left: 20px;
     margin-right: 20px;
+  }
+
+  .step-4-message {
+    margin-bottom: 1vh;
+
+    h3 {
+      font-size: 16px;
+    }
   }
 }
