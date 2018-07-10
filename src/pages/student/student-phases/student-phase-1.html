@@ -35,9 +35,9 @@
               {{ (matchPoints.industry) ? match.matchedIndustry : match.job.company.industries[0] }}
               <span class="match-check" [hidden]="!matchPoints.industry"><ion-icon name="checkmark" class=""></ion-icon></span>
             </p>
-            <div class="duration-wrapper" [ngClass]="{'duration-notice': match.job.duration < 4, 'duration-urgent': match.job.duration == 1}">
+            <div class="duration-wrapper" [ngClass]="{'duration-notice': match.job.numDaysRemaining < 4, 'duration-urgent': match.job.numDaysRemaining == 1}">
               <ion-icon class="duration-icon" name="md-time"></ion-icon>
-              <span>{{ match.job.duration }}</span>
+              <span>{{ match.job.numDaysRemaining }}</span>
             </div>
           </div>
           <!-- End Card Header -->

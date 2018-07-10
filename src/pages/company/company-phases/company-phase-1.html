@@ -43,9 +43,13 @@
         <div class="match-card-header">
           <h3 class="title fg-primary text-center">{{ match.student.firstName }} {{ match.student.lastName }}</h3>
           <p class="fg-grey text-center">{{ match.student.major }}</p>
-          <div class="duration-wrapper" [ngClass]="{'duration-notice': match.job.duration < 4, 'duration-urgent': match.job.duration == 1}">
+          <div class="duration-wrapper" [ngClass]="{'duration-notice': match.job.numDaysRemaining < 4, 'duration-urgent': match.job.numDaysRemaining == 1}">
             <ion-icon class="duration-icon" name="md-time"></ion-icon>
-            <span>{{ match.job.duration }}</span>
+            <span>{{ match.job.numDaysRemaining }}</span>
+          </div>
+          <div class="score-wrapper" [ngClass]="{'score-high': match.matchStrength >= .8}">
+            <ion-icon class="score-icon" name="md-speedometer"></ion-icon>
+            <span>{{ match.matchStrength * 100 }}%</span>
           </div>
         </div>
 

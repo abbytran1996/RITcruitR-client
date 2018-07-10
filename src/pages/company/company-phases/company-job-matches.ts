@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Events, AlertController } from 'ionic-angular';
+import { NavController, NavParams, Events, AlertController, ActionSheetController } from 'ionic-angular';
 
 import {
   CompanyPhase1Page
@@ -27,11 +27,13 @@ export class CompanyJobMatchesPage {
   public recruiter: RecruiterModel;
   public jobList = [];
   public pageLoading = true;
+  public activeJobs = true;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public events: Events,
+    public actionSheetCtrl: ActionSheetController,
     private alertCtrl: AlertController,
     private jobPostingService: JobPostingService,
     public helperService: HelperService
@@ -39,7 +41,7 @@ export class CompanyJobMatchesPage {
     this.recruiter = navParams.get("recruiter");
 
     if (this.recruiter != undefined) {
-      this.getOpenJobs();
+      this.getActiveJobs();
     }
   }
 
@@ -50,7 +52,7 @@ export class CompanyJobMatchesPage {
   ionViewDidEnter() {
     this.events.subscribe('tabs:recruiter', (recruiter) => {
       this.recruiter = recruiter;
-      this.getOpenJobs();
+      this.getActiveJobs();
     });
 
     // Hide the tabs bar on this page
@@ -68,9 +70,82 @@ export class CompanyJobMatchesPage {
     Called upon pulldown refresh, refresh the matches.
   */
   doRefresh(refresher) {
-    this.getOpenJobs(() => {
-      refresher.complete();
+    if (this.activeJobs) {
+      this.getActiveJobs(() => {
+        refresher.complete();
+      });
+    }
+    else {
+      this.getInactiveJobs(() => {
+        refresher.complete();
+      });
+    }
+  }
+
+  /*
+    Called when the jobs filter button is swiped in any direction. Determine threshold and call proper function.
+  */
+  swipe(event) {
+    if (this.activeJobs) {
+      this.showInactiveJobs();
+    }
+    else {
+      this.showActiveJobs();
+    }
+  }
+
+  /*
+    Show the action sheet.
+  */
+  showActionSheet() {
+    const actionSheet = this.actionSheetCtrl.create({
+      title: 'Job Filters',
+      buttons: [
+        {
+          text: 'Active Jobs',
+          cssClass: (this.activeJobs) ? 'selected' : '',
+          handler: () => {
+            this.showActiveJobs();
+          }
+        }, {
+          text: 'Inactive Jobs',
+          cssClass: (this.activeJobs) ? '' : 'selected',
+          handler: () => {
+            this.showInactiveJobs();
+          }
+        }, {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
     });
+
+    actionSheet.present();
+  }
+
+  /*
+    Get and show the active jobs.
+  */
+  showActiveJobs() {
+    if (!this.activeJobs) {
+      this.activeJobs = true;
+      this.pageLoading = true;
+      this.getActiveJobs();
+    }
+  }
+
+  /*
+    Get and show the inactive jobs.
+  */
+  showInactiveJobs() {
+    if (this.activeJobs) {
+      this.activeJobs = false;
+      this.pageLoading = true;
+      this.getInactiveJobs();
+    }
   }
 
   /*
@@ -91,15 +166,18 @@ export class CompanyJobMatchesPage {
         {
           text: 'Cancel',
           role: 'cancel',
-          handler: () => {
-            
-          }
+          handler: () => { }
         },
         {
           text: 'Deactivate',
           handler: () => {
-            // TODO: Deactivate job when the server is updated to do so
-            this.jobList = this.helperService.removeFromArrayById(this.jobList, job);
+            this.jobPostingService.deactivateJob(job.id).subscribe(
+              data => { },
+              res => {
+                this.pageLoading = true;
+                this.getActiveJobs();
+              }
+            );
           }
         }
       ]
@@ -109,10 +187,69 @@ export class CompanyJobMatchesPage {
   }
 
   /*
-    Get all company jobs that have a status of open.
+    Reactivate the given job.
   */
-  getOpenJobs(callback?) {
-    this.jobPostingService.getOpenJobsByCompany(this.recruiter.company.id).subscribe(
+  reactivateJob(job) {
+    let alert = this.alertCtrl.create({
+      title: 'Confirm Job Reactivation',
+      message: 'Would you like to reactivate this job? If so, it will be matchable again and have its duration reset.',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => { }
+        },
+        {
+          text: 'Reactivate',
+          handler: () => {
+            this.jobPostingService.reactivateJob(job.id).subscribe(
+              data => { },
+              res => {
+                this.pageLoading = true;
+                this.getInactiveJobs();
+              }
+            );
+          }
+        }
+      ]
+    });
+
+    alert.present();
+  }
+
+  /*
+    Get all company jobs that have a status of active.
+  */
+  getActiveJobs(callback?) {
+    this.jobPostingService.getActiveJobsByCompany(this.recruiter.company.id).subscribe(
+      data => {
+        this.jobList = data;
+
+        this.jobList.forEach((job, index) => {
+          this.jobPostingService.getNumPhase1Matches(job.id).subscribe(
+            data => {
+              this.jobList[index]["numMatches"] = data || 0;
+
+              if (index == this.jobList.length - 1) {
+                this.pageLoading = false;
+              }
+            }, res => { }
+          );
+        });
+
+        if (callback != undefined) callback();
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
+
+  /*
+    Get all company jobs that have a status of inactive.
+  */
+  getInactiveJobs(callback?) {
+    this.jobPostingService.getInactiveJobsByCompany(this.recruiter.company.id).subscribe(
       data => {
         this.jobList = data;
         this.pageLoading = false;
@@ -129,6 +266,8 @@ export class CompanyJobMatchesPage {
     View matches in the main flow for the selected job.
   */
   viewJobMatches(job) {
+    if (!this.activeJobs) return;
+    
     this.events.publish('tabs:setActive', 1, Date.now());
     this.jobPostingService.setCurrentJob(job);
   }
