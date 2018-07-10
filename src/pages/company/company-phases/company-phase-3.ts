@@ -9,7 +9,8 @@ import {
 } from '@app/models';
 
 import {
-  JobPostingService
+  JobPostingService,
+  HelperService
 } from '@app/services';
 
 //=========================================================================
@@ -40,6 +41,7 @@ export class CompanyPhase3Page {
     private alertCtrl: AlertController,
     private toastCtrl: ToastController,
     private jobPostingService: JobPostingService,
+    public helperService: HelperService,
     private callNumber: CallNumber,
     public events: Events
   ) {
@@ -272,23 +274,11 @@ export class CompanyPhase3Page {
   */
   getMatches(callback?) {
     this.jobPostingService.getFinalPhaseMatchesByJob(this.currentJob.id).subscribe(
-      res => {
-        this.matchList = res;
+      data => {
+        this.matchList = this.helperService.sortMatches(data);
 
-        if (this.matchList != undefined && this.matchList.length > 0) {
-          this.matchList.sort((a, b) => {
-            if (a.matchStrength < b.matchStrength) return 1;
-            else if (a.matchStrength > b.matchStrength) return -1;
-            else return 0;
-          });
-
-          this.events.publish('tabs:numMatches', this.currentJob);
-
-          this.pageLoading = false;
-        }
-        else {
-          this.pageLoading = false;
-        }
+        this.events.publish('tabs:numMatches', this.currentJob);
+        this.pageLoading = false;
 
         if (callback != undefined) callback();
       },

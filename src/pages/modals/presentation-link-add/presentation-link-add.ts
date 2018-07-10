@@ -56,10 +56,18 @@ export class PresentationLinkAddModal {
     Show an alert dialog explaining what a student presentation phase is.
   */
   yourPresentationInfo() {
-    this.showAlert(
-      "Your Presentation",
-      "This is your chance to show the recruiter anything of yours that you would like to share. This could be a link to a video of yourself, a project link, a personal website, or anything else."
-    );
+    if (this.model instanceof StudentModel) {
+      this.showAlert(
+        "Presentation Links",
+        "Presentation links are links to anything you may want an employer to see when applying to a job. A link could be to a video of yourself, a personal website, a project you've worked on, etc. These links will be used later when applying to jobs."
+      );
+    }
+    else if (this.model instanceof CompanyModel) {
+      this.showAlert(
+        "Presentation Links",
+        "Presentation links are links to anything you may want to present to an applicant applying to a job you're offering. A link could be to a company video, a company website, a product website, etc. These links can be used later when creating jobs."
+      );
+    }
   }
 
   /*

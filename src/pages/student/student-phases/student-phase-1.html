@@ -29,7 +29,7 @@
         (swipe)="swipe($event)" id="swipe-card">
 
           <!-- Card Header -->
-          <div class="match-card-header">
+          <div class="match-card-header" [ngClass]="{'large': helperService.isMatchHeaderLarge(match)}">
             <h3 class="title fg-primary text-center">{{ match.job.positionTitle }}</h3>
             <p class="fg-grey text-center">
               {{ (matchPoints.industry) ? match.matchedIndustry : match.job.company.industries[0] }}
@@ -37,13 +37,17 @@
             </p>
             <div class="duration-wrapper" [ngClass]="{'duration-notice': match.job.numDaysRemaining < 4, 'duration-urgent': match.job.numDaysRemaining == 1}">
               <ion-icon class="duration-icon" name="md-time"></ion-icon>
-              <span>{{ match.job.numDaysRemaining }}</span>
+              <span>{{ match.job.numDaysRemaining || '0' }}</span>
+            </div>
+            <div class="score-wrapper" [ngClass]="{'score-high': match.matchStrength >= .8}">
+              <ion-icon class="score-icon" name="md-speedometer"></ion-icon>
+              <span>{{ match.matchStrength * 100 }}%</span>
             </div>
           </div>
           <!-- End Card Header -->
 
           <!-- Match Summary Card Content -->
-          <div class="match-card-content" [ngClass]="{'slide-left': stage > 0}">
+          <div class="match-card-content" [ngClass]="{'slide-left': stage > 0, 'large': helperService.isMatchHeaderLarge(match)}">
             <div class="locations content-section">
               <h3 class="heading fg-dark"><ion-icon name="ios-pin" class="card-heading-icon"></ion-icon>Locations:</h3>
               <ul class="rec-ul">
@@ -56,8 +60,8 @@
             <div class="skills content-section">
               <h3 class="heading fg-dark"><ion-icon name="md-construct" class="card-heading-icon"></ion-icon>Top Skills:</h3>
               <ul class="rec-ul">
-                <li *ngFor="let skill of match.skillsToShow; let i = index">
-                  {{ skill.name }}
+                <li *ngFor="let skill of match.skillsToShow; let i = index" [hidden]="skill == undefined">
+                  {{ (skill) ? skill.name : '' }}
                   <span class="match-check" [hidden]="!matchPoints.skills[i]"><ion-icon name="checkmark" class=""></ion-icon></span>
                 </li>
               </ul>
@@ -70,7 +74,7 @@
           <!-- End Match Summary Card Content -->
 
           <!-- Company Problem Statement Card Content -->
-          <div class="match-card-content" [ngClass]="{'slide-left': stage > 1, 'slide-right': stage < 1}">
+          <div class="match-card-content" [ngClass]="{'slide-left': stage > 1, 'slide-right': stage < 1, 'large': helperService.isMatchHeaderLarge(match)}">
             <div class="company-work-statement content-section">
               <h3 class="heading fg-dark heading-spacer">
                 <ion-icon name="md-chatboxes" class="card-heading-icon"></ion-icon>Job Problem Statement<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="companyProbStatementInfo()"></ion-icon></h3>
@@ -80,7 +84,7 @@
           <!-- End Company Problem Statement Card Content -->
 
           <!-- Your Problem Statement Card Content -->
-          <div class="match-card-content" [ngClass]="{'slide-right': stage < 2}">
+          <div class="match-card-content" [ngClass]="{'slide-right': stage < 2, 'large': helperService.isMatchHeaderLarge(match)}">
             <div class="company-work-statement content-section">
               <h3 class="heading fg-dark heading-spacer">
                 <ion-icon name="md-chatboxes" class="card-heading-icon"></ion-icon>Your Problem Statement<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="yourProbStatementInfo()"></ion-icon>

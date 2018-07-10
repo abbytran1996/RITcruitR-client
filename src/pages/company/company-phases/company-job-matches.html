@@ -15,13 +15,13 @@
   <div class="loader-wrapper" *ngIf="pageLoading">
     <ion-spinner name="bubbles"></ion-spinner>
   </div>
-  <div class="job-matches-wrapper" *ngIf="!pageLoading && jobList != undefined && jobList.length > 0">
-    <div class="job-matches-header">
+  <div class="job-matches-wrapper">
+    <div class="job-matches-header" *ngIf="!pageLoading">
       <h3 class="text-pill bg-white fg-accent text-center center fake-link" (click)="showActionSheet()" (swipe)="swipe($event)">{{ (activeJobs) ? 'Active Jobs' : 'Inactive Jobs' }} <ion-icon name="ios-more" class="more-icon fg-dark"></ion-icon></h3>
-      <p class="fg-white text-center bold" [hidden]="!activeJobs">The jobs listed below are active and can be applied to. Tap one to review any matches.</p>
-      <p class="fg-white text-center bold" [hidden]="activeJobs">The jobs listed below are inactive and can't be matched. Swipe left on a job to reactivate it.</p>
+      <p class="fg-white text-center bold" [hidden]="!activeJobs || (jobList == undefined || jobList.length == 0)">The jobs listed below are active and can be applied to. Tap one to review any matches.</p>
+      <p class="fg-white text-center bold" [hidden]="activeJobs || (jobList == undefined || jobList.length == 0)">The jobs listed below are inactive and can't be matched. Swipe left on a job to reactivate it.</p>
     </div>
-    <div class="job-matches-list">
+    <div class="job-matches-list" *ngIf="!pageLoading && jobList != undefined && jobList.length > 0">
       <ion-list>
         <ion-item-sliding *ngFor="let job of jobList" class="list-item-card outer final-match fake-link">
           <ion-item class="list-item-card inner" (click)="viewJobMatches(job)">
@@ -63,12 +63,19 @@
 
   <!-- Empty List Message -->
   <div class="match-list-empty" *ngIf="!pageLoading && (jobList == undefined || jobList.length == 0)">
-    <ion-icon name="md-alert" class=""></ion-icon>
-    <div class="sep-horizontal-1"></div>
-    <h3 class="fg-white text-center">You don't have any jobs created on RecruitR. Create or import one using the buttons below.</h3>
-    <div class="sep-horizontal-1"></div>
-    <button class="rec-btn rec-btn-white btn-stacked center" (click)="createJobLink()">Create Job</button>
-    <button class="rec-btn rec-btn-white btn-stacked center" (click)="importJobLink()">Import Job</button>
+    <div [hidden]="!activeJobs">
+      <div class="sep-horizontal-1"></div>
+      <h3 class="fg-white text-center">You don't have any active jobs. Create or import new ones using the buttons below.</h3>
+      <div class="sep-horizontal-1"></div>
+      <button class="rec-btn-small-wide rec-btn-white btn-stacked center" (click)="createJobLink()">Create Job</button>
+      <button class="rec-btn-small-wide rec-btn-white btn-stacked center" (click)="importJobLink()">Import Job</button>
+    </div>
+    <div [hidden]="activeJobs">
+      <div class="sep-horizontal-1"></div>
+      <h3 class="fg-white text-center">You don't have any inactive jobs. Return to the active jobs list.</h3>
+      <div class="sep-horizontal-1"></div>
+      <button class="rec-btn-small-wide rec-btn-white btn-stacked center" (click)="showActiveJobs()">Active Jobs</button>
+    </div>
   </div>
   <!-- End Empty List Message -->
 </ion-content>

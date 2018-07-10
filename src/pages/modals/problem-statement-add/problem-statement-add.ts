@@ -53,8 +53,8 @@ export class ProblemStatementAddModal {
   */
   yourProbStatementInfo() {
     this.showAlert(
-      "Your Problem Statement",
-      "Your problem statement should be a short paragraph describing a project or problem you've worked on. Give recruiters an idea of the work you've done and what you like to do."
+      "Problem Statement",
+      "A problem statement is a short paragraph describing a project or problem you've worked on. Give recruiters an idea of the work you've done and what you like to do. The statements saved here can be used later when applying to matched jobs."
     );
   }
 

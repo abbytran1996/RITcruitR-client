@@ -2154,16 +2154,25 @@ ion-refresher-content {
   transition: transform 0s ease-in-out, opacity 0s ease-in-out;
 }
 
-$card-header-height: 70px;
+$card-header-height: 92px;
+$card-header-height-large: 120px;
 .match-card-header {
   height: $card-header-height;
   border-top-left-radius: 7px;
   border-top-right-radius: 7px;
   background-color: map-get($colors, light);
   padding-top: 12px;
+  padding-bottom: 5px;
+  box-sizing: border-box;
+
+  &.large {
+    height: $card-header-height-large;
+  }
 
   h3.title {
+    width: 75%;
     margin: 0;
+    margin: auto;
     font-size: 24px;
   }
 
@@ -2223,11 +2232,15 @@ $card-footer-height: 70px;
 .match-card-content {
   padding: 15px;
   width: 100%;
-  height: calc(100% - 140px);
+  height: calc(100% - 162px);
   position: absolute;
   transform: translateX(0);
   transition: transform .4s;
   overflow-y: auto;
+
+  &.large {
+    height: calc(100% - 190px);
+  }
 
   h3.heading {
     margin: 0;
@@ -2405,9 +2418,8 @@ ion-icon.card-heading-icon-right {
 .match-review-card {
   margin-top: 24%;
 
-  .match-card-header {
-    height: auto;
-    padding-bottom: 10px;
+  &.toolbar-large {
+    margin-top: 28%;
   }
 
   .card-heading-icon {
@@ -2415,6 +2427,11 @@ ion-icon.card-heading-icon-right {
   }
 
   &.contact {
+    .match-card-header {
+      height: auto;
+      padding-bottom: 10px;
+    }
+  
     .match-card-content {
       height: auto;
     }

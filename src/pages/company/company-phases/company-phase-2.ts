@@ -176,10 +176,7 @@ export class CompanyPhase2Page {
       this.fadeLeft = true;
 
       setTimeout(() => {
-        this.matchList = this.helperService.removeFromArrayById(this.matchList, this.match);
         this.nextMatch();
-        this.fadeLeft = false;
-        this.fadeRightInstant = true;
 
         setTimeout(() => {
           this.fadeRightInstant = false;
@@ -202,15 +199,12 @@ export class CompanyPhase2Page {
     Show the next match in the list of matches at this phase.
   */
   nextMatch() {
-    if (this.matchIndex + 1 < this.matchList.length) {
-      this.matchIndex = this.matchIndex + 1;
-    }
-    else {
-      this.matchIndex = 0;
-    }
-
+    this.matchList = this.helperService.removeFromArrayById(this.matchList, this.match);
     this.stage = 0;
     this.match = new MatchModel(this.matchList[this.matchIndex]);
+
+    this.fadeLeft = false;
+    this.fadeRightInstant = true;
   }
 
   /*
@@ -236,10 +230,7 @@ export class CompanyPhase2Page {
         }, this.helperService.getCardFadeTime() / 2);
 
         setTimeout(() => {
-          this.matchList = this.helperService.removeFromArrayById(this.matchList, this.match);
           this.nextMatch();
-          this.fadeLeft = false;
-          this.fadeRightInstant = true;
 
           setTimeout(() => {
             this.fadeRightInstant = false;
@@ -265,17 +256,11 @@ export class CompanyPhase2Page {
   getMatches(callback?) {
     this.jobPostingService.getPresentationPhaseMatchesByJob(this.currentJob.id).subscribe(
       data => {
-        this.matchList = data;
+        this.matchList = this.helperService.sortMatches(data);
 
+        this.events.publish('tabs:numMatches', this.currentJob);
+        
         if (this.matchList != undefined && this.matchList.length > 0) {
-          this.matchList.sort((a, b) => {
-            if (a.matchStrength < b.matchStrength) return 1;
-            else if (a.matchStrength > b.matchStrength) return -1;
-            else return 0;
-          });
-
-          this.events.publish('tabs:numMatches', this.currentJob);
-
           this.matchIndex = 0;
           this.stage = 0;
           this.match = new MatchModel(this.matchList[this.matchIndex]);

@@ -239,7 +239,7 @@
      <button class="rec-btn-circle-large rec-btn-primary rec-load-btn prev-btn" (click)="prevBtn()" [disabled]="saving || formSeq.currentStep == 0">
       <ion-icon name="ios-arrow-back" (click)="prevBtn()"></ion-icon>
     </button>
-    <button class="rec-btn-primary rec-load-btn" (click)="continueClicked()" [ngClass]="{'rec-btn btn-stacked center': !editMode, 'rec-btn-small continue-btn': editMode}" [disabled]="saving">
+    <button class="rec-btn-small rec-btn-primary continue-btn rec-load-btn" (click)="continueClicked()" [disabled]="saving">
       {{ (formSeq.currentStep == formSeq.maxSteps) ? ((saving) ? '' : ((editMode) ? 'Save' : 'Finish')) : ((saving) ? '' : 'Continue') }}
       <ion-spinner class="white" name="dots" [hidden]="!saving"></ion-spinner>
     </button>
