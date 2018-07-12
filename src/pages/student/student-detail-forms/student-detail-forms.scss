@@ -1,3 +1,47 @@
 page-student-detail-forms {
+  .row-message {
+    margin-top: 0 !important;
+    margin-bottom: 4vh;
 
+    h3 {
+      width: 100%;
+      margin: 0;
+      text-align: center;
+      line-height: 32px;
+    }
+  }
+
+  .row-buttons {
+    position: relative;
+  }
+
+  .circle-icon-btn ~ h3 {
+    font-size: 16px;
+  }
+
+  .row-one {
+    position: relative;
+
+    .circle-icon-btn-wrapper:first-child {
+      position: absolute;
+      left: 1vw;
+    }
+
+    .circle-icon-btn-wrapper:last-child {
+      position: absolute;
+      right: 1vw;
+    }
+  }
+
+  .row-two {
+    position: relative;
+    margin-top: 0vh;
+
+    .circle-icon-btn-wrapper {
+      position: absolute;
+      top: 28vh;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
 }
