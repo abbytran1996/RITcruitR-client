@@ -25,11 +25,21 @@ page-student-detail-forms {
     .circle-icon-btn-wrapper:first-child {
       position: absolute;
       left: 1vw;
+
+      &.small {
+        padding-left: 5vw;
+        margin-top: -2vh;
+      }
     }
 
     .circle-icon-btn-wrapper:last-child {
       position: absolute;
       right: 1vw;
+
+      &.small {
+        padding-right: 5vw;
+        margin-top: -2vh;
+      }
     }
   }
 
@@ -42,6 +52,10 @@ page-student-detail-forms {
       top: 28vh;
       left: 50%;
       transform: translateX(-50%);
+
+      &.small {
+        margin-top: -7vh;
+      }
     }
   }
 }

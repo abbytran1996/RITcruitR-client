@@ -83,25 +83,27 @@
     <!-- Step 2 -->
     <ion-row class="row-form row-buttons" [ngClass]="formSeq.formClasses[2]" [hidden]="formSeq.initHide" *ngIf="isSetup || formSeq.startStep == 2">
       <ion-col>
-        <ion-row class="row-message">
-          <h3>Choose a <span class="fg-accent">job preference</span> to modify.<br>These will help filter matches.</h3>
-        </ion-row>
-        <ion-row class="row-one clearfix">
-          <div class="circle-icon-btn-wrapper">
-            <ion-icon name="ios-pin" class="icon-link circle-icon-btn" (click)="jobLocationsModal()"></ion-icon>
-            <h3 class="text-center fg-dark">Job<br>Locations</h3>
-          </div>
-          <div class="circle-icon-btn-wrapper">
-            <ion-icon name="ios-briefcase" class="icon-link circle-icon-btn" (click)="jobIndustriesModal()"></ion-icon>
-            <h3 class="text-center fg-dark">Job<br>Industries</h3>
-          </div>
-        </ion-row>
-        <ion-row class="row-two clearfix">
-          <div class="circle-icon-btn-wrapper">
-            <ion-icon name="ios-expand" class="icon-link circle-icon-btn" (click)="companySizesModal()"></ion-icon>
-            <h3 class="text-center fg-dark">Company<br>Size</h3>
-          </div>
-        </ion-row>
+        <form #form2="ngForm">
+          <ion-row class="row-message">
+            <h3>Choose a <span class="fg-accent">job preference</span> to modify.<br>These will help filter matches.</h3>
+          </ion-row>
+          <ion-row class="row-one clearfix">
+            <div class="circle-icon-btn-wrapper" [ngClass]="{'small': isSetup}">
+              <ion-icon name="ios-pin" class="icon-link circle-icon-btn" [ngClass]="{'small': isSetup}" (click)="jobLocationsModal()"></ion-icon>
+              <h3 class="text-center fg-dark">Job<br>Locations</h3>
+            </div>
+            <div class="circle-icon-btn-wrapper" [ngClass]="{'small': isSetup}">
+              <ion-icon name="ios-briefcase" class="icon-link circle-icon-btn" [ngClass]="{'small': isSetup}" (click)="jobIndustriesModal()"></ion-icon>
+              <h3 class="text-center fg-dark">Job<br>Industries</h3>
+            </div>
+          </ion-row>
+          <ion-row class="row-two clearfix">
+            <div class="circle-icon-btn-wrapper" [ngClass]="{'small': isSetup}">
+              <ion-icon name="ios-expand" class="icon-link circle-icon-btn" [ngClass]="{'small': isSetup}" (click)="companySizesModal()"></ion-icon>
+              <h3 class="text-center fg-dark">Company<br>Size</h3>
+            </div>
+          </ion-row>
+        </form>
       </ion-col>
     </ion-row>
     <!-- End Step 2 -->

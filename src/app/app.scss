@@ -780,6 +780,17 @@ ion-icon.rec-btn-icon {
   margin-bottom: 0px;
 }
 
+.circle-icon-btn.small {
+  width: 12vh;
+  height: 12vh;
+  line-height: 12vh;
+  font-size: 35px !important;
+}
+
+.circle-icon-btn.small ~ h3 {
+  
+}
+
 .rec-load-btn {
   ion-spinner {
     transform: scale(2);
