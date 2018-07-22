@@ -47,13 +47,30 @@
     <ion-col>
       <form #newForm="ngForm">
         <div class="rec-input-group-small">
-          <label class="rec-label rl-secondary">TITLE</label>
-          <input type="text" name="title" class="rec-input ri-grey" required [(ngModel)]="newLinkModel.title">
+          <h2 class="text-center fg-black"><ion-icon name="{{ linkTypeCurrent.icon }}" [ngStyle]="{'color': linkTypeCurrent.color}" class="link-type-icon"></ion-icon> {{ linkTypeCurrent.title }}</h2>
         </div>
         <div class="rec-input-group-small">
-          <label class="rec-label rl-secondary">LINK</label>
-          <input type="text" name="link" class="rec-input ri-grey" required [(ngModel)]="newLinkModel.link">
+          <label class="rec-label rl-secondary">LINK TYPE</label>
+          <ion-select name="linkType" class="rec-input ri-grey" [(ngModel)]="linkTypeIndex" multiple="false" (ionChange)="typeChanged($event)">
+            <ion-option *ngFor="let type of linkTypes; index as i;" [value]="i">{{ type.text }}</ion-option>
+          </ion-select>
         </div>
+        
+        <!-- Link Type Fields -->
+        <div class="rec-input-group-small" *ngFor="let field of linkTypeCurrent.fields">
+          <label class="rec-label rl-secondary">{{ field.label }}</label>
+          <div [ngSwitch]="field.type" class="link-type-field">
+            <ion-icon name="{{ linkTypeCurrent.icon }}" [ngStyle]="{'color': linkTypeCurrent.color}" class="link-type-field-icon"></ion-icon>
+            <input *ngSwitchCase="'text'" type="text" name="field.name" class="rec-input ri-grey" [(ngModel)]="field.value" [required]="field.required ? '' : null">
+          </div>
+        </div>
+        <!-- End Link Type Fields -->
+
+        <div class="rec-input-group-small">
+          <label class="rec-label rl-secondary">LINK TITLE</label>
+          <input type="text" name="title" class="rec-input ri-grey" required [(ngModel)]="newLinkModel.title">
+        </div>
+
         <div class="rec-input-group-small" [hidden]="!allowExisting">
           <label class="rec-label rl-secondary">SAVE TO PROFILE</label>
           <ion-toggle name="saveToProfile" class="rec-input float-right" checked="false" [(ngModel)]="saveLink"></ion-toggle>

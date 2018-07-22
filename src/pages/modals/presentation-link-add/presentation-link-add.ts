@@ -10,7 +10,8 @@ import {
 import {
   HelperService,
   StudentService,
-  CompanyService
+  CompanyService,
+  DataService
 } from '@app/services';
 
 //=========================================================================
@@ -36,6 +37,65 @@ export class PresentationLinkAddModal {
   public model;
   public allowExisting = true;
 
+  public linkTypes = [
+    {
+      text: "Basic Link",
+      value: "basic",
+      title: "BASIC LINK",
+      icon: "md-link",
+      color: "#000000",
+      fields: [
+        { type: "text", label: "LINK URL", name: "linkUrl", value: "", required: true }
+      ],
+      generateLink: (fields) => {
+        let regex = new RegExp("^(https?|ftp)://.*$");
+        let link = String(fields[0].value);
+
+        if (!regex.test(link)) {
+          link = "http://" + link;
+        }
+
+        return link;
+      }
+    },
+    {
+      text: "YouTube Video",
+      value: "youtube",
+      title: "YOUTUBE",
+      icon: "logo-youtube",
+      color: "#eb3324",
+      fields: [
+        { type: "text", label: "VIDEO ID", name: "videoID", value: "", required: true }
+      ],
+      generateLink: (fields) => {
+        let ytUrl = "https://www.youtube.com/watch?v=";
+        let videoId = fields[0].value;
+
+        return ytUrl + videoId;
+      }
+    },
+    {
+      text: "GitHub",
+      value: "github",
+      title: "GITHUB",
+      icon: "logo-github",
+      color: "#000000",
+      fields: [
+        { type: "text", label: "GITHUB USERNAME", name: "githubUsername", value: "", required: true },
+        { type: "text", label: "GITHUB REPOSITORY NAME (OPTIONAL)", name: "githubRepo", value: "", required: false }
+      ],
+      generateLink: (fields) => {
+        let ghUrl = "https://github.com/";
+        let username = fields[0].value;
+        let repo = fields[1].value;
+
+        return ghUrl + username + "/" + repo;
+      }
+    }
+  ];
+  public linkTypeIndex = 0;
+  public linkTypeCurrent = undefined;
+
   constructor(
     public platform: Platform,
     public navParams: NavParams,
@@ -44,12 +104,16 @@ export class PresentationLinkAddModal {
     private alertCtrl: AlertController,
     private helperService: HelperService,
     private studentService: StudentService,
-    private companyService: CompanyService
+    private companyService: CompanyService,
+    private dataService: DataService
   ) {
     this.model = navParams.get("model") || { presentationLinks: [] };
     this.allowExisting = navParams.get("allowExisting");
     if (this.allowExisting == undefined) this.allowExisting = true;
     this.existingLinkOptions = this.helperService.sortById(this.model.presentationLinks, true);
+
+    // Link type fields initialization
+    this.linkTypeCurrent = this.linkTypes[this.linkTypeIndex];
   }
 
   /*
@@ -97,7 +161,7 @@ export class PresentationLinkAddModal {
         this.presentToast("Please either select an existing presentation link, or create a new one");
       }
       else {
-        this.presentToast("Please enter a link title and url");
+        this.presentToast("Please enter a value for all of the required fields");
       }
     }
   }
@@ -113,6 +177,9 @@ export class PresentationLinkAddModal {
     Dismiss the modal and send back the newly created presentation link.
   */
   dismissNew() {
+    // Link generation
+    this.newLinkModel.link = this.linkTypeCurrent.generateLink(this.linkTypeCurrent.fields);
+
     if (this.saveLink) {
       if (this.model instanceof StudentModel) {
         this.studentService.addStudentPresentationLink(this.model.id, this.newLinkModel).subscribe(
@@ -136,6 +203,16 @@ export class PresentationLinkAddModal {
     else {
       this.viewCtrl.dismiss(this.newLinkModel);
     }
+  }
+
+  /*
+    Called when a value is selected from the link type select box.
+  */
+  typeChanged(event) {
+    this.linkTypeCurrent = this.linkTypes[this.linkTypeIndex];
+    this.linkTypeCurrent.fields.forEach((field) => {
+      field.value = undefined;
+    });
   }
 
   /*
