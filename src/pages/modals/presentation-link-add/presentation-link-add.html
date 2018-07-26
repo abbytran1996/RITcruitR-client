@@ -47,12 +47,12 @@
     <ion-col>
       <form #newForm="ngForm">
         <div class="rec-input-group-small">
-          <h2 class="text-center fg-black"><ion-icon name="{{ linkTypeCurrent.icon }}" [ngStyle]="{'color': linkTypeCurrent.color}" class="link-type-icon"></ion-icon> {{ linkTypeCurrent.title }}</h2>
+          <h2 class="text-center fg-dark"><ion-icon name="{{ linkTypeCurrent.icon }}" [ngStyle]="{'color': linkTypeCurrent.color}" class="link-type-icon"></ion-icon> {{ linkTypeCurrent.pageTitle }}</h2>
         </div>
         <div class="rec-input-group-small">
           <label class="rec-label rl-secondary">LINK TYPE</label>
           <ion-select name="linkType" class="rec-input ri-grey" [(ngModel)]="linkTypeIndex" multiple="false" (ionChange)="typeChanged($event)">
-            <ion-option *ngFor="let type of linkTypes; index as i;" [value]="i">{{ type.text }}</ion-option>
+            <ion-option *ngFor="let type of linkTypes; index as i;" [value]="i">{{ type.optionText }}</ion-option>
           </ion-select>
         </div>
         

@@ -7,7 +7,8 @@ import { PresentationLinkAddModal } from '@app/pages/modals';
 
 import {
   StudentModel,
-  PresentationLinkModel
+  PresentationLinkModel,
+  PresentationLinkDBModel
 } from '@app/models';
 
 import {
@@ -32,7 +33,7 @@ export class StudentPresentationLinksPage {
 
   // ngForm object for validation control
   @ViewChild('linksForm') linksForm;
-  links = [];
+  public links: Array<PresentationLinkModel> = [];
 
   constructor(
     public navCtrl: NavController,

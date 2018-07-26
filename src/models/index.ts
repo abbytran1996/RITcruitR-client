@@ -16,3 +16,5 @@ export * from './student.model';
 export * from './user.model';
 export * from './problem-statement.model';
 export * from './presentation-link.model';
+export * from './presentation-link-db.model';
+export * from './youtube-link.model';

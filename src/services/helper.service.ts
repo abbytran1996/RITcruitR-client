@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 
+import { PresentationLinkModel } from '@app/models';
+import { YouTubeLinkModel } from '@app/models';
+
 @Injectable()
 export class HelperService {
   constructor() { }
@@ -64,5 +67,69 @@ export class HelperService {
     }
 
     return array;
+  }
+
+  getPresentationLinksConfig() {
+    // return [
+    //   {
+    //     optionText: "Basic Link",
+    //     optionValue: "basic",
+    //     pageTitle: "Basic Link",
+    //     icon: "md-link",
+    //     color: "#424242",
+    //     fields: [
+    //       { type: "text", label: "LINK URL", name: "linkUrl", value: "", required: true }
+    //     ],
+    //     generateLink: (fields) => {
+    //       let regex = new RegExp("^(https?|ftp)://.*$");
+    //       let link = String(fields[0].value);
+
+    //       if (!regex.test(link)) {
+    //         link = "http://" + link;
+    //       }
+
+    //       return link;
+    //     }
+    //   },
+    //   {
+    //     optionText: "YouTube Video",
+    //     optionValue: "youtube",
+    //     pageTitle: "YouTube",
+    //     icon: "logo-youtube",
+    //     color: "#eb3324",
+    //     fields: [
+    //       { type: "text", label: "VIDEO ID", name: "videoID", value: "", required: true }
+    //     ],
+    //     generateLink: (fields) => {
+    //       let ytUrl = "https://www.youtube.com/watch?v=";
+    //       let videoId = fields[0].value;
+
+    //       return ytUrl + videoId;
+    //     }
+    //   },
+    //   {
+    //     optionText: "GitHub",
+    //     optionValue: "github",
+    //     pageTitle: "GitHub",
+    //     icon: "logo-github",
+    //     color: "#000000",
+    //     fields: [
+    //       { type: "text", label: "GITHUB USERNAME", name: "githubUsername", value: "", required: true },
+    //       { type: "text", label: "GITHUB REPOSITORY NAME (OPTIONAL)", name: "githubRepo", value: "", required: false }
+    //     ],
+    //     generateLink: (fields) => {
+    //       let ghUrl = "https://github.com/";
+    //       let username = fields[0].value;
+    //       let repo = fields[1].value;
+
+    //       return ghUrl + username + "/" + repo;
+    //     }
+    //   }
+    // ];
+
+    return [
+      new PresentationLinkModel(),
+      new YouTubeLinkModel()
+    ];
   }
 }

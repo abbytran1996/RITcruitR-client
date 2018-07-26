@@ -3,6 +3,7 @@ import { Platform, NavParams, ViewController, ToastController, AlertController }
 
 import {
   PresentationLinkModel,
+  PresentationLinkDBModel,
   StudentModel,
   CompanyModel
 } from '@app/models';
@@ -30,69 +31,14 @@ export class PresentationLinkAddModal {
   @ViewChild('existingForm') existingForm;
   @ViewChild('newForm') newForm;
 
-  public newLinkModel = new PresentationLinkModel();
+  public newLinkModel = new PresentationLinkDBModel();
   public saveLink: boolean = false;
   public existingLinkModel = undefined;
   public existingLinkOptions = [];
   public model;
   public allowExisting = true;
 
-  public linkTypes = [
-    {
-      text: "Basic Link",
-      value: "basic",
-      title: "BASIC LINK",
-      icon: "md-link",
-      color: "#000000",
-      fields: [
-        { type: "text", label: "LINK URL", name: "linkUrl", value: "", required: true }
-      ],
-      generateLink: (fields) => {
-        let regex = new RegExp("^(https?|ftp)://.*$");
-        let link = String(fields[0].value);
-
-        if (!regex.test(link)) {
-          link = "http://" + link;
-        }
-
-        return link;
-      }
-    },
-    {
-      text: "YouTube Video",
-      value: "youtube",
-      title: "YOUTUBE",
-      icon: "logo-youtube",
-      color: "#eb3324",
-      fields: [
-        { type: "text", label: "VIDEO ID", name: "videoID", value: "", required: true }
-      ],
-      generateLink: (fields) => {
-        let ytUrl = "https://www.youtube.com/watch?v=";
-        let videoId = fields[0].value;
-
-        return ytUrl + videoId;
-      }
-    },
-    {
-      text: "GitHub",
-      value: "github",
-      title: "GITHUB",
-      icon: "logo-github",
-      color: "#000000",
-      fields: [
-        { type: "text", label: "GITHUB USERNAME", name: "githubUsername", value: "", required: true },
-        { type: "text", label: "GITHUB REPOSITORY NAME (OPTIONAL)", name: "githubRepo", value: "", required: false }
-      ],
-      generateLink: (fields) => {
-        let ghUrl = "https://github.com/";
-        let username = fields[0].value;
-        let repo = fields[1].value;
-
-        return ghUrl + username + "/" + repo;
-      }
-    }
-  ];
+  public linkTypes = [];
   public linkTypeIndex = 0;
   public linkTypeCurrent = undefined;
 
@@ -113,6 +59,7 @@ export class PresentationLinkAddModal {
     this.existingLinkOptions = this.helperService.sortById(this.model.presentationLinks, true);
 
     // Link type fields initialization
+    this.linkTypes = this.helperService.getPresentationLinksConfig();
     this.linkTypeCurrent = this.linkTypes[this.linkTypeIndex];
   }
 
@@ -179,6 +126,8 @@ export class PresentationLinkAddModal {
   dismissNew() {
     // Link generation
     this.newLinkModel.link = this.linkTypeCurrent.generateLink(this.linkTypeCurrent.fields);
+    delete this.newLinkModel.id;
+    console.log(this.newLinkModel);
 
     if (this.saveLink) {
       if (this.model instanceof StudentModel) {
