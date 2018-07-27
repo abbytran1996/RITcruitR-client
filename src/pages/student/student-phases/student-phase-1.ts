@@ -421,7 +421,7 @@ export class StudentPhase1Page {
     }
 
     // Check if any preferred industries match
-    this.studentService.getMatchedIndustries(this.matchIndex).subscribe(
+    this.studentService.getMatchedIndustries(this.match.id).subscribe(
       data => {
         this.matchedIndustries = data;
         if (this.matchedIndustries != undefined && this.matchedIndustries.length > 0) {
@@ -434,7 +434,7 @@ export class StudentPhase1Page {
     // Check if any preferred locations match
     let numLocationsToShow = 2;
     let locIndex = 0;
-    this.studentService.getMatchedLocations(this.matchIndex).subscribe(
+    this.studentService.getMatchedLocations(this.match.id).subscribe(
       data => {
         this.matchedLocations = data;
         if (this.matchedLocations != undefined && this.matchedLocations.length > 0){
@@ -448,7 +448,7 @@ export class StudentPhase1Page {
     );
 
     // Get the list of matched skills.
-    this.studentService.getMatchedSkills(this.matchIndex).subscribe(
+    this.studentService.getMatchedSkills(this.match.id).subscribe(
       data => {
         this.match["skillsToShow"] = data;
       }
