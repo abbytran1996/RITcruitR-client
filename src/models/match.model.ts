@@ -10,6 +10,10 @@ export class MatchModel {
   public studentProblemResponse: string = "";
   public studentPresentationLink: string = "";
   public studentPresentationLinks: any = [];
+  public matchedRequiredSkills: any = [];
+  public matchedNiceToHaveSkills: any = [];
+  public matchedIndustries: any = [];
+  public matchedLocations: any = [];
   public viewedSinceLastUpdate: boolean = false;
   public timeLastUpdated: any = null;
   public applicationStatus: string = "";
@@ -25,6 +29,10 @@ export class MatchModel {
       this.studentProblemResponse = init.studentProblemResponse || "";
       this.studentPresentationLink = init.studentPresentationLink || "";
       this.studentPresentationLinks = init.studentPresentationLinks || [];
+      this.matchedRequiredSkills = init.matchedRequiredSkills || [];
+	  this.matchedNiceToHaveSkills = init.matchedNiceToHaveSkills || [];
+	  this.matchedIndustries = init.matchedIndustries || [];
+	  this.matchedLocations = init.matchedLocations || [];
       this.viewedSinceLastUpdate = init.viewedSinceLastUpdate || false;
       this.timeLastUpdated = init.timeLastUpdated || null;
       this.applicationStatus = init.applicationStatus || "";
