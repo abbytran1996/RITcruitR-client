@@ -33,10 +33,9 @@ export class PresentationLinkAddModal {
 
   public newLinkModel = new PresentationLinkDBModel();
   public saveLink: boolean = false;
-  public existingLinkModel = undefined;
-  public existingLinkOptions = [];
   public model;
-  public allowExisting = true;
+  public allowSave = false;
+  public saving = false;
 
   public linkTypes = [];
   public linkTypeIndex = 0;
@@ -54,12 +53,12 @@ export class PresentationLinkAddModal {
     private dataService: DataService
   ) {
     this.model = navParams.get("model") || { presentationLinks: [] };
-    this.allowExisting = navParams.get("allowExisting");
-    if (this.allowExisting == undefined) this.allowExisting = true;
-    this.existingLinkOptions = this.helperService.sortById(this.model.presentationLinks, true);
+
+    this.allowSave = navParams.get("allowSave");
+    if (this.allowSave == undefined) this.allowSave = false;
 
     // Link type fields initialization
-    this.linkTypes = this.helperService.getPresentationLinksConfig();
+    this.linkTypes = this.helperService.getPresentationLinkTypes();
     this.linkTypeCurrent = this.linkTypes[this.linkTypeIndex];
   }
 
@@ -87,37 +86,12 @@ export class PresentationLinkAddModal {
     valid.
   */
   doneClicked() {
-    // New form valid, existing not
-    if (this.newForm && this.newForm.valid && this.existingForm && this.existingLinkModel == undefined) {
+    if (this.newForm && this.newForm.valid) {
       this.dismissNew();
     }
-
-    // Existing form valid, new form not
-    else if (this.newForm && !this.newForm.valid && this.existingForm && this.existingLinkModel != undefined) {
-      this.dismissExisting();
-    }
-
-    // Both forms valid
-    else if (this.newForm && this.newForm.valid && this.existingForm && this.existingLinkModel != undefined) {
-      this.dismissNew();
-    }
-
-    // Neither form valid
     else {
-      if (this.allowExisting) {
-        this.presentToast("Please either select an existing presentation link, or create a new one");
-      }
-      else {
-        this.presentToast("Please enter a value for all of the required fields");
-      }
+      this.presentToast("Please enter a value for all of the required fields");
     }
-  }
-
-  /*
-    Dismiss the modal and send back the selected existing presentation link
-  */
-  dismissExisting() {
-    this.viewCtrl.dismiss(this.existingLinkModel);
   }
 
   /*
@@ -126,14 +100,15 @@ export class PresentationLinkAddModal {
   dismissNew() {
     // Link generation
     this.newLinkModel.link = this.linkTypeCurrent.generateLink(this.linkTypeCurrent.fields);
-    delete this.newLinkModel.id;
-    console.log(this.newLinkModel);
 
     if (this.saveLink) {
+      this.saving = true;
+
       if (this.model instanceof StudentModel) {
         this.studentService.addStudentPresentationLink(this.model.id, this.newLinkModel).subscribe(
           resData => {
             this.model.presentationLinks.push(resData);
+            this.saving = false;
             this.viewCtrl.dismiss(resData);
           },
           res => { }
@@ -143,6 +118,7 @@ export class PresentationLinkAddModal {
         this.companyService.addCompanyPresentationLink(this.model.id, this.newLinkModel).subscribe(
           resData => {
             this.model.presentationLinks.push(resData);
+            this.saving = false;
             this.viewCtrl.dismiss(resData);
           },
           res => { }
@@ -162,17 +138,6 @@ export class PresentationLinkAddModal {
     this.linkTypeCurrent.fields.forEach((field) => {
       field.value = undefined;
     });
-  }
-
-  /*
-    Called when the select field value for the existing presentation links is changed.
-    Needed because Ionic doesn't provide the option to deselect options.
-  */
-  selectChanged() {
-    if (this.existingLinkModel == -1) {
-      this.existingLinkModel = undefined;
-      this.existingForm.reset();
-    }
   }
 
   /*

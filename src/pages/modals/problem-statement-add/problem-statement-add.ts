@@ -27,6 +27,7 @@ export class ProblemStatementAddModal {
   public saveStatement: boolean = false;
   public student: StudentModel;
   public allowSave = true;
+  public saving = false;
 
   constructor(
     public platform: Platform,
@@ -86,9 +87,11 @@ export class ProblemStatementAddModal {
     Dismiss the modal and send back the newly created problem statement.
   */
   dismissSave() {
+    this.saving = true;
     this.studentService.addStudentProblemStatement(this.student.id, this.newStatementModel).subscribe(
       resData => {
         this.student.problemStatements.push(new ProblemStatementModel(resData));
+        this.saving = false;
         this.viewCtrl.dismiss(resData);
       },
       res => { }

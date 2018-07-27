@@ -1,3 +1,5 @@
+import { PresentationLinkModel } from './presentation-link.model';
+
 export class CompanyModel {
   public id: any = null;
   public companyName: string = "";
@@ -11,7 +13,7 @@ export class CompanyModel {
   public emailSuffix: string = "";
   public userId: number = null;
   public timeRegistered: number = null;
-  public presentationLinks: any = [];
+  public presentationLinks: Array<PresentationLinkModel> = [];
 
   constructor(init?: any) {
     if (init) {

@@ -44,9 +44,9 @@
               <h3 class="heading heading-spacer fg-dark"><ion-icon name="md-easel" class="card-heading-icon"></ion-icon>Company Presentation<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="companyPresentationInfo()"></ion-icon></h3>
             </div>
             <div class="content-section">
-              <div *ngFor="let link of match.job.presentationLinks" class="presentation-link">
-                <h3 class="heading fg-dark">{{ link.title }}:</h3>
-                <p class="fg-dark fake-link" (click)="openLink(link.link)">{{ link.link }}<ion-icon name="md-open" class="presentation-link-icon"></ion-icon></p>
+              <div *ngFor="let link of displayLinks" class="presentation-link">
+                <h3 class="heading fg-dark"><ion-icon name="{{ link.icon }}" [ngStyle]="{'color': link.color}" class="link-display-icon"></ion-icon> {{ link.title }}</h3>
+                <div (click)="link.openLink(dataService.isApp)" [innerHTML]="domSanitizer.bypassSecurityTrustHtml(link.getDisplayTemplate())"></div>
               </div>
             </div>
           </div>
@@ -58,15 +58,31 @@
               <h3 class="heading heading-spacer fg-dark"><ion-icon name="md-easel" class="card-heading-icon"></ion-icon>Add Presentation Links<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="yourPresentationInfo()"></ion-icon></h3>
             </div>
             <div class="content-section">
+
+              <!-- Existing Links Form -->
+              <form #existingForm="ngForm" class="existing-link-list">
+                <div class="rec-input-group-small">
+                  <label class="rec-label rl-primary">SELECT EXISTING LINK</label>
+                  <ion-select name="selectedLink" class="rec-input ri-grey" [(ngModel)]="existingLinkModel" multiple="false" (ionChange)="selectChanged($event)">
+                    <ion-option *ngIf="existingLinkOptions && existingLinkOptions.length > 0" value="-1">None</ion-option>
+                    <ion-option *ngFor="let link of existingLinkOptions" [value]="link">{{ link.title }}</ion-option>
+                    <ion-option *ngIf="!existingLinkOptions || existingLinkOptions.length == 0" value="-1">No Profile Presentation Links</ion-option>
+                  </ion-select>
+                </div>
+              </form>
+              <!-- End Existing Links Form -->
+
               <ion-list class="rec-reorder-list">
                 <div class="list-header-wrapper">
                   <ion-list-header>PRESENTATION LINKS</ion-list-header>
                   <button class="rec-btn-circle-small rec-btn-primary" (click)="addLink()"><ion-icon name="md-add" class="rec-btn-icon"></ion-icon></button>
                 </div>
-                <ion-item-group reorder="true" side="start" (ionItemReorder)="$event.applyTo(linksList)">
-                  <ion-item *ngFor="let item of linksList; let i = index">
+                <ion-item-group reorder="false" side="start" (ionItemReorder)="$event.applyTo(linksList)">
+                  <ion-item *ngFor="let item of linksList; let i = index" class="link-list-item compact">
+                    <ion-icon name="{{ item.icon }}" [ngStyle]="{'color': item.color}" class="link-list-display-icon"></ion-icon>
                     <h5>{{ item.title }}</h5>
                     <p>{{ item.link }}</p>
+                    <ion-icon name="md-eye" class="link-details-icon fake-link" (click)="showLinkDetails(item)"></ion-icon>
                     <ion-icon name="md-close-circle" class="fake-link" (click)="removeLink(i)"></ion-icon>
                   </ion-item>
                 </ion-item-group>

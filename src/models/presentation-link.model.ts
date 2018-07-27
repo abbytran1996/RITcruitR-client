@@ -1,3 +1,5 @@
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+
 export class PresentationLinkModel {
   public id: number = null;
   public title: string = "";
@@ -28,6 +30,9 @@ export class PresentationLinkModel {
     ];
   }
 
+  /*
+    Generate the actual link to be stored in the database from the field values for this type.
+  */
   generateLink(fields) {
     let regex = new RegExp("^(https?|ftp)://.*$");
     let newLink = String(fields[0].value);
@@ -37,5 +42,37 @@ export class PresentationLinkModel {
     }
 
     return newLink;
+  }
+
+  /*
+    Returns boolean whether the given string matches this type of link.
+  */
+  matchLink(link: PresentationLinkModel) {
+    return false; // False for the default, children have implementations
+  }
+
+  /*
+    Convert the given presentation link to this type.
+  */
+  convertLink(link: PresentationLinkModel) {
+    return link; // For default, jut return itself
+  }
+
+  /*
+    Get the HTML template to use when displaying this type of link.
+  */
+  getDisplayTemplate() {
+    return `
+      <p class="fg-dark fake-link">${this.link}</p>
+    `;
+  }
+
+  /*
+    Handle the "opening" of this link type.
+  */
+  openLink(isApp) {
+    let browse = new InAppBrowser();
+    if (browse) browse.create(this.link);
+    else window.open(this.link, '_system', 'location=yes');
   }
 }

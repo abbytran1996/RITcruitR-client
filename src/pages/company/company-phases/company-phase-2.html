@@ -57,9 +57,11 @@
               <ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark"
                 (click)="presentationInfo()"></ion-icon>
             </h3>
-            <div *ngFor="let link of match.studentPresentationLinks" class="presentation-link">
-              <h3 class="heading fg-dark">{{ link.title }}:</h3>
-              <p class="fg-dark fake-link" (click)="openLink(link.link)">{{ link.link }}<ion-icon name="md-open" class="presentation-link-icon"></ion-icon></p>
+            <div class="content-section">
+              <div *ngFor="let link of displayLinks" class="presentation-link">
+                <h3 class="heading fg-dark"><ion-icon name="{{ link.icon }}" [ngStyle]="{'color': link.color}" class="link-display-icon"></ion-icon> {{ link.title }}</h3>
+                <div (click)="link.openLink(dataService.isApp)" [innerHTML]="domSanitizer.bypassSecurityTrustHtml(link.getDisplayTemplate())"></div>
+              </div>
             </div>
           </div>
         </div>

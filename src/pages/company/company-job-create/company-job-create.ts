@@ -10,7 +10,8 @@ import { PresentationLinkAddModal } from '@app/pages/modals';
 import {
   NewJobModel,
   JobModel,
-  RecruiterModel
+  RecruiterModel,
+  PresentationLinkModel
 } from '@app/models';
 
 import {
@@ -60,7 +61,10 @@ export class CompanyJobCreatePage {
 
   // Step 7 variables
   @ViewChild('form7') form7;
-  linksList = [];
+  public existingLinkModel = undefined;
+  public existingLinkOptions: Array<PresentationLinkModel> = [];
+  @ViewChild('existingForm') existingForm;
+  public linksList = [];
 
   // Implementation specific variables
   public jobModel: any = new NewJobModel();
@@ -85,11 +89,13 @@ export class CompanyJobCreatePage {
     public helperService: HelperService
   ) {
     this.recruiter = navParams.get("recruiter");
+    this.existingLinkOptions = this.recruiter.company.presentationLinks;
+
     if (navParams.get("job")) {
       this.jobModel = new JobModel(navParams.get("job"));
       this.jobModel.niceToHaveSkillsWeight = this.jobModel.niceToHaveSkillsWeight * 100;
       this.jobModel.matchThreshold = this.jobModel.matchThreshold * 100;
-      this.linksList = this.jobModel.presentationLinks.slice(0);
+      this.linksList = this.helperService.convertLinkTypes(this.jobModel.presentationLinks.slice(0));
       this.editMode = true;
       this.showErrorDots = true;
     }
@@ -240,7 +246,7 @@ export class CompanyJobCreatePage {
   prepJobForSave() {
     this.jobModel.requiredSkills = this.reqSkills;
     this.jobModel.niceToHaveSkills = this.nthSkills;
-    this.jobModel.presentationLinks = this.linksList.slice(0);
+    this.jobModel.presentationLinks = this.helperService.convertLinksForDB(this.linksList);
     this.jobModel.recruiterId = this.recruiter.id;
     this.jobModel.niceToHaveSkillsWeight = this.jobModel.niceToHaveSkillsWeight / 100;
     this.jobModel.matchThreshold = this.jobModel.matchThreshold / 100;
@@ -288,6 +294,19 @@ export class CompanyJobCreatePage {
     return this.form0.valid && this.form1.valid && this.form2.valid && this.form3.valid
       && this.form4.valid && this.form5.valid && this.form6.valid && this.form7.valid
       && customValid;
+  }
+
+  /*
+    Called when the select field value for the existing presentation links is changed.
+  */
+  selectChanged() {
+    if (this.existingLinkModel != -1 && this.existingLinkModel != undefined) {
+      this.linksList.push(this.helperService.convertSingleLinkType(this.existingLinkModel));
+      this.changed = true;
+    }
+
+    this.existingLinkModel = undefined;
+    this.existingForm.reset();
   }
 
   /*
@@ -412,14 +431,21 @@ export class CompanyJobCreatePage {
     profile link or create a new one.
   */
   addLink() {
-    let modal = this.modalCtrl.create(PresentationLinkAddModal, { model: this.recruiter.company });
+    let modal = this.modalCtrl.create(PresentationLinkAddModal, { model: this.recruiter.company, allowSave: true });
     modal.onDidDismiss(data => {
       if (data) {
-        this.linksList.push(data);
+        this.linksList.push(this.helperService.convertSingleLinkType(data));
         this.changed = true;
       }
     });
     modal.present();
+  }
+
+  /*
+    Displays an alert showing the clicked link's details.
+  */
+  showLinkDetails(link) {
+    this.showAlert("Link Details", link.title + ": " + link.link);
   }
 
   /*

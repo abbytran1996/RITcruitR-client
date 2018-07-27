@@ -1,13 +1,18 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController, ToastController, Events } from 'ionic-angular';
 import { CallNumber } from '@ionic-native/call-number';
+import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
 
 import {
   StudentModel,
   MatchModel
 } from '@app/models';
 
-import { StudentService } from '@app/services';
+import {
+  StudentService,
+  HelperService,
+  DataService
+} from '@app/services';
 
 //=========================================================================
 // * StudentPhase3Page                                                   
@@ -38,7 +43,10 @@ export class StudentPhase3Page {
     private alertCtrl: AlertController,
     private toastCtrl: ToastController,
     private studentService: StudentService,
+    private helperService: HelperService,
+    public dataService: DataService,
     private callNumber: CallNumber,
+    public domSanitizer: DomSanitizer,
     public events: Events
   ) {
     this.student= navParams.get("student");
@@ -95,6 +103,8 @@ export class StudentPhase3Page {
   matchDetails(match) {
     this.currentMatch = new MatchModel(match);
     this.prepMatch();
+    this.currentMatch.studentPresentationLinks = this.helperService.convertLinkTypes(this.currentMatch.studentPresentationLinks);
+    this.currentMatch.job.presentationLinks = this.helperService.convertLinkTypes(this.currentMatch.job.presentationLinks);
     this.detailMode = true;
     this.reviewStep = 0;
   }

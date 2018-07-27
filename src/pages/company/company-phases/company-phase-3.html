@@ -221,10 +221,8 @@
           </div>
           <div class="content-section">
             <div *ngFor="let link of currentMatch.job.presentationLinks" class="presentation-link">
-              <h3 class="heading fg-dark">{{ link.title }}:</h3>
-              <p class="fg-dark fake-link" (click)="openLink(link.link)">{{ link.link }}
-                <ion-icon name="md-open" class="presentation-link-icon"></ion-icon>
-              </p>
+              <h3 class="heading fg-dark"><ion-icon name="{{ link.icon }}" [ngStyle]="{'color': link.color}" class="link-display-icon"></ion-icon> {{ link.title }}</h3>
+              <div (click)="link.openLink(dataService.isApp)" [innerHTML]="domSanitizer.bypassSecurityTrustHtml(link.getDisplayTemplate())"></div>
             </div>
           </div>
         </div>
@@ -239,8 +237,8 @@
                 (click)="studentPresentationInfo()"></ion-icon>
             </h3>
             <div *ngFor="let link of currentMatch.studentPresentationLinks" class="presentation-link">
-              <h3 class="heading fg-dark">{{ link.title }}:</h3>
-              <p class="fg-dark fake-link" (click)="openLink(link.link)">{{ link.link }}<ion-icon name="md-open" class="presentation-link-icon"></ion-icon></p>
+              <h3 class="heading fg-dark"><ion-icon name="{{ link.icon }}" [ngStyle]="{'color': link.color}" class="link-display-icon"></ion-icon> {{ link.title }}</h3>
+              <div (click)="link.openLink(dataService.isApp)" [innerHTML]="domSanitizer.bypassSecurityTrustHtml(link.getDisplayTemplate())"></div>
             </div>
           </div>
         </div>

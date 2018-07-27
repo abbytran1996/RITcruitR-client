@@ -7,8 +7,7 @@ import { PresentationLinkAddModal } from '@app/pages/modals';
 
 import {
   StudentModel,
-  PresentationLinkModel,
-  PresentationLinkDBModel
+  PresentationLinkModel
 } from '@app/models';
 
 import {
@@ -46,7 +45,8 @@ export class StudentPresentationLinksPage {
     private helperService: HelperService
   ) {
     this.student = navParams.get("student");
-    this.links = this.helperService.sortById(this.student.presentationLinks.slice(0), true);
+    this.links = this.helperService.convertLinkTypes(this.student.presentationLinks.slice(0));
+    this.links = this.helperService.sortById(this.links, true);
   }
 
   /*
@@ -85,13 +85,13 @@ export class StudentPresentationLinksPage {
     Add a new presentation link to the list. Shows a modal to create a new link.
   */
   addLink() {
-    let modal = this.modalCtrl.create(PresentationLinkAddModal, { model: this.student, allowExisting: false });
+    let modal = this.modalCtrl.create(PresentationLinkAddModal, { model: this.student, allowSave: false });
     modal.onDidDismiss(data => {
       if (data) {
         this.loading = true;
         this.studentService.addStudentPresentationLink(this.student.id, data).subscribe(
           resData => {
-            this.links.push(resData);
+            this.links.push(this.helperService.convertSingleLinkType(resData));
             this.loading = false;
           },
           res => { }
@@ -99,6 +99,13 @@ export class StudentPresentationLinksPage {
       }
     });
     modal.present();
+  }
+
+  /*
+    Displays an alert showing the clicked link's details.
+  */
+  showLinkDetails(link) {
+    this.showAlert("Link Details", link.title + ": " + link.link);
   }
 
   /*
