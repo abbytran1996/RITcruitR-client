@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, ToastController, Events } from 'ionic-angular';
+import { NavController, NavParams, AlertController, ToastController, Events, ActionSheetController } from 'ionic-angular';
 import { CallNumber } from '@ionic-native/call-number';
 
 import {
@@ -28,6 +28,7 @@ export class StudentPhase3Page {
   public student: StudentModel;
   public matchList: any;
   public pageLoading = true;
+  public activeMatches = true;
   public detailMode = false;
   public reviewMode = false;
   public currentMatch: MatchModel;
@@ -40,6 +41,7 @@ export class StudentPhase3Page {
     public navParams: NavParams,
     private alertCtrl: AlertController,
     private toastCtrl: ToastController,
+    public actionSheetCtrl: ActionSheetController,
     private studentService: StudentService,
     public helperService: HelperService,
     private callNumber: CallNumber,
@@ -71,9 +73,16 @@ export class StudentPhase3Page {
     Called upon pulldown refresh, refresh the matches.
   */
   doRefresh(refresher) {
-    this.getFinalMatches(() => {
-      refresher.complete();
-    });
+    if (this.activeMatches) {
+      this.getFinalMatches(() => {
+        refresher.complete();
+      });
+    }
+    else {
+      this.getArchivedMatches(() => {
+        refresher.complete();
+      });
+    }
   }
 
   /*
@@ -94,6 +103,38 @@ export class StudentPhase3Page {
   }
 
   /*
+    Show the action sheet.
+  */
+  showActionSheet() {
+    const actionSheet = this.actionSheetCtrl.create({
+      title: 'Match Filters',
+      buttons: [
+        {
+          text: 'Final Matches',
+          cssClass: (this.activeMatches) ? 'selected' : '',
+          handler: () => {
+            this.showFinalMatches();
+          }
+        }, {
+          text: 'Archived Matches',
+          cssClass: (this.activeMatches) ? '' : 'selected',
+          handler: () => {
+            this.showArchivedMatches();
+          }
+        }, {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
+    });
+
+    actionSheet.present();
+  }
+
+  /*
     Show the match detail screen for the match that was clicked.
   */
   matchDetails(match) {
@@ -111,7 +152,6 @@ export class StudentPhase3Page {
     this.detailMode = false;
     this.reviewMode = false;
     this.reviewStep = 0;
-    this.getFinalMatches();
   }
 
   /*
@@ -411,6 +451,28 @@ export class StudentPhase3Page {
   }
 
   /*
+    Get and show the final matches.
+  */
+  showFinalMatches() {
+    if (!this.activeMatches) {
+      this.activeMatches = true;
+      this.pageLoading = true;
+      this.getFinalMatches();
+    }
+  }
+
+  /*
+    Get and show the archived matches.
+  */
+  showArchivedMatches() {
+    if (this.activeMatches) {
+      this.activeMatches = false;
+      this.pageLoading = true;
+      this.getArchivedMatches();
+    }
+  }
+
+  /*
     Get the list of "final" phase 3 matches for the current student.
   */
   getFinalMatches(callback?) {
@@ -431,6 +493,24 @@ export class StudentPhase3Page {
       },
       error => {
         console.log("Error getting final matches");
+        console.log(error);
+      }
+    );
+  }
+
+  /*
+    Get the list of archived matches for the current student
+  */
+  getArchivedMatches(callback?) {
+    this.studentService.getArchivedMatches(this.student.id).subscribe(
+      res => {
+        this.matchList = res;
+        this.pageLoading = false;
+
+        if (callback != undefined) callback();
+      },
+      error => {
+        console.log("Error getting archived matches");
         console.log(error);
       }
     );

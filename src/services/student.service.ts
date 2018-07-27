@@ -170,6 +170,16 @@ export class StudentService {
     }
 
     //=========================================================================
+    // * GET ARCHIVED MATCHES                                                    *
+    //=========================================================================
+    // - Get all archived matches
+    // - Expects a StudentModel id number
+    // - Returns an array of MatchModels
+    getArchivedMatches(studentId) {
+        return this.apiService.get("/matches/studentMatches/" + studentId + "?phase=archived");
+    }
+
+    //=========================================================================
     // * ARCHIVE MATCH                                                        *
     //=========================================================================
     // - Archive a match with the given id
@@ -210,5 +220,35 @@ export class StudentService {
     // - Returns the number of matches in that phase
     getNumFinalMatches(studentId) {
         return this.apiService.get("/matches/studentMatches/" + studentId + "/count?phase=interview");
+    }
+    
+    //=========================================================================
+    // * GET MATCHED SKILLS                                                   *
+    //=========================================================================
+    // - Get 3 top matched skills
+    // - Expects a Match id number
+    // - Returns a set of skills
+    getMatchedSkills(matchId) {
+      return this.apiService.get('/matches/' + matchId + \"/matchedSkills\");
+    }
+	
+	//=========================================================================
+    // * GET MATCHED INDUSTRIES                                               *
+    //=========================================================================
+    // - Get matched industries
+    // - Expects a Match id number
+    // - Returns a set of industries
+    getMatchedIndustries(matchId) {
+      return this.apiService.get('/matches/' + matchId + \"/matchedIndustries\");
+    }
+	
+	//=========================================================================
+    // * GET MATCHED LOCATIONS                                                *
+    //=========================================================================
+    // - Get matched locations
+    // - Expects a Match id number
+    // - Returns a set of locations
+    getMatchedLocations(matchId) {
+      return this.apiService.get('/matches/' + matchId + \"/matchedLocations\");
     }
 }

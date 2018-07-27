@@ -19,9 +19,10 @@
 
     <!-- Final Match List -->
     <div class="final matches" *ngIf="matchList != undefined && matchList.length != 0 && !detailMode">
-      <div class="final-matches-header">
-        <h3 class="text-pill bg-white fg-accent text-center center">You Made it!</h3>
-        <p class="fg-white text-center bold">The jobs listed below have made it to the final stage. Tap a job to view its details.</p>
+      <div class="job-matches-header">
+        <h3 class="text-pill bg-white fg-accent text-center center fake-link" (click)="showActionSheet()" (swipe)="swipe($event)">{{ (activeMatches) ? 'Final Matches' : 'Archived Matches' }} <ion-icon name="ios-more" class="more-icon fg-dark"></ion-icon></h3>
+        <p class="fg-white text-center bold" [hidden]="!activeMatches">The jobs listed below have made it to the final stage. Tap a job to view its detail.</p>
+        <p class="fg-white text-center bold" [hidden]="activeMatches">The jobs listed below are archived.</p>
       </div>
       <div class="final-matches-list">
         <ion-list>
@@ -43,7 +44,7 @@
                 Email
               </button>
             </ion-item-options>
-            <ion-item-options side="right">
+            <ion-item-options side="right" *ngIf="activeMatches">
               <button ion-button color="deny" (click)="archiveMatch(match)" class="font-body">
                 <ion-icon name="ios-archive"></ion-icon>
                 Archive
@@ -72,7 +73,7 @@
         <div class="rec-toolbar-btn fake-link" (click)="backToList()"><ion-icon name='md-arrow-round-back' class="fg-dark"></ion-icon><p class="fg-dark">Back To List</p></div>
         <div class="rec-toolbar-btn fake-link" (click)="reviewMatch()" [hidden]="reviewMode"><ion-icon name='md-clipboard' class="fg-primary"></ion-icon><p class="fg-primary">Review Match</p></div>
         <div class="rec-toolbar-btn fake-link" (click)="showContact()" [hidden]="!reviewMode"><ion-icon name='md-contact' class="fg-primary"></ion-icon><p class="fg-primary">Contact Details</p></div>
-        <div class="rec-toolbar-btn fake-link" (click)="archiveMatch(currentMatch)"><ion-icon name='ios-archive' class="fg-deny"></ion-icon><p class="fg-deny">Archive</p></div>
+        <div class="rec-toolbar-btn fake-link" (click)="archiveMatch(currentMatch)" [hidden]="!activeMatches"><ion-icon name='ios-archive' class="fg-deny"></ion-icon><p class="fg-deny">Archive</p></div>
       </div>
       <!-- End Toolbar -->
 
