@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController, NavParams, Events, ToastController, AlertController, ModalController } from 'ionic-angular';
 
 import { ProblemStatementAddModal } from '@app/pages/modals';
@@ -69,7 +69,7 @@ export class StudentPhase1Page {
     public modalCtrl: ModalController,
     public events: Events,
     private studentService: StudentService,
-    private helperService: HelperService
+    public helperService: HelperService
   ) {
     this.student= navParams.get("student");
   }
@@ -270,10 +270,7 @@ export class StudentPhase1Page {
       this.fadeLeft = true;
 
       setTimeout(() => {
-        this.matchList = this.helperService.removeFromArrayById(this.matchList, this.match);
         this.nextMatch();
-        this.fadeLeft = false;
-        this.fadeRightInstant = true;
 
         setTimeout(() => {
           this.fadeRightInstant = false;
@@ -296,15 +293,13 @@ export class StudentPhase1Page {
     Show the next match in the list of matches at this phase.
   */
   nextMatch() {
-    if (this.matchIndex + 1 < this.matchList.length) {
-      this.matchIndex = this.matchIndex + 1;
-    }
-    else {
-      this.matchIndex = 0;
-    }
-
+    this.matchList = this.helperService.removeFromArrayById(this.matchList, this.match);
     this.stage = 0;
+    this.match = new MatchModel(this.matchList[this.matchIndex]);
     this.prepMatch();
+
+    this.fadeLeft = false;
+    this.fadeRightInstant = true;
   }
 
   /*
@@ -330,10 +325,7 @@ export class StudentPhase1Page {
         }, this.helperService.getCardFadeTime() / 2);
 
         setTimeout(() => {
-          this.matchList = this.helperService.removeFromArrayById(this.matchList, this.match);
           this.nextMatch();
-          this.fadeLeft = false;
-          this.fadeRightInstant = true;
 
           setTimeout(() => {
             this.fadeRightInstant = false;
@@ -359,18 +351,13 @@ export class StudentPhase1Page {
   getNewMatches(callback?) {
     this.studentService.getNewMatches(this.student.id).subscribe(
       data => {
-        this.matchList = data;
+        this.matchList = this.helperService.sortMatches(data);
 
         if (this.matchList != undefined && this.matchList.length > 0) {
-          this.matchList.sort((a, b) => {
-            if (a.matchStrength < b.matchStrength) return 1;
-            else if (a.matchStrength > b.matchStrength) return -1;
-            else return 0;
-          });
-
           this.events.publish('tab:numMatches', this.student);
 
           this.matchIndex = 0;
+          this.match = new MatchModel(this.matchList[this.matchIndex]);
           this.prepMatch();
         }
         else {
@@ -411,8 +398,6 @@ export class StudentPhase1Page {
     skills and preferences to show match indicators on the match card.
   */
   prepMatch() {
-    // Set the current match to the current index
-    this.match = new MatchModel(this.matchList[this.matchIndex]);
     this.matchPoints = {industry: false, locations: [false, false], skills: []};
 
     // No matches in this phase, nothing to prep

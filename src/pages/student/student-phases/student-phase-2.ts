@@ -64,7 +64,7 @@ export class StudentPhase2Page {
     private toastCtrl: ToastController,
     private alertCtrl: AlertController,
     private studentService: StudentService,
-    private helperService: HelperService,
+    public helperService: HelperService,
     private iab: InAppBrowser,
     public events: Events
   ) {
@@ -185,10 +185,7 @@ export class StudentPhase2Page {
       this.fadeLeft = true;
 
       setTimeout(() => {
-        this.matchList = this.helperService.removeFromArrayById(this.matchList, this.match);
         this.nextMatch();
-        this.fadeLeft = false;
-        this.fadeRightInstant = true;
 
         setTimeout(() => {
           this.fadeRightInstant = false;
@@ -211,15 +208,13 @@ export class StudentPhase2Page {
     Show the next match in the match list of this phase.
   */
   nextMatch() {
-    if (this.matchIndex + 1 < this.matchList.length) {
-      this.matchIndex = this.matchIndex + 1;
-    }
-    else {
-      this.matchIndex = 0;
-    }
-
+    this.matchList = this.helperService.removeFromArrayById(this.matchList, this.match);
     this.stage = 0;
+    this.match = new MatchModel(this.matchList[this.matchIndex]);
     this.prepMatch();
+
+    this.fadeLeft = false;
+    this.fadeRightInstant = true;
   }
 
   /*
@@ -275,10 +270,7 @@ export class StudentPhase2Page {
         }, this.helperService.getCardFadeTime() / 2);
 
         setTimeout(() => {
-          this.matchList = this.helperService.removeFromArrayById(this.matchList, this.match);
           this.nextMatch();
-          this.fadeLeft = false;
-          this.fadeRightInstant = true;
 
           setTimeout(() => {
             this.fadeRightInstant = false;
@@ -303,19 +295,14 @@ export class StudentPhase2Page {
   */
   getPhase2Matches(callback?) {
     this.studentService.getPhase2Matches(this.student.id).subscribe(
-      res => {
-        this.matchList = res;
+      data => {
+        this.matchList = this.helperService.sortMatches(data);
 
         if (this.matchList != undefined && this.matchList.length > 0) {
-          this.matchList.sort((a, b) => {
-            if (a.matchStrength < b.matchStrength) return 1;
-            else if (a.matchStrength > b.matchStrength) return -1;
-            else return 0;
-          });
-
           this.events.publish('tab:numMatches', this.student);
 
           this.matchIndex = 0;
+          this.match = new MatchModel(this.matchList[this.matchIndex]);
           this.prepMatch();
           this.pageLoading = false;
         }

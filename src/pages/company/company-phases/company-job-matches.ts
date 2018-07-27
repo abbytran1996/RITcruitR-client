@@ -223,16 +223,33 @@ export class CompanyJobMatchesPage {
   getActiveJobs(callback?) {
     this.jobPostingService.getActiveJobsByCompany(this.recruiter.company.id).subscribe(
       data => {
-        this.jobList = data;
+        this.jobList = this.helperService.sortJobs(data);
 
+        if (this.jobList.length == 0) {
+          this.pageLoading = false;
+        }
+
+        // TODO: Replace this crazy amount of calls with the singel call to get all numbers once it is implemented properly
         this.jobList.forEach((job, index) => {
           this.jobPostingService.getNumPhase1Matches(job.id).subscribe(
-            data => {
-              this.jobList[index]["numMatches"] = data || 0;
+            data1 => {
 
-              if (index == this.jobList.length - 1) {
-                this.pageLoading = false;
-              }
+              // Get phase 2 num
+              this.jobPostingService.getNumPhase2Matches(job.id).subscribe(
+                data2 => {
+
+                  // Get final phase num
+                  this.jobPostingService.getNumFinalMatches(job.id).subscribe(
+                    data3 => {
+                      this.jobList[index]["numMatches"] = (data1 || 0) + (data2 || 0) + (data3 || 0);
+
+                      if (index == this.jobList.length - 1) {
+                        this.pageLoading = false;
+                      }
+                    }, res => { }
+                  );
+                }, res => { }
+              );
             }, res => { }
           );
         });

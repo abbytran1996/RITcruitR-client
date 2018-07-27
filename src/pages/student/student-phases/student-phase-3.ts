@@ -7,7 +7,10 @@ import {
   MatchModel
 } from '@app/models';
 
-import { StudentService } from '@app/services';
+import {
+  StudentService,
+  HelperService
+} from '@app/services';
 
 //=========================================================================
 // * StudentPhase3Page                                                   
@@ -40,6 +43,7 @@ export class StudentPhase3Page {
     private toastCtrl: ToastController,
     public actionSheetCtrl: ActionSheetController,
     private studentService: StudentService,
+    public helperService: HelperService,
     private callNumber: CallNumber,
     public events: Events
   ) {
@@ -473,16 +477,10 @@ export class StudentPhase3Page {
   */
   getFinalMatches(callback?) {
     this.studentService.getFinalMatches(this.student.id).subscribe(
-      res => {
-        this.matchList = res;
+      data => {
+        this.matchList = this.helperService.sortMatches(data);
 
         if (this.matchList != undefined && this.matchList.length > 0) {
-          this.matchList.sort((a, b) => {
-            if (a.matchStrength < b.matchStrength) return 1;
-            else if (a.matchStrength > b.matchStrength) return -1;
-            else return 0;
-          });
-
           this.events.publish('tab:numMatches', this.student);
 
           this.pageLoading = false;

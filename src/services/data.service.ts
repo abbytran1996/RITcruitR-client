@@ -10,14 +10,6 @@ export class DataService {
     ) {}
 
     public isApp = true;
-    private companySizes = [
-      { text: "No Preference", id: 0 },
-      { text: "Startup (< 100)", id: 1 },
-      { text: "Small (100-300)", id: 2 },
-      { text: "Medium (301-500)", id: 3 },
-      { text: "Large (501-1000)", id: 4 },
-      { text: "Huge (> 1000)", id: 5 }
-    ];
 
     // TODO: Update this to pull real structured data from the API
     getLocations() {
@@ -44,13 +36,32 @@ export class DataService {
     }
 
     // TODO: Update this to pull real structured data from the API
+    // NOTE: The temp lists were added back directly into the functions
+    //       to fix a bug on mobile devices that prevented the list
+    //       from working properly. Remove after todo above is done
     getCompanySizesForStudent() {
-      return this.companySizes;
+      return [
+        { text: "No Preference", id: 0 },
+        { text: "Startup (< 100)", id: 1 },
+        { text: "Small (100-300)", id: 2 },
+        { text: "Medium (301-500)", id: 3 },
+        { text: "Large (501-1000)", id: 4 },
+        { text: "Huge (> 1000)", id: 5 }
+      ];
     }
 
     // TODO: Update this to pull real structured data from the API
+    // NOTE: The temp lists were added back directly into the functions
+    //       to fix a bug on mobile devices that prevented the list
+    //       from working properly. Remove after todo above is done
     getCompanySizesForCompany() {
-      return this.companySizes.splice(1);
+      return [
+        { text: "Startup (< 100)", id: 1 },
+        { text: "Small (100-300)", id: 2 },
+        { text: "Medium (301-500)", id: 3 },
+        { text: "Large (501-1000)", id: 4 },
+        { text: "Huge (> 1000)", id: 5 }
+      ];
     }
 
     //=========================================================================

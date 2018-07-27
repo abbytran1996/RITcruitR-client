@@ -65,4 +65,61 @@ export class HelperService {
 
     return array;
   }
+
+  //=========================================================================
+  // * SORT MATCHES                                                  
+  //=========================================================================
+  // - Sort the given array of matches first by numDaysRemaining, and
+  //   then by matchStrength
+  sortMatches(matchArray) {
+    return matchArray.sort((a, b) => {
+      // If numDaysRemaining is greater, put that first, if equal, put higher matchStrength first
+      return a.job.numDaysRemaining - b.job.numDaysRemaining || b.matchStrength - a.matchStrength;
+    });
+  }
+
+  //=========================================================================
+  // * SORT JOBS                                                  
+  //=========================================================================
+  // - Sort the given array of jobs first by numDaysRemaining
+  sortJobs(jobsArray) {
+    return jobsArray.sort((a, b) => {
+      return a.numDaysRemaining - b.numDaysRemaining;
+    });
+  }
+
+  //=========================================================================
+  // * IS MATCH HEADER LARGE                                                  
+  //=========================================================================
+  // - Determines if the match card header for the given match should be
+  //   the large variety or not based on the length of a certain string
+  //   determined by the useValue parameter. If non is specified, the]
+  //   job's positionTitle will be used
+  isMatchHeaderLarge(match, useField?) {
+    var charLimit = 20;
+
+    if (useField == undefined) return (match.job.positionTitle.length >= charLimit);
+
+    switch (useField) {
+      case "studentName":
+        let studentName = match.student.firstName + " " + match.student.lastName;
+        return (studentName.length >= charLimit);
+      
+      case "companyName":
+        let companyName = match.job.company.companyName;
+        return (companyName.length >= charLimit);
+
+      default:
+        return false;
+    }
+  }
+
+  //=========================================================================
+  // * IS MATCH TOOLBAR LARGE                                                  
+  //=========================================================================
+  // - Determines if the match toolbar for the given match should be
+  //   the large variety or not based on the length of the positionTitle
+  isMatchToolbarLarge(match, useStudentName?) {
+    return (match.job.positionTitle.length >= 24);
+  }
 }

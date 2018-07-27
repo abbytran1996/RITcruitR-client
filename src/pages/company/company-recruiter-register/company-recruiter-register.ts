@@ -78,7 +78,7 @@ export class CompanyRecruiterRegisterPage {
     this.formSeq.formTitles = [
       "Company Information",
       "Company Information",
-      "Primary Recruiter",
+      "Add Recruiter",
       "Recruiter Contact"
     ];
     this.formSeq.formErrorMessages = [
