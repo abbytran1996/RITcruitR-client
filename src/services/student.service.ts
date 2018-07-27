@@ -170,6 +170,16 @@ export class StudentService {
     }
 
     //=========================================================================
+    // * GET ARCHIVED MATCHES                                                    *
+    //=========================================================================
+    // - Get all archived matches
+    // - Expects a StudentModel id number
+    // - Returns an array of MatchModels
+    getArchivedMatches(studentId) {
+        return this.apiService.get("/matches/studentMatches/" + studentId + "?phase=archived");
+    }
+
+    //=========================================================================
     // * ARCHIVE MATCH                                                        *
     //=========================================================================
     // - Archive a match with the given id
