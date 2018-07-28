@@ -229,7 +229,7 @@ export class StudentService {
     // - Expects a Match id number
     // - Returns a set of skills
     getMatchedSkills(matchId) {
-      return this.apiService.get('/matches/' + matchId + \"/matchedSkills\");
+      return this.apiService.get('/matches/' + matchId + "/matchedSkills");
     }
 	
 	//=========================================================================
@@ -239,7 +239,7 @@ export class StudentService {
     // - Expects a Match id number
     // - Returns a set of industries
     getMatchedIndustries(matchId) {
-      return this.apiService.get('/matches/' + matchId + \"/matchedIndustries\");
+      return this.apiService.get('/matches/' + matchId + "/matchedIndustries");
     }
 	
 	//=========================================================================
@@ -249,6 +249,6 @@ export class StudentService {
     // - Expects a Match id number
     // - Returns a set of locations
     getMatchedLocations(matchId) {
-      return this.apiService.get('/matches/' + matchId + \"/matchedLocations\");
+      return this.apiService.get('/matches/' + matchId + "/matchedLocations");
     }
 }

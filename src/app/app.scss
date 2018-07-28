@@ -798,6 +798,19 @@ ion-icon.rec-btn-icon {
   }
 }
 
+.fab-btn {
+  box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.2);
+
+  ion-icon {
+    font-size: 28px !important;
+    font-weight: bold !important;
+  }
+}
+
+.fab-br {
+  bottom: 20px !important;
+}
+
 
 
 
@@ -2071,6 +2084,12 @@ ion-refresher-content {
   &.score-high {
     color: rgba(map-get($colors, accept), .8);
   }
+}
+
+.filter-list-desc {
+  margin-top: 0;
+  border-top: 2px solid #f8f8f85c;
+  padding-top: 10px;
 }
 
 

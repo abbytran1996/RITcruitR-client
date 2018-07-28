@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, ToastController, Events } from 'ionic-angular';
+import { NavController, NavParams, AlertController, ToastController, Events, ActionSheetController } from 'ionic-angular';
 import { CallNumber } from '@ionic-native/call-number';
 
 import {
@@ -28,6 +28,7 @@ export class CompanyPhase3Page {
   public recruiter: RecruiterModel;
   public currentJob: JobModel;
   public matchList: any;
+  public activeMatches = true;
   public pageLoading = true;
   public detailMode = false;
   public reviewMode = false;
@@ -40,6 +41,7 @@ export class CompanyPhase3Page {
     public navParams: NavParams,
     private alertCtrl: AlertController,
     private toastCtrl: ToastController,
+    public actionSheetCtrl: ActionSheetController,
     private jobPostingService: JobPostingService,
     public helperService: HelperService,
     private callNumber: CallNumber,
@@ -55,7 +57,7 @@ export class CompanyPhase3Page {
   ionViewDidEnter() {
     this.pageLoading = true;
     this.getCurrentJob();
-    this.getMatches();
+    this.getFinalMatches();
   }
 
   /*
@@ -72,7 +74,7 @@ export class CompanyPhase3Page {
     Called upon pulldown refresh, refresh the matches.
   */
   doRefresh(refresher) {
-    this.getMatches(() => {
+    this.getFinalMatches(() => {
       refresher.complete();
     });
   }
@@ -110,6 +112,60 @@ export class CompanyPhase3Page {
   }
 
   /*
+    Show the action sheet.
+  */
+  showActionSheet() {
+    const actionSheet = this.actionSheetCtrl.create({
+      title: 'Match Filters',
+      buttons: [
+        {
+          text: 'Final Matches',
+          cssClass: (this.activeMatches) ? 'selected' : '',
+          handler: () => {
+            this.showFinalMatches();
+          }
+        }, {
+          text: 'Archived Matches',
+          cssClass: (this.activeMatches) ? '' : 'selected',
+          handler: () => {
+            this.showArchivedMatches();
+          }
+        }, {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
+    });
+
+    actionSheet.present();
+  }
+
+  /*
+    Get and show the final matches.
+  */
+  showFinalMatches() {
+    if (!this.activeMatches) {
+      this.activeMatches = true;
+      this.pageLoading = true;
+      this.getFinalMatches();
+    }
+  }
+
+  /*
+    Get and show the archived matches.
+  */
+  showArchivedMatches() {
+    if (this.activeMatches) {
+      this.activeMatches = false;
+      this.pageLoading = true;
+      this.getArchivedMatches();
+    }
+  }
+
+  /*
     Show the match detail screen for the match that was clicked.
   */
   matchDetails(match) {
@@ -126,7 +182,13 @@ export class CompanyPhase3Page {
     this.detailMode = false;
     this.reviewMode = false;
     this.reviewStep = 0;
-    this.getMatches();
+
+    if (this.activeMatches) {
+      this.showFinalMatches();
+    }
+    else {
+      this.showArchivedMatches();
+    }
   }
 
   /*
@@ -183,7 +245,7 @@ export class CompanyPhase3Page {
   */
   postArchive() {
     this.backToList();
-    this.getMatches();
+    this.getFinalMatches();
     this.events.publish('tabs:numMatches', this.currentJob);
   }
 
@@ -272,7 +334,7 @@ export class CompanyPhase3Page {
   /*
     Get the list of "final" phase 3 matches for the current job.
   */
-  getMatches(callback?) {
+  getFinalMatches(callback?) {
     this.jobPostingService.getFinalPhaseMatchesByJob(this.currentJob.id).subscribe(
       data => {
         this.matchList = this.helperService.sortMatches(data);
@@ -284,6 +346,24 @@ export class CompanyPhase3Page {
       },
       error => {
         console.log("Error getting final matches");
+        console.log(error);
+      }
+    );
+  }
+
+  /*
+    Get the list of "archived" phase 3 matches for the current job.
+  */
+  getArchivedMatches(callback?) {
+    this.jobPostingService.getArchivedMatchesByJob(this.currentJob.id).subscribe(
+      data => {
+        this.matchList = data;
+        this.pageLoading = false;
+
+        if (callback != undefined) callback();
+      },
+      error => {
+        console.log("Error getting archived matches");
         console.log(error);
       }
     );

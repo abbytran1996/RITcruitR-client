@@ -47,7 +47,7 @@ export class StudentPhase3Page {
     private callNumber: CallNumber,
     public events: Events
   ) {
-    this.student= navParams.get("student");
+    this.student = navParams.get("student");
   }
 
   /*
@@ -67,6 +67,7 @@ export class StudentPhase3Page {
     this.reviewMode = false;
     this.currentMatch = undefined;
     this.reviewStep = 0;
+    this.activeMatches = true;
   }
 
   /*
@@ -99,6 +100,18 @@ export class StudentPhase3Page {
       if (this.reviewStep < this.reviewStepMax) {
         this.cardNext();
       }
+    }
+  }
+
+  /*
+    Called when the match filter button is swiped in any direction. Determine threshold and call proper function.
+  */
+  swipeFilter(event) {
+    if (this.activeMatches) {
+      this.showArchivedMatches();
+    }
+    else {
+      this.showFinalMatches();
     }
   }
 
@@ -152,6 +165,13 @@ export class StudentPhase3Page {
     this.detailMode = false;
     this.reviewMode = false;
     this.reviewStep = 0;
+
+    if (this.activeMatches) {
+      this.showFinalMatches();
+    }
+    else {
+      this.showArchivedMatches();
+    }
   }
 
   /*

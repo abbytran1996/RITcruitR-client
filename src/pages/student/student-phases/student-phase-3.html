@@ -20,9 +20,9 @@
     <!-- Final Match List -->
     <div class="final matches" *ngIf="matchList != undefined && matchList.length != 0 && !detailMode">
       <div class="job-matches-header">
-        <h3 class="text-pill bg-white fg-accent text-center center fake-link" (click)="showActionSheet()" (swipe)="swipe($event)">{{ (activeMatches) ? 'Final Matches' : 'Archived Matches' }} <ion-icon name="ios-more" class="more-icon fg-dark"></ion-icon></h3>
-        <p class="fg-white text-center bold" [hidden]="!activeMatches">The jobs listed below have made it to the final stage. Tap a job to view its detail.</p>
-        <p class="fg-white text-center bold" [hidden]="activeMatches">The jobs listed below are archived.</p>
+        <h3 class="text-pill fg-light text-center center">{{ (activeMatches) ? 'Final Matches' : 'Archived Matches' }}</h3>
+        <p class="fg-white text-center bold filter-list-desc" [hidden]="!activeMatches">The jobs listed below have made it to the final stage. Tap a job to view its detail.</p>
+        <p class="fg-white text-center bold filter-list-desc" [hidden]="activeMatches">The jobs listed below are archived.</p>
       </div>
       <div class="final-matches-list">
         <ion-list>
@@ -109,12 +109,6 @@
               <li class="fg-dark">
                 <ion-icon name="ios-mail" class="card-heading-icon fg-primary"></ion-icon> {{ currentMatch.job.recruiter.contactEmail }}
               </li>
-              <!-- When the field below is implemented, comment it out and update it -->
-              <!-- <li class="fg-dark margin-top-10">
-                <ion-icon name="md-chatboxes" class="card-heading-icon fg-primary"></ion-icon> <span class="bold">Contact Preferences</span>
-                <br>
-                <p class="fg=dark">Give me a call sometime M-F, 8am to 5pm to set up an official interview.</p>
-              </li> -->
             </ul>
           </div>
         </div>
@@ -240,4 +234,10 @@
     <!-- End Match Details -->
 
   </div>
+
+  <!-- FAB -->
+  <ion-fab top right edge *ngIf="matchList != undefined && matchList.length != 0 && !detailMode && !pageLoading">
+    <button ion-fab mini color="accent" class="fab-btn" (click)="showActionSheet()"><ion-icon name="ios-more"></ion-icon></button>
+  </ion-fab>
+  <!-- End FAB -->
 </ion-content>

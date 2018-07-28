@@ -18,7 +18,7 @@
   <div class="phase-wrapper" *ngIf="!pageLoading">
 
     <!-- Final Match List -->
-    <div class="final matches" *ngIf="matchList != undefined && matchList.length != 0 && !detailMode">
+    <div class="final-matches" *ngIf="matchList != undefined && matchList.length != 0 && !detailMode">
 
       <!-- Toolbar -->
       <div class="list-item-card rec-toolbar">
@@ -50,7 +50,7 @@
                 Email
               </button>
             </ion-item-options>
-            <ion-item-options side="right">
+            <ion-item-options side="right" *ngIf="activeMatches">
               <button ion-button color="deny" (click)="archiveMatch(match)" class="font-body">
                 <ion-icon name="ios-archive"></ion-icon>
                 Archive
@@ -99,7 +99,7 @@
           <ion-icon name='md-contact' class="fg-primary"></ion-icon>
           <p class="fg-primary">Contact Details</p>
         </div>
-        <div class="rec-toolbar-btn fake-link" (click)="archiveMatch(currentMatch)">
+        <div class="rec-toolbar-btn fake-link" [hidden]="!activeMatches" (click)="archiveMatch(currentMatch)">
           <ion-icon name='ios-archive' class="fg-deny"></ion-icon>
           <p class="fg-deny">Archive</p>
         </div>
@@ -264,4 +264,10 @@
     <!-- End Match Details -->
 
   </div>
+
+  <!-- FAB -->
+  <ion-fab top right edge *ngIf="matchList != undefined && matchList.length != 0 && !detailMode">
+    <button ion-fab mini color="accent" class="fab-btn" (click)="showActionSheet()"><ion-icon name="ios-more"></ion-icon></button>
+  </ion-fab>
+  <!-- End FAB -->
 </ion-content>
