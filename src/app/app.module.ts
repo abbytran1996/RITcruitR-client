@@ -84,6 +84,11 @@ import {
   HelperService
 } from '@app/services';
 
+// Pipes
+import {
+  PhonePipe
+} from '@app/pipes';
+
 @NgModule({
 
   /*
@@ -123,7 +128,9 @@ import {
     ProblemStatementAddModal,
     JobLocationsPreferenceModal,
     JobIndustriesPreferenceModal,
-    CompanySizePreferenceModal
+    CompanySizePreferenceModal,
+
+    PhonePipe
   ],
 
   /*

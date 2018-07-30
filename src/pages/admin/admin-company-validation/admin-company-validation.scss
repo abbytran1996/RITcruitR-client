@@ -20,6 +20,7 @@ page-admin-company-validation {
 
             .companies-list {
                 padding-right: 75px;
+                overflow-y: auto;
 
                 .headers ion-col {
                     font-weight: bold;

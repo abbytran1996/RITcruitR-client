@@ -1,8 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, ToastController, IonicPage } from 'ionic-angular';
+import { NavController, ToastController, IonicPage, AlertController } from 'ionic-angular';
 
 import { StudentTabsPage } from '@app/pages/student';
-import { CompanyTabsPage } from '@app/pages/company';
+import {
+  CompanyTabsPage,
+  CompanyRegisterConfirmPage
+} from '@app/pages/company';
+
 import { RegisterPage } from '@app/pages/general';
 import { AdminDashboardPage } from '@app/pages/admin';
 
@@ -27,10 +31,6 @@ import {
 //   will be retrieved based on the user's role. Then the corresponding
 //   tabs page will be loaded.
 //_________________________________________________________________________
-@IonicPage({
-  name: 'login',
-  segment: 'login'
-})
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html'
@@ -48,6 +48,7 @@ export class LoginPage {
   constructor(
     public navCtrl: NavController,
     private toastCtrl: ToastController,
+    private alertCtrl: AlertController,
     private authService: AuthService,
     private studentService: StudentService,
     private recruiterService: RecruiterService,
@@ -96,7 +97,10 @@ export class LoginPage {
     if (this.loginForm && this.loginForm.valid) {
       this.loadingLogin = true;
 
-      // Make API call to login and attempt authentication
+      /*
+        Attempt initial user authentication.
+        =================================================================
+      */
       this.authService.login(this.model).subscribe(
         data => {
 
@@ -105,8 +109,17 @@ export class LoginPage {
           let userRole = this.authService.getUserRole(data);
           let userEmail = data.username;
 
-          // Student
+          /*
+            User is a student.
+            --------------------------------------------------------------
+          */
           if (userRole == AuthService.STUDENT) {
+            if (!this.dataService.isApp) {
+              this.presentToast("Student's can only login using the RecruitR mobile app");
+              this.loadingLogin = false;
+              return;
+            }
+
             this.studentService.getStudentByEmail(userEmail).subscribe(
               data => {
                 let student = new StudentModel(data);
@@ -120,15 +133,39 @@ export class LoginPage {
             );
           }
 
-          // Recruiter and Primary Recruiter
+          /*
+            User is a recruiter.
+            --------------------------------------------------------------
+          */
           else if (userRole == AuthService.RECRUITER || userRole == AuthService.PRIMARY_RECRUITER) {
+            if (!this.dataService.isApp) {
+              this.presentToast("Recruiter's can only login using the RecruitR mobile app");
+              this.loadingLogin = false;
+              return;
+            }
+
             this.recruiterService.getRecruiterByEmail(userEmail).subscribe(
               data => {
                 let recruiter = new RecruiterModel(data);
                 recruiter.primary = (userRole == AuthService.PRIMARY_RECRUITER);
+                
+                // If the company hasn't yet been approved or denied
+                if (recruiter.company.status == null || recruiter.company.status == 0) {
+                  this.loadingLogin = false;
+                  this.navCtrl.push(CompanyRegisterConfirmPage, { fromLogin: true }, { animation: "md-transition" });
+                }
 
-                this.loadingLogin = false;
-                this.navCtrl.push(CompanyTabsPage, {recruiter: recruiter}, { animation: "md-transition" });
+                // If the company has been denied
+                else if (recruiter.company.status == 2) {
+                  this.loadingLogin = false;
+                  this.showAlert("Company Denied", "We're sorry, but your company has been denied acces to RecruitR. This is potentially because an administrator detected faulty information in your registration. Please contact RecruitR with any concerns.");
+                }
+
+                // If the company has been approved
+                else if (recruiter.company.status == 1) {
+                  this.loadingLogin = false;
+                  this.navCtrl.push(CompanyTabsPage, { recruiter: recruiter }, { animation: "md-transition" });
+                }
               },
               error => {
                 this.presentToast("An error occurred loading your account, please try again later");
@@ -137,10 +174,19 @@ export class LoginPage {
             );
           }
 
-          // Admin
+          /*
+            User is an admin.
+            --------------------------------------------------------------
+          */
           else if (userRole == AuthService.ADMIN) {
+            if (this.dataService.isApp) {
+              this.presentToast("Administrators's cannot login through the RecruitR mobile app. Please use a desktop web browser");
+              this.loadingLogin = false;
+              return;
+            }
+
             this.loadingLogin = false;
-            this.navCtrl.setRoot('admin-dashboard', { user: data }, { animation: "md-transition" });
+            this.navCtrl.setRoot(AdminDashboardPage, { user: data }, { animation: "md-transition" });
           }
         },
         error => {
@@ -178,5 +224,17 @@ export class LoginPage {
     });
 
     toast.present();
+  }
+
+  /*
+    Show an alert dialog with the given title and message.
+  */
+  showAlert(title, message) {
+    let alert = this.alertCtrl.create({
+      title: title,
+      message: message,
+      buttons: ['Dismiss']
+    });
+    alert.present();
   }
 }

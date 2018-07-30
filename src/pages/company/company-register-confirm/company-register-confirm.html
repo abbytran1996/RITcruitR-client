@@ -12,10 +12,13 @@
     <!-- Message -->
     <ion-row class="row-message">
       <ion-col>
-        <h3 class="fg-white no-padding text-center">
+        <h3 class="fg-white no-padding text-center" [hidden]="fromLogin">
           Before you can continue using<br>the app and post jobs, your<br>company <span class="fg-accent">must be approved</span>.
           <br><br>
-          Once it is approved you will receive an email notifying you.
+          After approval you may log into the app using your primary recruiter credentials.
+        </h3>
+        <h3 class="fg-white no-padding text-center" [hidden]="!fromLogin">
+          Your company has not yet been<br>approved, please check back<br>later.
           <br><br>
           After approval you may log into the app using your primary recruiter credentials.
         </h3>
@@ -26,7 +29,7 @@
     <!-- Buttons -->
     <ion-row class="row-buttons">
       <ion-col>
-        <button class="rec-btn rec-btn-white btn-stacked center" (click)="continueClicked()">Ok</button>
+        <button class="rec-btn rec-btn-white btn-stacked center" (click)="okClicked()">Ok</button>
       </ion-col>
     </ion-row>
     <!-- End Buttons -->

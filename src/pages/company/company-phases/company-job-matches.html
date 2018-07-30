@@ -17,9 +17,9 @@
   </div>
   <div class="job-matches-wrapper">
     <div class="job-matches-header" *ngIf="!pageLoading">
-      <h3 class="text-pill bg-white fg-accent text-center center fake-link" (click)="showActionSheet()" (swipe)="swipe($event)">{{ (activeJobs) ? 'Active Jobs' : 'Inactive Jobs' }} <ion-icon name="ios-more" class="more-icon fg-dark"></ion-icon></h3>
-      <p class="fg-white text-center bold" [hidden]="!activeJobs || (jobList == undefined || jobList.length == 0)">The jobs listed below are active and can be applied to. Tap one to review any matches.</p>
-      <p class="fg-white text-center bold" [hidden]="activeJobs || (jobList == undefined || jobList.length == 0)">The jobs listed below are inactive and can't be matched. Swipe left on a job to reactivate it.</p>
+      <h3 class="text-pill fg-light text-center center fake-link" (click)="showActionSheet()" (swipe)="swipe($event)">{{ (activeJobs) ? 'Active Jobs' : 'Inactive Jobs' }}</h3>
+      <p class="fg-white text-center bold filter-list-desc" [hidden]="!activeJobs || (jobList == undefined || jobList.length == 0)">The jobs listed below are active and can be applied to. Tap one to review any matches.</p>
+      <p class="fg-white text-center bold filter-list-desc" [hidden]="activeJobs || (jobList == undefined || jobList.length == 0)">The jobs listed below are inactive and can't be matched. Swipe left on a job to reactivate it.</p>
     </div>
     <div class="job-matches-list" *ngIf="!pageLoading && jobList != undefined && jobList.length > 0">
       <ion-list>
@@ -78,4 +78,10 @@
     </div>
   </div>
   <!-- End Empty List Message -->
+
+  <!-- FAB -->
+  <ion-fab top right edge class="fab-br" *ngIf="!pageLoading">
+    <button ion-fab mini color="accent" class="fab-btn" (click)="showActionSheet()"><ion-icon name="ios-more"></ion-icon></button>
+  </ion-fab>
+  <!-- End FAB -->
 </ion-content>

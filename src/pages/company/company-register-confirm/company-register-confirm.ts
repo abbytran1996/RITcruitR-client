@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
+import { LoginPage } from '@app/pages/general';
 import { CompanyTabsPage } from '@app/pages/company';
 
 //=========================================================================
@@ -14,13 +15,19 @@ import { CompanyTabsPage } from '@app/pages/company';
 })
 export class CompanyRegisterConfirmPage {
 
+  public fromLogin = false;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams
-  ) { }
+  ) {
+    this.fromLogin = navParams.get("fromLogin") || false;
+  }
 
-  continueClicked() {
-     // TODO: Change this so it leads back to the login screen, keep for dev
-    this.navCtrl.push(CompanyTabsPage);
+  /*
+    Send the user back to the login page.
+  */
+  okClicked() {
+    this.navCtrl.push(LoginPage);
   }
 }

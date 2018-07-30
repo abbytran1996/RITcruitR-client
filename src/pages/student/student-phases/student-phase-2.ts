@@ -70,7 +70,6 @@ export class StudentPhase2Page {
     private toastCtrl: ToastController,
     private alertCtrl: AlertController,
     private studentService: StudentService,
-    private helperService: HelperService,
     public dataService: DataService,
     public domSanitizer: DomSanitizer,
     public helperService: HelperService,

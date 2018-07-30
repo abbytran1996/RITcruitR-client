@@ -217,6 +217,16 @@ export class JobPostingService {
     }
 
     //=========================================================================
+    // * GET ARCHIVED MATCHES BY JOB                                          *
+    //=========================================================================
+    // - Get all archived matches for the job with the given id
+    // - Expects a JobModel id number
+    // - Returns an array of MatchModels
+    getArchivedMatchesByJob(jobId) {
+      return this.apiService.get("/matches/posting/" + jobId + "?phase=archived");
+    }
+
+    //=========================================================================
     // * ACCEPT MATCH                                                         *
     //=========================================================================
     // - Accepts a given match

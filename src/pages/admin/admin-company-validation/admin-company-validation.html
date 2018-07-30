@@ -36,7 +36,7 @@
           <ion-col>Time Registered</ion-col>
         </ion-row>
 
-        <ion-row *ngFor="let company of companies" (click)="updateCompany(company)" class="company-container" [ngClass]="{ 'active': currentCompany == company }" align-items-center>
+        <ion-row *ngFor="let company of companies" (click)="updateCompany(company)" class="company-container" [ngClass]="{ 'active': currentCompany != undefined && currentCompany.id == company.id }" align-items-center>
           <ion-col col-4><h2>{{ company.companyName }}</h2></ion-col>
           <ion-col class="fg-grey">{{ company.timeRegistered | date: 'MMMM d, yyyy, h:mm a' }}</ion-col>
         </ion-row>
@@ -45,10 +45,10 @@
       <ion-col class="separator"></ion-col>
 
       <ion-col class="approval-form">
-        <ng-template [ngIf]="currentCompany.hasOwnProperty('companyName')">
+        <div *ngIf="currentCompany != undefined">
           <span class="company-name">{{ currentCompany.companyName }}</span><span class="fg-grey">{{ currentCompany.timeRegistered | date: 'MMMM d, yyyy, h:mm a' }}</span>
 
-          <hr />
+          <hr/>
 
           <div class="company-container">
             <ion-row class="fg-dark">
@@ -80,9 +80,9 @@
                 <ion-col>
                   <h3><ion-icon name="md-person" class="card-heading-icon fg-primary"></ion-icon>Primary Recruiter Contact</h3>
                   <div class="company-container-info">
-                      <ion-icon name="md-contact" class="card-heading-icon fg-primary"></ion-icon>{{ currentCompany.userId }}<br />
-                      <ion-icon name="md-mail" class="card-heading-icon fg-primary"></ion-icon>{{ currentCompany.userId }}<br />
-                      <ion-icon name="md-call" class="card-heading-icon fg-primary"></ion-icon>{{ currentCompany.userId }}
+                      <ion-icon name="md-contact" class="card-heading-icon fg-primary"></ion-icon>{{ currentRecruiter.firstName }} {{ currentRecruiter.lastName }}<br />
+                      <ion-icon name="md-mail" class="card-heading-icon fg-primary"></ion-icon>{{ currentRecruiter.contactEmail }}<br />
+                      <ion-icon name="md-call" class="card-heading-icon fg-primary"></ion-icon>{{ currentRecruiter.phoneNumber | phone }}
                   </div>
                 </ion-col>
               </ion-row>
@@ -92,7 +92,7 @@
             <button class="rec-btn-small rec-btn-deny rec-btn-admin" (click)="denyCompany(currentCompany)"><ion-icon name="md-thumbs-down" class="card-heading-icon"></ion-icon>Deny</button>
             <button class="rec-btn-small rec-btn-accept rec-btn-admin" (click)="approveCompany(currentCompany)">Approve<ion-icon name="md-thumbs-up" class="card-heading-icon-right"></ion-icon></button>
           </div>
-        </ng-template>
+        </div>
       </ion-col>
     </ion-row>
     <!-- End List of Companies Awaiting Approval -->
