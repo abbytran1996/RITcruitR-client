@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController, NavParams, Events, ToastController, AlertController, ModalController } from 'ionic-angular';
 
 import { ProblemStatementAddModal } from '@app/pages/modals';
@@ -15,7 +15,7 @@ import {
 } from '@app/services';
 
 //=========================================================================
-// * StudentPhase1Page                                                   
+// * StudentPhase1Page
 //=========================================================================
 // - Shows any phase 1 matches that a student has. Each match is shown
 //   one at a time on an easy to read "card". Students can declare if
@@ -37,6 +37,8 @@ export class StudentPhase1Page {
   public matchList: any;
   public matchIndex = 0;
   public matchPoints = {industry: false, locations: [false, false], skills: []};
+  public matchedIndustries = [];
+  public matchedLocations = [];
   public stage = 0;
   public maxStage = 2;
 
@@ -67,7 +69,7 @@ export class StudentPhase1Page {
     public modalCtrl: ModalController,
     public events: Events,
     private studentService: StudentService,
-    private helperService: HelperService
+    public helperService: HelperService
   ) {
     this.student= navParams.get("student");
   }
@@ -268,10 +270,7 @@ export class StudentPhase1Page {
       this.fadeLeft = true;
 
       setTimeout(() => {
-        this.matchList = this.helperService.removeFromArrayById(this.matchList, this.match);
         this.nextMatch();
-        this.fadeLeft = false;
-        this.fadeRightInstant = true;
 
         setTimeout(() => {
           this.fadeRightInstant = false;
@@ -294,15 +293,13 @@ export class StudentPhase1Page {
     Show the next match in the list of matches at this phase.
   */
   nextMatch() {
-    if (this.matchIndex + 1 < this.matchList.length) {
-      this.matchIndex = this.matchIndex + 1;
-    }
-    else {
-      this.matchIndex = 0;
-    }
-
+    this.matchList = this.helperService.removeFromArrayById(this.matchList, this.match);
     this.stage = 0;
+    this.match = new MatchModel(this.matchList[this.matchIndex]);
     this.prepMatch();
+
+    this.fadeLeft = false;
+    this.fadeRightInstant = true;
   }
 
   /*
@@ -328,10 +325,7 @@ export class StudentPhase1Page {
         }, this.helperService.getCardFadeTime() / 2);
 
         setTimeout(() => {
-          this.matchList = this.helperService.removeFromArrayById(this.matchList, this.match);
           this.nextMatch();
-          this.fadeLeft = false;
-          this.fadeRightInstant = true;
 
           setTimeout(() => {
             this.fadeRightInstant = false;
@@ -357,18 +351,13 @@ export class StudentPhase1Page {
   getNewMatches(callback?) {
     this.studentService.getNewMatches(this.student.id).subscribe(
       data => {
-        this.matchList = data;
+        this.matchList = this.helperService.sortMatches(data);
 
         if (this.matchList != undefined && this.matchList.length > 0) {
-          this.matchList.sort((a, b) => {
-            if (a.matchStrength < b.matchStrength) return 1;
-            else if (a.matchStrength > b.matchStrength) return -1;
-            else return 0;
-          });
-
           this.events.publish('tab:numMatches', this.student);
-  
+
           this.matchIndex = 0;
+          this.match = new MatchModel(this.matchList[this.matchIndex]);
           this.prepMatch();
         }
         else {
@@ -409,8 +398,6 @@ export class StudentPhase1Page {
     skills and preferences to show match indicators on the match card.
   */
   prepMatch() {
-    // Set the current match to the current index
-    this.match = new MatchModel(this.matchList[this.matchIndex]);
     this.matchPoints = {industry: false, locations: [false, false], skills: []};
 
     // No matches in this phase, nothing to prep
@@ -419,146 +406,38 @@ export class StudentPhase1Page {
     }
 
     // Check if any preferred industries match
-    this.student.preferredIndustries.forEach(industry => {
-      if (this.match.job.company.industries.some(ind => ind === industry)) {
-        if (!this.matchPoints.industry) {
-          this.match["matchedIndustry"] = industry;
+    this.studentService.getMatchedIndustries(this.match.id).subscribe(
+      data => {
+        this.matchedIndustries = data;
+        if (this.matchedIndustries != undefined && this.matchedIndustries.length > 0) {
           this.matchPoints.industry = true;
+          this.match["matchedIndustry"] = this.matchedIndustries[0];
         }
       }
-    });
+    );
 
     // Check if any preferred locations match
     let numLocationsToShow = 2;
     let locIndex = 0;
-    for (locIndex; locIndex < numLocationsToShow; locIndex++) {
-      if (this.match.job.locations[locIndex] != undefined &&
-          this.student.preferredLocations.some(loc => loc === this.match.job.locations[locIndex])) {
-        this.matchPoints.locations[locIndex] = true;
-      }
-    }
-
-    // Build the list of matched skills. Searches through the job's skills and the
-    // student's skills to show which ones were matched on.
-    let reqSkills = this.match.job.requiredSkills.map(x => Object.assign({}, x));
-    let reqSkillsMatched = [];
-    let nthSkills = this.match.job.niceToHaveSkills.map(x => Object.assign({}, x));
-    let nthSkillsMatched = [];
-    this.student.skills.forEach(studentSkill => {
-      if (reqSkills.some(skill => skill.id === studentSkill.id)) {
-        reqSkillsMatched.push(studentSkill);
-        reqSkills = this.helperService.removeFromArrayById(reqSkills, studentSkill);
-      }
-
-      if (nthSkills.some(skill => skill.id === studentSkill.id)) {
-        nthSkillsMatched.push(studentSkill);
-        nthSkills = this.helperService.removeFromArrayById(nthSkills, studentSkill);
-      }
-    });
-
-    // Build the list of skills to show
-    let prefNumReqSkillsToShow = 2;
-    let prefNumNthSkillsToShow = 1;
-    let prefTotalSkillsToShow = prefNumReqSkillsToShow + prefNumNthSkillsToShow;
-    let skillsToShow = [];
-    let reqSkillsToShow = [];
-    let nthSkillsToShow = [];
-    let toRemove = [];
-
-    // Add up to the preferred number of matched required skills
-    for (let i = 0; i < prefNumReqSkillsToShow; i++) {
-      if (reqSkillsMatched[i] != undefined) {
-        reqSkillsToShow.push(reqSkillsMatched[i]);
-        toRemove.push(reqSkillsMatched[i]);
-        this.matchPoints.skills.push(true);
-      }
-    }
-    toRemove.forEach(el => { reqSkillsMatched = this.helperService.removeFromArrayById(reqSkillsMatched, el);});
-    toRemove = [];
-
-    // If additional required skills should be shown
-    if (reqSkillsToShow.length < prefNumReqSkillsToShow &&
-        reqSkills.length >= (prefNumReqSkillsToShow - reqSkillsMatched.length)) {
-      for (let i = 0; i < prefNumReqSkillsToShow - reqSkillsMatched.length; i++) {
-        if (reqSkills[i] != undefined) {
-          reqSkillsToShow.push(reqSkills[i]);
-          toRemove.push(reqSkills[i]);
-          this.matchPoints.skills.push(false);
-        }
-      }
-    }
-    toRemove.forEach(el => { reqSkills = this.helperService.removeFromArrayById(reqSkills, el);});
-    toRemove = [];
-
-    // Add up to the preferred number of matched nice to have skills
-    for (let i = 0; i < prefNumNthSkillsToShow; i++) {
-      if (nthSkillsMatched[i] != undefined) {
-        nthSkillsToShow.push(nthSkillsMatched[i]);
-        toRemove.push(nthSkillsMatched[i]);
-        this.matchPoints.skills.push(true);
-      }
-    }
-    toRemove.forEach(el => { nthSkillsMatched = this.helperService.removeFromArrayById(nthSkillsMatched, el);});
-    toRemove = [];
-
-    // If additional nice to have skills should eb shown
-    if (nthSkillsToShow.length < prefNumNthSkillsToShow &&
-        nthSkills.length >= (prefNumNthSkillsToShow - nthSkillsMatched.length)) {
-      for (let i = 0; i < prefNumNthSkillsToShow - nthSkillsMatched.length; i++) {
-        if (nthSkills[i] != undefined) {
-          nthSkillsToShow.push(nthSkills[i]);
-          toRemove.push(nthSkills[i]);
-          this.matchPoints.skills.push(false);
-        }
-      }
-    }
-    toRemove.forEach(el => { nthSkills = this.helperService.removeFromArrayById(nthSkills, el);});
-    toRemove = [];
-
-    let numInArrays = reqSkillsToShow.length + nthSkillsToShow.length;
-    let keepRunning = true;
-    while (keepRunning && numInArrays < prefTotalSkillsToShow) {
-      if (reqSkillsMatched.length > 0) {
-        for (let i = 0; i < prefTotalSkillsToShow - numInArrays; i++) {
-          if (reqSkillsMatched[i] != undefined) {
-            reqSkillsToShow.push(reqSkillsMatched[i]);
-            this.matchPoints.skills.push(true);
+    this.studentService.getMatchedLocations(this.match.id).subscribe(
+      data => {
+        this.matchedLocations = data;
+        if (this.matchedLocations != undefined && this.matchedLocations.length > 0){
+          for (locIndex; locIndex < numLocationsToShow; locIndex++) {
+            if (this.matchedLocations.indexOf(this.match.job.locations[locIndex]) > -1) {
+              this.matchPoints.locations[locIndex] = true;
+            }
           }
         }
       }
-      else if (reqSkills.length > 0) {
-        for (let i = 0; i < prefTotalSkillsToShow - numInArrays; i++) {
-          if (reqSkills[i] != undefined) {
-            reqSkillsToShow.push(reqSkills[i]);
-            this.matchPoints.skills.push(false);
-          }
-        }
-      }
-      else if (nthSkillsMatched.length > 0) {
-        for (let i = 0; i < prefTotalSkillsToShow - numInArrays; i++) {
-          if (nthSkillsMatched[i] != undefined) {
-            nthSkillsToShow.push(nthSkillsMatched[i]);
-            this.matchPoints.skills.push(true);
-          }
-        }
-      }
-      else if (nthSkills.length > 0) {
-        for (let i = 0; i < prefTotalSkillsToShow - numInArrays; i++) {
-          if (nthSkills[i] != undefined) {
-            nthSkillsToShow.push(reqSkills[i]);
-            this.matchPoints.skills.push(false);
-          }
-        }
-      }
-      else {
-        keepRunning = false;
-      }
+    );
 
-      numInArrays = reqSkillsToShow.length + nthSkillsToShow.length;
-    }
-
-    skillsToShow = reqSkillsToShow.concat(nthSkillsToShow);
-    this.match["skillsToShow"] = skillsToShow;
+    // Get the list of matched skills.
+    this.studentService.getMatchedSkills(this.match.id).subscribe(
+      data => {
+        this.match["skillsToShow"] = data;
+      }
+    );
 
     this.pageLoading = false;
   }

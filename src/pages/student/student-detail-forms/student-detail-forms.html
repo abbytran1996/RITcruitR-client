@@ -81,39 +81,28 @@
     <!-- End Step 1 -->
 
     <!-- Step 2 -->
-    <ion-row class="row-form" [ngClass]="formSeq.formClasses[2]" [hidden]="formSeq.initHide" *ngIf="isSetup || formSeq.startStep == 2">
+    <ion-row class="row-form row-buttons" [ngClass]="formSeq.formClasses[2]" [hidden]="formSeq.initHide" *ngIf="isSetup || formSeq.startStep == 2">
       <ion-col>
         <form #form2="ngForm">
-          <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
-            <label class="rec-label rl-secondary">PREFERRED LOCATIONS</label>
-            <select-searchable
-              name="preferredLocations"
-              class="rec-input ri-grey clearfix"
-              [(ngModel)]="prefsModel.preferredLocations"
-              [items]="locationOptions"
-              [canSearch]="true"
-              [multiple]="true"
-              title="Locations">
-            </select-searchable>
-          </div>
-          <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
-            <label class="rec-label rl-secondary">PREFERRED INDUSTRIES</label>
-            <select-searchable
-              name="preferredIndustries"
-              class="rec-input ri-grey clearfix"
-              [(ngModel)]="prefsModel.preferredIndustries"
-              [items]="industryOptions"
-              [canSearch]="true"
-              [multiple]="true"
-              title="Industries">
-            </select-searchable>
-          </div>
-          <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
-            <label class="rec-label rl-secondary">PREFERRED COMPANY SIZES</label>
-            <ion-select name="preferredCompanySizes" class="rec-input ri-grey" required [(ngModel)]="prefsModel.preferredCompanySizes" multiple="true">
-              <ion-option *ngFor="let option of companySizeOptions" value="{{ option.id }}">{{ option.text }}</ion-option>
-            </ion-select>
-          </div>
+          <ion-row class="row-message">
+            <h3>Choose a <span class="fg-accent">job preference</span> to modify.<br>These will help filter matches.</h3>
+          </ion-row>
+          <ion-row class="row-one clearfix">
+            <div class="circle-icon-btn-wrapper" [ngClass]="{'small': isSetup}">
+              <ion-icon name="ios-pin" class="icon-link circle-icon-btn" [ngClass]="{'small': isSetup}" (click)="jobLocationsModal()"></ion-icon>
+              <h3 class="text-center fg-dark">Job<br>Locations</h3>
+            </div>
+            <div class="circle-icon-btn-wrapper" [ngClass]="{'small': isSetup}">
+              <ion-icon name="ios-briefcase" class="icon-link circle-icon-btn" [ngClass]="{'small': isSetup}" (click)="jobIndustriesModal()"></ion-icon>
+              <h3 class="text-center fg-dark">Job<br>Industries</h3>
+            </div>
+          </ion-row>
+          <ion-row class="row-two clearfix">
+            <div class="circle-icon-btn-wrapper" [ngClass]="{'small': isSetup}">
+              <ion-icon name="ios-expand" class="icon-link circle-icon-btn" [ngClass]="{'small': isSetup}" (click)="companySizesModal()"></ion-icon>
+              <h3 class="text-center fg-dark">Company<br>Size</h3>
+            </div>
+          </ion-row>
         </form>
       </ion-col>
     </ion-row>
@@ -123,13 +112,13 @@
     <ion-row class="row-form" [ngClass]="formSeq.formClasses[3]" [hidden]="formSeq.initHide" *ngIf="isSetup || formSeq.startStep == 3">
       <ion-col>
         <form #form3="ngForm">
-          <select-searchable name="skills" class="rec-select-searchable-btn small clearfix" [(ngModel)]="skills" [items]="skillOptions"
+          <select-searchable name="skills" class="rec-select-searchable-btn circle has-header clearfix" [(ngModel)]="skills" [items]="skillOptions"
             itemTextField="name" [canSearch]="true" [multiple]="true" title="Skills">
           </select-searchable>
           <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
             <ion-list class="rec-reorder-list">
               <div class="list-header-wrapper">
-                <ion-list-header class="header-no-min-height"> </ion-list-header>
+                <ion-list-header class="header-no-min-height font-large">SKILLS</ion-list-header>
               </div>
               <ion-item-group reorder="true" side="start" (ionItemReorder)="$event.applyTo(skills)">
                 <ion-item *ngFor="let skill of skills; let i = index">
@@ -151,7 +140,7 @@
 </ion-content>
 
 <!-- Button Footer -->
-<ion-footer class="button-footer">
+<ion-footer class="button-footer" [hidden]="formSeq.currentStep == 2 && !isSetup">
   <ion-row>
     <button class="rec-btn rec-btn-primary btn-stacked center rec-load-btn" (click)="continueClicked()" [disabled]="saving">
       {{ ((!isSetup) ? ((saving) ? '' : 'Save') : (formSeq.currentStep == formSeq.maxSteps) ? ((saving) ? '' : 'Finish') : ((saving) ? '' : 'Continue')) }}

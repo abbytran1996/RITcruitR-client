@@ -65,7 +65,10 @@ import {
 // Modals
 import {
   PresentationLinkAddModal,
-  ProblemStatementAddModal
+  ProblemStatementAddModal,
+  JobLocationsPreferenceModal,
+  JobIndustriesPreferenceModal,
+  CompanySizePreferenceModal
 } from '@app/pages/modals';
 
 // Services
@@ -117,7 +120,10 @@ import {
     AdminCompanyValidationPage,
 
     PresentationLinkAddModal,
-    ProblemStatementAddModal
+    ProblemStatementAddModal,
+    JobLocationsPreferenceModal,
+    JobIndustriesPreferenceModal,
+    CompanySizePreferenceModal
   ],
 
   /*
@@ -182,7 +188,10 @@ import {
     AdminCompanyValidationPage,
 
     PresentationLinkAddModal,
-    ProblemStatementAddModal
+    ProblemStatementAddModal,
+    JobLocationsPreferenceModal,
+    JobIndustriesPreferenceModal,
+    CompanySizePreferenceModal
   ],
 
   /*

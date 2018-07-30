@@ -28,18 +28,22 @@
         [hidden]="hideCard"
         (swipe)="swipe($event)" id="swipe-card">
           <!-- Card Header -->
-          <div class="match-card-header">
+          <div class="match-card-header" [ngClass]="{'large': helperService.isMatchHeaderLarge(match, 'companyName')}">
             <h3 class="title fg-primary text-center">{{ match.job.company.companyName }}</h3>
             <p class="fg-grey text-center">{{ (match.matchedIndustry) ? match.matchedIndustry : match.job.company.industries[0] }}</p>
             <div class="duration-wrapper" [ngClass]="{'duration-notice': match.job.numDaysRemaining < 4, 'duration-urgent': match.job.numDaysRemaining == 1}">
               <ion-icon class="duration-icon" name="md-time"></ion-icon>
               <span>{{ match.job.numDaysRemaining }}</span>
             </div>
+            <div class="score-wrapper" [ngClass]="{'score-high': match.matchStrength >= .8}">
+              <ion-icon class="score-icon" name="md-speedometer"></ion-icon>
+              <span>{{ match.matchStrength * 100 }}%</span>
+            </div>
           </div>
           <!-- End Card Header -->
     
           <!-- Company Presentation Card Content -->
-          <div class="match-card-content" [ngClass]="{'slide-left': stage > 0}">
+          <div class="match-card-content" [ngClass]="{'slide-left': stage > 0, 'large': helperService.isMatchHeaderLarge(match, 'companyName')}">
             <div class="content-section presentation-explanation">
               <h3 class="heading heading-spacer fg-dark"><ion-icon name="md-easel" class="card-heading-icon"></ion-icon>Company Presentation<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="companyPresentationInfo()"></ion-icon></h3>
             </div>
@@ -53,7 +57,7 @@
           <!-- End Company Presentation Card Content -->
     
           <!-- Your Presentation Card Content -->
-          <div class="match-card-content" [ngClass]="{'slide-right': stage < 1}">
+          <div class="match-card-content" [ngClass]="{'slide-right': stage < 1, 'large': helperService.isMatchHeaderLarge(match, 'companyName')}">
             <div class="content-section">
               <h3 class="heading heading-spacer fg-dark"><ion-icon name="md-easel" class="card-heading-icon"></ion-icon>Add Presentation Links<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="yourPresentationInfo()"></ion-icon></h3>
             </div>

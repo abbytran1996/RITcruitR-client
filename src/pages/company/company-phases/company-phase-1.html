@@ -36,11 +36,11 @@
       <!-- Match Card -->
       <div class="match-card match-review-card"
       *ngIf="matchList != undefined && matchList.length > 0"
-      [ngClass]="{'fade-left': fadeLeft, 'fade-right': fadeRight, 'fade-left-instant': fadeLeftInstant, 'fade-right-instant': fadeRightInstant}"
+      [ngClass]="{'fade-left': fadeLeft, 'fade-right': fadeRight, 'fade-left-instant': fadeLeftInstant, 'fade-right-instant': fadeRightInstant, 'toolbar-large': helperService.isMatchToolbarLarge(match)}"
       [hidden]="hideCard"
       (swipe)="swipe($event)" id="swipe-card">
 
-        <div class="match-card-header">
+        <div class="match-card-header" [ngClass]="{'large': helperService.isMatchHeaderLarge(match, 'studentName')}">
           <h3 class="title fg-primary text-center">{{ match.student.firstName }} {{ match.student.lastName }}</h3>
           <p class="fg-grey text-center">{{ match.student.major }}</p>
           <div class="duration-wrapper" [ngClass]="{'duration-notice': match.job.numDaysRemaining < 4, 'duration-urgent': match.job.numDaysRemaining == 1}">
@@ -54,7 +54,7 @@
         </div>
 
         <!-- Student Overview -->
-        <div class="match-card-content" [ngClass]="{'slide-left': stage > 0}">
+        <div class="match-card-content" [ngClass]="{'slide-left': stage > 0, 'large': helperService.isMatchHeaderLarge(match, 'studentName')}">
           <div class="content-section university">
             <h3 class="heading fg-dark"><ion-icon name="md-bookmarks" class="card-heading-icon"></ion-icon>University:</h3>
             <p class="compact">{{ match.student.school }}</p>
@@ -70,8 +70,8 @@
           <div class="content-section skills">
             <h3 class="heading fg-dark"><ion-icon name="md-build" class="card-heading-icon"></ion-icon>Top Skills:</h3>
             <ul class="rec-ul">
-              <li *ngFor="let skill of match.student.skills | slice:0:2; let i = index" class="fg-dark">
-                {{ skill.name }}
+              <li *ngFor="let skill of match.student.skills | slice:0:2; let i = index" class="fg-dark" [hidden]="skill == undefined">
+                {{ (skill != undefined) ? skill.name : "" }}
               </li>
             </ul>
           </div>
@@ -79,7 +79,7 @@
         <!-- End Student Overview -->
 
         <!-- Student Problem Statement -->
-        <div class="match-card-content" [ngClass]="{'slide-right': stage < 1} ">
+        <div class="match-card-content" [ngClass]="{'slide-right': stage < 1, 'large': helperService.isMatchHeaderLarge(match, 'studentName')} ">
           <div class="content-section problem-statement">
             <h3 class="heading fg-dark heading-spacer">
               <ion-icon name="md-chatboxes" class="card-heading-icon"></ion-icon>{{ match.student.firstName }}'s Problem Statement<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="probStatementInfo()"></ion-icon></h3>
