@@ -34,7 +34,7 @@ export class PresentationLinkModel {
     Generate the actual link to be stored in the database from the field values for this type.
   */
   generateLink(fields) {
-    let regex = new RegExp("^(https?|ftp)://.*$");
+    let regex = new RegExp("^(https?)://.*$");
     let newLink = String(fields[0].value);
 
     if (!regex.test(newLink)) {
