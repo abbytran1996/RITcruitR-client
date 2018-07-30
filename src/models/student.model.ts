@@ -2,6 +2,7 @@ import { UserModel } from './user.model';
 import { StudentEducationModel } from './student-education.model';
 import { StudentContactModel } from './student-contact.model';
 import { StudentJobPreferencesModel } from './student-job-preferences.model';
+import { PresentationLinkModel } from './presentation-link.model';
 
 export class StudentModel {
   public id: number = null;
@@ -20,7 +21,7 @@ export class StudentModel {
   public preferredLocations: any = [];
   public preferredIndustries: any = [];
   public preferredCompanySizes: any = [];
-  public presentationLinks: any = [];
+  public presentationLinks: Array<PresentationLinkModel> = [];
   public problemStatements: any = [];
 
   constructor(init?: any) {

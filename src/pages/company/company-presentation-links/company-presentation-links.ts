@@ -32,7 +32,7 @@ export class CompanyPresentationLinksPage {
 
   // ngForm object for validation control
   @ViewChild('linksForm') linksForm;
-  links = [];
+  public links: Array<PresentationLinkModel> = [];
 
   constructor(
     public navCtrl: NavController,
@@ -45,7 +45,8 @@ export class CompanyPresentationLinksPage {
     private helperService: HelperService
   ) {
     this.recruiter = navParams.get("recruiter");
-    this.links = this.helperService.sortById(this.recruiter.company.presentationLinks.slice(0), true);
+    this.links = this.helperService.convertLinkTypes(this.recruiter.company.presentationLinks.slice(0));
+    this.links = this.helperService.sortById(this.links, true);
   }
 
   /*
@@ -90,7 +91,7 @@ export class CompanyPresentationLinksPage {
         this.loading = true;
         this.companyService.addCompanyPresentationLink(this.recruiter.company.id, data).subscribe(
           resData => {
-            this.links.push(resData);
+            this.links.push(this.helperService.convertSingleLinkType(resData));
             this.loading = false;
           },
           res => { }
@@ -98,6 +99,13 @@ export class CompanyPresentationLinksPage {
       }
     });
     modal.present();
+  }
+
+  /*
+    Displays an alert showing the clicked link's details.
+  */
+  showLinkDetails(link) {
+    this.showAlert("Link Details", link.title + ": " + link.link);
   }
 
   /*

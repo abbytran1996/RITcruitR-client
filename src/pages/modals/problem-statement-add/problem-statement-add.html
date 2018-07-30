@@ -43,7 +43,10 @@
 <!-- Button Footer -->
 <ion-footer class="button-footer">
   <ion-row>
-    <button class="rec-btn-small rec-btn-primary btn-stacked center" (click)="doneClicked()">Add</button>
+    <button class="rec-btn-small rec-btn-primary btn-stacked center rec-load-btn" (click)="doneClicked()" [disabled]="saving">
+      {{ (saving) ? '' : 'Add' }}
+      <ion-spinner class="white" name="dots" [hidden]="!saving"></ion-spinner>
+    </button>
   </ion-row>
 </ion-footer>
 <!-- End Button Footer -->

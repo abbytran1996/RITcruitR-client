@@ -1,17 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams, ModalController, ToastController, AlertController, Events } from 'ionic-angular';
-import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
 
 import { PresentationLinkAddModal } from '@app/pages/modals';
 
 import { 
   StudentModel,
-  MatchModel
+  MatchModel,
+  PresentationLinkModel
 } from '@app/models';
 
 import {
   StudentService,
-  HelperService
+  HelperService,
+  DataService
 } from '@app/services';
 
 //=========================================================================
@@ -31,6 +33,7 @@ export class StudentPhase2Page {
 
   public student: StudentModel;
   public match: MatchModel;
+  public displayLinks: Array<PresentationLinkModel>;
   public pageLoading = true;
 
   // Match fields
@@ -55,6 +58,9 @@ export class StudentPhase2Page {
   public browser;
 
   // Reorder list of presentation links
+  public existingLinkModel = undefined;
+  public existingLinkOptions: Array<PresentationLinkModel> = [];
+  @ViewChild('existingForm') existingForm;
   public linksList = [];
 
   constructor(
@@ -64,11 +70,14 @@ export class StudentPhase2Page {
     private toastCtrl: ToastController,
     private alertCtrl: AlertController,
     private studentService: StudentService,
+    private helperService: HelperService,
+    public dataService: DataService,
+    public domSanitizer: DomSanitizer,
     public helperService: HelperService,
-    private iab: InAppBrowser,
     public events: Events
   ) {
     this.student = navParams.get("student");
+    this.existingLinkOptions = this.student.presentationLinks;
   }
 
   /*
@@ -129,6 +138,18 @@ export class StudentPhase2Page {
   }
 
   /*
+    Called when the select field value for the existing presentation links is changed.
+  */
+  selectChanged() {
+    if (this.existingLinkModel != -1 && this.existingLinkModel != undefined) {
+      this.linksList.push(this.helperService.convertSingleLinkType(this.existingLinkModel));
+    }
+
+    this.existingLinkModel = undefined;
+    this.existingForm.reset();
+  }
+
+  /*
     Called when the "Interested" button is tapped on a match card.
     Proceed to the next stage. If on the last stage, submit the presentation
     phase and "accept" the match, then show the next match.
@@ -139,7 +160,7 @@ export class StudentPhase2Page {
     }
     else {
       if (this.linksList && this.linksList.length > 0 && this.linksList.length <= 3) {
-        this.match.studentPresentationLinks = this.linksList;
+        this.match.studentPresentationLinks = this.helperService.convertLinksForDB(this.linksList);
 
         // API call to submit match with presentation links
         this.studentService.submitMatchPresentationPhase(this.match.id, this.match.studentPresentationLinks).subscribe(
@@ -218,14 +239,6 @@ export class StudentPhase2Page {
   }
 
   /*
-    Open the given URL(link) in the browser.
-  */
-  openLink(link) {
-    // Open browser app separately
-    window.open(link, '_system', 'location=yes');
-  }
-
-  /*
     Remove the presentation link at the given index from the list of ones
     for the current match.
   */
@@ -238,13 +251,20 @@ export class StudentPhase2Page {
     Show the new presentation list modal.
   */
   addLink() {
-    let modal = this.modalCtrl.create(PresentationLinkAddModal, { model: this.student });
+    let modal = this.modalCtrl.create(PresentationLinkAddModal, { model: this.student, allowSave: true });
     modal.onDidDismiss(data => {
       if (data) {
-        this.linksList.push(data);
+        this.linksList.push(this.helperService.convertSingleLinkType(data));
       }
     });
     modal.present();
+  }
+
+  /*
+    Displays an alert showing the clicked link's details.
+  */
+  showLinkDetails(link) {
+    this.showAlert("Link Details", link.title + ": " + link.link);
   }
 
   /*
@@ -326,6 +346,7 @@ export class StudentPhase2Page {
   prepMatch() {
     // Set the current match to the current index
     this.match = new MatchModel(this.matchList[this.matchIndex]);
+    this.displayLinks = this.helperService.convertLinkTypes(this.match.job.presentationLinks);
 
     // No matches in this phase, nothing to prep
     if (this.match == undefined) {
@@ -343,8 +364,6 @@ export class StudentPhase2Page {
         }
       }
     });
-
-    this.pageLoading = false;
   }
 
   /*

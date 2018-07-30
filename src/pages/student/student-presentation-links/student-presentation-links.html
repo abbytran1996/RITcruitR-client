@@ -29,14 +29,16 @@
           <ion-list class="rec-reorder-list">
             <div class="list-header-wrapper">
             <ion-list-header>PRESENTATION LINKS<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="presentationInfo()"></ion-icon></ion-list-header>
-            <button class="rec-btn-circle-small rec-btn-primary" (click)="addLink()">
+            <button class="rec-btn-circle-small rec-btn-primary list-add-btn" (click)="addLink()">
               <ion-icon name="md-add" class="rec-btn-icon"></ion-icon>
             </button>
           </div>
             <ion-item-group reorder="false" side="start" (ionItemReorder)="$event.applyTo(links)">
-              <ion-item *ngFor="let link of links; let i = index" class="boxed bg-superlight">
+              <ion-item *ngFor="let link of links; let i = index" class="link-item boxed bg-superlight link-list-item">
+                <ion-icon name="{{ link.icon }}" [ngStyle]="{'color': link.color}" class="link-list-display-icon"></ion-icon>
                 <h5>{{ link.title }}</h5>
                 <p>{{ link.link }}</p>
+                <ion-icon name="md-eye" class="link-details-icon fake-link" (click)="showLinkDetails(link)"></ion-icon>
                 <ion-icon name="md-close-circle" class="fake-link" (click)="removeLink(i)"></ion-icon>
               </ion-item>
             </ion-item-group>

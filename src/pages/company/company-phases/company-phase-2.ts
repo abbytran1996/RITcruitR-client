@@ -1,15 +1,18 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, Events, AlertController } from 'ionic-angular';
+import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
 
 import {
   RecruiterModel,
   JobModel,
-  MatchModel
+  MatchModel,
+  PresentationLinkModel
 } from '@app/models';
 
 import {
   JobPostingService,
-  HelperService
+  HelperService,
+  DataService
 } from '@app/services';
 
 //=========================================================================
@@ -27,6 +30,7 @@ export class CompanyPhase2Page {
   public recruiter: RecruiterModel;
   public currentJob: JobModel;
   public match: MatchModel;
+  public displayLinks: Array<PresentationLinkModel>;
   public pageLoading = true;
 
   // Match fields
@@ -53,7 +57,9 @@ export class CompanyPhase2Page {
     public events: Events,
     private alertCtrl: AlertController,
     private jobPostingService: JobPostingService,
-    public helperService: HelperService
+    public helperService: HelperService,
+    public dataService: DataService,
+    public domSanitizer: DomSanitizer
   ) {
     this.recruiter= navParams.get("recruiter");
   }
@@ -202,6 +208,7 @@ export class CompanyPhase2Page {
     this.matchList = this.helperService.removeFromArrayById(this.matchList, this.match);
     this.stage = 0;
     this.match = new MatchModel(this.matchList[this.matchIndex]);
+    this.displayLinks = this.helperService.convertLinkTypes(this.match.studentPresentationLinks);
 
     this.fadeLeft = false;
     this.fadeRightInstant = true;
@@ -264,6 +271,7 @@ export class CompanyPhase2Page {
           this.matchIndex = 0;
           this.stage = 0;
           this.match = new MatchModel(this.matchList[this.matchIndex]);
+          this.displayLinks = this.helperService.convertLinkTypes(this.match.studentPresentationLinks);
           this.pageLoading = false;
         }
         else {

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController, ToastController, Events } from 'ionic-angular';
 import { CallNumber } from '@ionic-native/call-number';
+import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
 
 import {
   RecruiterModel,
@@ -10,7 +11,8 @@ import {
 
 import {
   JobPostingService,
-  HelperService
+  HelperService,
+  DataService
 } from '@app/services';
 
 //=========================================================================
@@ -41,8 +43,10 @@ export class CompanyPhase3Page {
     private alertCtrl: AlertController,
     private toastCtrl: ToastController,
     private jobPostingService: JobPostingService,
+    public dataService: DataService,
     public helperService: HelperService,
     private callNumber: CallNumber,
+    public domSanitizer: DomSanitizer,
     public events: Events
   ) {
     this.recruiter = navParams.get("recruiter");
@@ -114,6 +118,8 @@ export class CompanyPhase3Page {
   */
   matchDetails(match) {
     this.currentMatch = new MatchModel(match);
+    this.currentMatch.studentPresentationLinks = this.helperService.convertLinkTypes(this.currentMatch.studentPresentationLinks);
+    this.currentMatch.job.presentationLinks = this.helperService.convertLinkTypes(this.currentMatch.job.presentationLinks);
     this.detailMode = true;
     this.reviewStep = 0;
   }

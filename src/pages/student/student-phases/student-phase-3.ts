@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController, ToastController, Events, ActionSheetController } from 'ionic-angular';
 import { CallNumber } from '@ionic-native/call-number';
+import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
 
 import {
   StudentModel,
@@ -9,7 +10,8 @@ import {
 
 import {
   StudentService,
-  HelperService
+  HelperService,
+  DataService
 } from '@app/services';
 
 //=========================================================================
@@ -43,8 +45,10 @@ export class StudentPhase3Page {
     private toastCtrl: ToastController,
     public actionSheetCtrl: ActionSheetController,
     private studentService: StudentService,
+    public dataService: DataService,
     public helperService: HelperService,
     private callNumber: CallNumber,
+    public domSanitizer: DomSanitizer,
     public events: Events
   ) {
     this.student= navParams.get("student");
@@ -140,6 +144,8 @@ export class StudentPhase3Page {
   matchDetails(match) {
     this.currentMatch = new MatchModel(match);
     this.prepMatch();
+    this.currentMatch.studentPresentationLinks = this.helperService.convertLinkTypes(this.currentMatch.studentPresentationLinks);
+    this.currentMatch.job.presentationLinks = this.helperService.convertLinkTypes(this.currentMatch.job.presentationLinks);
     this.detailMode = true;
     this.reviewStep = 0;
   }
