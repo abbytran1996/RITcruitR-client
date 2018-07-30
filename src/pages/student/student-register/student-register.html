@@ -47,7 +47,7 @@
 <!-- Button Footer -->
 <ion-footer class="button-footer">
   <ion-row>
-    <button class="rec-btn rec-btn-primary btn-stacked center" (click)="register()" [disabled]="loading">
+    <button class="rec-btn rec-btn-primary btn-stacked center rec-load-btn" (click)="register()" [disabled]="loading">
       {{ (loading) ? '' : 'Register' }}
       <ion-spinner class="white" name="dots" [hidden]="!loading"></ion-spinner>
     </button>

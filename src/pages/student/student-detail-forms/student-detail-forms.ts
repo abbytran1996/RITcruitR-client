@@ -1,15 +1,20 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, ToastController, NavParams } from 'ionic-angular';
+import { NavController, ToastController, NavParams, ModalController } from 'ionic-angular';
 
 import {
   StudentTabsPage
 } from '@app/pages/student';
 
 import {
+  JobLocationsPreferenceModal,
+  JobIndustriesPreferenceModal,
+  CompanySizePreferenceModal
+} from '@app/pages/modals';
+
+import {
   StudentModel,
   StudentEducationModel,
-  StudentContactModel,
-  StudentJobPreferencesModel
+  StudentContactModel
 } from '@app/models';
 
 import {
@@ -42,10 +47,6 @@ export class StudentDetailFormsPage {
 
   // Step 2 variables
   @ViewChild('form2') form2;
-  public prefsModel = new StudentJobPreferencesModel();
-  public locationOptions = [];
-  public industryOptions = [];
-  public companySizeOptions = [];
 
   // Step 3 variables
   @ViewChild('form3') form3;
@@ -62,6 +63,7 @@ export class StudentDetailFormsPage {
     public navCtrl: NavController,
     private toastCtrl: ToastController,
     public navParams: NavParams,
+    public modalCtrl: ModalController,
     public formSeq: FormSequenceService,
     private studentService: StudentService,
     private dataService: DataService
@@ -78,7 +80,7 @@ export class StudentDetailFormsPage {
     this.formSeq.formErrorMessages = [
       "Please enter your university name, major, GPA, and expected graduation date",
       "Please enter a contact email and a phone number",
-      "Please select at least one option for preferred company sizes",
+      "There was a problem saving your job preferences, please try again",
       "There was an error saving your skills"
     ];
 
@@ -86,11 +88,6 @@ export class StudentDetailFormsPage {
 
     // Step 0
     this.maxYear = (new Date()).getFullYear() + 20;
-
-    // Step 2
-    this.locationOptions = this.dataService.getLocations();
-    this.industryOptions = this.dataService.getIndustries();
-    this.companySizeOptions = this.dataService.getCompanySizesForStudent();
 
     // Step 3
     // Get skills from the DB to populate the typeahead
@@ -102,7 +99,7 @@ export class StudentDetailFormsPage {
         this.skills = [];
         this.student.skills.forEach(skill => {
           let skillIndex = this.skillOptions.findIndex(skillOption => skillOption.id == skill.id);
-          if (skillIndex && skillIndex > -1) {
+          if (skillIndex != undefined && skillIndex > -1) {
             this.skills.push(this.skillOptions[skillIndex]);
           }
         });
@@ -125,10 +122,6 @@ export class StudentDetailFormsPage {
       this.contactModel.contactEmail = this.student.contactEmail;
       this.contactModel.phoneNumber = this.student.phoneNumber;
       this.contactModel.website = this.student.website;
-
-      this.prefsModel.preferredLocations = this.student.preferredLocations;
-      this.prefsModel.preferredIndustries = this.student.preferredIndustries;
-      this.prefsModel.preferredCompanySizes = this.student.preferredCompanySizes;
     }
   }
 
@@ -204,31 +197,6 @@ export class StudentDetailFormsPage {
         );
       }
 
-      // Save job preferences after step 2
-      else if (this.formSeq.currentStep == 2) {
-        this.saving = true;
-        this.student.updateMatchPreferences(this.prefsModel);
-        this.studentService.updateStudent(this.student).subscribe(
-          data => { },
-          res => {
-            if (res.status == 200) {
-              if (this.isSetup) {
-                this.saving = false;
-                this.formSeq.nextStep();
-              }
-              else {
-                this.saving = false;
-                this.navCtrl.setRoot(StudentTabsPage, { message: "Job Preferences updated successfully" });
-              }
-            }
-            else {
-              this.presentToast("There was an error updating your job preferences, please try again");
-              this.saving = false;
-            }
-          }
-        );
-      }
-
       // Save student skills after step 3
       // Last step
       else if (this.formSeq.currentStep == 3) {
@@ -282,6 +250,45 @@ export class StudentDetailFormsPage {
     else {
       this.formSeq.previousStep();
     }
+  }
+
+  /*
+    Show the job locations preferences modal.
+  */
+  jobLocationsModal() {
+    let modal = this.modalCtrl.create(JobLocationsPreferenceModal, { student: this.student });
+    modal.onDidDismiss(data => {
+      if (data) {
+        this.presentToast("Location preferences updated successfully");
+      }
+    });
+    modal.present();
+  }
+
+  /*
+    Show the job industries preferences modal.
+  */
+  jobIndustriesModal() {
+    let modal = this.modalCtrl.create(JobIndustriesPreferenceModal, { student: this.student });
+    modal.onDidDismiss(data => {
+      if (data) {
+        this.presentToast("Industry preferences updated successfully");
+      }
+    });
+    modal.present();
+  }
+
+  /*
+    Show the job company size preferences modal.
+  */
+  companySizesModal() {
+    let modal = this.modalCtrl.create(CompanySizePreferenceModal, { student: this.student });
+    modal.onDidDismiss(data => {
+      if (data) {
+        this.presentToast("Company size preferences updated successfully");
+      }
+    });
+    modal.present();
   }
 
   /*
