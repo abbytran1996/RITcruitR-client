@@ -214,7 +214,12 @@ export class LoginPage {
     Called when the register button is clicked, navigate to register screen.
   */
   register() {
-    this.navCtrl.push(RegisterPage);
+    if (this.isApp) {
+      this.navCtrl.push(RegisterPage);
+    }
+    else {
+      this.presentToast("Please use the RecruitR mobile app to register as a new user");
+    }
   }
 
   /*
