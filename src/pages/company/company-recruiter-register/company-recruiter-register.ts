@@ -16,7 +16,8 @@ import {
   DataService,
   RecruiterService,
   CompanyService,
-  AuthService
+  AuthService,
+  HelperService
 } from '@app/services';
 
 //=========================================================================
@@ -66,7 +67,8 @@ export class CompanyRecruiterRegisterPage {
     public dataService: DataService,
     private companyService: CompanyService,
     private recruiterService: RecruiterService,
-    private authService: AuthService
+    private authService: AuthService,
+    private helperService: HelperService
   ) {
     this.addRecruiter = navParams.get("addRecruiter") || false;
     this.editContact = navParams.get("editContact") || false;
@@ -121,6 +123,17 @@ export class CompanyRecruiterRegisterPage {
     if (this.formSeq.switchingStep) return;
 
     if (this.formSeq.currentForm && this.formSeq.currentForm.valid) {
+
+      // At step 2 (recruiter registration, perform password validation)
+      if (this.formSeq.currentStep == 2) {
+        let pwdVal = this.helperService.validatePassword(this.recruiterModel.password);
+        if (pwdVal != true) {
+          this.presentToast(pwdVal);
+          this.loading = false;
+          return;
+        }
+      }
+
       if (this.formSeq.currentStep == this.formSeq.maxSteps) {
         this.saving = true;
 

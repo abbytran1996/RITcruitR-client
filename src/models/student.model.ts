@@ -23,6 +23,7 @@ export class StudentModel {
   public preferredCompanySizes: any = [];
   public presentationLinks: Array<PresentationLinkModel> = [];
   public problemStatements: any = [];
+  public isSetup: boolean = false;
 
   constructor(init?: any) {
     if (init) {
@@ -44,6 +45,7 @@ export class StudentModel {
       this.preferredCompanySizes = init.preferredCompanySizes || [];
       this.presentationLinks = init.presentationLinks || [];
       this.problemStatements = init.problemStatements || [];
+      this.isSetup = init.isSetup || false;
     }
   }
 

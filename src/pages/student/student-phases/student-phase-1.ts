@@ -351,9 +351,8 @@ export class StudentPhase1Page {
   getNewMatches(callback?) {
     this.studentService.getNewMatches(this.student.id).subscribe(
       data => {
+        console.log(data);
         this.matchList = this.helperService.sortMatches(data);
-
-        console.log(this.matchList);
 
         if (this.matchList != undefined && this.matchList.length > 0) {
           this.events.publish('tab:numMatches', this.student);
@@ -407,39 +406,39 @@ export class StudentPhase1Page {
       return;
     }
 
-    // Check if any preferred industries match
-    this.studentService.getMatchedIndustries(this.match.id).subscribe(
-      data => {
-        this.matchedIndustries = data;
-        if (this.matchedIndustries != undefined && this.matchedIndustries.length > 0) {
-          this.matchPoints.industry = true;
-          this.match["matchedIndustry"] = this.matchedIndustries[0];
-        }
-      }
-    );
+    // // Check if any preferred industries match
+    // this.studentService.getMatchedIndustries(this.match.id).subscribe(
+    //   data => {
+    //     this.matchedIndustries = data;
+    //     if (this.matchedIndustries != undefined && this.matchedIndustries.length > 0) {
+    //       this.matchPoints.industry = true;
+    //       this.match["matchedIndustry"] = this.matchedIndustries[0];
+    //     }
+    //   }
+    // );
 
-    // Check if any preferred locations match
-    let numLocationsToShow = 2;
-    let locIndex = 0;
-    this.studentService.getMatchedLocations(this.match.id).subscribe(
-      data => {
-        this.matchedLocations = data;
-        if (this.matchedLocations != undefined && this.matchedLocations.length > 0){
-          for (locIndex; locIndex < numLocationsToShow; locIndex++) {
-            if (this.matchedLocations.indexOf(this.match.job.locations[locIndex]) > -1) {
-              this.matchPoints.locations[locIndex] = true;
-            }
-          }
-        }
-      }
-    );
+    // // Check if any preferred locations match
+    // let numLocationsToShow = 2;
+    // let locIndex = 0;
+    // this.studentService.getMatchedLocations(this.match.id).subscribe(
+    //   data => {
+    //     this.matchedLocations = data;
+    //     if (this.matchedLocations != undefined && this.matchedLocations.length > 0){
+    //       for (locIndex; locIndex < numLocationsToShow; locIndex++) {
+    //         if (this.matchedLocations.indexOf(this.match.job.locations[locIndex]) > -1) {
+    //           this.matchPoints.locations[locIndex] = true;
+    //         }
+    //       }
+    //     }
+    //   }
+    // );
 
-    // Get the list of matched skills.
-    this.studentService.getMatchedSkills(this.match.id).subscribe(
-      data => {
-        this.match["skillsToShow"] = data;
-      }
-    );
+    // // Get the list of matched skills.
+    // this.studentService.getMatchedSkills(this.match.id).subscribe(
+    //   data => {
+    //     this.match["skillsToShow"] = data;
+    //   }
+    // );
 
     this.pageLoading = false;
   }

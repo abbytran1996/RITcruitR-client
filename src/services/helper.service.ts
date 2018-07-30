@@ -217,5 +217,14 @@ export class HelperService {
     return (match.job.positionTitle.length >= 24);
   }
 
-  
+  //=========================================================================
+  // * VALIDATE PASSWORD                                                  
+  //=========================================================================
+  // - Determines if the given string password is valid based on the app's
+  //   password requirements.
+  // - Must be at least 8 characters long.
+  validatePassword(password) {
+    let message = "Password must be at least 8 characters long.";
+    return password.length >= 8 || message;
+  }
 }

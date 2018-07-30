@@ -113,16 +113,15 @@ export class StudentDetailFormsPage {
     if (navParams.get("setup") == true) {
       this.isSetup = true;
     }
-    else {
-      this.educationModel.school = this.student.school;
-      this.educationModel.major = this.student.major;
-      this.educationModel.gpa = this.student.gpa;
-      this.educationModel.graduationDate = this.student.graduationDate.substring(0, 7);
 
-      this.contactModel.contactEmail = this.student.contactEmail;
-      this.contactModel.phoneNumber = this.student.phoneNumber;
-      this.contactModel.website = this.student.website;
-    }
+    this.educationModel.school = this.student.school;
+    this.educationModel.major = this.student.major;
+    this.educationModel.gpa = this.student.gpa;
+    this.educationModel.graduationDate = this.student.graduationDate.substring(0, 7);
+
+    this.contactModel.contactEmail = this.student.contactEmail;
+    this.contactModel.phoneNumber = this.student.phoneNumber;
+    this.contactModel.website = this.student.website;
   }
 
   /*
@@ -205,8 +204,15 @@ export class StudentDetailFormsPage {
         this.studentService.updateStudentSkills(this.student.id, this.student.skills).subscribe(
           data => {
             if (this.isSetup) {
-              this.saving = false;
-              this.navCtrl.push(StudentTabsPage, { student: this.student });
+              this.studentService.completeStudentSetup(this.student.id).subscribe(
+                resData => {
+                  this.saving = false;
+                  this.navCtrl.push(StudentTabsPage, { student: this.student });
+                },
+                res => {
+
+                }
+              );
             }
             else {
               this.saving = false;

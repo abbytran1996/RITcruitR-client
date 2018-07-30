@@ -134,7 +134,7 @@
                 <ion-icon name="md-contact" class="card-heading-icon fg-primary"></ion-icon> {{ currentMatch.student.firstName }} {{ currentMatch.student.lastName }}
               </li>
               <li class="fg-dark">
-                <ion-icon name="md-call" class="card-heading-icon fg-primary"></ion-icon> {{ currentMatch.student.phoneNumber }}
+                <ion-icon name="md-call" class="card-heading-icon fg-primary"></ion-icon> {{ currentMatch.student.phoneNumber | phone }}
               </li>
               <li class="fg-dark">
                 <ion-icon name="ios-mail" class="card-heading-icon fg-primary"></ion-icon> {{ currentMatch.student.contactEmail }}
@@ -153,7 +153,7 @@
           <p class="fg-grey text-center">{{ currentMatch.student.major }}</p>
           <div class="score-wrapper" [ngClass]="{'score-high': currentMatch.matchStrength >= .8}">
             <ion-icon class="score-icon" name="md-speedometer"></ion-icon>
-            <span>{{ currentMatch.matchStrength * 100 }}%</span>
+            <span>{{ currentMatch.matchStrength * 100 | number:'2.0'}}%</span>
           </div>
         </div>
 
@@ -173,7 +173,7 @@
           </div>
           <div class="content-section score">
             <h3 class="heading fg-dark"><ion-icon name="md-speedometer" class="card-heading-icon"></ion-icon>Match Score:</h3>
-            <p class="compact"><span>{{ currentMatch.matchStrength * 100 }}%</span></p>
+            <p class="compact"><span>{{ currentMatch.matchStrength * 100 | number:'2.0'}}%</span></p>
           </div>
         </div>
         <!-- End Step 0 -->

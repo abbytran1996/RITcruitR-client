@@ -1,7 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, ToastController, IonicPage, AlertController } from 'ionic-angular';
 
-import { StudentTabsPage } from '@app/pages/student';
+import {
+  StudentTabsPage,
+  StudentDetailFormsPage
+} from '@app/pages/student';
 import {
   CompanyTabsPage,
   CompanyRegisterConfirmPage
@@ -123,8 +126,15 @@ export class LoginPage {
             this.studentService.getStudentByEmail(userEmail).subscribe(
               data => {
                 let student = new StudentModel(data);
-                this.loadingLogin = false;
-                this.navCtrl.push(StudentTabsPage, {student: student}, { animation: "md-transition" });
+                
+                if (student.isSetup) {
+                  this.loadingLogin = false;
+                  this.navCtrl.push(StudentTabsPage, { student: student }, { animation: "md-transition" });
+                }
+                else {
+                  this.loadingLogin = false;
+                  this.navCtrl.push(StudentDetailFormsPage, { student: student, setup: true }, { animation: "md-transition" });
+                }
               },
               error => {
                 this.presentToast("An error occurred loading your account, please try again later");

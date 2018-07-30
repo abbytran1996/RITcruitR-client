@@ -100,6 +100,17 @@ export class StudentService {
     }
 
     //=========================================================================
+    // * COMPLETE STUDENT SETUP                                               *
+    //=========================================================================
+    // - Sets the student with the given id to have its isSetup flag set
+    //   to true
+    // - Expects a StudentModel id number
+    // - Returns the StudentModel
+    completeStudentSetup(studentId) {
+        return this.apiService.get('/students/' + studentId + "/completesetup");
+    }
+
+    //=========================================================================
     // * SUBMIT MATCH PROBLEM STATEMENT                                       *
     //=========================================================================
     // - Submits a match problem statement and moves it to the next phase

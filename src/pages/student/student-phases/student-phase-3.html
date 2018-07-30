@@ -104,7 +104,7 @@
                 <ion-icon name="md-contact" class="card-heading-icon fg-primary"></ion-icon> {{ currentMatch.job.recruiter.firstName }} {{ currentMatch.job.recruiter.lastName }}
               </li>
               <li class="fg-dark">
-                <ion-icon name="md-call" class="card-heading-icon fg-primary"></ion-icon> {{ currentMatch.job.recruiter.phoneNumber }}
+                <ion-icon name="md-call" class="card-heading-icon fg-primary"></ion-icon> {{ currentMatch.job.recruiter.phoneNumber | phone }}
               </li>
               <li class="fg-dark">
                 <ion-icon name="ios-mail" class="card-heading-icon fg-primary"></ion-icon> {{ currentMatch.job.recruiter.contactEmail }}
@@ -125,7 +125,7 @@
           </p>
           <div class="score-wrapper" [ngClass]="{'score-high': currentMatch.matchStrength >= .8}">
             <ion-icon class="score-icon" name="md-speedometer"></ion-icon>
-            <span>{{ currentMatch.matchStrength * 100 }}%</span>
+            <span>{{ currentMatch.matchStrength * 100 | number:'2.0'}}%</span>
           </div>
         </div>
 

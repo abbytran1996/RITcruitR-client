@@ -37,7 +37,7 @@
             </div>
             <div class="score-wrapper" [ngClass]="{'score-high': match.matchStrength >= .8}">
               <ion-icon class="score-icon" name="md-speedometer"></ion-icon>
-              <span>{{ match.matchStrength * 100 }}%</span>
+              <span>{{ match.matchStrength * 100 | number:'2.0'}}%</span>
             </div>
           </div>
           <!-- End Card Header -->

@@ -10,7 +10,8 @@ import {
 
 import {
   AuthService,
-  StudentService
+  StudentService,
+  HelperService
  } from '@app/services';
 
 //=========================================================================
@@ -34,7 +35,8 @@ export class StudentRegisterPage {
     public navCtrl: NavController,
     private toastCtrl: ToastController,
     private studentService: StudentService,
-    private authService: AuthService
+    private authService: AuthService,
+    private helperService: HelperService
   ) {}
 
   /*
@@ -44,6 +46,15 @@ export class StudentRegisterPage {
   register() {
     this.loading = true;
     if (this.registerForm && this.registerForm.valid) {
+
+      // Password validation
+      let pwdVal = this.helperService.validatePassword(this.model.password);
+      if (pwdVal != true) {
+        this.presentToast(pwdVal);
+        this.loading = false;
+        return;
+      }
+
       this.model.passwordConfirm = this.model.password;
       this.studentService.addStudent(this.model).subscribe(
         data => {

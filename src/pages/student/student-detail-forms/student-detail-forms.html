@@ -71,10 +71,6 @@
             <label class="rec-label rl-secondary">PHONE NUMBER</label>
             <input type="text" name="phoneNumber" class="rec-input ri-grey" required [(ngModel)]="contactModel.phoneNumber">
           </div>
-          <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
-            <label class="rec-label rl-secondary">WEBSITE</label>
-            <input type="text" name="website" class="rec-input ri-grey" [(ngModel)]="contactModel.website">
-          </div>
         </form>
       </ion-col>
     </ion-row>
@@ -85,7 +81,8 @@
       <ion-col>
         <form #form2="ngForm">
           <ion-row class="row-message">
-            <h3>Choose a <span class="fg-accent">job preference</span> to modify.<br>These will help filter matches.</h3>
+            <h3>Alter your <span class="fg-accent">job preferencea</span> here.<span [hidden]="isSetup"><br>These will help filter matches.</span></h3>
+            <h3 [hidden]="!isSetup">This step is <span class="fg-accent">optional</span> in setup.</h3>
           </ion-row>
           <ion-row class="row-one clearfix">
             <div class="circle-icon-btn-wrapper" [ngClass]="{'small': isSetup}">
