@@ -17,10 +17,6 @@ import {
 //=========================================================================
 // - Main page for admins, contains menu to other admin pages.
 //_________________________________________________________________________
-@IonicPage({
-  name: 'admin-dashboard',
-  segment: 'admin-dashboard'
-})
 @Component({
   selector: 'page-admin-dashboard',
   templateUrl: 'admin-dashboard.html'
@@ -56,7 +52,7 @@ export class AdminDashboardPage {
     Logout back to the login screen.
   */
   logout() {
-    this.navCtrl.setRoot("login");
+    this.navCtrl.setRoot(LoginPage);
   }
 
   /*

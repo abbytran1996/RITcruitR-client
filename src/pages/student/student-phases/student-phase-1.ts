@@ -353,6 +353,8 @@ export class StudentPhase1Page {
       data => {
         this.matchList = this.helperService.sortMatches(data);
 
+        console.log(this.matchList);
+
         if (this.matchList != undefined && this.matchList.length > 0) {
           this.events.publish('tab:numMatches', this.student);
 

@@ -57,4 +57,14 @@ export class RecruiterService {
     updateRecruiter(recruiter) {
         return this.apiService.put('/recruiters/' + recruiter.id, recruiter);
     }
+
+    //=========================================================================
+    // * MAKE PRIMARY RECRUITER                                               *
+    //=========================================================================
+    // - Makes the recruiter with the given id the primary recruiter.
+    // - Expects a RecruiterModel id number
+    // - Returns 200 (OK) response
+    makePrimaryRecruiter(recruiterId) {
+        return this.apiService.put('/recruiters/' + recruiterId + "/primary");
+    }
 }

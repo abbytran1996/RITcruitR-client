@@ -2,12 +2,16 @@ import { Component, ViewChild } from '@angular/core';
 import { NavController, ToastController, NavParams } from 'ionic-angular';
 
 import {
-  UserModel
+  UserModel,
+  CompanyModel,
+  RecruiterModel
 } from '@app/models';
 
 import {
   DataService,
-  CompanyService
+  CompanyService,
+  RecruiterService,
+  HelperService
 } from '@app/services';
 
 //=========================================================================
@@ -21,19 +25,22 @@ import {
   templateUrl: 'admin-company-validation.html'
 })
 export class AdminCompanyValidationPage {
-
-  companies = [];
-  currentCompany = {};
-
+  
   public isApp = true;
   public user: UserModel;
+
+  public companies: Array<CompanyModel> = [];
+  public currentCompany: CompanyModel;
+  public currentRecruiter: RecruiterModel;
 
   constructor(
     public navCtrl: NavController,
     private toastCtrl: ToastController,
     private navParams: NavParams,
     private dataService: DataService,
-    private companyService: CompanyService
+    private companyService: CompanyService,
+    private recruiterService: RecruiterService,
+    private helperService: HelperService
   ) {
     this.isApp = dataService.isApp;
     this.user = navParams.get("user");
@@ -53,39 +60,50 @@ export class AdminCompanyValidationPage {
     Updates the current company upon clicking on a company on the list.
   */
   updateCompany(company) {
-    this.currentCompany = company;
+    this.recruiterService.getRecruitersByCompany(company.id).subscribe(
+      resData => {
+        this.currentCompany = new CompanyModel(company);
+        this.currentRecruiter = new RecruiterModel(resData[0]);
+      },
+      res => {
+      }
+    );
   }
 
   /*
     Approves the company
   */
   approveCompany(company) {
-    let message = "";
     this.companyService.approveCompany(company).subscribe(
-      data => {
-        message = company.companyName + " has been approved."
+      resData => {
       },
-      error => {
-        message = "There was an error approving company '" + company.companyName + "'. Please try again later."
+      res => {
+        this.presentToast(company.companyName + " has been approved");
+        this.removeCurrentCompany();
       }
     );
-    this.presentToast(message);
   }
 
   /*
     Denies the company
   */
   denyCompany(company) {
-    let message = "";
     this.companyService.denyCompany(company).subscribe(
-      data => {
-        message = company.companyName + " has been denied."
+      resData => {
       },
-      error => {
-        message = "There was an error denying company '" + company.companyName + "'. Please try again later."
+      res => {
+        this.presentToast(company.companyName + " has been denied");
+        this.removeCurrentCompany();
       }
     );
-    this.presentToast(message);
+  }
+
+  /*
+    Removes the current company from the list.
+  */
+  removeCurrentCompany() {
+    this.companies = this.helperService.removeFromArrayById(this.companies, this.currentCompany);
+    this.currentCompany = undefined;
   }
 
   /*

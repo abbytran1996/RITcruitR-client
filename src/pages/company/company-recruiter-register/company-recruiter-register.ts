@@ -185,12 +185,18 @@ export class CompanyRecruiterRegisterPage {
                 recruiterData => {
                   let recruiter = new RecruiterModel(recruiterData);
 
-                  // TODO: Remove this setLocalVars call after dev. We don't want
-                  // to "login" the recruiter after company creation because they
-                  // need to await approval. Keeping for dev.
-                  this.authService.setLocalVars(recruiterData.user);
-                  this.saving = false;
-                  this.navCtrl.push(CompanyRegisterConfirmPage, { recruiter: recruiter });
+                  /*
+                    Make the new recruiter the primary recruiter
+                    =================================================================
+                  */
+                  this.recruiterService.makePrimaryRecruiter(recruiter.id).subscribe(
+                    resData => {
+                    },
+                    res => {
+                      this.saving = false;
+                      this.navCtrl.push(CompanyRegisterConfirmPage, { fromLogin: false });
+                    }
+                  );
                 },
 
                 // Recruiter create error

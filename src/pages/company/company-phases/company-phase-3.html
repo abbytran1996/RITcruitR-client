@@ -266,7 +266,7 @@
   </div>
 
   <!-- FAB -->
-  <ion-fab top right edge *ngIf="matchList != undefined && matchList.length != 0 && !detailMode">
+  <ion-fab top right edge *ngIf="!detailMode">
     <button ion-fab mini color="accent" class="fab-btn" (click)="showActionSheet()"><ion-icon name="ios-more"></ion-icon></button>
   </ion-fab>
   <!-- End FAB -->

@@ -122,4 +122,6 @@ export class HelperService {
   isMatchToolbarLarge(match, useStudentName?) {
     return (match.job.positionTitle.length >= 24);
   }
+
+  
 }
