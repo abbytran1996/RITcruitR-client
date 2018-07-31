@@ -216,7 +216,7 @@
       <!-- Existing Form -->
       <form #existingForm="ngForm" class="existing-link-list">
         <div class="rec-input-group-small">
-          <label class="rec-label rl-primary">SELECT EXISTING LINK</label>
+          <label class="rec-label rl-primary">SELECT EXISTING LINKS</label>
           <ion-select name="selectedLink" class="rec-input ri-grey" [(ngModel)]="existingLinkModel" multiple="false" (ionChange)="selectChanged($event)">
             <ion-option *ngIf="existingLinkOptions && existingLinkOptions.length > 0" value="-1">None</ion-option>
             <ion-option *ngFor="let link of existingLinkOptions" [value]="link">{{ link.title }}</ion-option>

@@ -219,7 +219,13 @@ export class CompanyPhase1Page {
   nextMatch() {
     this.matchList = this.helperService.removeFromArrayById(this.matchList, this.match);
     this.stage = 0;
-    this.match = new MatchModel(this.matchList[this.matchIndex]);
+    
+    if (this.matchList.length > 0) {
+      this.match = new MatchModel(this.matchList[this.matchIndex], false);
+    }
+    else {
+      this.match = undefined;
+    }
 
     this.fadeLeft = false;
     this.fadeRightInstant = true;
@@ -281,7 +287,7 @@ export class CompanyPhase1Page {
         if (this.matchList != undefined && this.matchList.length > 0) {
           this.matchIndex = 0;
           this.stage = 0;
-          this.match = new MatchModel(this.matchList[this.matchIndex]);
+          this.match = new MatchModel(this.matchList[this.matchIndex], false);
           this.pageLoading = false;
         }
         else {

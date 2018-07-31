@@ -46,6 +46,7 @@
             class="rec-input ri-grey clearfix"
             required
             [(ngModel)]="companyModel.industries"
+            itemTextField="name"
             [items]="industryOptions"
             [canSearch]="true"
             [multiple]="true"

@@ -47,7 +47,12 @@ export class CompanyDetailsPage {
 
     // Get the data for the select fields
     this.locationOptions = this.dataService.getLocations();
-    this.industryOptions = this.dataService.getIndustries();
+    this.dataService.getIndustries().subscribe(
+      resData => {
+        this.industryOptions = resData;
+      },
+      res => { }
+    );
     this.companySizeOptions = this.dataService.getCompanySizesForCompany();
   }
 

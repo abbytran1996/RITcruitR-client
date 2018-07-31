@@ -11,8 +11,8 @@ export class StudentModel {
   public skills: any = [];
   public email: string = "";
   public graduationDate: string = "";
-  public school: string = "";
-  public major: string = "";
+  public school: any = null;
+  public major: any = null;
   public gpa: number = null;
   public user: UserModel = new UserModel();
   public phoneNumber: string = "";
@@ -33,8 +33,8 @@ export class StudentModel {
       this.skills = init.skills || [];
       this.email = init.email || "";
       this.graduationDate = init.graduationDate || "";
-      this.school = init.school || "";
-      this.major = init.major || "";
+      this.school = init.school || null;
+      this.major = init.major || null;
       this.gpa = init.gpa || null;
       this.user = new UserModel(init.user) || new UserModel();
       this.phoneNumber = init.phoneNumber || "";

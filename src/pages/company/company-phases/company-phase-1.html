@@ -49,7 +49,7 @@
           </div>
           <div class="score-wrapper" [ngClass]="{'score-high': match.matchStrength >= .8}">
             <ion-icon class="score-icon" name="md-speedometer"></ion-icon>
-            <span>{{ match.matchStrength * 100 | number:'2.0'}}%</span>
+            <span>{{ match.matchStrength * 100 | number:'2.0-0'}}%</span>
           </div>
         </div>
 
@@ -70,8 +70,9 @@
           <div class="content-section skills">
             <h3 class="heading fg-dark"><ion-icon name="md-build" class="card-heading-icon"></ion-icon>Top Skills:</h3>
             <ul class="rec-ul">
-              <li *ngFor="let skill of match.student.skills | slice:0:2; let i = index" class="fg-dark" [hidden]="skill == undefined">
-                {{ (skill != undefined) ? skill.name : "" }}
+              <li *ngFor="let skill of match.matchDisplay.skills; let i = index" [hidden]="skill == undefined">
+                {{ skill?.value.name }}
+                <span class="match-check" [hidden]="!skill?.matched"><ion-icon name="checkmark" class=""></ion-icon></span>
               </li>
             </ul>
           </div>

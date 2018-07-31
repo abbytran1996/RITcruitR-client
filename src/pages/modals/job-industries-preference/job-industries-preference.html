@@ -39,7 +39,7 @@
           <!-- List -->
           <div class="select-search-list">
             <select-searchable name="industries" class="rec-select-searchable-btn circle has-header clearfix" [(ngModel)]="studentIndustries" [items]="industryOptions"
-              [canSearch]="true" [multiple]="true" title="Locations">
+              itemTextField="name" [canSearch]="true" [multiple]="true" title="Locations">
             </select-searchable>
             <div class="rec-input-group">
               <ion-list class="rec-reorder-list">

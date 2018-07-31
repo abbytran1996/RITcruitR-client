@@ -120,8 +120,9 @@
               </li>
               <li class="fg-dark">
                 <ion-icon name="ios-pin" class="card-heading-icon fg-primary"></ion-icon>
-                <span *ngFor="let location of currentMatch.job.locations | slice:0:2; let i = index" class="fg-dark">
-                  {{ location }}
+                <span *ngFor="let location of currentMatch.matchDisplay.locations; let i = index" class="fg-dark">
+                  {{ location.value }}
+                  <span class="match-check" [hidden]="!location.matched"><ion-icon name="checkmark" class=""></ion-icon></span>
                   <br>
                 </span>
               </li>
@@ -153,7 +154,7 @@
           <p class="fg-grey text-center">{{ currentMatch.student.major }}</p>
           <div class="score-wrapper" [ngClass]="{'score-high': currentMatch.matchStrength >= .8}">
             <ion-icon class="score-icon" name="md-speedometer"></ion-icon>
-            <span>{{ currentMatch.matchStrength * 100 | number:'2.0'}}%</span>
+            <span>{{ currentMatch.matchStrength * 100 | number:'2.0-0'}}%</span>
           </div>
         </div>
 
@@ -173,7 +174,7 @@
           </div>
           <div class="content-section score">
             <h3 class="heading fg-dark"><ion-icon name="md-speedometer" class="card-heading-icon"></ion-icon>Match Score:</h3>
-            <p class="compact"><span>{{ currentMatch.matchStrength * 100 | number:'2.0'}}%</span></p>
+            <p class="compact"><span>{{ currentMatch.matchStrength * 100 | number:'2.0-0'}}%</span></p>
           </div>
         </div>
         <!-- End Step 0 -->

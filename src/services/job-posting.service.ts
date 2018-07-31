@@ -288,4 +288,12 @@ export class JobPostingService {
     getNumFinalMatches(jobId) {
         return this.apiService.get("/matches/posting/" + jobId + "/count?phase=interview");
     }
+
+    //=========================================================================
+    // * GET NUM ALL MATCHES                                                  *
+    //=========================================================================
+    // - Gets the number matches the job with the given id has in all phases
+    getNumAllMatches(jobId) {
+      return this.apiService.get("/matches/posting/" + jobId + "/count");
+    }
 }

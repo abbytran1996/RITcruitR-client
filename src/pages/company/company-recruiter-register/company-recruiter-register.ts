@@ -91,7 +91,12 @@ export class CompanyRecruiterRegisterPage {
     ];
 
     // Get the data for the select fields
-    this.industryOptions = this.dataService.getIndustries();
+    this.dataService.getIndustries().subscribe(
+      resData => {
+        this.industryOptions = resData;
+      },
+      res => { }
+    );
     this.locationOptions = this.dataService.getLocations();
     this.companySizeOptions = this.dataService.getCompanySizesForCompany();
 

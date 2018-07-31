@@ -39,6 +39,8 @@ export class StudentDetailFormsPage {
   // Step 0 variables
   @ViewChild('form0') form0;
   public maxYear = undefined;
+  public universityOptions = [];
+  public majorOptions = [];
   public educationModel = new StudentEducationModel();
 
   // Step 1 variables
@@ -87,6 +89,18 @@ export class StudentDetailFormsPage {
     this.student = navParams.get("student") || new StudentModel();
 
     // Step 0
+    this.dataService.getUniversities().subscribe(
+      resData => {
+        this.universityOptions = resData;
+      },
+      res => { }
+    );
+    this.dataService.getMajors().subscribe(
+      resData => {
+        this.majorOptions = resData;
+      },
+      res => { }
+    );
     this.maxYear = (new Date()).getFullYear() + 20;
 
     // Step 3

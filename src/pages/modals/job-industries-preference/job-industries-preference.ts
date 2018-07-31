@@ -41,7 +41,12 @@ export class JobIndustriesPreferenceModal {
     private studentService: StudentService
   ) {
     this.student = navParams.get("student");
-    this.industryOptions = this.dataService.getIndustries();
+    this.dataService.getIndustries().subscribe(
+      resData => {
+        this.industryOptions = resData;
+      },
+      res => { }
+    );
 
     // TODO when model is updated: Set this.studentIndustriesWeight = this.student.preferredIndustriesWeight;
 

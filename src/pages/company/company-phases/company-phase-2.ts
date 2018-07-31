@@ -207,8 +207,15 @@ export class CompanyPhase2Page {
   nextMatch() {
     this.matchList = this.helperService.removeFromArrayById(this.matchList, this.match);
     this.stage = 0;
-    this.match = new MatchModel(this.matchList[this.matchIndex]);
-    this.displayLinks = this.helperService.convertLinkTypes(this.match.studentPresentationLinks);
+    
+    if (this.matchList.length > 0) {
+      this.match = new MatchModel(this.matchList[this.matchIndex]);
+      this.displayLinks = this.helperService.convertLinkTypes(this.match.job.presentationLinks);
+    }
+    else {
+      this.match = undefined;
+      this.displayLinks = undefined;
+    }
 
     this.fadeLeft = false;
     this.fadeRightInstant = true;
@@ -270,7 +277,7 @@ export class CompanyPhase2Page {
         if (this.matchList != undefined && this.matchList.length > 0) {
           this.matchIndex = 0;
           this.stage = 0;
-          this.match = new MatchModel(this.matchList[this.matchIndex]);
+          this.match = new MatchModel(this.matchList[this.matchIndex], false);
           this.displayLinks = this.helperService.convertLinkTypes(this.match.studentPresentationLinks);
           this.pageLoading = false;
         }
