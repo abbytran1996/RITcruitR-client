@@ -149,7 +149,7 @@ export class CompanyRecruiterRegisterPage {
           this.recruiterService.addRecruiter(this.currentRecruiter.company.id, this.recruiterModel).subscribe(
             recruiterData => {
               this.saving = false;
-              this.navCtrl.setRoot(CompanyTabsPage, { recruiter: this.currentRecruiter, message: "New recruiter registered successfully. Logout to login using the new recruiter credentials." });
+              this.navCtrl.pop();
             },
 
             // Recruiter create error

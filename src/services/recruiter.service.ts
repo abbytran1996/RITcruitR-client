@@ -59,6 +59,16 @@ export class RecruiterService {
     }
 
     //=========================================================================
+    // * DELETE RECRUITER                                                     *
+    //=========================================================================
+    // - Deletes a recruiter with the given id
+    // - Expects a RecruiterModel id number
+    // - Returns 200 (OK) response
+    deleteRecruiter(recruiterId) {
+        return this.apiService.delete('/recruiters/' + recruiterId);
+    }
+
+    //=========================================================================
     // * MAKE PRIMARY RECRUITER                                               *
     //=========================================================================
     // - Makes the recruiter with the given id the primary recruiter.
@@ -66,5 +76,15 @@ export class RecruiterService {
     // - Returns 200 (OK) response
     makePrimaryRecruiter(recruiterId) {
         return this.apiService.put('/recruiters/' + recruiterId + "/primary");
+    }
+
+    //=========================================================================
+    // * REVOKE PRIMARY RECRUITER                                             *
+    //=========================================================================
+    // - Revokes the status of primary from the recruiter with the given id
+    // - Expects a RecruiterModel id number
+    // - Returns 200 (OK) response
+    revokePrimaryRecruiter(recruiterId) {
+        return this.apiService.delete('/recruiters/' + recruiterId + "/primary");
     }
 }

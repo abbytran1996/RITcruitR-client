@@ -10,3 +10,4 @@ export * from './company-setup/company-setup';
 export * from './company-tabs/company-tabs';
 export * from './recruiter-company-select/recruiter-company-select';
 export * from './company-presentation-links/company-presentation-links';
+export * from './company-manage-recruiters/company-manage-recruiters';
