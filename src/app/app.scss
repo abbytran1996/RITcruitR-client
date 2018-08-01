@@ -2260,6 +2260,14 @@ ion-refresher-content {
   padding-top: 10px;
 }
 
+.num-matches-spinner {
+  transform: scale(.7);
+
+  svg circle {
+    fill: #FFFFFF;
+  }
+}
+
 
 
 

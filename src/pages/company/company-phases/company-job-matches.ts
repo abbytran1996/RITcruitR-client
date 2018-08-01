@@ -229,18 +229,17 @@ export class CompanyJobMatchesPage {
           this.pageLoading = false;
         }
 
+        // Get the match count for each job
         this.jobList.forEach((job, index) => {
           this.jobPostingService.getNumAllMatches(job.id).subscribe(
             data => {
               this.jobList[index]["numMatches"] = data || 0;
-
-              if (index == this.jobList.length - 1) {
-                this.pageLoading = false;
-              }
             },
             res => { }
           );
         });
+
+        this.pageLoading = false;
 
         if (callback != undefined) callback();
       },
