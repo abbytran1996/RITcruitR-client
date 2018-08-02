@@ -28,6 +28,7 @@ export class CompanyPhase1Page {
   public currentJob: JobModel;
   public match: MatchModel;
   public pageLoading = true;
+  public showOtherSkills = false;
   
   // Match fields
   public matchList: any;
@@ -147,6 +148,13 @@ export class CompanyPhase1Page {
   }
 
   /*
+    Toggle the 'showOtherSkills' boolean to show or hide the additional student skills.
+  */
+  toggleOtherSkills() {
+    this.showOtherSkills = !this.showOtherSkills;
+  }
+
+  /*
     Called when the "Interested" button is tapped on a match card.
     Proceed to the next stage. If the last stage, submit the problem statement to the DB,
     then show the next match.
@@ -219,7 +227,13 @@ export class CompanyPhase1Page {
   nextMatch() {
     this.matchList = this.helperService.removeFromArrayById(this.matchList, this.match);
     this.stage = 0;
-    this.match = new MatchModel(this.matchList[this.matchIndex]);
+    
+    if (this.matchList.length > 0) {
+      this.match = new MatchModel(this.matchList[this.matchIndex], false);
+    }
+    else {
+      this.match = undefined;
+    }
 
     this.fadeLeft = false;
     this.fadeRightInstant = true;
@@ -281,7 +295,7 @@ export class CompanyPhase1Page {
         if (this.matchList != undefined && this.matchList.length > 0) {
           this.matchIndex = 0;
           this.stage = 0;
-          this.match = new MatchModel(this.matchList[this.matchIndex]);
+          this.match = new MatchModel(this.matchList[this.matchIndex], false);
           this.pageLoading = false;
         }
         else {

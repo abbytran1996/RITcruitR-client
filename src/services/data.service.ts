@@ -11,7 +11,12 @@ export class DataService {
 
     public isApp = true;
 
-    // TODO: Update this to pull real structured data from the API
+    //=========================================================================
+    // * GET LOCATIONS                                                        *
+    //=========================================================================
+    // - Returns the structured list of locatiions
+    // - Returns a list of locations (there's no model because it's simple):
+    //   ex. [{"id": 1, "name": "Buffalo, NY"}, {...}]
     getLocations() {
       return [
         'Buffalo, NY',
@@ -23,45 +28,34 @@ export class DataService {
       ];
     }
 
-    // TODO: Update this to pull real structured data from the API
+    //=========================================================================
+    // * GET INDUSTRIES                                                       *
+    //=========================================================================
+    // - Returns the structured list of industries
+    // - Returns a list of industries (there's no model because it's simple):
+    //   ex. [{"id": 1, "name": "Medical"}, {...}]
     getIndustries() {
-      return [
-        'Medical',
-        'Food Service',
-        'Banking',
-        'Hardware',
-        'Financial',
-        'Social Network'
-      ];
+      return this.apiService.get("/industries");
     }
 
-    // TODO: Update this to pull real structured data from the API
-    // NOTE: The temp lists were added back directly into the functions
-    //       to fix a bug on mobile devices that prevented the list
-    //       from working properly. Remove after todo above is done
-    getCompanySizesForStudent() {
-      return [
-        { text: "No Preference", id: 0 },
-        { text: "Startup (< 100)", id: 1 },
-        { text: "Small (100-300)", id: 2 },
-        { text: "Medium (301-500)", id: 3 },
-        { text: "Large (501-1000)", id: 4 },
-        { text: "Huge (> 1000)", id: 5 }
-      ];
+    //=========================================================================
+    // * GET UNIVERSITIES                                                     *
+    //=========================================================================
+    // - Returns the structured list of universities
+    // - Returns a list of universities (there's no model because it's simple):
+    //   ex. [{"id": 1, "name": "Rochester Institute of Technology"}, {...}]
+    getUniversities() {
+      return this.apiService.get("/universities");
     }
 
-    // TODO: Update this to pull real structured data from the API
-    // NOTE: The temp lists were added back directly into the functions
-    //       to fix a bug on mobile devices that prevented the list
-    //       from working properly. Remove after todo above is done
-    getCompanySizesForCompany() {
-      return [
-        { text: "Startup (< 100)", id: 1 },
-        { text: "Small (100-300)", id: 2 },
-        { text: "Medium (301-500)", id: 3 },
-        { text: "Large (501-1000)", id: 4 },
-        { text: "Huge (> 1000)", id: 5 }
-      ];
+    //=========================================================================
+    // * GET MAJORS                                                           *
+    //=========================================================================
+    // - Returns the structured list of majors
+    // - Returns a list of majors (there's no model because it's simple):
+    //   ex. [{"id": 1, "name": "Software Engineering"}, {...}]
+    getMajors() {
+      return this.apiService.get("/majors");
     }
 
     //=========================================================================
@@ -70,9 +64,39 @@ export class DataService {
     // - Returns the structured list of skills
     // - Returns a list of skills (there's no skill model because it's simple):
     //   ex. [{"id": 1, "name": "Experience Design"}, {...}]
-    getSkills(major="") {
+    // - NOTE: Sending majors to get skills is currently 'NYI'
+    getSkills(major = "") {
       let params = new HttpParams();
-      if(major){ params.append("major", major); }
+      if (major) { params.append("major", major); }
       return this.apiService.get('/skills', params);
+    }
+
+    //=========================================================================
+    // * GET COMPANY SIZES FOR STUDENT                                        *
+    //=========================================================================
+    // - Returns the structured list of company sizes for student preference
+    getCompanySizesForStudent() {
+      return [
+        { text: "No Preference", value: "DONT_CARE" },
+        { text: "Startup (< 100)", value: "STARTUP" },
+        { text: "Small (100-300)", value: "SMALL" },
+        { text: "Medium (301-500)", value: "MEDIUM" },
+        { text: "Large (501-1000)", value: "LARGE" },
+        { text: "Huge (> 1000)", value: "HUGE" }
+      ];
+    }
+
+    //=========================================================================
+    // * GET COMPANY SIZES FOR COMPANY                                        *
+    //=========================================================================
+    // - Returns the structured list of company sizes for company registration
+    getCompanySizesForCompany() {
+      return [
+        { text: "Startup (< 100)", value: "STARTUP" },
+        { text: "Small (100-300)", value: "SMALL" },
+        { text: "Medium (301-500)", value: "MEDIUM" },
+        { text: "Large (501-1000)", value: "LARGE" },
+        { text: "Huge (> 1000)", value: "HUGE" }
+      ];
     }
 }

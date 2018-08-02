@@ -43,7 +43,7 @@ export class JobLocationsPreferenceModal {
     this.student = navParams.get("student");
     this.locationOptions = this.dataService.getLocations();
 
-    // TODO when model is updated: this.studentLocationsWeight = this.student.preferredLocationsWeight;
+    this.studentLocationsWeight = this.student.preferredLocationsWeight * 100;
 
     this.student.preferredLocations.forEach(location => {
       let locationIndex = this.locationOptions.findIndex(locationOption => locationOption == location);
@@ -96,7 +96,7 @@ export class JobLocationsPreferenceModal {
   doneClicked() {
     this.saving = true;
     this.student.preferredLocations = this.studentLocations;
-    // TODO when model is updated: this.student.preferredLocationsWeight = this.studentLocationsWeight;
+    this.student.preferredLocationsWeight = this.studentLocationsWeight / 100;
 
     this.studentService.updateStudent(this.student).subscribe(
       data => { },

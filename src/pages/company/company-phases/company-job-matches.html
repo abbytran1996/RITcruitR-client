@@ -27,7 +27,8 @@
           <ion-item class="list-item-card inner" (click)="viewJobMatches(job)">
             <ion-icon name='md-alert' class="item-card-icon fg-primary" *ngIf="!activeJobs"></ion-icon>
             <div class="item-card-icon-div bg-primary fg-white" *ngIf="activeJobs">
-              {{ job.numMatches }}
+              <span *ngIf="job.hasOwnProperty('numMatches')">{{ job.numMatches }}</span>
+              <ion-spinner name="dots" class="num-matches-spinner" *ngIf="!job.hasOwnProperty('numMatches')"></ion-spinner>
             </div>
             <div class="item-card-content with-icon">
               <h5 class="fg-dark">{{ job.positionTitle }}</h5>

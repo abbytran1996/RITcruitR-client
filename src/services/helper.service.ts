@@ -4,7 +4,8 @@ import {
   PresentationLinkModel,
   PresentationLinkDBModel,
   YouTubeLinkModel,
-  GitHubLinkModel
+  GitHubLinkModel,
+  MatchModel
 } from '@app/models';
 
 @Injectable()

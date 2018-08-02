@@ -46,6 +46,7 @@
             class="rec-input ri-grey clearfix"
             required
             [(ngModel)]="companyModel.industries"
+            itemTextField="name"
             [items]="industryOptions"
             [canSearch]="true"
             [multiple]="true"
@@ -68,7 +69,7 @@
         <div class="rec-input-group-small">
           <label class="rec-label rl-secondary">COMPANY SIZE</label>
           <ion-select name="size" class="rec-input ri-grey" required [(ngModel)]="companyModel.size">
-            <ion-option *ngFor="let option of companySizeOptions" value="{{ option.id }}">{{ option.text }}</ion-option>
+            <ion-option *ngFor="let option of companySizeOptions" value="{{ option.value }}">{{ option.text }}</ion-option>
           </ion-select>
         </div>
         <div class="rec-input-group-small">

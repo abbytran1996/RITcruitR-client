@@ -130,25 +130,25 @@
     <ion-col>
       <form #form3="ngForm">
         <div class="rec-input-group-small">
-          <label class="rec-label full-width rl-secondary">NICE TO HAVE SKILLS WEIGHT<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="nthSkillsWeightInfo()"></ion-icon></label>
+          <label class="rec-label full-width rl-secondary">RECOMMENDED SKILLS WEIGHT<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="recommendedSkillsWeightInfo()"></ion-icon></label>
           <ion-label class="range-label left">LESS IMPORTANT</ion-label>
           <ion-label class="range-label right">MORE IMPORTANT</ion-label>
-          <ion-range class="labeled" name="niceToHaveSkillsWeight" min="0" max="100" step="10" snaps="true" color="primary" [(ngModel)]="jobModel.niceToHaveSkillsWeight"></ion-range>
+          <ion-range class="labeled" name="recommendedSkillsWeight" min="0" max="50" step="10" snaps="true" color="primary" [(ngModel)]="jobModel.recommendedSkillsWeight"></ion-range>
         </div>
         <div class="rec-input-group-small relative">
-          <label class="rec-label full-width rl-secondary">NICE TO HAVE SKILLS<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="nthSkillsInfo()"></ion-icon></label>
-          <select-searchable name="nthSkills" class="rec-select-searchable-btn circle clearfix" [(ngModel)]="nthSkills" [items]="nthSkillOptions"
-            itemTextField="name" [canSearch]="true" [multiple]="true" title="NTH Skills">
+          <label class="rec-label full-width rl-secondary">RECOMMENDED SKILLS<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="recommendedSkillsInfo()"></ion-icon></label>
+          <select-searchable name="recommendedSkills" class="rec-select-searchable-btn circle clearfix" [(ngModel)]="recommendedSkills" [items]="recommendedSkillOptions"
+            itemTextField="name" [canSearch]="true" [multiple]="true" title="Recommended Skills">
           </select-searchable>
           <div class="rec-input-group">
             <ion-list class="rec-reorder-list">
               <div class="list-header-wrapper">
                 <ion-list-header class="header-no-min-height"> </ion-list-header>
               </div>
-              <ion-item-group reorder="true" side="start" (ionItemReorder)="$event.applyTo(nthSkills)">
-                <ion-item *ngFor="let skill of nthSkills; let i = index">
+              <ion-item-group reorder="true" side="start" (ionItemReorder)="$event.applyTo(recommendedSkills)">
+                <ion-item *ngFor="let skill of recommendedSkills; let i = index">
                   <h5>{{ skill.name }}</h5>
-                  <ion-icon name="md-close-circle" class="fake-link" (click)="removeNthSkill(i)"></ion-icon>
+                  <ion-icon name="md-close-circle" class="fake-link" (click)="removeRecommendedSkill(i)"></ion-icon>
                 </ion-item>
               </ion-item-group>
             </ion-list>
@@ -216,7 +216,7 @@
       <!-- Existing Form -->
       <form #existingForm="ngForm" class="existing-link-list">
         <div class="rec-input-group-small">
-          <label class="rec-label rl-primary">SELECT EXISTING LINK</label>
+          <label class="rec-label rl-primary">SELECT EXISTING LINKS</label>
           <ion-select name="selectedLink" class="rec-input ri-grey" [(ngModel)]="existingLinkModel" multiple="false" (ionChange)="selectChanged($event)">
             <ion-option *ngIf="existingLinkOptions && existingLinkOptions.length > 0" value="-1">None</ion-option>
             <ion-option *ngFor="let link of existingLinkOptions" [value]="link">{{ link.title }}</ion-option>

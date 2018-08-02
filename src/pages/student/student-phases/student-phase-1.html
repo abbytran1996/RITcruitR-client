@@ -32,8 +32,8 @@
           <div class="match-card-header" [ngClass]="{'large': helperService.isMatchHeaderLarge(match)}">
             <h3 class="title fg-primary text-center">{{ match.job.positionTitle }}</h3>
             <p class="fg-grey text-center">
-              {{ (matchPoints.industry) ? match.matchedIndustry : match.job.company.industries[0] }}
-              <span class="match-check" [hidden]="!matchPoints.industry"><ion-icon name="checkmark" class=""></ion-icon></span>
+              {{ match.matchDisplay.industry.value }}
+              <span class="match-check" [hidden]="!match.matchDisplay.industry.matched"><ion-icon name="checkmark" class=""></ion-icon></span>
             </p>
             <div class="duration-wrapper" [ngClass]="{'duration-notice': match.job.numDaysRemaining < 4, 'duration-urgent': match.job.numDaysRemaining == 1}">
               <ion-icon class="duration-icon" name="md-time"></ion-icon>
@@ -41,7 +41,7 @@
             </div>
             <div class="score-wrapper" [ngClass]="{'score-high': match.matchStrength >= .8}">
               <ion-icon class="score-icon" name="md-speedometer"></ion-icon>
-              <span>{{ match.matchStrength * 100 | number:'2.0'}}%</span>
+              <span>{{ match.matchStrength * 100 | number:'2.0-0'}}%</span>
             </div>
           </div>
           <!-- End Card Header -->
@@ -51,18 +51,18 @@
             <div class="locations content-section">
               <h3 class="heading fg-dark"><ion-icon name="ios-pin" class="card-heading-icon"></ion-icon>Locations:</h3>
               <ul class="rec-ul">
-                <li *ngFor="let location of match.job.locations | slice:0:2; let i = index" class="fg-dark">
-                  {{ location }}
-                  <span class="match-check" [hidden]="!matchPoints.locations[i]"><ion-icon name="checkmark" class=""></ion-icon></span>
+                <li *ngFor="let location of match.matchDisplay.locations; let i = index" class="fg-dark">
+                  {{ location.value }}
+                  <span class="match-check" [hidden]="!location.matched"><ion-icon name="checkmark" class=""></ion-icon></span>
                 </li>
               </ul>
             </div>
             <div class="skills content-section">
               <h3 class="heading fg-dark"><ion-icon name="md-construct" class="card-heading-icon"></ion-icon>Top Skills:</h3>
               <ul class="rec-ul">
-                <li *ngFor="let skill of match.skillsToShow; let i = index" [hidden]="skill == undefined">
-                  {{ (skill) ? skill.name : '' }}
-                  <span class="match-check" [hidden]="!matchPoints.skills[i]"><ion-icon name="checkmark" class=""></ion-icon></span>
+                <li *ngFor="let skill of match.matchDisplay.skills; let i = index" [hidden]="skill == undefined">
+                  {{ skill?.value.name }}
+                  <span class="match-check" [hidden]="!skill?.matched"><ion-icon name="checkmark" class=""></ion-icon></span>
                 </li>
               </ul>
             </div>
