@@ -1,0 +1,51 @@
+<ion-header class="rec-header">
+  <ion-row>
+    <!-- Back Icon -->
+    <ion-row class="row-back-icon">
+      <ion-icon name="close" class="icon-link back-icon block fg-dark opacity-50" (click)="backClicked()"></ion-icon>
+    </ion-row>
+    <!-- End Back Icon -->
+
+    <!-- Title -->
+    <ion-row class="row-title">
+      <h1 class="fg-grey text-center no-padding">RecruitR</h1>
+      <h3 class="text-center no-padding">Recruiter Details</h3>
+    </ion-row>
+    <!-- End Title -->
+  </ion-row>
+</ion-header>
+
+<ion-content padding class="rec-content bg-white">
+  <div class="loader-wrapper" *ngIf="pageLoading">
+    <ion-spinner name="bubbles" class="primary"></ion-spinner>
+  </div>
+  <div [hidden]="pageLoading">
+    <div class="rec-input-group-small">
+      <label class="rec-label rl-secondary"><ion-icon name="md-contact" class="card-heading-icon fg-secondary"></ion-icon> NAME</label>
+      <p class="fg-dark">{{ recruiterShown.firstName }} {{ recruiterShown.lastName }}</p>
+    </div>
+    <div class="rec-input-group-small">
+      <label class="rec-label rl-secondary"><ion-icon name="md-mail" class="card-heading-icon fg-secondary"></ion-icon> EMAIL</label>
+      <p class="fg-dark">{{ recruiterShown.email }}</p>
+    </div>
+    <div class="rec-input-group-small">
+      <label class="rec-label rl-secondary"><ion-icon name="md-call" class="card-heading-icon fg-secondary"></ion-icon> PHONE NUMBER</label>
+      <p class="fg-dark">{{ recruiterShown.phoneNumber | phone }}</p>
+    </div>
+    <div class="rec-input-group-small" *ngIf="!isSelf">
+      <label class="rec-label rl-secondary">PRIMARY RECRUITER</label>
+      <ion-toggle name="primary" class="rec-input float-right" checked="false" [(ngModel)]="isPrimary"></ion-toggle>
+    </div>
+  </div>
+</ion-content>
+
+<!-- Button Footer -->
+<ion-footer class="button-footer">
+  <ion-row>
+    <button class="rec-btn-small rec-btn-primary btn-stacked center rec-load-btn" (click)="doneClicked()" [disabled]="pageLoading">
+      {{ (pageLoading) ? '' : 'Save' }}
+      <ion-spinner class="white" name="dots" [hidden]="!pageLoading"></ion-spinner>
+    </button>
+  </ion-row>
+</ion-footer>
+<!-- End Button Footer -->

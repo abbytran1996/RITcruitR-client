@@ -1,0 +1,26 @@
+page-company-manage-recruiters {
+  .list-header-wrapper {
+    margin-bottom: 15px;
+  }
+
+  ion-item-sliding {
+    margin-bottom: 15px;
+  }
+
+  ion-item.list-item-card {
+    background-color: map-get($colors, superlight) !important;
+
+    ion-label {
+      padding-left: 15px;
+      padding-top: 0px !important;
+    }
+
+    .remove-btn-circle {
+      right: 15px !important;
+    }
+  }
+
+  .self-tag {
+    font-size: 12px;
+  }
+}

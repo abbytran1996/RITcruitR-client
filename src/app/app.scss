@@ -923,6 +923,22 @@ ion-icon.rec-btn-icon {
   bottom: 20px !important;
 }
 
+.item-details-icon {
+  position: absolute;
+  right: 55px !important;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px !important;
+  font-weight: normal !important;
+  background-color: map-get($colors, primary);
+  color: rgba(255, 255, 255, 0.911);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 30px;
+}
+
 
 
 

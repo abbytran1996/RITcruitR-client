@@ -9,7 +9,8 @@ import {
   CompanyDetailsPage,
   CompanyJobCreatePage,
   CompanyRecruiterRegisterPage,
-  CompanyPresentationLinksPage
+  CompanyPresentationLinksPage,
+  CompanyManageRecruitersPage
 } from '@app/pages/company';
 
 import { LoginPage } from '@app/pages/general';
@@ -206,17 +207,10 @@ export class CompanyTabsPage {
   }
 
   /*
-    Add a new recruiter to the company.
-  */
-  addRecruiter() {
-    this.navCtrl.push(CompanyRecruiterRegisterPage, {recruiter: this.recruiter, startStep: 2, addRecruiter: true});
-  }
-
-  /*
     Edit the recruiters in a company.
   */
   editRecruiters() {
-
+    this.navCtrl.push(CompanyManageRecruitersPage, {recruiter: this.recruiter});
   }
 
   /*

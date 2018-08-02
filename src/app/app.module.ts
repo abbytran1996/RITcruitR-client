@@ -52,7 +52,8 @@ import {
   CompanyDetailsPage,
   RecruiterCompanySelectPage,
   CompanyJobCreatePage,
-  CompanyPresentationLinksPage
+  CompanyPresentationLinksPage,
+  CompanyManageRecruitersPage
 } from '@app/pages/company';
 
 // Admin Module
@@ -68,7 +69,8 @@ import {
   ProblemStatementAddModal,
   JobLocationsPreferenceModal,
   JobIndustriesPreferenceModal,
-  CompanySizePreferenceModal
+  CompanySizePreferenceModal,
+  RecruiterDetailsModal
 } from '@app/pages/modals';
 
 // Services
@@ -121,6 +123,7 @@ import {
     CompanyDetailsPage,
     RecruiterCompanySelectPage,
     CompanyPresentationLinksPage,
+    CompanyManageRecruitersPage,
 
     AdminCompanyValidationPage,
 
@@ -129,6 +132,7 @@ import {
     JobLocationsPreferenceModal,
     JobIndustriesPreferenceModal,
     CompanySizePreferenceModal,
+    RecruiterDetailsModal,
 
     PhonePipe
   ],
@@ -190,6 +194,7 @@ import {
     CompanyDetailsPage,
     RecruiterCompanySelectPage,
     CompanyPresentationLinksPage,
+    CompanyManageRecruitersPage,
 
     AdminDashboardPage,
     AdminCompanyValidationPage,
@@ -198,7 +203,8 @@ import {
     ProblemStatementAddModal,
     JobLocationsPreferenceModal,
     JobIndustriesPreferenceModal,
-    CompanySizePreferenceModal
+    CompanySizePreferenceModal,
+    RecruiterDetailsModal
   ],
 
   /*
