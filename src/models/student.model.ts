@@ -5,6 +5,10 @@ import { StudentJobPreferencesModel } from './student-job-preferences.model';
 import { PresentationLinkModel } from './presentation-link.model';
 
 export class StudentModel {
+  private static PREFERRED_LOCATIONS_WEIGHT = 0.4;
+  private static PREFERRED_INDUSTRIES_WEIGHT = 0.3;
+  private static PREFERRED_COMPANY_SIZE_WEIGHT = 0.2;
+
   public id: number = null;
   public firstName: string = "";
   public lastName: string = "";
@@ -21,9 +25,9 @@ export class StudentModel {
   public preferredLocations: any = [];
   public preferredIndustries: any = [];
   public preferredCompanySizes: any = [];
-  public preferredLocationsWeight: number = 0.4;
-  public preferredIndustriesWeight: number = 0.3;
-  public preferredCompanySizeWeight: number = 0.2; 
+  public preferredLocationsWeight: number = StudentModel.PREFERRED_LOCATIONS_WEIGHT;
+  public preferredIndustriesWeight: number = StudentModel.PREFERRED_LOCATIONS_WEIGHT;
+  public preferredCompanySizeWeight: number = StudentModel.PREFERRED_LOCATIONS_WEIGHT;
   public presentationLinks: Array<PresentationLinkModel> = [];
   public problemStatements: any = [];
   public isSetup: boolean = false;
@@ -46,9 +50,9 @@ export class StudentModel {
       this.preferredLocations = init.preferredLocations || [];
       this.preferredIndustries = init.preferredIndustries || [];
       this.preferredCompanySizes = init.preferredCompanySizes || [];
-      this.preferredLocationsWeight = init.preferredLocationsWeight || 0.4;
-      this.preferredIndustriesWeight = init.preferredIndustriesWeight || 0.3;
-      this.preferredCompanySizeWeight = init.preferredCompanySizeWeight || 0.2; 
+      this.preferredLocationsWeight = init.preferredLocationsWeight || StudentModel.PREFERRED_LOCATIONS_WEIGHT;
+      this.preferredIndustriesWeight = init.preferredIndustriesWeight || StudentModel.PREFERRED_LOCATIONS_WEIGHT;
+      this.preferredCompanySizeWeight = init.preferredCompanySizeWeight || StudentModel.PREFERRED_LOCATIONS_WEIGHT; 
       this.presentationLinks = init.presentationLinks || [];
       this.problemStatements = init.problemStatements || [];
       this.isSetup = init.isSetup || false;
