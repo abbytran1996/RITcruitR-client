@@ -3,7 +3,7 @@ import { NavController, ToastController, IonicPage, AlertController } from 'ioni
 
 import {
   StudentTabsPage,
-  StudentDetailFormsPage
+  StudentSetupPage
 } from '@app/pages/student';
 import {
   CompanyTabsPage,
@@ -133,7 +133,7 @@ export class LoginPage {
                 }
                 else {
                   this.loadingLogin = false;
-                  this.navCtrl.push(StudentDetailFormsPage, { student: student, setup: true }, { animation: "md-transition" });
+                  this.navCtrl.push(StudentSetupPage, { student: student, fromLogin: true }, { animation: "md-transition" });
                 }
               },
               error => {

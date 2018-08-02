@@ -68,7 +68,8 @@ import {
   ProblemStatementAddModal,
   JobLocationsPreferenceModal,
   JobIndustriesPreferenceModal,
-  CompanySizePreferenceModal
+  CompanySizePreferenceModal,
+  StudentImportModal
 } from '@app/pages/modals';
 
 // Services
@@ -129,6 +130,7 @@ import {
     JobLocationsPreferenceModal,
     JobIndustriesPreferenceModal,
     CompanySizePreferenceModal,
+    StudentImportModal,
 
     PhonePipe
   ],
@@ -198,7 +200,8 @@ import {
     ProblemStatementAddModal,
     JobLocationsPreferenceModal,
     JobIndustriesPreferenceModal,
-    CompanySizePreferenceModal
+    CompanySizePreferenceModal,
+    StudentImportModal
   ],
 
   /*

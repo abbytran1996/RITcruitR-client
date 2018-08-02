@@ -4,3 +4,4 @@ export * from './problem-statement-add/problem-statement-add';
 export * from './job-locations-preference/job-locations-preference';
 export * from './job-industries-preference/job-industries-preference';
 export * from './company-size-preference/company-size-preference';
+export * from './student-import/student-import';

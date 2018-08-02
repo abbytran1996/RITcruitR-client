@@ -20,7 +20,8 @@ import {
 import {
   FormSequenceService,
   StudentService,
-  DataService
+  DataService,
+  AuthService
 } from '@app/services';
 
 //=========================================================================
@@ -58,6 +59,7 @@ export class StudentDetailFormsPage {
   public isSetup = false;
   public saving = false;
   public loading = true;
+  public importEnabled = false;
 
   constructor(
     public navCtrl: NavController,
@@ -66,7 +68,8 @@ export class StudentDetailFormsPage {
     public modalCtrl: ModalController,
     public formSeq: FormSequenceService,
     private studentService: StudentService,
-    private dataService: DataService
+    private dataService: DataService,
+    private authService: AuthService
   ) {
     this.formSeq.reset();
     this.formSeq.startStep = navParams.get("startStep") || 0;
@@ -85,6 +88,7 @@ export class StudentDetailFormsPage {
     ];
 
     this.student = navParams.get("student") || new StudentModel();
+    this.importEnabled = navParams.get("importEnabled") || false;
 
     // Step 0
     this.maxYear = (new Date()).getFullYear() + 20;
@@ -207,7 +211,8 @@ export class StudentDetailFormsPage {
               this.studentService.completeStudentSetup(this.student.id).subscribe(
                 resData => {
                   this.saving = false;
-                  this.navCtrl.push(StudentTabsPage, { student: this.student });
+                  this.authService.setLocalVars(this.student.user);
+                  this.navCtrl.push(StudentTabsPage);
                 },
                 res => {
 
