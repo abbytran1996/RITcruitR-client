@@ -458,24 +458,3 @@ export class StudentPhase3Page {
     alert.present();
   }
 }
-
-/*
-  Remove the given skill from the given array.
-  This is needed because a simple index splice inline
-  is causing ordering issues.
-*/
-function removeSkillFromArray(array, skill) {
-  let index = 0;
-  let indexToRemove = -1;
-  array.forEach(skillInArr => {
-    if (skillInArr.id == skill.id) {
-      indexToRemove = index;
-    }
-
-    index++;
-  });
-
-  if (indexToRemove > -1) {
-    array.splice(indexToRemove, 1);
-  }
-}

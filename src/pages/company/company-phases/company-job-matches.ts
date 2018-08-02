@@ -28,6 +28,7 @@ export class CompanyJobMatchesPage {
   public jobList = [];
   public pageLoading = true;
   public activeJobs = true;
+  public initialLoad = true;
 
   constructor(
     public navCtrl: NavController,
@@ -55,8 +56,15 @@ export class CompanyJobMatchesPage {
       this.getActiveJobs();
     });
 
+    if (!this.initialLoad && this.recruiter != undefined) {
+      this.activeJobs = true;
+      this.pageLoading = true;
+      this.getActiveJobs();
+    }
+
     // Hide the tabs bar on this page
     this.events.publish('tabs:setHidden', true, Date.now());
+    this.initialLoad = false;
   }
 
   /*

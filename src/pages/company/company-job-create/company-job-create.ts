@@ -47,8 +47,8 @@ export class CompanyJobCreatePage {
 
   // Step 3 variables
   @ViewChild('form3') form3;
-  nthSkillOptions = [];
-  nthSkills = [];
+  recommendedSkillOptions = [];
+  recommendedSkills = [];
 
   // Step 4 variables
   @ViewChild('form4') form4;
@@ -74,7 +74,7 @@ export class CompanyJobCreatePage {
   public loading = false;
   public showErrorDots = false;
   private initialReqSkills;
-  private initialNthSkills;
+  private initialRecommendedSkills;
   private changed = false;
 
   constructor(
@@ -93,7 +93,7 @@ export class CompanyJobCreatePage {
 
     if (navParams.get("job")) {
       this.jobModel = new JobModel(navParams.get("job"));
-      this.jobModel.niceToHaveSkillsWeight = this.jobModel.niceToHaveSkillsWeight * 100;
+      this.jobModel.recommendedSkillsWeight = this.jobModel.recommendedSkillsWeight * 100;
       this.jobModel.matchThreshold = this.jobModel.matchThreshold * 100;
       this.linksList = this.helperService.convertLinkTypes(this.jobModel.presentationLinks.slice(0));
       this.editMode = true;
@@ -107,7 +107,7 @@ export class CompanyJobCreatePage {
       "Job Basic Details",
       "Job Description",
       "Required Skills",
-      "Nice to Have Skills",
+      "Recommended Skills",
       "Job Filters",
       "Job Duration",
       "Problem Statement",
@@ -128,7 +128,6 @@ export class CompanyJobCreatePage {
     this.dataService.getSkills().subscribe(
       data => {
         this.reqSkillOptions = data;
-        this.nthSkillOptions = data;
 
         // Set the local skills lists to reflect the edit model if edit mode
         if (this.editMode) {
@@ -141,14 +140,14 @@ export class CompanyJobCreatePage {
           });
           this.initialReqSkills = this.reqSkills.length;
 
-          this.nthSkills = [];
-          this.jobModel.niceToHaveSkills.forEach(skill => {
-            let skillIndex = this.nthSkillOptions.findIndex(skillOption => skillOption.id == skill.id);
+          this.recommendedSkills = [];
+          this.jobModel.recommendedSkills.forEach(skill => {
+            let skillIndex = this.recommendedSkillOptions.findIndex(skillOption => skillOption.id == skill.id);
             if (skillIndex && skillIndex > -1) {
-              this.nthSkills.push(this.nthSkillOptions[skillIndex]);
+              this.recommendedSkills.push(this.recommendedSkillOptions[skillIndex]);
             }
           });
-          this.initialNthSkills = this.nthSkills.length;
+          this.initialRecommendedSkills = this.recommendedSkills.length;
         }
       },
       error => {
@@ -230,8 +229,16 @@ export class CompanyJobCreatePage {
 
         // Custom init rules at certain steps
         if (this.formSeq.currentStep == 3) {
-          this.nthSkillOptions = this.reqSkillOptions;
-          this.removeNthSkillOptions(this.jobModel.requiredSkills);
+          let tempRecSkills = this.reqSkillOptions;
+
+          this.reqSkills.forEach(value => {
+            let skillIndex = tempRecSkills.findIndex(skill => skill.id == value.id);
+            if (skillIndex != undefined && skillIndex > -1) {
+              tempRecSkills.splice(skillIndex, 1);
+            }
+          });
+
+          this.recommendedSkillOptions = tempRecSkills;
         }
       }
     }
@@ -245,10 +252,10 @@ export class CompanyJobCreatePage {
   */
   prepJobForSave() {
     this.jobModel.requiredSkills = this.reqSkills;
-    this.jobModel.niceToHaveSkills = this.nthSkills;
+    this.jobModel.recommendedSkills = this.recommendedSkills;
     this.jobModel.presentationLinks = this.helperService.convertLinksForDB(this.linksList);
     this.jobModel.recruiterId = this.recruiter.id;
-    this.jobModel.niceToHaveSkillsWeight = this.jobModel.niceToHaveSkillsWeight / 100;
+    this.jobModel.recommendedSkillsWeight = this.jobModel.recommendedSkillsWeight / 100;
     this.jobModel.matchThreshold = this.jobModel.matchThreshold / 100;
   }
 
@@ -324,8 +331,8 @@ export class CompanyJobCreatePage {
     ) return true;
 
     if (this.form3.dirty
-      || this.nthSkills.length > this.initialNthSkills
-      || this.nthSkills.length < this.initialNthSkills
+      || this.recommendedSkills.length > this.initialRecommendedSkills
+      || this.recommendedSkills.length < this.initialRecommendedSkills
     ) return true;
 
     if (this.form4.dirty) return true;
@@ -395,27 +402,11 @@ export class CompanyJobCreatePage {
   }
 
   /*
-    Remove the nice to have skill at the given index from the job model.
+    Remove the recommended skill at the given index from the job model.
   */
-  removeNthSkill(index) {
-    this.nthSkills.splice(index, 1);
+  removeRecommendedSkill(index) {
+    this.recommendedSkills.splice(index, 1);
     this.changed = true;
-  }
-
-  /*
-    Remove the given array of skills from the skills options.
-    Used to remove skills selected as required skills from the previous
-    step to prevent duplicates.
-  */
-  removeNthSkillOptions(toRemove) {
-    let values = toRemove;
-
-    values.forEach(value => {
-      let skillIndex = this.nthSkillOptions.findIndex(skill => skill.id == value.id);
-      if (skillIndex != undefined && skillIndex > -1) {
-        this.nthSkillOptions.splice(skillIndex, 1);
-      }
-    });
   }
 
   /*
@@ -469,22 +460,22 @@ export class CompanyJobCreatePage {
   }
 
   /*
-    Show an alert dialog explaining nice to have skills weight.
+    Show an alert dialog explaining recommended skills weight.
   */
-  nthSkillsWeightInfo() {
+  recommendedSkillsWeightInfo() {
     this.showAlert(
-      "Nice to Have Skills Weight",
-      "Nice to have skills weight determines how heavily these skills will be used for matching. A higher number means a student will need to have more of these skills in order to be matched."
+      "Recommended Skills Weight",
+      "Recommended skills weight determines how heavily these skills will be used for matching. A higher number means a student will need to have more of these skills in order to be matched."
     );
   }
 
   /*
-    Show an alert dialog explaining nice to have skills.
+    Show an alert dialog explaining recommended skills.
   */
-  nthSkillsInfo() {
+  recommendedSkillsInfo() {
     this.showAlert(
-      "Nice to Have Skills",
-      "Nice to have skills are skills for the job that are not required to be matched, but a student having one or more of these skills would be a plus for them. Matching on nice to have skills will improve a student's match score, showing them further towards the top of the list."
+      "Recommended skills",
+      "Recommended skills are skills for the job that are not required to be matched, but a student having one or more of these skills would be a plus for them. Matching on recommended skills will improve a student's match score, showing them further towards the top of the list."
     );
   }
 

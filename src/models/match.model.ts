@@ -1,3 +1,4 @@
+import { element } from 'protractor';
 import { StudentModel } from './student.model';
 import { JobModel } from './job.model';
 
@@ -11,7 +12,7 @@ export class MatchModel {
   public studentPresentationLink: string = "";
   public studentPresentationLinks: any = [];
   public matchedRequiredSkills: any = [];
-  public matchedNiceToHaveSkills: any = [];
+  public matchedRecommendedSkills: any = [];
   public matchedIndustries: any = [];
   public matchedLocations: any = [];
   public viewedSinceLastUpdate: boolean = false;
@@ -32,7 +33,7 @@ export class MatchModel {
       this.studentPresentationLink = init.studentPresentationLink || "";
       this.studentPresentationLinks = init.studentPresentationLinks || [];
       this.matchedRequiredSkills = init.matchedRequiredSkills || [];
-	    this.matchedNiceToHaveSkills = init.matchedNiceToHaveSkills || [];
+	    this.matchedRecommendedSkills = init.matchedRecommendedSkills || [];
 	    this.matchedIndustries = init.matchedIndustries || [];
 	    this.matchedLocations = init.matchedLocations || [];
       this.viewedSinceLastUpdate = init.viewedSinceLastUpdate || false;
@@ -56,15 +57,16 @@ export class MatchModel {
     this.matchDisplay = {
       industry: {},
       locations: [],
-      skills: []
+      skills: [],
+      otherSkills: []
     };
 
     // Set match industry to show
     if (this.matchedIndustries.length > 0) {
-      this.matchDisplay.industry = {value: this.matchedIndustries[0], matched: true};
+      this.matchDisplay.industry = {value: this.matchedIndustries[0].name, matched: true};
     }
     else {
-      this.matchDisplay.industry = { value: this.job.company.industries[0], matched: false };
+      this.matchDisplay.industry = { value: this.job.company.industries[0].name, matched: false };
     }
 
     // Set match locations to show
@@ -88,42 +90,83 @@ export class MatchModel {
     // Set match required skills to show
     let numReqSkills = 2;
     let reqSkills = [];
-    let numNthSkills = 1;
-    let nthSkills = [];
+    let numRecommendedSkills = 1;
+    let recommendedSkills = [];
 
+    // Add up to max number of matched required skills
     this.matchedRequiredSkills.forEach(reqSkill => {
       if (reqSkills.length < numReqSkills) {
         reqSkills.push({ value: reqSkill, matched: true });
       }
     });
-    this.matchDisplay.skills.concat(reqSkills);
+    this.matchDisplay.skills = this.matchDisplay.skills.concat(reqSkills);
 
-    this.matchedNiceToHaveSkills.forEach(nthSkill => {
-      if (nthSkills.length < numNthSkills) {
-        nthSkills.push({ value: nthSkill, matched: true });
+    // Add up to max number of matched recommended skills
+    this.matchedRecommendedSkills.forEach(recommendedSkill => {
+      if (recommendedSkills.length < numRecommendedSkills) {
+        recommendedSkills.push({ value: recommendedSkill, matched: true });
       }
     });
-    this.matchDisplay.skills.concat(nthSkills);
+    this.matchDisplay.skills = this.matchDisplay.skills.concat(recommendedSkills);
 
-    if (this.isStudentMatch) {
-      this.job.requiredSkills.forEach(reqSkill => {
-        if (this.matchDisplay.skills.length < (numReqSkills + numNthSkills)) {
-          this.matchDisplay.skills.push({ value: reqSkill, matched: false });
-        }
-      });
+    // If the total skill number hasn't been reached, add non-matched skills
+    if (this.matchDisplay.skills.length < (numReqSkills + numRecommendedSkills)) {
 
-      this.job.niceToHaveSkills.forEach(nthSkill => {
-        if (this.matchDisplay.skills.length < (numReqSkills + numNthSkills)) {
-          this.matchDisplay.skills.push({ value: nthSkill, matched: false });
-        }
-      });
+      // If this is a match being viewed by a student
+      if (this.isStudentMatch) {
+        // Start with recommended skills to add some variety because most of the required skills were likely matched
+        let testRecSkills = this.removeSkillIntersection(this.job.recommendedSkills, this.matchedRecommendedSkills);
+        testRecSkills.forEach(recommendedSkill => {
+          if (this.matchDisplay.skills.length < (numReqSkills + numRecommendedSkills)) {
+            this.matchDisplay.skills.push({ value: recommendedSkill, matched: false });
+          }
+        });
+
+        let testReqSkills = this.removeSkillIntersection(this.job.requiredSkills, this.matchedRequiredSkills);
+        testReqSkills.forEach(reqSkill => {
+          if (this.matchDisplay.skills.length < (numReqSkills + numRecommendedSkills)) {
+            this.matchDisplay.skills.push({ value: reqSkill, matched: false });
+          }
+        });
+      }
+
+      // If this is a match being viewed by a recruiter
+      else {
+        let testStudentSkills = this.removeSkillIntersection(this.student.skills, this.matchedRequiredSkills);
+        testStudentSkills = this.removeSkillIntersection(testStudentSkills, this.matchedRecommendedSkills);
+        testStudentSkills.forEach(studSkill => {
+          if (this.matchDisplay.skills.length < (numReqSkills + numRecommendedSkills)) {
+            this.matchDisplay.skills.push({ value: studSkill, matched: false });
+          }
+        });
+
+        // Prepare the list of all other student skills for the recruiter
+        let usedSkills = [];
+        this.matchDisplay.skills.forEach(skill => {
+          usedSkills.push(skill.value);
+        });
+        
+        let otherSkills = this.removeSkillIntersection(this.student.skills, usedSkills);
+        otherSkills.forEach(skill => {
+          let reqIndex = this.matchedRequiredSkills.findIndex(reqSkill => { return skill.id == reqSkill.id });
+          let recIndex = this.matchedRecommendedSkills.findIndex(recSkill => { return skill.id == recSkill.id });
+          if ((reqIndex != undefined && reqIndex > -1) || (recIndex != undefined && recIndex > -1)) {
+            this.matchDisplay.otherSkills.push({ value: skill, matched: true });
+          }
+          else {
+            this.matchDisplay.otherSkills.push({ value: skill, matched: false });
+          }
+        });
+      }
     }
-    else {
-      this.student.skills.forEach(studSkill => {
-        if (this.matchDisplay.skills.length < (numReqSkills + numNthSkills)) {
-          this.matchDisplay.skills.push({ value: studSkill, matched: false });
-        }
-      });
-    }
+  }
+
+  /*
+    Removes the intersected skills in the given two arrays from the first array and returns the result.
+  */
+  removeSkillIntersection(arr1, arr2) {
+    return arr1.filter(function (skill1) {
+      return arr2.findIndex(skill2 => skill1.id == skill2.id) < 0; // Returns true for skills found in arr2
+    });
   }
 }

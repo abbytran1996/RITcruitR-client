@@ -5,6 +5,7 @@ import {
   StudentTabsPage,
   StudentDetailFormsPage
 } from '@app/pages/student';
+
 import {
   CompanyTabsPage,
   CompanyRegisterConfirmPage
@@ -16,7 +17,8 @@ import { AdminDashboardPage } from '@app/pages/admin';
 import {
   LoginModel,
   StudentModel,
-  RecruiterModel
+  RecruiterModel,
+  CompanyModel
 } from '@app/models';
 
 import {
@@ -160,19 +162,19 @@ export class LoginPage {
                 recruiter.primary = (userRole == AuthService.PRIMARY_RECRUITER);
                 
                 // If the company hasn't yet been approved or denied
-                if (recruiter.company.status == null || recruiter.company.status == 0) {
+                if (recruiter.company.status == null || recruiter.company.status == CompanyModel.STATUS_OPTIONS.AWAITING_APPROVAL) {
                   this.loadingLogin = false;
                   this.navCtrl.push(CompanyRegisterConfirmPage, { fromLogin: true }, { animation: "md-transition" });
                 }
 
                 // If the company has been denied
-                else if (recruiter.company.status == 2) {
+                else if (recruiter.company.status == CompanyModel.STATUS_OPTIONS.DENIED) {
                   this.loadingLogin = false;
                   this.showAlert("Company Denied", "We're sorry, but your company has been denied acces to RecruitR. This is potentially because an administrator detected faulty information in your registration. Please contact RecruitR with any concerns.");
                 }
 
                 // If the company has been approved
-                else if (recruiter.company.status == 1) {
+                else if (recruiter.company.status == CompanyModel.STATUS_OPTIONS.APPROVED) {
                   this.loadingLogin = false;
                   this.navCtrl.push(CompanyTabsPage, { recruiter: recruiter }, { animation: "md-transition" });
                 }

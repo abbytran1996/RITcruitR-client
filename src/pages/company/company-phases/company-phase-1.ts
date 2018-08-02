@@ -28,6 +28,7 @@ export class CompanyPhase1Page {
   public currentJob: JobModel;
   public match: MatchModel;
   public pageLoading = true;
+  public showOtherSkills = false;
   
   // Match fields
   public matchList: any;
@@ -144,6 +145,13 @@ export class CompanyPhase1Page {
         this.interested();
       }
     }
+  }
+
+  /*
+    Toggle the 'showOtherSkills' boolean to show or hide the additional student skills.
+  */
+  toggleOtherSkills() {
+    this.showOtherSkills = !this.showOtherSkills;
   }
 
   /*

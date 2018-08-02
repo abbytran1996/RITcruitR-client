@@ -18,7 +18,7 @@
   <div class="phase-wrapper" *ngIf="!pageLoading">
 
     <!-- Final Match List -->
-    <div class="final-matches" *ngIf="matchList != undefined && matchList.length != 0 && !detailMode">
+    <div class="final-matches" *ngIf="!detailMode">
 
       <!-- Toolbar -->
       <div class="list-item-card rec-toolbar">
@@ -30,14 +30,14 @@
       </div>
       <!-- End Toolbar -->
 
-      <div class="final-matches-list">
+      <div class="final-matches-list" *ngIf="matchList != undefined && matchList.length != 0">
         <ion-list>
           <ion-item-sliding *ngFor="let match of matchList" class="list-item-card outer final-match fake-link">
             <ion-item class="list-item-card inner" (click)="matchDetails(match)">
               <ion-icon name='md-checkmark-circle' class="item-card-icon fg-accept"></ion-icon>
               <div class="item-card-content with-icon">
                 <h5 class="fg-dark">{{ match.student.firstName }} {{ match.student.lastName }}</h5>
-                <p class="fg-grey">{{ match.student.school }} - {{ match.student.graduationDate | amDateFormat:'MMMM YYYY' }}</p>
+                <p class="fg-grey">{{ match.student.school.name }} {{ match.student.graduationDate | amDateFormat:'YYYY' }}</p>
               </div>
             </ion-item>
             <ion-item-options side="left">
@@ -59,28 +59,24 @@
           </ion-item-sliding>
         </ion-list>
       </div>
+
+      <!-- Empty List Message -->
+      <div class="match-list-empty" *ngIf="matchList == undefined || matchList.length == 0">
+        <ion-icon name="ios-checkmark-circle" [hidden]="!activeMatches"></ion-icon>
+        <ion-icon name="ios-archive" [hidden]="activeMatches"></ion-icon>
+        <div class="sep-horizontal-1"></div>
+        <h3 class="fg-white text-center" [hidden]="!activeMatches">
+          You don't have any final matches for this job. Students will show up here when they've made it through each previous phase.
+          Start in the first "Job Matches" tab to progress a student's application.
+        </h3>
+        <h3 class="fg-white text-center" [hidden]="activeMatches">
+          You don't have any archived matches for this job. You can archive a match by swiping left on a final match to reveal the archive option.
+        </h3>
+        <div class="sep-horizontal-1"></div>
+      </div>
+      <!-- End Empty List Message -->
     </div>
     <!-- End Final Match List -->
-
-    <!-- Empty List Message -->
-    <!-- Toolbar -->
-      <div class="list-item-card rec-toolbar" *ngIf="matchList == undefined || matchList.length == 0 && !detailMode">
-        <div class="rec-toolbar-btn fake-link" (click)="backToJobs()"><ion-icon name='md-arrow-round-back' class="fg-dark"></ion-icon><p class="fg-dark">Back To Jobs</p></div>
-        <div class="rec-toolbar-text sep-left">
-          <h5 class="fg-dark text-center">{{ currentJob.positionTitle }}</h5>
-          <p class="fg-grey text-center">{{ currentJob.company.companyName }}</p>
-        </div>
-      </div>
-      <!-- End Toolbar -->
-
-    <div class="match-list-empty" *ngIf="matchList == undefined || matchList.length == 0 && !detailMode">
-      <ion-icon name="ios-checkmark-circle" class=""></ion-icon>
-      <div class="sep-horizontal-1"></div>
-      <h3 class="fg-white text-center">You don't have any final matches for this job. Students will show up here when they've made it through each previous phase. Start
-        in the first "Job Matches" tab to progress a student's application.</h3>
-      <div class="sep-horizontal-1"></div>
-    </div>
-    <!-- End Empty List Message -->
 
     <!-- Match Details -->
     <div class="match-card-container" *ngIf="detailMode">
@@ -151,7 +147,7 @@
 
         <div class="match-card-header" [ngClass]="{'large': helperService.isMatchHeaderLarge(currentMatch, 'studentName')}">
           <h3 class="title fg-primary text-center">{{ currentMatch.student.firstName }} {{ currentMatch.student.lastName }}</h3>
-          <p class="fg-grey text-center">{{ currentMatch.student.major }}</p>
+          <p class="fg-grey text-center">{{ currentMatch.student.major.name }}</p>
           <div class="score-wrapper" [ngClass]="{'score-high': currentMatch.matchStrength >= .8}">
             <ion-icon class="score-icon" name="md-speedometer"></ion-icon>
             <span>{{ currentMatch.matchStrength * 100 | number:'2.0-0'}}%</span>
@@ -162,7 +158,7 @@
         <div class="match-card-content" [ngClass]="{'slide-left': reviewStep > 0, 'large': helperService.isMatchHeaderLarge(currentMatch, 'studentName')}">
           <div class="content-section university">
             <h3 class="heading fg-dark"><ion-icon name="md-bookmarks" class="card-heading-icon"></ion-icon>University:</h3>
-            <p class="compact">{{ currentMatch.student.school }}</p>
+            <p class="compact">{{ currentMatch.student.school.name }}</p>
           </div>
           <div class="content-section grad-date">
             <h3 class="heading fg-dark"><ion-icon name="md-calendar" class="card-heading-icon"></ion-icon>Graduation Date:</h3>
@@ -184,9 +180,17 @@
           <div class="content-section skills">
             <h3 class="heading fg-dark"><ion-icon name="md-build" class="card-heading-icon"></ion-icon>{{ currentMatch.student.firstName }}'s Skills:</h3>
             <ul class="rec-ul">
-              <li *ngFor="let skill of currentMatch.student.skills; let i = index" class="fg-dark">
-                {{ skill.name }}
+              <li *ngFor="let skill of currentMatch.matchDisplay.skills; let i = index" [hidden]="skill == undefined">
+                {{ skill?.value.name }}
+                <span class="match-check" [hidden]="!skill?.matched"><ion-icon name="checkmark" class=""></ion-icon></span>
               </li>
+              <li *ngFor="let skill of currentMatch.matchDisplay.otherSkills; let i = index" [hidden]="skill == undefined">
+                {{ skill?.value.name }}
+                <span class="match-check" [hidden]="!skill?.matched"><ion-icon name="checkmark" class=""></ion-icon></span>
+              </li>
+              <!-- <li *ngFor="let skill of currentMatch.student.skills; let i = index" class="fg-dark">
+                {{ skill.name }}
+              </li> -->
             </ul>
           </div>
         </div>

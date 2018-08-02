@@ -31,7 +31,7 @@
               <ion-icon name='md-checkmark-circle' class="item-card-icon fg-accept"></ion-icon>
               <div class="item-card-content with-icon">
                 <h5 class="fg-dark">{{ match.job.positionTitle }}</h5>
-                <p class="fg-grey">{{ match.job.company.companyName }} - {{ getMatchedIndustry(match) }}<br>{{ getMatchedLocation(match) }}</p>
+                <p class="fg-grey">{{ match.job.company.companyName }} - {{ getMatchedIndustry(match).name }}<br>{{ getMatchedLocation(match) }}</p>
               </div>
             </ion-item>
             <ion-item-options side="left">
@@ -87,7 +87,7 @@
             <h3 class="heading fg-dark">Job Overview</h3>
             <ul class="rec-ul no-bullets">
               <li class="fg-dark">
-                <ion-icon name="md-briefcase" class="card-heading-icon fg-primary"></ion-icon> {{ currentMatch.job.company.companyName }} <span class="fg-grey">- {{ getMatchedIndustry(currentMatch) }}</span>
+                <ion-icon name="md-briefcase" class="card-heading-icon fg-primary"></ion-icon> {{ currentMatch.job.company.companyName }} <span class="fg-grey">- {{ currentMatch.matchDisplay.industry.value }}</span>
               </li>
               <li class="fg-dark">
                 <ion-icon name="ios-pin" class="card-heading-icon fg-primary"></ion-icon> 

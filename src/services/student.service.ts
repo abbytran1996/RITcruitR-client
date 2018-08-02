@@ -177,7 +177,7 @@ export class StudentService {
     // - Expects a StudentModel id number
     // - Returns an array of MatchModels
     getFinalMatches(studentId) {
-        return this.apiService.get("/matches/studentMatches/" + studentId + "?phase=interview");
+        return this.apiService.get("/matches/studentMatches/" + studentId + "?phase=final");
     }
 
     //=========================================================================
@@ -230,7 +230,7 @@ export class StudentService {
     // - Expects a StudentModel id number
     // - Returns the number of matches in that phase
     getNumFinalMatches(studentId) {
-        return this.apiService.get("/matches/studentMatches/" + studentId + "/count?phase=interview");
+        return this.apiService.get("/matches/studentMatches/" + studentId + "/count?phase=final");
     }
     
     //=========================================================================
