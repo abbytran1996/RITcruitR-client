@@ -26,7 +26,7 @@ export class CompanySizePreferenceModal {
   public saving = false;
   public student: StudentModel;
   public companySizeOptions = [];
-  public studentCompanySize = 0;
+  public studentCompanySizes = [];
   public studentCompanySizeWeight = 0;
   @ViewChild('form') form;
 
@@ -43,8 +43,8 @@ export class CompanySizePreferenceModal {
     this.student = navParams.get("student");
     this.companySizeOptions = this.dataService.getCompanySizesForStudent();
 
-    // TODO when model is updated: Set this.studentCompanySizeWeight = this.student.preferredCompanySizeWeight;
-    // TODO when model is updated: Set this.studentCompanySize = this.student.preferredCompanySize;
+    this.studentCompanySizes = this.student.preferredCompanySizes;
+    this.studentCompanySizeWeight = this.student.preferredCompanySizeWeight * 100;
 
     this.pageLoading = false;
   }
@@ -82,8 +82,8 @@ export class CompanySizePreferenceModal {
   */
   doneClicked() {
     this.saving = true;
-    // TODO when model is updated: this.student.preferredCompanySize = this.studentCompanySize;
-    // TODO when model is updated: this.student.preferredLocationsWeight = this.studentLocationsWeight;
+    this.student.preferredCompanySizes = this.studentCompanySizes;
+    this.student.preferredCompanySizeWeight = this.studentCompanySizeWeight / 100;
 
     this.studentService.updateStudent(this.student).subscribe(
       data => { },

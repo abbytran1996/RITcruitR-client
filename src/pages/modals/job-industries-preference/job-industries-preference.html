@@ -31,7 +31,7 @@
             </label>
             <ion-label class="range-label left">LESS IMPORTANT</ion-label>
             <ion-label class="range-label right">MORE IMPORTANT</ion-label>
-            <ion-range class="labeled" name="industriesPreferenceWeight" min="1" max="10" step="1" snaps="true" color="primary" [(ngModel)]="studentIndustriesWeight">
+            <ion-range class="labeled" name="industriesPreferenceWeight" min="0" max="50" step="10" snaps="true" color="primary" [(ngModel)]="studentIndustriesWeight">
             </ion-range>
           </div>
           <!-- End Weight -->
@@ -51,7 +51,7 @@
                 </div>
                 <ion-item-group reorder="false">
                   <ion-item *ngFor="let industry of studentIndustries; let i = index">
-                    <h5>{{ industry }}</h5>
+                    <h5>{{ industry.name }}</h5>
                     <ion-icon name="md-close-circle" class="fake-link" (click)="removeIndustry(i)"></ion-icon>
                   </ion-item>
                 </ion-item-group>

@@ -44,18 +44,18 @@ export class JobIndustriesPreferenceModal {
     this.dataService.getIndustries().subscribe(
       resData => {
         this.industryOptions = resData;
+
+        this.student.preferredIndustries.forEach(industry => {
+          let industryIndex = this.industryOptions.findIndex(industryOption => industryOption.id == industry.id);
+          if (industryIndex != undefined && industryIndex > -1) {
+            this.studentIndustries.push(this.industryOptions[industryIndex]);
+          }
+        });
       },
       res => { }
     );
 
-    // TODO when model is updated: Set this.studentIndustriesWeight = this.student.preferredIndustriesWeight;
-
-    this.student.preferredIndustries.forEach(industry => {
-      let industryIndex = this.industryOptions.findIndex(industryOption => industryOption == industry);
-      if (industryIndex != undefined && industryIndex > -1) {
-        this.studentIndustries.push(this.industryOptions[industryIndex]);
-      }
-    });
+    this.studentIndustriesWeight = this.student.preferredIndustriesWeight * 100;
 
     this.pageLoading = false;
   }
@@ -101,7 +101,7 @@ export class JobIndustriesPreferenceModal {
   doneClicked() {
     this.saving = true;
     this.student.preferredIndustries = this.studentIndustries;
-    // TODO when model is updated: this.student.preferredIndustriesWeight = this.studentIndustriesWeight;
+    this.student.preferredIndustriesWeight = this.studentIndustriesWeight / 100;
 
     this.studentService.updateStudent(this.student).subscribe(
       data => { },

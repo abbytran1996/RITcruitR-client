@@ -77,12 +77,12 @@ export class DataService {
     // - Returns the structured list of company sizes for student preference
     getCompanySizesForStudent() {
       return [
-        { text: "No Preference", id: 0, dbValue: "DONT_CARE" },
-        { text: "Startup (< 100)", id: 1, dbValue: "STARTUP" },
-        { text: "Small (100-300)", id: 2, dbValue: "SMALL" },
-        { text: "Medium (301-500)", id: 3, dbValue: "MEDIUM" },
-        { text: "Large (501-1000)", id: 4, dbValue: "LARGE" },
-        { text: "Huge (> 1000)", id: 5, dbValue: "HUGE" }
+        { text: "No Preference", value: "DONT_CARE" },
+        { text: "Startup (< 100)", value: "STARTUP" },
+        { text: "Small (100-300)", value: "SMALL" },
+        { text: "Medium (301-500)", value: "MEDIUM" },
+        { text: "Large (501-1000)", value: "LARGE" },
+        { text: "Huge (> 1000)", value: "HUGE" }
       ];
     }
 
@@ -92,11 +92,11 @@ export class DataService {
     // - Returns the structured list of company sizes for company registration
     getCompanySizesForCompany() {
       return [
-        { text: "Startup (< 100)", id: 1, dbValue: "STARTUP" },
-        { text: "Small (100-300)", id: 2, dbValue: "SMALL" },
-        { text: "Medium (301-500)", id: 3, dbValue: "MEDIUM" },
-        { text: "Large (501-1000)", id: 4, dbValue: "LARGE" },
-        { text: "Huge (> 1000)", id: 5, dbValue: "HUGE" }
+        { text: "Startup (< 100)", value: "STARTUP" },
+        { text: "Small (100-300)", value: "SMALL" },
+        { text: "Medium (301-500)", value: "MEDIUM" },
+        { text: "Large (501-1000)", value: "LARGE" },
+        { text: "Huge (> 1000)", value: "HUGE" }
       ];
     }
 }

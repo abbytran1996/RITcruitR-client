@@ -53,12 +53,8 @@ export class CompanyDetailsPage {
       },
       res => { }
     );
+    
     this.companySizeOptions = this.dataService.getCompanySizesForCompany();
-
-    // Set the local size value to the correct model
-    this.companyModel.size = this.companySizeOptions[this.companySizeOptions.findIndex(option => {
-      return option.dbValue == this.companyModel.size
-    })].id;
   }
 
   /*

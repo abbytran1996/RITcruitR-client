@@ -31,21 +31,17 @@
             </label>
             <ion-label class="range-label left">LESS IMPORTANT</ion-label>
             <ion-label class="range-label right">MORE IMPORTANT</ion-label>
-            <ion-range class="labeled" name="locationPreferenceWeight" min="1" max="10" step="1" snaps="true" color="primary" [(ngModel)]="studentCompanySizeWeight">
+            <ion-range class="labeled" name="locationPreferenceWeight" min="0" max="50" step="10" snaps="true" color="primary" [(ngModel)]="studentCompanySizeWeight">
             </ion-range>
           </div>
           <!-- End Weight -->
 
           <!-- Preference Value -->
-          <div class="rec-input-group-compact">
-            <label class="rec-label full-width rl-primary">
-              PREFERRED COMPANY SIZE
-              <ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="companySizePrefInfo()"></ion-icon>
-            </label>
-            <ion-label class="range-label left">{{ companySizeOptions[1].text }}</ion-label>
-            <ion-label class="range-label right">{{ companySizeOptions[companySizeOptions.length - 1].text }}</ion-label>
-            <ion-range class="labeled" name="locationPreferenceWeight" min="1" max="{{ companySizeOptions.length - 1 }}" step="1" snaps="true" color="primary" [(ngModel)]="studentCompanySize">
-            </ion-range>
+          <div class="rec-input-group">
+            <label class="rec-label rl-secondary">PREFERRED COMPANY SIZES</label>
+            <ion-select multiple="true" name="size" class="rec-input ri-grey" required [(ngModel)]="studentCompanySizes">
+              <ion-option *ngFor="let option of companySizeOptions" value="{{ option.value }}">{{ option.text }}</ion-option>
+            </ion-select>
           </div>
           <!-- End Preference Value -->
         </form>
