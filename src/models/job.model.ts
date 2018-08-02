@@ -8,8 +8,8 @@ export class JobModel {
   public description: string = "";
   public locations: any = [];
   public requiredSkills: any = [];
-  public niceToHaveSkills: any = [];
-  public niceToHaveSkillsWeight: number = 0;
+  public recommendedSkills: any = [];
+  public recommendedSkillsWeight: number = 0;
   public minGpa: number = null;
   public hasWorkExperience: boolean = false;
   public matchThreshold: number = 50;
@@ -29,8 +29,8 @@ export class JobModel {
       this.description = init.description || "";
       this.locations = init.locations || [];
       this.requiredSkills = init.requiredSkills || [];
-      this.niceToHaveSkills = init.niceToHaveSkills || [];
-      this.niceToHaveSkillsWeight = init.niceToHaveSkillsWeight || 0;
+      this.recommendedSkills = init.recommendedSkills || [];
+      this.recommendedSkillsWeight = init.recommendedSkillsWeight || 0;
       this.minGpa = init.minGpa || null;
       this.hasWorkExperience = init.hasWorkExperience || false;
       this.matchThreshold = init.matchThreshold || 50;

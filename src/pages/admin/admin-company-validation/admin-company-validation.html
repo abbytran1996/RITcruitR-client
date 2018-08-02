@@ -33,12 +33,12 @@
       <ion-col class="companies-list">
         <ion-row class="fg-grey headers">
           <ion-col col-4>Company Name</ion-col>
-          <ion-col>Time Registered</ion-col>
+          <!-- <ion-col>Time Registered</ion-col> -->
         </ion-row>
 
         <ion-row *ngFor="let company of companies" (click)="updateCompany(company)" class="company-container" [ngClass]="{ 'active': currentCompany != undefined && currentCompany.id == company.id }" align-items-center>
           <ion-col col-4><h2>{{ company.companyName }}</h2></ion-col>
-          <ion-col class="fg-grey">{{ company.timeRegistered | date: 'MMMM d, yyyy, h:mm a' }}</ion-col>
+          <!-- <ion-col class="fg-grey">{{ company.timeRegistered | date: 'MMMM d, yyyy, h:mm a' }}</ion-col> -->
         </ion-row>
       </ion-col>
 
@@ -46,7 +46,8 @@
 
       <ion-col class="approval-form">
         <div *ngIf="currentCompany != undefined">
-          <span class="company-name">{{ currentCompany.companyName }}</span><span class="fg-grey">{{ currentCompany.timeRegistered | date: 'MMMM d, yyyy, h:mm a' }}</span>
+          <span class="company-name">{{ currentCompany.companyName }}</span>
+          <!-- <span class="fg-grey">{{ currentCompany.timeRegistered | date: 'MMMM d, yyyy, h:mm a' }}</span> -->
 
           <hr/>
 
@@ -56,7 +57,7 @@
                 <h3><ion-icon name="md-build" class="card-heading-icon fg-primary"></ion-icon>Industries</h3>
                 <div class="company-container-info">
                   <ul>
-                    <li *ngFor="let industry of currentCompany.industries">{{ industry }}</li>
+                    <li *ngFor="let industry of currentCompany.industries">{{ industry.name }}</li>
                   </ul>
                 </div>
               </ion-col>
@@ -89,8 +90,14 @@
           </div>
 
           <div class="company-container" text-right>
-            <button class="rec-btn-small rec-btn-deny rec-btn-admin" (click)="denyCompany(currentCompany)"><ion-icon name="md-thumbs-down" class="card-heading-icon"></ion-icon>Deny</button>
-            <button class="rec-btn-small rec-btn-accept rec-btn-admin" (click)="approveCompany(currentCompany)">Approve<ion-icon name="md-thumbs-up" class="card-heading-icon-right"></ion-icon></button>
+            <button class="rec-btn-small rec-btn-deny rec-btn-admin rec-load-btn" (click)="denyCompany(currentCompany)" [disabled]="saving">
+              <ion-icon name="md-thumbs-down" class="card-heading-icon" [hidden]="saving"></ion-icon>{{ (saving) ? '' : 'Deny' }}
+              <ion-spinner class="white" name="dots" [hidden]="!saving"></ion-spinner>
+            </button>
+            <button class="rec-btn-small rec-btn-accept rec-btn-admin rec-load-btn" (click)="approveCompany(currentCompany)" [disabled]="saving">
+              {{ (saving) ? '' : 'Approve' }}<ion-icon name="md-thumbs-up" class="card-heading-icon-right" [hidden]="saving"></ion-icon>
+              <ion-spinner class="white" name="dots" [hidden]="!saving"></ion-spinner>
+            </button>
           </div>
         </div>
       </ion-col>

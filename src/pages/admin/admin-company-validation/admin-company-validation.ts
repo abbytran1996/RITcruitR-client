@@ -28,6 +28,7 @@ export class AdminCompanyValidationPage {
   
   public isApp = true;
   public user: UserModel;
+  public saving = false;
 
   public companies: Array<CompanyModel> = [];
   public currentCompany: CompanyModel;
@@ -64,6 +65,8 @@ export class AdminCompanyValidationPage {
       resData => {
         this.currentCompany = new CompanyModel(company);
         this.currentRecruiter = new RecruiterModel(resData[0]);
+
+        console.log(this.currentCompany);
       },
       res => {
       }
@@ -74,12 +77,14 @@ export class AdminCompanyValidationPage {
     Approves the company
   */
   approveCompany(company) {
+    this.saving = true;
     this.companyService.approveCompany(company).subscribe(
       resData => {
       },
       res => {
         this.presentToast(company.companyName + " has been approved");
         this.removeCurrentCompany();
+        this.saving = false;
       }
     );
   }
@@ -88,12 +93,14 @@ export class AdminCompanyValidationPage {
     Denies the company
   */
   denyCompany(company) {
+    this.saving = true;
     this.companyService.denyCompany(company).subscribe(
       resData => {
       },
       res => {
         this.presentToast(company.companyName + " has been denied");
         this.removeCurrentCompany();
+        this.saving = false;
       }
     );
   }

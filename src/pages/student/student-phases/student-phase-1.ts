@@ -36,9 +36,6 @@ export class StudentPhase1Page {
   // Match fields
   public matchList: any;
   public matchIndex = 0;
-  public matchPoints = {industry: false, locations: [false, false], skills: []};
-  public matchedIndustries = [];
-  public matchedLocations = [];
   public stage = 0;
   public maxStage = 2;
 
@@ -295,11 +292,17 @@ export class StudentPhase1Page {
   nextMatch() {
     this.matchList = this.helperService.removeFromArrayById(this.matchList, this.match);
     this.stage = 0;
-    this.match = new MatchModel(this.matchList[this.matchIndex]);
-    this.prepMatch();
+
+    if (this.matchList.length > 0) {
+      this.match = new MatchModel(this.matchList[this.matchIndex]);
+    }
+    else {
+      this.match = undefined;
+    }
 
     this.fadeLeft = false;
     this.fadeRightInstant = true;
+    this.pageLoading = false;
   }
 
   /*
@@ -351,7 +354,6 @@ export class StudentPhase1Page {
   getNewMatches(callback?) {
     this.studentService.getNewMatches(this.student.id).subscribe(
       data => {
-        console.log(data);
         this.matchList = this.helperService.sortMatches(data);
 
         if (this.matchList != undefined && this.matchList.length > 0) {
@@ -359,7 +361,7 @@ export class StudentPhase1Page {
 
           this.matchIndex = 0;
           this.match = new MatchModel(this.matchList[this.matchIndex]);
-          this.prepMatch();
+          this.pageLoading = false;
         }
         else {
           this.pageLoading = false;
@@ -386,61 +388,6 @@ export class StudentPhase1Page {
   */
   editPrefs() {
     this.events.publish('tab:editPrefs', this.student);
-  }
-
-  // TODO: Remove comment
-  // I know this function is dusgusting, but I have it in for now for sake of
-  // things working. It isn't really bad performance-wise because I'm capping
-  // the loops at low numbers, but still. Maybe some of this makes more sense
-  // server-side, but that will take a lot of effort to setup so I imagine
-  // that will be more of a summer time patch. TODO: Remove this comment...
-  /*
-    Prepare the current match for the view. Gathers data and sets flags based on matched
-    skills and preferences to show match indicators on the match card.
-  */
-  prepMatch() {
-    this.matchPoints = {industry: false, locations: [false, false], skills: []};
-
-    // No matches in this phase, nothing to prep
-    if (this.match == undefined) {
-      return;
-    }
-
-    // // Check if any preferred industries match
-    // this.studentService.getMatchedIndustries(this.match.id).subscribe(
-    //   data => {
-    //     this.matchedIndustries = data;
-    //     if (this.matchedIndustries != undefined && this.matchedIndustries.length > 0) {
-    //       this.matchPoints.industry = true;
-    //       this.match["matchedIndustry"] = this.matchedIndustries[0];
-    //     }
-    //   }
-    // );
-
-    // // Check if any preferred locations match
-    // let numLocationsToShow = 2;
-    // let locIndex = 0;
-    // this.studentService.getMatchedLocations(this.match.id).subscribe(
-    //   data => {
-    //     this.matchedLocations = data;
-    //     if (this.matchedLocations != undefined && this.matchedLocations.length > 0){
-    //       for (locIndex; locIndex < numLocationsToShow; locIndex++) {
-    //         if (this.matchedLocations.indexOf(this.match.job.locations[locIndex]) > -1) {
-    //           this.matchPoints.locations[locIndex] = true;
-    //         }
-    //       }
-    //     }
-    //   }
-    // );
-
-    // // Get the list of matched skills.
-    // this.studentService.getMatchedSkills(this.match.id).subscribe(
-    //   data => {
-    //     this.match["skillsToShow"] = data;
-    //   }
-    // );
-
-    this.pageLoading = false;
   }
 
   /*

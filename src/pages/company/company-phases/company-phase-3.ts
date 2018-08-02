@@ -173,7 +173,7 @@ export class CompanyPhase3Page {
     Show the match detail screen for the match that was clicked.
   */
   matchDetails(match) {
-    this.currentMatch = new MatchModel(match);
+    this.currentMatch = new MatchModel(match, false);
     this.currentMatch.studentPresentationLinks = this.helperService.convertLinkTypes(this.currentMatch.studentPresentationLinks);
     this.currentMatch.job.presentationLinks = this.helperService.convertLinkTypes(this.currentMatch.job.presentationLinks);
     this.detailMode = true;
@@ -327,14 +327,6 @@ export class CompanyPhase3Page {
       "Student Presentation",
       "This is the student's chance to provide anything interesting to share. This could be a link to a video of the student, a project link, a personal website, or anything else. Tap a link to open it."
     );
-  }
-
-  /*
-    Open the given URL(link) in the browser.
-  */
-  openLink(link) {
-    // Open browser app separately
-    window.open(link, '_system', 'location=yes');
   }
 
   /*

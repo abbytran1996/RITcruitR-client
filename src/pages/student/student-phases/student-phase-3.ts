@@ -156,9 +156,6 @@ export class StudentPhase3Page {
   */
   matchDetails(match) {
     this.currentMatch = new MatchModel(match);
-    this.prepMatch();
-    this.currentMatch.studentPresentationLinks = this.helperService.convertLinkTypes(this.currentMatch.studentPresentationLinks);
-    this.currentMatch.job.presentationLinks = this.helperService.convertLinkTypes(this.currentMatch.job.presentationLinks);
     this.detailMode = true;
     this.reviewStep = 0;
   }
@@ -184,6 +181,8 @@ export class StudentPhase3Page {
     Show the review screens for the current match.
   */
   reviewMatch() {
+    this.currentMatch.studentPresentationLinks = this.helperService.convertLinkTypes(this.currentMatch.studentPresentationLinks);
+    this.currentMatch.job.presentationLinks = this.helperService.convertLinkTypes(this.currentMatch.job.presentationLinks);
     this.reviewMode = true;
     this.reviewStep = 0;
   }
@@ -318,162 +317,6 @@ export class StudentPhase3Page {
   openLink(link) {
     // Open browser app separately
     window.open(link, '_system', 'location=yes');
-  }
-
-  // TODO: Remove comment
-  // I know this function is dusgusting, but I have it in for now for sake of
-  // things working. It isn't really bad performance-wise because I'm capping
-  // the loops at low numbers, but still. Maybe some of this makes more sense
-  // server-side, but that will take a lot of effort to setup so I imagine
-  // that will be more of a summer time patch. TODO: Remove this comment...
-  /*
-    Prepare the current match for the view. Gathers data and sets flags based on matched
-    skills and preferences to show match indicators on the match card.
-  */
-  prepMatch() {
-    this.matchPoints = {industry: false, locations: [false, false], skills: []};
-
-    // Check if any preferred industries match
-    this.student.preferredIndustries.forEach(industry => {
-      if (this.currentMatch.job.company.industries.some(ind => ind === industry)) {
-        if (!this.matchPoints.industry) {
-          this.currentMatch["matchedIndustry"] = industry;
-          this.matchPoints.industry = true;
-        }
-      }
-    });
-
-    // Check if any preferred locations match
-    let numLocationsToShow = 2;
-    let locIndex = 0;
-    for (locIndex; locIndex < numLocationsToShow; locIndex++) {
-      if (this.currentMatch.job.locations[locIndex] != undefined &&
-        this.student.preferredLocations.some(loc => loc === this.currentMatch.job.locations[locIndex])) {
-        this.matchPoints.locations[locIndex] = true;
-      }
-    }
-
-    // Build the list of matched skills. Searches through the job's skills and the
-    // student's skills to show which ones were matched on.
-    let reqSkills = this.currentMatch.job.requiredSkills.map(x => Object.assign({}, x));
-    let reqSkillsMatched = [];
-    let nthSkills = this.currentMatch.job.niceToHaveSkills.map(x => Object.assign({}, x));
-    let nthSkillsMatched = [];
-    this.student.skills.forEach(studentSkill => {
-      if (reqSkills.some(skill => skill.id === studentSkill.id)) {
-        reqSkillsMatched.push(studentSkill);
-        removeSkillFromArray(reqSkills, studentSkill);
-      }
-
-      if (nthSkills.some(skill => skill.id === studentSkill.id)) {
-        nthSkillsMatched.push(studentSkill);
-        removeSkillFromArray(nthSkills, studentSkill);
-      }
-    });
-
-    // Build the list of skills to show
-    let prefNumReqSkillsToShow = 3;
-    let prefNumNthSkillsToShow = 1;
-    let prefTotalSkillsToShow = prefNumReqSkillsToShow + prefNumNthSkillsToShow;
-    let skillsToShow = [];
-    let reqSkillsToShow = [];
-    let nthSkillsToShow = [];
-    let toRemove = [];
-
-    // Add up to the preferred number of matched required skills
-    for (let i = 0; i < prefNumReqSkillsToShow; i++) {
-      if (reqSkillsMatched[i] != undefined) {
-        reqSkillsToShow.push(reqSkillsMatched[i]);
-        toRemove.push(reqSkillsMatched[i]);
-        this.matchPoints.skills.push(true);
-      }
-    }
-    toRemove.forEach(el => {removeSkillFromArray(reqSkillsMatched, el);});
-    toRemove = [];
-
-    // If additional required skills should be shown
-    if (reqSkillsToShow.length < prefNumReqSkillsToShow &&
-        reqSkills.length >= (prefNumReqSkillsToShow - reqSkillsMatched.length)) {
-      for (let i = 0; i < prefNumReqSkillsToShow - reqSkillsMatched.length; i++) {
-        if (reqSkills[i] != undefined) {
-          reqSkillsToShow.push(reqSkills[i]);
-          toRemove.push(reqSkills[i]);
-          this.matchPoints.skills.push(false);
-        }
-      }
-    }
-    toRemove.forEach(el => {removeSkillFromArray(reqSkills, el);});
-    toRemove = [];
-
-    // Add up to the preferred number of matched nice to have skills
-    for (let i = 0; i < prefNumNthSkillsToShow; i++) {
-      if (nthSkillsMatched[i] != undefined) {
-        nthSkillsToShow.push(nthSkillsMatched[i]);
-        toRemove.push(nthSkillsMatched[i]);
-        this.matchPoints.skills.push(true);
-      }
-    }
-    toRemove.forEach(el => {removeSkillFromArray(nthSkillsMatched, el);});
-    toRemove = [];
-
-    // If additional nice to have skills should eb shown
-    if (nthSkillsToShow.length < prefNumNthSkillsToShow &&
-        nthSkills.length >= (prefNumNthSkillsToShow - nthSkillsMatched.length)) {
-      for (let i = 0; i < prefNumNthSkillsToShow - nthSkillsMatched.length; i++) {
-        if (nthSkills[i] != undefined) {
-          nthSkillsToShow.push(nthSkills[i]);
-          toRemove.push(nthSkills[i]);
-          this.matchPoints.skills.push(false);
-        }
-      }
-    }
-    toRemove.forEach(el => {removeSkillFromArray(nthSkills, el);});
-    toRemove = [];
-
-    let numInArrays = reqSkillsToShow.length + nthSkillsToShow.length;
-    let keepRunning = true;
-    while (keepRunning && numInArrays < prefTotalSkillsToShow) {
-      if (reqSkillsMatched.length > 0) {
-        for (let i = 0; i < prefTotalSkillsToShow - numInArrays; i++) {
-          if (reqSkillsMatched[i] != undefined) {
-            reqSkillsToShow.push(reqSkillsMatched[i]);
-            this.matchPoints.skills.push(true);
-          }
-        }
-      }
-      else if (reqSkills.length > 0) {
-        for (let i = 0; i < prefTotalSkillsToShow - numInArrays; i++) {
-          if (reqSkills[i] != undefined) {
-            reqSkillsToShow.push(reqSkills[i]);
-            this.matchPoints.skills.push(false);
-          }
-        }
-      }
-      else if (nthSkillsMatched.length > 0) {
-        for (let i = 0; i < prefTotalSkillsToShow - numInArrays; i++) {
-          if (nthSkillsMatched[i] != undefined) {
-            nthSkillsToShow.push(nthSkillsMatched[i]);
-            this.matchPoints.skills.push(true);
-          }
-        }
-      }
-      else if (nthSkills.length > 0) {
-        for (let i = 0; i < prefTotalSkillsToShow - numInArrays; i++) {
-          if (nthSkills[i] != undefined) {
-            nthSkillsToShow.push(reqSkills[i]);
-            this.matchPoints.skills.push(false);
-          }
-        }
-      }
-      else {
-        keepRunning = false;
-      }
-
-      numInArrays = reqSkillsToShow.length + nthSkillsToShow.length;
-    }
-
-    skillsToShow = reqSkillsToShow.concat(nthSkillsToShow);
-    this.currentMatch["skillsToShow"] = skillsToShow;
   }
 
   /*
@@ -613,26 +456,5 @@ export class StudentPhase3Page {
       buttons: ['Dismiss']
     });
     alert.present();
-  }
-}
-
-/*
-  Remove the given skill from the given array.
-  This is needed because a simple index splice inline
-  is causing ordering issues.
-*/
-function removeSkillFromArray(array, skill) {
-  let index = 0;
-  let indexToRemove = -1;
-  array.forEach(skillInArr => {
-    if (skillInArr.id == skill.id) {
-      indexToRemove = index;
-    }
-
-    index++;
-  });
-
-  if (indexToRemove > -1) {
-    array.splice(indexToRemove, 1);
   }
 }

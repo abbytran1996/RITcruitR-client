@@ -40,11 +40,31 @@
         <form #form0="ngForm">
           <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
             <label class="rec-label rl-secondary">UNIVERSITY</label>
-            <input type="text" name="school" class="rec-input ri-grey" required [(ngModel)]="educationModel.school">
+            <select-searchable
+              name="university"
+              class="rec-input ri-grey clearfix"
+              required
+              [(ngModel)]="educationModel.school"
+              [items]="universityOptions"
+              itemTextField="name"
+              [canSearch]="true"
+              [multiple]="false"
+              title="University">
+            </select-searchable>
           </div>
           <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
             <label class="rec-label rl-secondary">MAJOR</label>
-            <input type="text" name="major" class="rec-input ri-grey" required [(ngModel)]="educationModel.major">
+            <select-searchable
+              name="major"
+              class="rec-input ri-grey clearfix"
+              required
+              [(ngModel)]="educationModel.major"
+              [items]="majorOptions"
+              itemTextField="name"
+              [canSearch]="true"
+              [multiple]="false"
+              title="Major">
+            </select-searchable>
           </div>
           <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
             <label class="rec-label rl-secondary">GPA</label>

@@ -213,7 +213,7 @@ export class JobPostingService {
     // - Expects a job id number
     // - Returns a list of MatchModels
     getFinalPhaseMatchesByJob(jobId) {
-      return this.apiService.get('/matches/posting/' + jobId + '?phase=interview');
+      return this.apiService.get('/matches/posting/' + jobId + '?phase=final');
     }
 
     //=========================================================================
@@ -286,6 +286,14 @@ export class JobPostingService {
     // - Expects a JobModel id number
     // - Returns the number of matches in that phase
     getNumFinalMatches(jobId) {
-        return this.apiService.get("/matches/posting/" + jobId + "/count?phase=interview");
+        return this.apiService.get("/matches/posting/" + jobId + "/count?phase=final");
+    }
+
+    //=========================================================================
+    // * GET NUM ALL MATCHES                                                  *
+    //=========================================================================
+    // - Gets the number matches the job with the given id has in all phases
+    getNumAllMatches(jobId) {
+      return this.apiService.get("/matches/posting/" + jobId + "/count");
     }
 }

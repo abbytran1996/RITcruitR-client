@@ -230,11 +230,19 @@ export class StudentPhase2Page {
   nextMatch() {
     this.matchList = this.helperService.removeFromArrayById(this.matchList, this.match);
     this.stage = 0;
-    this.match = new MatchModel(this.matchList[this.matchIndex]);
-    this.prepMatch();
+
+    if (this.matchList.length > 0) {
+      this.match = new MatchModel(this.matchList[this.matchIndex]);
+      this.displayLinks = this.helperService.convertLinkTypes(this.match.job.presentationLinks);
+    }
+    else {
+      this.match = undefined;
+      this.displayLinks = undefined;
+    }
 
     this.fadeLeft = false;
     this.fadeRightInstant = true;
+    this.pageLoading = false;
   }
 
   /*
@@ -322,7 +330,7 @@ export class StudentPhase2Page {
 
           this.matchIndex = 0;
           this.match = new MatchModel(this.matchList[this.matchIndex]);
-          this.prepMatch();
+          this.displayLinks = this.helperService.convertLinkTypes(this.match.job.presentationLinks);
           this.pageLoading = false;
         }
         else {
@@ -336,33 +344,6 @@ export class StudentPhase2Page {
         console.log(error);
       }
     );
-  }
-
-  /*
-    Prepare the current match for the view. Gathers data and sets flags based on matched
-    preferences to show match indicators on the match card. Thisa only matches industries.
-  */
-  prepMatch() {
-    // Set the current match to the current index
-    this.match = new MatchModel(this.matchList[this.matchIndex]);
-    this.displayLinks = this.helperService.convertLinkTypes(this.match.job.presentationLinks);
-
-    // No matches in this phase, nothing to prep
-    if (this.match == undefined) {
-      return;
-    }
-
-    let matchPoints = { industry: false };
-
-    // Check if any preferred industries match
-    this.student.preferredIndustries.forEach(industry => {
-      if (this.match.job.company.industries.some(ind => ind === industry)) {
-        if (!matchPoints.industry) {
-          this.match["matchedIndustry"] = industry;
-          matchPoints.industry = true;
-        }
-      }
-    });
   }
 
   /*

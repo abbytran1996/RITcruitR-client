@@ -42,14 +42,14 @@
 
         <div class="match-card-header" [ngClass]="{'large': helperService.isMatchHeaderLarge(match, 'studentName')}">
           <h3 class="title fg-primary text-center">{{ match.student.firstName }} {{ match.student.lastName }}</h3>
-          <p class="fg-grey text-center">{{ match.student.major }}</p>
+          <p class="fg-grey text-center">{{ match.student.major.name }}</p>
           <div class="duration-wrapper" [ngClass]="{'duration-notice': match.job.numDaysRemaining < 4, 'duration-urgent': match.job.numDaysRemaining == 1}">
             <ion-icon class="duration-icon" name="md-time"></ion-icon>
             <span>{{ match.job.numDaysRemaining }}</span>
           </div>
           <div class="score-wrapper" [ngClass]="{'score-high': match.matchStrength >= .8}">
             <ion-icon class="score-icon" name="md-speedometer"></ion-icon>
-            <span>{{ match.matchStrength * 100 | number:'2.0'}}%</span>
+            <span>{{ match.matchStrength * 100 | number:'2.0-0'}}%</span>
           </div>
         </div>
 
@@ -57,7 +57,7 @@
         <div class="match-card-content" [ngClass]="{'slide-left': stage > 0, 'large': helperService.isMatchHeaderLarge(match, 'studentName')}">
           <div class="content-section university">
             <h3 class="heading fg-dark"><ion-icon name="md-bookmarks" class="card-heading-icon"></ion-icon>University:</h3>
-            <p class="compact">{{ match.student.school }}</p>
+            <p class="compact">{{ match.student.school.name }}</p>
           </div>
           <div class="content-section grad-date">
             <h3 class="heading fg-dark"><ion-icon name="md-calendar" class="card-heading-icon"></ion-icon>Graduation Date:</h3>
@@ -68,10 +68,15 @@
             <p class="compact">{{ match.student.gpa }}</p>
           </div>
           <div class="content-section skills">
-            <h3 class="heading fg-dark"><ion-icon name="md-build" class="card-heading-icon"></ion-icon>Top Skills:</h3>
+            <h3 class="heading fg-dark"><ion-icon name="md-build" class="card-heading-icon"></ion-icon>Top Skills: <span class="fg-grey more-skills" (click)="toggleOtherSkills()">{{ (showOtherSkills == true) ? '(Show Less)' : '(Show More)'}}</span></h3>
             <ul class="rec-ul">
-              <li *ngFor="let skill of match.student.skills | slice:0:2; let i = index" class="fg-dark" [hidden]="skill == undefined">
-                {{ (skill != undefined) ? skill.name : "" }}
+              <li *ngFor="let skill of match.matchDisplay.skills; let i = index" [hidden]="skill == undefined">
+                {{ skill?.value.name }}
+                <span class="match-check" [hidden]="!skill?.matched"><ion-icon name="checkmark" class=""></ion-icon></span>
+              </li>
+              <li *ngFor="let skill of match.matchDisplay.otherSkills; let i = index" [hidden]="skill == undefined || showOtherSkills == false">
+                {{ skill?.value.name }}
+                <span class="match-check" [hidden]="!skill?.matched"><ion-icon name="checkmark" class=""></ion-icon></span>
               </li>
             </ul>
           </div>

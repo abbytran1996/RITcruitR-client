@@ -904,6 +904,7 @@ ion-icon.rec-btn-icon {
   color: rgba(255, 255, 255, 0.74);
   z-index: 1;
   font-size: 40px;
+  font-style: normal;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
@@ -920,6 +921,22 @@ ion-icon.rec-btn-icon {
 
 .fab-br {
   bottom: 20px !important;
+}
+
+.item-details-icon {
+  position: absolute;
+  right: 55px !important;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px !important;
+  font-weight: normal !important;
+  background-color: map-get($colors, primary);
+  color: rgba(255, 255, 255, 0.911);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 30px;
 }
 
 
@@ -2257,6 +2274,14 @@ ion-refresher-content {
   margin-top: 0;
   border-top: 2px solid #f8f8f85c;
   padding-top: 10px;
+}
+
+.num-matches-spinner {
+  transform: scale(.7);
+
+  svg circle {
+    fill: #FFFFFF;
+  }
 }
 
 

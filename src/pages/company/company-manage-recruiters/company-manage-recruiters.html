@@ -1,0 +1,66 @@
+<ion-header class="rec-header">
+  <ion-row>
+    <!-- Back Icon -->
+    <ion-row class="row-back-icon">
+      <ion-icon name="arrow-round-back" class="icon-link back-icon block fg-dark opacity-50" (click)="backBtn()"></ion-icon>
+    </ion-row>
+    <!-- End Back Icon -->
+
+    <!-- Title -->
+    <ion-row class="row-title">
+      <h1 class="fg-grey text-center no-padding">RecruitR</h1>
+      <h3 class="text-center no-padding">Manage Recruiters</h3>
+    </ion-row>
+    <!-- End Title -->
+
+  </ion-row>
+</ion-header>
+
+<ion-content padding class="rec-content bg-white">
+  <div class="loader-wrapper" *ngIf="loading">
+    <ion-spinner name="bubbles" class="primary"></ion-spinner>
+  </div>
+  <div class="recruiters-wrapper" [hidden]="loading">
+    <ion-list class="rec-reorder-list">
+      <div class="list-header-wrapper">
+        <ion-list-header>COMPANY RECRUITER</ion-list-header>
+        <button class="rec-btn-circle-small rec-btn-primary list-add-btn" (click)="addRecruiter()" [disabled]="loading">
+          <ion-icon name="md-add" class="rec-btn-icon"></ion-icon>
+        </button>
+      </div>
+      <ion-item-sliding *ngFor="let recruiter of allRecruiters; let i = index" class="list-item-card outer fake-link">
+        <ion-item class="list-item-card inner bg-superlight">
+          <div class="item-card-content">
+            <h5>{{ recruiter.firstName }} {{ recruiter.lastName }} <span *ngIf="recruiterModel.id == recruiter.id" class="fg-accept self-tag">(SELF)</span></h5>
+            <p>{{ recruiter.email }}</p>
+            <ion-icon name="md-eye" class="item-details-icon fake-link" (click)="showRecruiterDetails(recruiter)"></ion-icon>
+            <ion-icon name="md-close-circle" class="fake-link remove-btn-circle" (click)="removeRecruiter(i)"></ion-icon>
+          </div>
+        </ion-item>
+        <ion-item-options side="left">
+          <button ion-button color="accent" (click)="showRecruiterDetails(recruiter)" class="font-body">
+            <ion-icon name="md-eye"></ion-icon>
+            Details
+          </button>
+        </ion-item-options>
+        <ion-item-options side="right">
+          <button ion-button color="deny" (click)="removeRecruiter(i)" class="font-body">
+            <ion-icon name="md-close-circle"></ion-icon>
+            Remove
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+  </div>
+</ion-content>
+
+<!-- Button Footer -->
+<ion-footer class="button-footer">
+  <ion-row>
+    <button class="rec-btn rec-btn-primary btn-stacked center rec-load-btn" (click)="doneClicked()" [disabled]="loading">
+      {{ (loading) ? '' : 'Done' }}
+      <ion-spinner class="white" name="dots" [hidden]="!loading"></ion-spinner>
+    </button>
+  </ion-row>
+</ion-footer>
+<!-- End Button Footer -->

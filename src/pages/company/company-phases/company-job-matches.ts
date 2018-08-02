@@ -28,6 +28,7 @@ export class CompanyJobMatchesPage {
   public jobList = [];
   public pageLoading = true;
   public activeJobs = true;
+  public initialLoad = true;
 
   constructor(
     public navCtrl: NavController,
@@ -55,8 +56,15 @@ export class CompanyJobMatchesPage {
       this.getActiveJobs();
     });
 
+    if (!this.initialLoad && this.recruiter != undefined) {
+      this.activeJobs = true;
+      this.pageLoading = true;
+      this.getActiveJobs();
+    }
+
     // Hide the tabs bar on this page
     this.events.publish('tabs:setHidden', true, Date.now());
+    this.initialLoad = false;
   }
 
   /*
@@ -229,30 +237,17 @@ export class CompanyJobMatchesPage {
           this.pageLoading = false;
         }
 
-        // TODO: Replace this crazy amount of calls with the singel call to get all numbers once it is implemented properly
+        // Get the match count for each job
         this.jobList.forEach((job, index) => {
-          this.jobPostingService.getNumPhase1Matches(job.id).subscribe(
-            data1 => {
-
-              // Get phase 2 num
-              this.jobPostingService.getNumPhase2Matches(job.id).subscribe(
-                data2 => {
-
-                  // Get final phase num
-                  this.jobPostingService.getNumFinalMatches(job.id).subscribe(
-                    data3 => {
-                      this.jobList[index]["numMatches"] = (data1 || 0) + (data2 || 0) + (data3 || 0);
-
-                      if (index == this.jobList.length - 1) {
-                        this.pageLoading = false;
-                      }
-                    }, res => { }
-                  );
-                }, res => { }
-              );
-            }, res => { }
+          this.jobPostingService.getNumAllMatches(job.id).subscribe(
+            data => {
+              this.jobList[index]["numMatches"] = data || 0;
+            },
+            res => { }
           );
         });
+
+        this.pageLoading = false;
 
         if (callback != undefined) callback();
       },

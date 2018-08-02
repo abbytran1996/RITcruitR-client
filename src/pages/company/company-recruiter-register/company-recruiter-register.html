@@ -50,6 +50,7 @@
               required
               [(ngModel)]="companyModel.industries"
               [items]="industryOptions"
+              itemTextField="name"
               [canSearch]="true"
               [multiple]="true"
               title="Industries">
@@ -80,7 +81,7 @@
           <div class="rec-input-group">
             <label class="rec-label rl-secondary">COMPANY SIZE</label>
             <ion-select name="size" class="rec-input ri-grey" required [(ngModel)]="companyModel.size">
-              <ion-option *ngFor="let option of companySizeOptions" value="{{ option.id }}">{{ option.text }}</ion-option>
+              <ion-option *ngFor="let option of companySizeOptions" value="{{ option.value }}">{{ option.text }}</ion-option>
             </ion-select>
           </div>
           <div class="rec-input-group">

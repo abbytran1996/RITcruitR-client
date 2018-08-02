@@ -6,4 +6,12 @@ page-company-phase-1 {
       color: map-get($colors, primary);
     }
   }
+
+  .more-skills {
+    font-size: 14px;
+    margin-left: 2px;
+    font-family: map-get($font-bodybold, family);
+    color: map-get($colors, primary) !important;
+    border-radius: 30px;
+  }
 }

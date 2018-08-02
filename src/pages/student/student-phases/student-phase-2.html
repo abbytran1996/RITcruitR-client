@@ -30,14 +30,17 @@
           <!-- Card Header -->
           <div class="match-card-header" [ngClass]="{'large': helperService.isMatchHeaderLarge(match, 'companyName')}">
             <h3 class="title fg-primary text-center">{{ match.job.company.companyName }}</h3>
-            <p class="fg-grey text-center">{{ (match.matchedIndustry) ? match.matchedIndustry : match.job.company.industries[0] }}</p>
+            <p class="fg-grey text-center">
+              {{ match.matchDisplay.industry.value }}
+              <span class="match-check" [hidden]="!match.matchDisplay.industry.matched"><ion-icon name="checkmark" class=""></ion-icon></span>
+            </p>
             <div class="duration-wrapper" [ngClass]="{'duration-notice': match.job.numDaysRemaining < 4, 'duration-urgent': match.job.numDaysRemaining == 1}">
               <ion-icon class="duration-icon" name="md-time"></ion-icon>
               <span>{{ match.job.numDaysRemaining }}</span>
             </div>
             <div class="score-wrapper" [ngClass]="{'score-high': match.matchStrength >= .8}">
               <ion-icon class="score-icon" name="md-speedometer"></ion-icon>
-              <span>{{ match.matchStrength * 100 | number:'2.0'}}%</span>
+              <span>{{ match.matchStrength * 100 | number:'2.0-0'}}%</span>
             </div>
           </div>
           <!-- End Card Header -->
@@ -66,7 +69,7 @@
               <!-- Existing Links Form -->
               <form #existingForm="ngForm" class="existing-link-list">
                 <div class="rec-input-group-small">
-                  <label class="rec-label rl-primary">SELECT EXISTING LINK</label>
+                  <label class="rec-label rl-primary">SELECT EXISTING LINKS</label>
                   <ion-select name="selectedLink" class="rec-input ri-grey" [(ngModel)]="existingLinkModel" multiple="false" (ionChange)="selectChanged($event)">
                     <ion-option *ngIf="existingLinkOptions && existingLinkOptions.length > 0" value="-1">None</ion-option>
                     <ion-option *ngFor="let link of existingLinkOptions" [value]="link">{{ link.title }}</ion-option>
