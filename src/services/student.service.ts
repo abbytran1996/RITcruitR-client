@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 
+import { StudentModel } from '@app/models';
+
 import { ApiService } from './api.service';
 
 @Injectable()
@@ -181,7 +183,7 @@ export class StudentService {
     }
 
     //=========================================================================
-    // * GET ARCHIVED MATCHES                                                    *
+    // * GET ARCHIVED MATCHES                                                 *
     //=========================================================================
     // - Get all archived matches
     // - Expects a StudentModel id number
@@ -261,5 +263,58 @@ export class StudentService {
     // - Returns a set of locations
     getMatchedLocations(matchId) {
       return this.apiService.get('/matches/' + matchId + "/matchedLocations");
+    }
+
+    //=========================================================================
+    // * IMPORT STUDENT PROFILE                                               *
+    //=========================================================================
+    // - Import a student profile from the API being used.
+    // - Expects a StudentModel and an authData object
+    //     - Contains the data needed for authentication with the API being used.
+    //     - For example (for portfolium): {api: "portfolium", identity: "", password: ""}
+    // - Returns the needed student information from the API.
+    importStudentProfile(student: StudentModel, authData) {
+        // NOTE: This is currently mocking what will be returned by the
+        //       server if this were fully implemented. If implemented,
+        //       remove all of the current code and uncomment the
+        //       below code and ensure the proper URL:
+        // this.apiService.post("/student/" + student.id + "/import", authData);
+
+        // TEMP EXAMPLE IMPORT, Remove if importing is actually hooked up
+        // Example API profile data:
+        // email: "import@rit.edu",
+        // phone: "1234567890",
+        // github_url: "https://www.github.com/import123",
+        // personal_url: "http://www.importsite.com",
+        // school: "Rochester Institute of Technology",
+        // major: "Software Engineering",
+        // grad_year: "2018"
+
+        student.contactEmail = "import@rit.edu";
+        student.phoneNumber = "1234567890";
+        student.school = "Rochester Institute of Technology";
+        student.major = "Software Engineering";
+        student.graduationDate = "2018-09-30";
+
+        // Simulating presentation link import because Portfolium has github and personal links.
+        // This will typically be done by the server.
+        this.addStudentPresentationLink(student.id, {title: "GitHub Profile", link: "https://www.github.com/import123"}).subscribe(
+            resData => {
+
+            },
+            res => {
+
+            }
+        );
+        this.addStudentPresentationLink(student.id, { title: "Personal Site", link: "http://www.importsite.com" }).subscribe(
+            resData => {
+
+            },
+            res => {
+
+            }
+        );
+
+        return student;
     }
 }

@@ -70,6 +70,7 @@ import {
   JobLocationsPreferenceModal,
   JobIndustriesPreferenceModal,
   CompanySizePreferenceModal,
+  StudentImportModal,
   RecruiterDetailsModal
 } from '@app/pages/modals';
 
@@ -132,6 +133,7 @@ import {
     JobLocationsPreferenceModal,
     JobIndustriesPreferenceModal,
     CompanySizePreferenceModal,
+    StudentImportModal,
     RecruiterDetailsModal,
 
     PhonePipe
@@ -204,6 +206,7 @@ import {
     JobLocationsPreferenceModal,
     JobIndustriesPreferenceModal,
     CompanySizePreferenceModal,
+    StudentImportModal,
     RecruiterDetailsModal
   ],
 

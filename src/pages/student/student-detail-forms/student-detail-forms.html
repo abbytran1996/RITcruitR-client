@@ -1,7 +1,7 @@
 <ion-header class="rec-header">
   <ion-row>
     <!-- Back Icon -->
-    <ion-row class="row-back-icon" [hidden]="isSetup && formSeq.currentStep == formSeq.startStep">
+    <ion-row class="row-back-icon" [hidden]="isSetup && formSeq.currentStep == formSeq.startStep && importEnabled == false">
       <ion-icon name="arrow-round-back" class="icon-link back-icon block fg-dark opacity-50" (click)="backBtn()"></ion-icon>
     </ion-row>
     <!-- End Back Icon -->

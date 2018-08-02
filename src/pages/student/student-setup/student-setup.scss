@@ -10,4 +10,14 @@ page-student-setup {
   .row-buttons {
     margin-top: 6vh;
   }
+
+  ion-content.import-enabled {
+    .row-message {
+      margin-top: 5vh;
+    }
+
+    .row-buttons {
+      margin-top: 5vh;
+    }
+  }
 }

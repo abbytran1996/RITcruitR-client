@@ -1,0 +1,49 @@
+<ion-header class="rec-header">
+  <ion-row>
+    <!-- Back Icon -->
+    <ion-row class="row-back-icon">
+      <ion-icon name="close" class="icon-link back-icon block fg-dark opacity-50" (click)="backClicked()"></ion-icon>
+    </ion-row>
+    <!-- End Back Icon -->
+
+    <!-- Title -->
+    <ion-row class="row-title">
+      <h1 class="fg-grey text-center no-padding">RecruitR</h1>
+      <h3 class="text-center no-padding">Portfolium Import</h3>
+    </ion-row>
+    <!-- End Title -->
+  </ion-row>
+</ion-header>
+
+<ion-content padding class="rec-content bg-white">
+  <div class="loader-wrapper" *ngIf="pageLoading">
+    <ion-spinner name="bubbles" class="primary"></ion-spinner>
+  </div>
+  <div [hidden]="pageLoading">
+    <ion-row class="row-form">
+      <ion-col>
+        <form #form="ngForm">
+          <div class="rec-input-group-small">
+            <label class="rec-label rl-secondary">PORTFOLIUM EMAIL</label>
+            <input type="email" name="email" class="rec-input ri-grey" required [(ngModel)]="authData.email">
+          </div>
+          <div class="rec-input-group-small">
+            <label class="rec-label rl-secondary">PORTFOLIUM PASSWORD</label>
+            <input type="password" name="password" class="rec-input ri-grey" required [(ngModel)]="authData.password">
+          </div>
+        </form>
+      </ion-col>
+    </ion-row>
+  </div>
+</ion-content>
+
+<!-- Button Footer -->
+<ion-footer class="button-footer">
+  <ion-row>
+    <button class="rec-btn-small rec-btn-primary btn-stacked center rec-load-btn" (click)="doneClicked()" [disabled]="saving">
+      {{ (saving) ? '' : 'Import' }}
+      <ion-spinner class="white" name="dots" [hidden]="!saving"></ion-spinner>
+    </button>
+  </ion-row>
+</ion-footer>
+<!-- End Button Footer -->
