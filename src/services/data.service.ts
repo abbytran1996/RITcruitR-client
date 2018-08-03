@@ -77,7 +77,6 @@ export class DataService {
     // - Returns the structured list of company sizes for student preference
     getCompanySizesForStudent() {
       return [
-        { text: "No Preference", value: "DONT_CARE" },
         { text: "Startup (< 100)", value: "STARTUP" },
         { text: "Small (100-300)", value: "SMALL" },
         { text: "Medium (301-500)", value: "MEDIUM" },

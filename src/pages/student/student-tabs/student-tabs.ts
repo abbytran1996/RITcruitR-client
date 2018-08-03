@@ -67,26 +67,31 @@ export class StudentTabsPage {
   ) {
     this.student = navParams.get("student");
 
-    // If a student model is sent to this page, use it, otherwise get it from the DB.
-    if (this.student != undefined) {
-      this.studentTabParams = {student: this.student};
-      this.getNumMatches();
-      this.loadingStudent = false;
-    }
-    else {
+    if (this.student == undefined) {
       let userEmail = window.localStorage.getItem("email");
       this.studentService.getStudentByEmail(userEmail).subscribe(
         data => {
           this.student = new StudentModel(data);
-          this.studentTabParams = {student: this.student};
-          this.events.publish('tabs:student', this.student, Date.now());
-          this.getNumMatches();
+
+          if (navParams.get("firstLoad") == true) {
+            this.events.publish('firstload:student', this.student);
+            this.studentTabParams = { student: this.student };
+          }
+          else {
+            this.events.publish('tabs:student', this.student);
+            this.studentTabParams = { student: this.student };
+          }
+
           this.loadingStudent = false;
         },
         error => {
           this.presentToast("An error occurred loading your account, please try again later");
         }
       );
+    }
+    else {
+      this.studentTabParams = { student: this.student };
+      this.loadingStudent = false;
     }
 
     // If a message was sent with nav params, show it.

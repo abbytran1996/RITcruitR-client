@@ -238,6 +238,8 @@ export class StudentPhase2Page {
     else {
       this.match = undefined;
       this.displayLinks = undefined;
+      this.pageLoading = true;
+      this.getPhase2Matches();
     }
 
     this.fadeLeft = false;
@@ -323,19 +325,18 @@ export class StudentPhase2Page {
   getPhase2Matches(callback?) {
     this.studentService.getPhase2Matches(this.student.id).subscribe(
       data => {
-        this.matchList = this.helperService.sortMatches(data);
-
-        if (this.matchList != undefined && this.matchList.length > 0) {
-          this.events.publish('tab:numMatches', this.student);
-
+        if (data == undefined || data.length == 0) {
+          this.pageLoading = false;
+        }
+        else {
+          this.matchList = this.helperService.sortMatches(data);
           this.matchIndex = 0;
           this.match = new MatchModel(this.matchList[this.matchIndex]);
           this.displayLinks = this.helperService.convertLinkTypes(this.match.job.presentationLinks);
           this.pageLoading = false;
         }
-        else {
-          this.pageLoading = false;
-        }
+
+        this.events.publish('tab:numMatches', this.student);
 
         if (callback != undefined) callback();
       },

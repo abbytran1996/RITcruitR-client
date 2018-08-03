@@ -57,23 +57,8 @@ export class CompanyPhase1Page {
     public helperService: HelperService
   ) {
     this.recruiter = navParams.get("recruiter");
-  }
 
-  /*
-    Called when this page is "entered". Subscribe to an event to retrieve
-    the recruiter model after an async call in the parent tabs page.
-  */
-  ionViewDidEnter() {
-    this.pageLoading = true;
-
-    // Show the tabs bar now that we're in the main flow
-    this.events.publish('tabs:setHidden', false, Date.now());
-
-    if (this.recruiter != undefined) {
-      this.getCurrentJob();
-      this.getMatches();
-    }
-    else {
+    if (this.recruiter == undefined) {
       this.events.subscribe('tabs:recruiter', (recruiter) => {
         this.recruiter = recruiter;
         this.getCurrentJob();
@@ -83,9 +68,24 @@ export class CompanyPhase1Page {
   }
 
   /*
+    Called when this page is "entered". Subscribe to an event to retrieve
+    the recruiter model after an async call in the parent tabs page.
+  */
+  ionViewDidEnter() {
+    // Show the tabs bar now that we're in the main flow
+    this.events.publish('tabs:setHidden', false);
+
+    if (this.recruiter != undefined && (this.matchList == undefined || this.matchList.length < 1)) {
+      this.pageLoading = true;
+      this.getCurrentJob();
+      this.getMatches();
+    }
+  }
+
+  /*
     Called when this page is "exited". Unsubscribe to events.
   */
-  ionViewDidLeave() {
+  ionViewWillUnload() {
     this.events.unsubscribe("tabs:recruiter");
   }
 
@@ -233,6 +233,8 @@ export class CompanyPhase1Page {
     }
     else {
       this.match = undefined;
+      this.pageLoading = true;
+      this.getMatches();
     }
 
     this.fadeLeft = false;
@@ -288,19 +290,18 @@ export class CompanyPhase1Page {
   getMatches(callback?) {
     this.jobPostingService.getProblemPhaseMatchesByJob(this.currentJob.id).subscribe(
       data => {
-        this.matchList = this.helperService.sortMatches(data);
-
-        this.events.publish('tabs:numMatches', this.currentJob);
-        
-        if (this.matchList != undefined && this.matchList.length > 0) {
+        if (data == undefined || data.length == 0) {
+          this.pageLoading = false;
+        }
+        else {
+          this.matchList = this.helperService.sortMatches(data);
           this.matchIndex = 0;
           this.stage = 0;
           this.match = new MatchModel(this.matchList[this.matchIndex], false);
           this.pageLoading = false;
         }
-        else {
-          this.pageLoading = false;
-        }
+
+        this.events.publish('tabs:numMatches', this.currentJob);
 
         if (callback != undefined) callback();
       },

@@ -41,36 +41,32 @@ export class CompanyJobMatchesPage {
   ) {
     this.recruiter = navParams.get("recruiter");
 
-    if (this.recruiter != undefined) {
-      this.getActiveJobs();
+    if (this.recruiter == undefined) {
+      this.events.subscribe('tabs:recruiter', (recruiter) => {
+        this.recruiter = recruiter;
+        this.getActiveJobs();
+      });
     }
   }
 
   /*
-    Called when this page is "entered". Subscribe to an event to retrieve
-    the recruiter model after an async call in the parent tabs page.
+    Called when this page is "entered". 
   */
   ionViewDidEnter() {
-    this.events.subscribe('tabs:recruiter', (recruiter) => {
-      this.recruiter = recruiter;
-      this.getActiveJobs();
-    });
+    // Hide the tabs bar on this page
+    this.events.publish('tabs:setHidden', true);
 
-    if (!this.initialLoad && this.recruiter != undefined) {
+    if (this.recruiter != undefined) {
       this.activeJobs = true;
       this.pageLoading = true;
       this.getActiveJobs();
     }
-
-    // Hide the tabs bar on this page
-    this.events.publish('tabs:setHidden', true, Date.now());
-    this.initialLoad = false;
   }
 
   /*
     Called when this page is "exited". Unsubscribe to events.
   */
-  ionViewDidLeave() {
+  ionViewWillUnload() {
    this.events.unsubscribe("tabs:recruiter");
   }
 
@@ -232,10 +228,6 @@ export class CompanyJobMatchesPage {
     this.jobPostingService.getActiveJobsByCompany(this.recruiter.company.id).subscribe(
       data => {
         this.jobList = this.helperService.sortJobs(data);
-
-        if (this.jobList.length == 0) {
-          this.pageLoading = false;
-        }
 
         // Get the match count for each job
         this.jobList.forEach((job, index) => {

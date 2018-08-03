@@ -80,10 +80,19 @@ export class MatchModel {
       this.matchDisplay.locations = this.matchDisplay.locations.slice(0, numLocations);
     }
     else {
-      while (this.matchDisplay.locations.length < numLocations) {
-        this.job.locations.forEach(loc => {
+      let otherLocationOptions = this.job.locations;
+      let matchedLocations = this.matchedLocations;
+      otherLocationOptions = otherLocationOptions.filter(function (loc1) {
+        return matchedLocations.findIndex(loc2 => loc1 == loc2) < 0; // Returns true for skills found in arr2
+      });
+
+      let giveUpLocations = false;
+      while (this.matchDisplay.locations.length < numLocations && !giveUpLocations) {
+        otherLocationOptions.forEach(loc => {
           this.matchDisplay.locations.push({value: loc, matched: false});
         });
+
+        giveUpLocations = true;
       }
     }
 

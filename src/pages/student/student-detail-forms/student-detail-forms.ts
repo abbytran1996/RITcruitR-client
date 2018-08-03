@@ -168,6 +168,11 @@ export class StudentDetailFormsPage {
       if (this.formSeq.currentStep == 0) {
         this.saving = true;
         this.student.updateEducation(this.educationModel);
+
+        if (this.isSetup && this.contactModel.contactEmail == "") {
+          this.contactModel.contactEmail = this.student.email;
+        }
+
         this.studentService.updateStudent(this.student).subscribe(
           data => { },
           res => {
@@ -226,7 +231,7 @@ export class StudentDetailFormsPage {
                 resData => {
                   this.saving = false;
                   this.authService.setLocalVars(this.student.user);
-                  this.navCtrl.push(StudentTabsPage);
+                  this.navCtrl.push(StudentTabsPage, {firstLoad: true});
                 },
                 res => {
 

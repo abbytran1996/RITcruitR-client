@@ -128,6 +128,7 @@ export class CompanyJobCreatePage {
     this.dataService.getSkills().subscribe(
       data => {
         this.reqSkillOptions = data;
+        this.recommendedSkillOptions = data;
 
         // Set the local skills lists to reflect the edit model if edit mode
         if (this.editMode) {

@@ -1261,6 +1261,7 @@ select-searchable-page {
 
         ion-label {
           padding-top: 5px;
+          margin: 0 !important;
 
           h2 {
             font-size: 22px;
@@ -2746,5 +2747,40 @@ ion-icon.card-heading-icon-right {
   }
   100% {
     left: 0px;
+  }
+}
+
+.fade-in {
+  animation-name: fade-in;
+  animation-duration: 1s;
+  opacity: 1;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in-up {
+  animation-name: fade-in-up;
+  animation-duration: 2s;
+  opacity: 1;
+  transform: translateY(0%);
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0%);
   }
 }

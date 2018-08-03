@@ -68,7 +68,7 @@
           </div>
           <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
             <label class="rec-label rl-secondary">GPA</label>
-            <input type="text" name="gpa" class="rec-input ri-grey" required [(ngModel)]="educationModel.gpa">
+            <input type="number" name="gpa" class="rec-input ri-grey" required [(ngModel)]="educationModel.gpa">
           </div>
           <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
             <label class="rec-label rl-secondary">EXPECTED GRADUATION DATE</label>
@@ -101,7 +101,7 @@
       <ion-col>
         <form #form2="ngForm">
           <ion-row class="row-message">
-            <h3>Alter your <span class="fg-accent">job preferencea</span> here.<span [hidden]="isSetup"><br>These will help filter matches.</span></h3>
+            <h3>Alter your <span class="fg-accent">job preferences</span> here.<span [hidden]="isSetup"><br>These will help filter matches.</span></h3>
             <h3 [hidden]="!isSetup">This step is <span class="fg-accent">optional</span> in setup.</h3>
           </ion-row>
           <ion-row class="row-one clearfix">

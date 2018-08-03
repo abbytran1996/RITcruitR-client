@@ -292,8 +292,8 @@ export class StudentService {
 
         student.contactEmail = "import@rit.edu";
         student.phoneNumber = "1234567890";
-        student.school = "Rochester Institute of Technology";
-        student.major = "Software Engineering";
+        student.school = {id: 1, name: "Rochester Institute of Technology"};
+        student.major = {id: 1, name: "Software Engineering"};
         student.graduationDate = "2018-09-30";
 
         // Simulating presentation link import because Portfolium has github and personal links.

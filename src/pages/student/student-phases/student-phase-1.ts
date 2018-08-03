@@ -32,6 +32,7 @@ export class StudentPhase1Page {
   public student: StudentModel;
   public match: MatchModel;
   public pageLoading = true;
+  public firstLoad = false;
 
   // Match fields
   public matchList: any;
@@ -68,7 +69,27 @@ export class StudentPhase1Page {
     private studentService: StudentService,
     public helperService: HelperService
   ) {
-    this.student= navParams.get("student");
+    this.student = navParams.get("student");
+
+    if (this.student == undefined) {
+      this.events.subscribe('firstload:student', (student) => {
+        this.firstLoad = true;
+        this.student = student;
+        this.existingStatementOptions = this.helperService.sortById(this.student.problemStatements, true);
+
+        // Wait a bit longer for new account match generation.
+        setTimeout(() => {
+          this.getNewMatches();
+          this.events.publish('tab:numMatches', this.student);
+        }, 4000);
+      });
+
+      this.events.subscribe('tabs:student', (student) => {
+        this.student = student;
+        this.existingStatementOptions = this.helperService.sortById(this.student.problemStatements, true);
+        this.getNewMatches();
+      });
+    }
   }
 
   /*
@@ -76,20 +97,10 @@ export class StudentPhase1Page {
     Get the list of new matches with the student model.
   */
   ionViewDidEnter() {
-    if (this.matchList == undefined || this.matchList.length < 1) {
+    if (this.student != undefined && (this.matchList == undefined || this.matchList.length < 1)) {
       this.pageLoading = true;
-
-      if (this.student != undefined) {
-        this.getNewMatches();
-        this.existingStatementOptions = this.helperService.sortById(this.student.problemStatements, true);
-      }
-      else {
-        this.events.subscribe('tabs:student', (student) => {
-          this.student = student;
-          this.existingStatementOptions = this.helperService.sortById(this.student.problemStatements, true);
-          this.getNewMatches();
-        });
-      }
+      this.getNewMatches();
+      this.existingStatementOptions = this.helperService.sortById(this.student.problemStatements, true);
     }
   }
 
@@ -97,8 +108,9 @@ export class StudentPhase1Page {
     Called when this page is "exited".
     Unsubscribe from any declared events to avoid double triggering.
   */
-  ionViewDidLeave() {
+  ionViewWillUnload() {
    this.events.unsubscribe("tabs:student");
+   this.events.unsubscribe("firstload:student");
   }
 
   /*
@@ -298,6 +310,8 @@ export class StudentPhase1Page {
     }
     else {
       this.match = undefined;
+      this.pageLoading = true;
+      this.getNewMatches();
     }
 
     this.fadeLeft = false;
@@ -354,18 +368,17 @@ export class StudentPhase1Page {
   getNewMatches(callback?) {
     this.studentService.getNewMatches(this.student.id).subscribe(
       data => {
-        this.matchList = this.helperService.sortMatches(data);
-
-        if (this.matchList != undefined && this.matchList.length > 0) {
-          this.events.publish('tab:numMatches', this.student);
-
+        if (data == undefined || data.length == 0) {
+          this.pageLoading = false;
+        }
+        else {
+          this.matchList = this.helperService.sortMatches(data);
           this.matchIndex = 0;
           this.match = new MatchModel(this.matchList[this.matchIndex]);
           this.pageLoading = false;
         }
-        else {
-          this.pageLoading = false;
-        }
+
+        this.events.publish('tab:numMatches', this.student);
 
         if (callback != undefined) callback();
       },

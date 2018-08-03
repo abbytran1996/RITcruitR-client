@@ -65,26 +65,25 @@ export class CompanyTabsPage {
   ) {
     this.recruiter = navParams.get("recruiter");
 
-    // If recruiter is sent in from previous page, use it, otherwise get the recruiter from the DB.
-    if (this.recruiter != undefined) {
-      this.recruiterTabParams = {recruiter: this.recruiter};
-      this.loadingRecruiter = false;
-    }
-    else {
+    if (this.recruiter == undefined) {
       let userEmail = window.localStorage.getItem("email");
       this.recruiterService.getRecruiterByEmail(userEmail).subscribe(
         data => {
           this.recruiter = new RecruiterModel(data);
           this.recruiter.primary = (AuthService.PRIMARY_RECRUITER == authService.getUserRole(this.recruiter.user));
 
-          this.recruiterTabParams = {recruiter: this.recruiter};
-          this.events.publish('tabs:recruiter', this.recruiter, Date.now());
+          this.events.publish('tabs:recruiter', this.recruiter);
+          this.recruiterTabParams = { recruiter: this.recruiter };
           this.loadingRecruiter = false;
         },
         error => {
           this.presentToast("An error occurred loading your account, please try again later");
         }
       );
+    }
+    else {
+      this.recruiterTabParams = { recruiter: this.recruiter };
+      this.loadingRecruiter = false;
     }
 
     // If a message was sent with nav params, show it.
@@ -136,7 +135,7 @@ export class CompanyTabsPage {
   }
 
   /*
-    Get the number of macthes in each phase.
+    Get the number of matches in each phase.
   */
   getNumMatches(job) {
     // Get phase 1 num

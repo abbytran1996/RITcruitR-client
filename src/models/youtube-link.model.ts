@@ -60,13 +60,15 @@ export class YouTubeLinkModel extends PresentationLinkModel {
     Handle the "opening" of this link type.
   */
   openLink(isApp) {
-    if (isApp) {
-      let ytPlayer = new YoutubeVideoPlayer();
-      ytPlayer.openVideo(String(this.getVideoId));
-    }
-    else {
-      super.openLink(isApp);
-    }
+    // if (isApp) {
+    //   let ytPlayer = new YoutubeVideoPlayer();
+    //   ytPlayer.openVideo(String(this.getVideoId));
+    // }
+    // else {
+    //   super.openLink(isApp);
+    // }
+    
+    super.openLink(isApp);
   }
 
   /*

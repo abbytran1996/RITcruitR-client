@@ -30,19 +30,12 @@
       </div>
       <ion-item-sliding *ngFor="let recruiter of allRecruiters; let i = index" class="list-item-card outer fake-link">
         <ion-item class="list-item-card inner bg-superlight">
-          <div class="item-card-content">
+          <div class="item-card-content" (click)="showRecruiterDetails(recruiter)">
             <h5>{{ recruiter.firstName }} {{ recruiter.lastName }} <span *ngIf="recruiterModel.id == recruiter.id" class="fg-accept self-tag">(SELF)</span></h5>
             <p>{{ recruiter.email }}</p>
-            <ion-icon name="md-eye" class="item-details-icon fake-link" (click)="showRecruiterDetails(recruiter)"></ion-icon>
-            <ion-icon name="md-close-circle" class="fake-link remove-btn-circle" (click)="removeRecruiter(i)"></ion-icon>
           </div>
+          <ion-icon name="md-close-circle" class="fake-link remove-btn-circle" (click)="removeRecruiter(i)"></ion-icon>
         </ion-item>
-        <ion-item-options side="left">
-          <button ion-button color="accent" (click)="showRecruiterDetails(recruiter)" class="font-body">
-            <ion-icon name="md-eye"></ion-icon>
-            Details
-          </button>
-        </ion-item-options>
         <ion-item-options side="right">
           <button ion-button color="deny" (click)="removeRecruiter(i)" class="font-body">
             <ion-icon name="md-close-circle"></ion-icon>

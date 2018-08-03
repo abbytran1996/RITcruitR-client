@@ -61,7 +61,7 @@ export class CompanyPhase2Page {
     public dataService: DataService,
     public domSanitizer: DomSanitizer
   ) {
-    this.recruiter= navParams.get("recruiter");
+    this.recruiter = navParams.get("recruiter");
   }
 
   /*
@@ -215,6 +215,8 @@ export class CompanyPhase2Page {
     else {
       this.match = undefined;
       this.displayLinks = undefined;
+      this.pageLoading = true;
+      this.getMatches();
     }
 
     this.fadeLeft = false;
@@ -270,20 +272,19 @@ export class CompanyPhase2Page {
   getMatches(callback?) {
     this.jobPostingService.getPresentationPhaseMatchesByJob(this.currentJob.id).subscribe(
       data => {
-        this.matchList = this.helperService.sortMatches(data);
-
-        this.events.publish('tabs:numMatches', this.currentJob);
-        
-        if (this.matchList != undefined && this.matchList.length > 0) {
+        if (data == undefined || data.length == 0) {
+          this.pageLoading = false;
+        }
+        else {
+          this.matchList = this.helperService.sortMatches(data);
           this.matchIndex = 0;
           this.stage = 0;
           this.match = new MatchModel(this.matchList[this.matchIndex], false);
           this.displayLinks = this.helperService.convertLinkTypes(this.match.studentPresentationLinks);
           this.pageLoading = false;
         }
-        else {
-          this.pageLoading = false;
-        }
+
+        this.events.publish('tabs:numMatches', this.currentJob);
 
         if (callback != undefined) callback();
       },
