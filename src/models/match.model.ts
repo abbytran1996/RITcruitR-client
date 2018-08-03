@@ -54,6 +54,22 @@ export class MatchModel {
     Prep the match to determine what match data to show on the card.
   */
   prepMatch() {
+
+    // TEMP: generate matched criteria
+    let localStudent = this.student;
+    this.matchedIndustries = this.job.company.industries.filter(function (obj1) {
+      return localStudent.preferredIndustries.findIndex(obj2 => obj1.id == obj2.id) > -1;
+    });
+    this.matchedLocations = this.job.locations.filter(function (obj1) {
+      return localStudent.preferredLocations.findIndex(obj2 => obj1 == obj2) > -1;
+    });
+    this.matchedRequiredSkills = this.job.requiredSkills.filter(function (obj1) {
+      return localStudent.skills.findIndex(obj2 => obj1.id == obj2.id) > -1;
+    });
+    this.matchedRecommendedSkills = this.job.recommendedSkills.filter(function (obj1) {
+      return localStudent.skills.findIndex(obj2 => obj1.id == obj2.id) > -1;
+    });
+
     this.matchDisplay = {
       industry: {},
       locations: [],
