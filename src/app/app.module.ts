@@ -42,6 +42,7 @@ import {
 // Company Module
 import {
   CompanyTabsPage,
+  CompanyWebDashboard,
   CompanyRecruiterRegisterPage,
   CompanyRegisterConfirmPage,
   CompanySetupPage,
@@ -113,6 +114,7 @@ import {
     StudentProblemStatementsPage,
 
     CompanyTabsPage,
+    CompanyWebDashboard,
     CompanyRecruiterRegisterPage,
     CompanyRegisterConfirmPage,
     CompanySetupPage,
@@ -185,6 +187,7 @@ import {
     StudentProblemStatementsPage,
 
     CompanyTabsPage,
+    CompanyWebDashboard,
     CompanyRecruiterRegisterPage,
     CompanyRegisterConfirmPage,
     CompanySetupPage,

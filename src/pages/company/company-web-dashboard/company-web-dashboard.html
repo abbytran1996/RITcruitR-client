@@ -1,0 +1,38 @@
+<ion-menu [content]="content" type="reveal" onload="open()">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>RecruitR</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <button ion-item menuToggle (click)="createCompanyJob()">
+        <ion-icon name="md-add-circle" class="opacity-50"></ion-icon>
+        Create Job
+      </button>
+      <button ion-item menuToggle (click)="editPresentationLinks()">
+        <ion-icon name="md-easel" class="opacity-50"></ion-icon>
+        Presentation Links
+      </button>
+      <button ion-item menuToggle (click)="editRecruiters()" *ngIf="recruiter && recruiter.primary">
+        <ion-icon name="md-contacts" class="opacity-50"></ion-icon>
+        Manage Recruiters
+      </button>
+      <button ion-item menuToggle (click)="editCompanyDetails()" *ngIf="recruiter && recruiter.primary">
+        <ion-icon name="md-list" class="opacity-50"></ion-icon>
+        Company Details
+      </button>
+      <button ion-item menuToggle (click)="editContact()">
+        <ion-icon name="ios-call" class="opacity-50"></ion-icon>
+        Edit Contact Info
+      </button>
+      <button ion-item menuToggle (click)="logout()">
+        <ion-icon name="ios-exit" class="opacity-50"></ion-icon>
+        Logout
+      </button>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<ion-nav [root]="companyJobMatchesTab" [rootParams]="recruiterTabParams" #content></ion-nav>
+

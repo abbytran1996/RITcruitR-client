@@ -8,6 +8,7 @@ export * from './company-recruiter-register/company-recruiter-register';
 export * from './company-register-confirm/company-register-confirm';
 export * from './company-setup/company-setup';
 export * from './company-tabs/company-tabs';
+export * from './company-web-dashboard/company-web-dashboard';
 export * from './recruiter-company-select/recruiter-company-select';
 export * from './company-presentation-links/company-presentation-links';
 export * from './company-manage-recruiters/company-manage-recruiters';

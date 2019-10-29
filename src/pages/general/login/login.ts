@@ -8,7 +8,8 @@ import {
 
 import {
   CompanyTabsPage,
-  CompanyRegisterConfirmPage
+  CompanyRegisterConfirmPage,
+  CompanyWebDashboard
 } from '@app/pages/company';
 
 import { RegisterPage } from '@app/pages/general';
@@ -150,12 +151,6 @@ export class LoginPage {
             --------------------------------------------------------------
           */
           else if (userRole == AuthService.RECRUITER || userRole == AuthService.PRIMARY_RECRUITER) {
-            if (!this.dataService.isApp) {
-              this.presentToast("Recruiter's can only login using the RecruitR mobile app");
-              this.loadingLogin = false;
-              return;
-            }
-
             this.recruiterService.getRecruiterByEmail(userEmail).subscribe(
               data => {
                 let recruiter = new RecruiterModel(data);
@@ -171,7 +166,11 @@ export class LoginPage {
                 }
                 else if (recruiter.company.status == CompanyModel.STATUS_OPTIONS.APPROVED) {
                   this.loadingLogin = false;
-                  this.navCtrl.push(CompanyTabsPage, { recruiter: recruiter }, { animation: "md-transition" });
+                  if (this.dataService.isApp) {
+                    this.navCtrl.push(CompanyTabsPage, { recruiter: recruiter }, { animation: "md-transition" });
+                  } else {
+                    this.navCtrl.push(CompanyWebDashboard, { recruiter: recruiter }, { animation: "md-transition" });
+                  }
                 }
               },
               error => {
