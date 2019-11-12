@@ -1,0 +1,155 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle icon-only>
+      <ion-icon name='menu'></ion-icon>
+    </button>
+    <ion-title>Matched Jobs</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="bg-full-image" padding no-bounce>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  
+  <div class="match-card-success" [ngClass]="{'fade': matchSuccessFade, 'transform': matchSuccessTransform}" [hidden]="!matchSuccess">
+    <ion-icon name="checkmark-circle" class="content" [ngClass]="{'fade': matchSuccessContentFade}"></ion-icon>
+  </div>
+  <div class="loader-wrapper" *ngIf="pageLoading">
+    <ion-spinner name="bubbles" class="fade-in"></ion-spinner>
+    <h3 class="text-center fg-white first-load-message fade-in-up" *ngIf="firstLoad">Generating Initial Matches</h3>
+  </div>
+  <div class="phase-wrapper" *ngIf="!pageLoading">
+    <div class="match-card-container" *ngIf="matchList != undefined && (matchList != undefined && matchList.length > 0)">
+      <div class="match-list">
+
+        <!-- Match Card -->
+        <div class="match-card"
+        [ngClass]="{'fade-left': fadeLeft, 'fade-right': fadeRight, 'fade-left-instant': fadeLeftInstant, 'fade-right-instant': fadeRightInstant}"
+        [hidden]="hideCard"
+        (swipe)="swipe($event)" id="swipe-card">
+
+          <!-- Card Header -->
+          <div class="match-card-header" [ngClass]="{'large': helperService.isMatchHeaderLarge(match)}">
+            <h3 class="title fg-primary text-center">{{ match.job.positionTitle }}</h3>
+            <p class="fg-grey text-center">
+              {{ match.matchDisplay.industry.value }}
+              <span class="match-check" [hidden]="!match.matchDisplay.industry.matched"><ion-icon name="checkmark" class=""></ion-icon></span>
+            </p>
+            <div class="duration-wrapper" [ngClass]="{'duration-notice': match.job.numDaysRemaining < 4, 'duration-urgent': match.job.numDaysRemaining == 1}">
+              <ion-icon class="duration-icon" name="md-time"></ion-icon>
+              <span>{{ match.job.numDaysRemaining || '0' }}</span>
+            </div>
+            <div class="score-wrapper" [ngClass]="{'score-high': match.matchStrength >= .8}">
+              <ion-icon class="score-icon" name="md-speedometer"></ion-icon>
+              <span>{{ match.matchStrength * 100 | number:'2.0-0'}}%</span>
+            </div>
+          </div>
+          <!-- End Card Header -->
+
+          <!-- Match Summary Card Content -->
+          <div class="match-card-content" [ngClass]="{'slide-left': stage > 0, 'large': helperService.isMatchHeaderLarge(match)}">
+            <div class="locations content-section">
+              <h3 class="heading fg-dark"><ion-icon name="ios-pin" class="card-heading-icon"></ion-icon>Locations:</h3>
+              <ul class="rec-ul">
+                <li *ngFor="let location of match.matchDisplay.locations; let i = index" class="fg-dark">
+                  {{ location.value }}
+                  <span class="match-check" [hidden]="!location.matched"><ion-icon name="checkmark" class=""></ion-icon></span>
+                </li>
+              </ul>
+            </div>
+            <div class="skills content-section">
+              <h3 class="heading fg-dark"><ion-icon name="md-construct" class="card-heading-icon"></ion-icon>Top Skills:</h3>
+              <ul class="rec-ul">
+                <li *ngFor="let skill of match.matchDisplay.skills; let i = index" [hidden]="skill == undefined">
+                  {{ skill?.value.name }}
+                  <span class="match-check" [hidden]="!skill?.matched"><ion-icon name="checkmark" class=""></ion-icon></span>
+                </li>
+              </ul>
+            </div>
+            <div class="summary content-section">
+              <h3 class="heading fg-dark"><ion-icon name="ios-paper" class="card-heading-icon"></ion-icon>Summary:</h3>
+              <p class="fg-dark" [innerHTML]="(match.job.description.length > 4000) ? (match.job.description | slice:0:201) + '...' : (match.job.description)"></p>
+            </div>
+          </div>
+          <!-- End Match Summary Card Content -->
+
+          <!-- Company Problem Statement Card Content -->
+          <div class="match-card-content" [ngClass]="{'slide-left': stage > 1, 'slide-right': stage < 1, 'large': helperService.isMatchHeaderLarge(match)}">
+            <div class="company-work-statement content-section">
+              <h3 class="heading fg-dark heading-spacer">
+                <ion-icon name="md-chatboxes" class="card-heading-icon"></ion-icon>Job Problem Statement<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="companyProbStatementInfo()"></ion-icon></h3>
+              <p class="fg-dark" [innerHTML]="match.job.problemStatement"></p>
+            </div>
+          </div>
+          <!-- End Company Problem Statement Card Content -->
+
+          <!-- Your Problem Statement Card Content -->
+          <div class="match-card-content" [ngClass]="{'slide-right': stage < 2, 'large': helperService.isMatchHeaderLarge(match)}">
+            <div class="company-work-statement content-section">
+              <h3 class="heading fg-dark heading-spacer">
+                <ion-icon name="md-chatboxes" class="card-heading-icon"></ion-icon>Your Problem Statement<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="yourProbStatementInfo()"></ion-icon>
+              </h3>
+
+              <form #problemStatementForm="ngForm" [hidden]="!existingStatementOptions || existingStatementOptions.length == 0 || problemStatement != undefined">
+                <div class="rec-input-group-small">
+                  <label class="rec-label rl-secondary">SELECT EXISTING STATEMENT</label>
+                  <ion-select name="selectedStatement" class="rec-input ri-grey" [(ngModel)]="existingStatementModel" multiple="false" (ionChange)="selectChanged($event)">
+                    <ion-option *ngFor="let statement of existingStatementOptions" [value]="statement">{{ statement.title }}</ion-option>
+                    <ion-option *ngIf="!existingStatementOptions || existingStatementOptions.length == 0" value="-1">No Profile Statements Found</ion-option>
+                  </ion-select>
+                </div>
+              </form>
+
+              <ion-row class="row-sep" [hidden]="!existingStatementOptions || existingStatementOptions.length == 0 || problemStatement != undefined">
+                <div class="rec-sep-or">
+                  <span class="left"></span>OR<span class="right"></span>
+                </div>
+              </ion-row>
+
+              <div class="custom-statement-section">
+                <div class="custom-statement-button" *ngIf="problemStatement == undefined">
+                  <button class="rec-btn-wide-short rec-btn-primary btn-stacked center" (click)="newStatement()"><ion-icon name="md-add-circle" class="rec-btn-icon to-left"></ion-icon>New Statement</button>
+                </div>
+                <div class="custom-statement" *ngIf="problemStatement != undefined">
+                  <div class="clearfix custom-statement-buttons">
+                    <button class="rec-btn-small rec-btn-primary float-left" (click)="editStatement()" [hidden]="hideEditBtn"><ion-icon name="md-create" class="rec-btn-icon to-left"></ion-icon>Edit</button>
+                    <button class="rec-btn-small rec-btn-deny" (click)="clearStatement()" [ngClass]="{'float-right': !hideEditBtn, 'btn-stacked center': hideEditBtn}"><ion-icon name="md-close-circle" class="rec-btn-icon to-left"></ion-icon>Clear</button>
+                  </div>
+                  <label class="rec-label rl-secondary">STATEMENT</label>
+                  <p class="fg-dark" [innerHTML]="problemStatement.text"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Your Problem Statement Card Content -->
+
+          <!-- Card Footer -->
+          <div class="match-card-footer">
+            <button class="rec-btn-small float-left" [ngClass]="{'rec-btn-deny': stage == 0}" (click)="backDecline()" [disabled]="disableDecline">
+              <ion-icon name="ios-arrow-back" class="card-heading-icon" [hidden]="stage == 0"></ion-icon>
+              <ion-icon name="md-thumbs-down" class="card-heading-icon" [hidden]="stage > 0"></ion-icon>
+              {{ (stage == 0) ? "Decline" : "Back"}}
+            </button>
+            <button class="rec-btn-small float-right" [ngClass]="{'rec-btn-accept': stage == maxStage}" (click)="interested()">
+              {{ (stage == maxStage) ? "Submit" : "More"}}
+              <ion-icon name="ios-arrow-forward" class="card-heading-icon-right" [hidden]="stage == maxStage"></ion-icon>
+              <ion-icon name="md-thumbs-up" class="card-heading-icon-right" [hidden]="stage < maxStage "></ion-icon>
+            </button>
+          </div>
+          <!-- End Card Footer -->
+        </div>
+        <!-- End Match Card -->
+
+      </div>
+    </div>
+    <div class="match-list-empty" *ngIf="matchList == undefined || matchList.length == 0">
+      <ion-icon name="ios-cog" class=""></ion-icon>
+      <div class="sep-horizontal-1"></div>
+      <h3 class="fg-white text-center">You don't have any matched job positions. Perhaps update your skills and job preferences to increase your number of matches.</h3>
+      <div class="sep-horizontal-1"></div>
+      <button class="rec-btn-small-wide rec-btn-white btn-stacked center" (click)="editSkills()">Edit Skills</button>
+      <button class="rec-btn-small-wide rec-btn-white btn-stacked center" (click)="editPrefs()">Edit Preferences</button>
+    </div>
+  </div>
+</ion-content>

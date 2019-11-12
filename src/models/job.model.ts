@@ -6,6 +6,7 @@ export class JobModel {
   public status: number = null;
   public positionTitle: string = "";
   public description: string = "";
+  public expanded: boolean = false;
   public locations: any = [];
   public requiredSkills: any = [];
   public recommendedSkills: any = [];

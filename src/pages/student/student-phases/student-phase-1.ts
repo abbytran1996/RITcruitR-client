@@ -6,7 +6,8 @@ import { ProblemStatementAddModal } from '@app/pages/modals';
 import {
   StudentModel,
   MatchModel,
-  ProblemStatementModel
+  ProblemStatementModel,
+  JobModel
 } from '@app/models';
 
 import {
@@ -34,8 +35,11 @@ export class StudentPhase1Page {
   public pageLoading = true;
   public firstLoad = false;
 
+  // Job Field
+  public jobList: JobModel[];
+
   // Match fields
-  public matchList: any;
+  public matchList: MatchModel[];
   public matchIndex = 0;
   public stage = 0;
   public maxStage = 2;
@@ -205,6 +209,13 @@ export class StudentPhase1Page {
   }
 
   /*
+    Calls to expand a job view for a better student experience
+  */
+  expandJobView(job) {
+    job.expanded = true
+  }
+
+  /*
     Clears the currently set "new" problem statement.
   */
   clearStatement() {
@@ -303,6 +314,7 @@ export class StudentPhase1Page {
   */
   nextMatch() {
     this.matchList = this.helperService.removeFromArrayById(this.matchList, this.match);
+    this.jobList = this.matchList.map(match => match.job);
     this.stage = 0;
 
     if (this.matchList.length > 0) {
@@ -373,6 +385,7 @@ export class StudentPhase1Page {
         }
         else {
           this.matchList = this.helperService.sortMatches(data);
+          this.jobList = this.matchList.map(match => match.job);
           this.matchIndex = 0;
           this.match = new MatchModel(this.matchList[this.matchIndex]);
           this.pageLoading = false;
