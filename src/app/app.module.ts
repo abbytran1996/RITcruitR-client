@@ -71,7 +71,8 @@ import {
   JobIndustriesPreferenceModal,
   CompanySizePreferenceModal,
   StudentImportModal,
-  RecruiterDetailsModal
+  RecruiterDetailsModal,
+  LocationsSearchModal
 } from '@app/pages/modals';
 
 // Services
@@ -135,6 +136,7 @@ import {
     CompanySizePreferenceModal,
     StudentImportModal,
     RecruiterDetailsModal,
+    LocationsSearchModal,
 
     PhonePipe
   ],
@@ -207,7 +209,8 @@ import {
     JobIndustriesPreferenceModal,
     CompanySizePreferenceModal,
     StudentImportModal,
-    RecruiterDetailsModal
+    RecruiterDetailsModal,
+    LocationsSearchModal
   ],
 
   /*

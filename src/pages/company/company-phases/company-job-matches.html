@@ -66,10 +66,9 @@
   <div class="match-list-empty" *ngIf="!pageLoading && (jobList == undefined || jobList.length == 0)">
     <div [hidden]="!activeJobs">
       <div class="sep-horizontal-1"></div>
-      <h3 class="fg-white text-center">You don't have any active jobs. Create or import new ones using the buttons below.</h3>
+      <h3 class="fg-white text-center">You don't have any active jobs. Create a new job using the button below.</h3>
       <div class="sep-horizontal-1"></div>
       <button class="rec-btn-small-wide rec-btn-white btn-stacked center" (click)="createJobLink()">Create Job</button>
-      <button class="rec-btn-small-wide rec-btn-white btn-stacked center" (click)="importJobLink()">Import Job</button>
     </div>
     <div [hidden]="activeJobs">
       <div class="sep-horizontal-1"></div>
