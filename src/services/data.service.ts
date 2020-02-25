@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
+import { OnetWebService } from 'services/Onet.js';
 
 import { ApiService } from './api.service';
 
@@ -67,8 +68,14 @@ export class DataService {
     // - NOTE: Sending majors to get skills is currently 'NYI'
     getSkills(major = "") {
       let params = new HttpParams();
-      if (major) { params.append("major", major); }
-      return this.apiService.get('/skills', params);
+      //if (major) { params.append("major", major); }
+      // insert Onet api read file into list return list
+      const OnetConfig = new OnetWebService();
+      const testres = OnetConfig.call('about');
+      return testres.api_version
+      
+      
+      //return this.apiService.get('/skills', params);
     }
 
     //=========================================================================
