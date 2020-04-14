@@ -26,8 +26,8 @@ export class StudentModel {
   public preferredIndustries: any = [];
   public preferredCompanySizes: any = [];
   public preferredLocationsWeight: number = StudentModel.PREFERRED_LOCATIONS_WEIGHT;
-  public preferredIndustriesWeight: number = StudentModel.PREFERRED_LOCATIONS_WEIGHT;
-  public preferredCompanySizeWeight: number = StudentModel.PREFERRED_LOCATIONS_WEIGHT;
+  public preferredIndustriesWeight: number = StudentModel.PREFERRED_INDUSTRIES_WEIGHT;
+  public preferredCompanySizeWeight: number = StudentModel.PREFERRED_COMPANY_SIZE_WEIGHT;
   public presentationLinks: Array<PresentationLinkModel> = [];
   public problemStatements: any = [];
   public isSetup: boolean = false;
