@@ -51,8 +51,8 @@ export class StudentModel {
       this.preferredIndustries = init.preferredIndustries || [];
       this.preferredCompanySizes = init.preferredCompanySizes || [];
       this.preferredLocationsWeight = init.preferredLocationsWeight || StudentModel.PREFERRED_LOCATIONS_WEIGHT;
-      this.preferredIndustriesWeight = init.preferredIndustriesWeight || StudentModel.PREFERRED_LOCATIONS_WEIGHT;
-      this.preferredCompanySizeWeight = init.preferredCompanySizeWeight || StudentModel.PREFERRED_LOCATIONS_WEIGHT; 
+      this.preferredIndustriesWeight = init.preferredIndustriesWeight || StudentModel.PREFERRED_INDUSTRIES_WEIGHT;
+      this.preferredCompanySizeWeight = init.preferredCompanySizeWeight || StudentModel.PREFERRED_COMPANY_SIZE_WEIGHT; 
       this.presentationLinks = init.presentationLinks || [];
       this.problemStatements = init.problemStatements || [];
       this.isSetup = init.isSetup || false;
