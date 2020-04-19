@@ -23,6 +23,7 @@ import {
   DataService,
   AuthService
 } from '@app/services';
+import { SelectSearchable } from '@app/pages/modals/ionic-select-searchable';
 
 //=========================================================================
 // * StudentDetailForms                                                   
@@ -54,6 +55,7 @@ export class StudentDetailFormsPage {
   // Step 3 variables
   @ViewChild('form3') form3;
   public skills = [];
+  public tools = [];
   public skillOptions = [];
 
   // Implementation specific variables
@@ -114,12 +116,18 @@ export class StudentDetailFormsPage {
         this.skillOptions = data;
 
         // Transfer student skills to skills array (needed to get searchable modal to reflect the proper values)
+        // Split skills and tools up for ease of use for students
         this.skills = [];
         this.student.skills.forEach(skill => {
-          let skillIndex = this.skillOptions.findIndex(skillOption => skillOption.id == skill.id);
+          let skillIndex = this.skillOptions.findIndex(skillOption => skillOption.id == skill.id && (skill.type === "skill" || skill.type === "knowledge" || skill.type === "work_style" || skill.type === "abilities" || skill.type === "technology_types"   ));
+          let toolIndex = this.skillOptions.findIndex(skillOption => skillOption.id == skill.id && (skill.type === "hot_technology" || skill.type === "commodity" || skill.type === "tools" ));
           if (skillIndex != undefined && skillIndex > -1) {
             this.skills.push(this.skillOptions[skillIndex]);
           }
+          if (toolIndex != undefined && toolIndex > -1) {
+            this.tools.push(this.skillOptions[toolIndex]);
+          }
+
         });
       },
       error => {
@@ -223,7 +231,9 @@ export class StudentDetailFormsPage {
       // Last step
       else if (this.formSeq.currentStep == 3) {
         this.saving = true;
-        this.student.skills = this.skills;
+        //Combine selected skills and tools, save under studentSkills
+        this.student.skills = this.skills.concat(this.tools); 
+        
         this.studentService.updateStudentSkills(this.student.id, this.student.skills).subscribe(
           data => {
             if (this.isSetup) {
@@ -344,6 +354,52 @@ export class StudentDetailFormsPage {
     this.skills.splice(index, 1);
   }
 
+  removeTool(index) {
+    this.tools.splice(index, 1);
+  }
+
+  searchSkills(event: {component: SelectSearchable, text: string }){
+    let text = (event.text || '').trim().toLowerCase();
+
+    if(!text){
+      event.component.items = [];
+      return;
+    } else if (event.text.length < 1){
+      return;
+    }
+
+    event.component.isSearching = true;
+
+    this.dataService.getSkills().subscribe(skills => {
+      event.component.items = skills.filter(skill => {
+        return skill.name.toLowerCase().indexOf(text) !== -1 && (skill.type === "skill" || skill.type === "knowledge" || skill.type === "work_style" || skill.type === "abilities" || skill.type === "technology_types"   ) ;
+      });
+
+      event.component.isSearching = false;
+    })
+  }
+
+  searchTools(event: {component: SelectSearchable, text: string }){
+    let text = (event.text || '').trim().toLowerCase();
+
+    if(!text){
+      event.component.items = [];
+      return;
+    } else if (event.text.length < 1){
+      return;
+    }
+
+    event.component.isSearching = true;
+
+    this.dataService.getSkills().subscribe(skills => {
+      event.component.items = skills.filter(skill => {
+        return skill.name.toLowerCase().indexOf(text) !== -1 && (skill.type === "hot_technology" || skill.type === "commodity" || skill.type === "tools" ) ;
+      });
+
+      event.component.isSearching = false;
+    })
+  }
+
   /*
     Present a toast message to the user
   */
@@ -352,6 +408,22 @@ export class StudentDetailFormsPage {
       message: message,
       duration: 4000,
       position: 'top',
+      showCloseButton: true,
+      closeButtonText: ''
+    });
+
+    toast.onDidDismiss(() => {
+
+    });
+
+    toast.present();
+  }
+
+  presentToastTest(message) {
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 8000,
+      position: 'bottom',
       showCloseButton: true,
       closeButtonText: ''
     });
