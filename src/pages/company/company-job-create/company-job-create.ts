@@ -252,7 +252,6 @@ export class CompanyJobCreatePage {
     Set various job fields to be prepared to save/update the job in the DB.
   */
   prepJobForSave() {
-    console.log(typeof this.jobModel.minGpa);
     this.jobModel.requiredSkills = this.reqSkills;
     this.jobModel.recommendedSkills = this.recommendedSkills;
     this.jobModel.presentationLinks = this.helperService.convertLinksForDB(this.linksList);
@@ -274,10 +273,12 @@ export class CompanyJobCreatePage {
       // Update the job using the API
       this.jobPostingService.updateJob(this.jobModel).subscribe(
         data => { 
+          console.log(data);
           this.saving = false;
           this.navCtrl.setRoot(CompanyTabsPage, { message: this.jobModel.positionTitle + " job updated successfully" });
         },
         res => {
+          res.ok = true;
           console.log(res)
         }
       );

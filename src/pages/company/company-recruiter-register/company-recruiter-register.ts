@@ -227,6 +227,8 @@ export class CompanyRecruiterRegisterPage {
 
             // Company create error
             error => {
+              console.log("error" )
+              console.log(error)
               this.presentToast("A company is already registered by that name, please contact our support team to report fraudulant companies");
               this.saving = false;
             }

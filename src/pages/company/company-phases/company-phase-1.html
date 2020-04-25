@@ -41,7 +41,8 @@
       (swipe)="swipe($event)" id="swipe-card">
 
         <div class="match-card-header" [ngClass]="{'large': helperService.isMatchHeaderLarge(match, 'studentName')}">
-          <h3 class="title fg-primary text-center">{{ match.student.firstName }} {{ match.student.lastName }}</h3>
+          <!--Commented out because we don't want this to show up in the 1st phase-->
+          <!-- <h3 class="title fg-primary text-center">{{ match.student.firstName }} {{ match.student.lastName }}</h3> -->
           <p class="fg-grey text-center">{{ match.student.major.name }}</p>
           <div class="duration-wrapper" [ngClass]="{'duration-notice': match.job.numDaysRemaining < 4, 'duration-urgent': match.job.numDaysRemaining == 1}">
             <ion-icon class="duration-icon" name="md-time"></ion-icon>
@@ -70,7 +71,7 @@
           <div class="content-section skills">
             <h3 class="heading fg-dark"><ion-icon name="md-build" class="card-heading-icon"></ion-icon>Top Skills: <span class="fg-grey more-skills" (click)="toggleOtherSkills()">{{ (showOtherSkills == true) ? '(Show Less)' : '(Show More)'}}</span></h3>
             <ul class="rec-ul">
-              <li *ngFor="let skill of match.matchDisplay.skills; let i = index" [hidden]="skill == undefined">
+              <li *ngFor="let skill of match.matchDisplay.skills; let i = index" [hidden]="skill == undefined || !skill?.matched">
                 {{ skill?.value.name }}
                 <span class="match-check" [hidden]="!skill?.matched"><ion-icon name="checkmark" class=""></ion-icon></span>
               </li>
@@ -87,7 +88,7 @@
         <div class="match-card-content" [ngClass]="{'slide-right': stage < 1, 'large': helperService.isMatchHeaderLarge(match, 'studentName')} ">
           <div class="content-section problem-statement">
             <h3 class="heading fg-dark heading-spacer">
-              <ion-icon name="md-chatboxes" class="card-heading-icon"></ion-icon>{{ match.student.firstName }}'s Problem Statement<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="probStatementInfo()"></ion-icon></h3>
+              <ion-icon name="md-chatboxes" class="card-heading-icon"></ion-icon>Student's Problem Statement<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="probStatementInfo()"></ion-icon></h3>
             <p class="fg-dark" [innerHTML]="match.studentProblemResponse"></p>
           </div>
         </div>

@@ -37,8 +37,6 @@
     "@ng-bootstrap/ng-bootstrap": "^1.0.2",
     "angular-froala-wysiwyg": "^2.8.4",
     "call-number": "^1.0.1",
-    "cordova-android": "6.4.0",
-    "cordova-ios": "4.5.4",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-inappbrowser": "^3.0.0",
     "cordova-plugin-ionic-keyboard": "^2.1.2",
@@ -58,9 +56,9 @@
   },
   "devDependencies": {
     "@compodoc/compodoc": "^1.1.2",
-    "@ionic/app-scripts": "3.1.8",
-    "@types/jasmine": "^2.5.41",
-    "@types/node": "^8.0.45",
+    "@ionic/app-scripts": "^3.2.4",
+    "@types/jasmine": "2.8.9",
+    "@types/node": "^8.10.60",
     "angular2-template-loader": "^0.6.2",
     "html-loader": "^0.5.1",
     "istanbul-instrumenter-loader": "^3.0.0",
@@ -73,11 +71,13 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^2.0.3",
+    "node-sass": "^4.14.0",
     "null-loader": "^0.1.1",
     "protractor": "^5.1.1",
+    "rebuild-node-sass": "^1.1.0",
     "ts-loader": "^3.0.3",
     "ts-node": "^3.0.2",
-    "typescript": "2.4.2"
+    "typescript": "2.8.3"
   },
   "description": "An Ionic project",
   "config": {
@@ -97,8 +97,11 @@
       "call-number": {}
     },
     "platforms": [
-      "ios",
-      "android"
+      "ios"
+    ],
+    "types": [
+      "node",
+      "jasmine"
     ]
   }
 }
