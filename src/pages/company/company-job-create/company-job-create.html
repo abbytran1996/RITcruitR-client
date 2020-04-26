@@ -129,12 +129,12 @@
   <ion-row class="row-form" [ngClass]="formSeq.formClasses[3]" [hidden]="formSeq.initHide">
     <ion-col>
       <form #form3="ngForm">
-        <div class="rec-input-group-small">
+        <!-- <div class="rec-input-group-small">
           <label class="rec-label full-width rl-secondary">RECOMMENDED SKILLS WEIGHT<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="recommendedSkillsWeightInfo()"></ion-icon></label>
           <ion-label class="range-label left">LESS IMPORTANT</ion-label>
           <ion-label class="range-label right">MORE IMPORTANT</ion-label>
           <ion-range class="labeled" name="recommendedSkillsWeight" min="0" max="50" step="10" snaps="true" color="primary" [(ngModel)]="jobModel.recommendedSkillsWeight"></ion-range>
-        </div>
+        </div> -->
         <div class="rec-input-group-small relative">
           <label class="rec-label full-width rl-secondary">RECOMMENDED SKILLS<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="recommendedSkillsInfo()"></ion-icon></label>
           <select-searchable name="recommendedSkills" class="rec-select-searchable-btn circle clearfix" [(ngModel)]="recommendedSkills" [items]="recommendedSkillOptions"
@@ -172,12 +172,12 @@
           <label class="rec-label full-width rl-secondary">MATCH THRESHOLD<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="thresholdInfo()"></ion-icon></label>
           <ion-label class="range-label left">MORE MATCHES</ion-label>
           <ion-label class="range-label right">BETTER MATCHES</ion-label>
-          <ion-range class="labeled" name="matchThreshold" min="30" max="100" step="10" snaps="true" color="primary" [(ngModel)]="jobModel.matchThreshold"></ion-range>
+          <ion-range class="labeled" name="matchThreshold" min="30" max="80" step="10" snaps="true" color="primary" [(ngModel)]="jobModel.matchThreshold"></ion-range>
         </div>
-        <div class="rec-input-group">
+        <!-- <div class="rec-input-group">
           <label class="rec-label rl-secondary">MINIMUM GPA<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="minGpaInfo()"></ion-icon></label>
           <input type="number" name="minGpa" class="rec-input ri-grey" [(ngModel)]="jobModel.minGpa">
-        </div>
+        </div> -->
       </form>
     </ion-col>
   </ion-row>
@@ -189,7 +189,7 @@
       <form #form5="ngForm">
         <div class="rec-input-group-small">
           <label class="rec-label full-width rl-secondary">JOB DURATION<ion-icon name="md-information-circle" class="info-icon to-right opacity-75 icon-link fg-dark" (click)="durationInfo()"></ion-icon> <ion-badge class="rec-badge float-right">{{ jobModel.duration }} {{ (jobModel.duration == 1) ? 'day' : 'days' }}</ion-badge></label>
-          <ion-range name="duration" min="3" max="10" step="1" snaps="true" color="primary" [(ngModel)]="jobModel.duration"></ion-range>
+          <ion-range name="duration" min="0" max="7" step="1" snaps="true" color="primary" [(ngModel)]="jobModel.duration"></ion-range>
         </div>
       </form>
     </ion-col>
