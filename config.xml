@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.recruitr" version="0.1.4" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.ritcruiter" version="0.5.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>RecruitR</name>
-    <description>RecruitR</description>
+    <description>RITruiter</description>
     <author email="" href="">Rochester Institute of Technology</author>
     <content src="index.html" />
     <access origin="*" />
