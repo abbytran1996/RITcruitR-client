@@ -41,7 +41,6 @@
       (swipe)="swipe($event)" id="swipe-card">
 
         <div class="match-card-header" [ngClass]="{'large': helperService.isMatchHeaderLarge(match, 'studentName')}">
-          <!-- <h3 class="title fg-primary text-center">{{ match.student.firstName }} {{ match.student.lastName }}</h3> -->
           <p class="fg-grey text-center">{{ match.student.major.name }}</p>
           <div class="duration-wrapper" [ngClass]="{'duration-notice': match.job.numDaysRemaining < 4, 'duration-urgent': match.job.numDaysRemaining == 1}">
             <ion-icon class="duration-icon" name="md-time"></ion-icon>

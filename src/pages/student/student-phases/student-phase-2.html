@@ -29,7 +29,6 @@
         (swipe)="swipe($event)" id="swipe-card">
           <!-- Card Header -->
           <div class="match-card-header" [ngClass]="{'large': helperService.isMatchHeaderLarge(match, 'companyName')}">
-            <!-- <h3 class="title fg-primary text-center">{{ match.job.company.companyName }}</h3> -->
             <p class="fg-grey text-center">
               {{ match.matchDisplay.industry.value }}
               <span class="match-check" [hidden]="!match.matchDisplay.industry.matched"><ion-icon name="checkmark" class=""></ion-icon></span>

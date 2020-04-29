@@ -211,8 +211,6 @@ export class CompanyJobCreatePage {
                 this.navCtrl.setRoot(CompanyTabsPage, { message: this.jobModel.positionTitle + " job created successfully" });
               },
               error => {
-                //"src/main/java/com/avalanche/tmcs/credentials/credentials.json (No such file or directory)"
-                console.log(error);
                 this.presentToast("There was an error creating the job. Please check on company's approval status and try again later");
                 this.saving = false;
               }

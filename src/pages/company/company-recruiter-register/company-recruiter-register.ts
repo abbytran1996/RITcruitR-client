@@ -159,7 +159,6 @@ export class CompanyRecruiterRegisterPage {
 
             // Recruiter create error
             error => {
-              console.log(error);
               this.presentToast("There was an error registering the recruiter for your company, please try again");
               this.saving = false;
             }
@@ -220,7 +219,6 @@ export class CompanyRecruiterRegisterPage {
 
                 // Recruiter create error
                 error => {
-                  console.log(error);
                   this.presentToast("There was an error registering the recruiter for your company, please try again");
                   this.saving = false;
                 }
@@ -229,7 +227,6 @@ export class CompanyRecruiterRegisterPage {
 
             // Company create error
             error => {
-              console.log(error);
               this.presentToast("A company is already registered by that name, please contact our support team to report fraudulant companies");
               this.saving = false;
             }
