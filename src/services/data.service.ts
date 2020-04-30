@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
+import { OnetWebService } from 'services/Onet.js';
 
 import { ApiService } from './api.service';
 
@@ -59,15 +60,14 @@ export class DataService {
     }
 
     //=========================================================================
-    // * GET ALL SKILLS                                                       *
+    // * GET ALL                                                        *
     //=========================================================================
-    // - Returns the structured list of skills
-    // - Returns a list of skills (there's no skill model because it's simple):
+    // - Returns the structured list of 
+    // - Returns a list of  (there's no skill model because it's simple):
     //   ex. [{"id": 1, "name": "Experience Design"}, {...}]
-    // - NOTE: Sending majors to get skills is currently 'NYI'
+    // - NOTE: Sending majors to get  is currently 'NYI'
     getSkills(major = "") {
       let params = new HttpParams();
-      if (major) { params.append("major", major); }
       return this.apiService.get('/skills', params);
     }
 

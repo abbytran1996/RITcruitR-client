@@ -130,7 +130,7 @@
       <ion-col>
         <form #form3="ngForm">
           <select-searchable name="skills" class="rec-select-searchable-btn circle has-header clearfix" [(ngModel)]="skills" [items]="skillOptions"
-            itemTextField="name" [canSearch]="true" [multiple]="true" title="Skills">
+            itemTextField="name" [canSearch]="true" [multiple]="true" title="Skills" (onSearch)="searchSkills($event)">
           </select-searchable>
           <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
             <ion-list class="rec-reorder-list">
@@ -143,26 +143,42 @@
                   <ion-icon name="md-close-circle" class="fake-link" (click)="removeSkill(i)"></ion-icon>
                 </ion-item>
               </ion-item-group>
-              <ion-item-group [hidden]="skills.length > 0">
-                <h5 class="list-empty-message">You currently have no skills saved, add some by tapping the
-                  <span class="fg-accent">Add</span> button above.</h5>
+            </ion-list>
+          </div>
+        </form>
+        <form #form3="ngForm">
+          <select-searchable name="Tools" class="rec-select-searchable-btn circle has-header clearfix" [(ngModel)]="tools" [items]="ToolsOptions"
+            itemTextField="name" [canSearch]="true" [multiple]="true" title="Tools" (onSearch)="searchTools($event)">
+          </select-searchable>
+          <div [ngClass]="{'rec-input-group': !isSetup, 'rec-input-group-small': isSetup}">
+            <ion-list class="rec-reorder-list">
+              <div class="list-header-wrapper">
+                <ion-list-header class="header-no-min-height font-large">Tool Proficiency</ion-list-header>
+              </div>
+              <ion-item-group reorder="true" side="start" (ionItemReorder)="$event.applyTo(tools)">
+                <ion-item *ngFor="let tool of tools; let i = index">
+                  <h5>{{ tool.name }}</h5>
+                  <ion-icon name="md-close-circle" class="fake-link" (click)="removeTool(i)"></ion-icon>
+                </ion-item>
               </ion-item-group>
             </ion-list>
           </div>
         </form>
+        <p style="font-size:x-small;">This site incorporates information from <a style="font-size:small" href="https://services.onetcenter.org/">O*NET Web Services</a> by the U.S. Department of Labor, Employment and Training Administration (USDOL/ETA). </p>
       </ion-col>
     </ion-row>
     <!-- End Step 3 -->
   </div>
-</ion-content>
+</ion-content>  1```````````````````````````````````````````
 
 <!-- Button Footer -->
 <ion-footer class="button-footer" [hidden]="formSeq.currentStep == 2 && !isSetup">
   <ion-row>
-    <button class="rec-btn rec-btn-primary btn-stacked center rec-load-btn" (click)="continueClicked()" [disabled]="saving">
+    <button  class="rec-btn-small-wide rec-btn-primary btn-stacked center rec-load-btn" (click)="continueClicked()" [disabled]="saving">
       {{ ((!isSetup) ? ((saving) ? '' : 'Save') : (formSeq.currentStep == formSeq.maxSteps) ? ((saving) ? '' : 'Finish') : ((saving) ? '' : 'Continue')) }}
       <ion-spinner class="white" name="dots" [hidden]="!saving"></ion-spinner>
     </button>
   </ion-row>
+  
 </ion-footer>
 <!-- End Button Footer -->
